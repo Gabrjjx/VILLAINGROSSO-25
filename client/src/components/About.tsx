@@ -169,7 +169,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1520942702018-0862200e6873?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                src="https://images.unsplash.com/photo-1566559532225-027aca0bc5cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
                 alt="Tramonto sul Mare" 
                 className="w-full h-full object-cover"
               />
