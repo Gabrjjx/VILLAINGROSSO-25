@@ -15,8 +15,8 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-end">
             <p className="mb-2 text-blue-100">© {new Date().getFullYear()} Villa Ingrosso. Tutti i diritti riservati.</p>
             <div className="flex space-x-6 mt-2">
-              <Link href="/privacy">
-                <a className="text-white hover:text-blue-200 transition-colors text-sm uppercase tracking-wide">Privacy</a>
+              <Link href="/privacy" className="text-white hover:text-blue-200 transition-colors text-sm uppercase tracking-wide">
+                Privacy
               </Link>
               <a href="#contact" className="text-white hover:text-blue-200 transition-colors text-sm uppercase tracking-wide">Contatti</a>
             </div>

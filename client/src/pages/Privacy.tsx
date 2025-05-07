@@ -8,11 +8,9 @@ export default function Privacy() {
     <div className="font-body text-neutral-900 bg-white min-h-screen pt-24">
       <div className="max-w-4xl mx-auto px-6 lg:px-8 pb-16">
         <div className="mb-10">
-          <Link href="/">
-            <a className="inline-flex items-center text-cyan-600 hover:text-cyan-700 transition-colors">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              <span>Torna alla home</span>
-            </a>
+          <Link href="/" className="inline-flex items-center text-cyan-600 hover:text-cyan-700 transition-colors">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            <span>Torna alla home</span>
           </Link>
         </div>
         
