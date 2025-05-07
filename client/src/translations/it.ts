@@ -24,10 +24,10 @@ export default {
     feature3: "Wi-Fi gratuito",
     feature4: "Design moderno",
     coastTitle: "Il Mare della Costa Tarantina",
-    coastDescription: "Scopri le meravigliose spiagge e il mare cristallino a pochi passi dalla villa. La costa tarantina offre paesaggi mozzafiato e acque limpide per un'esperienza balneare indimenticabile.",
+    coastDescription: "Scopri le meravigliose spiagge e il mare cristallino a pochi passi dalla villa. La costa ionica tarantina offre insenature suggestive, sabbia dorata e acque turchesi per una vacanza indimenticabile.",
     beach1: "Spiaggia di Gandoli",
-    beach2: "Marina di Leporano",
-    beach3: "Costa Meravigliosa",
+    beach2: "Litorale di Leporano",
+    beach3: "Costa Ionica al Tramonto",
   },
   gallery: {
     title: "Galleria",

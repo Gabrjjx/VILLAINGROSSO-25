@@ -67,10 +67,10 @@ export default function About() {
             </div>
           </motion.div>
           
-          {/* Image grid - spanning 7 columns, asymmetrically placed */}
+          {/* Image grid - spanning 7 columns, just 2 images */}
           <div className="lg:col-span-7 lg:pl-6 grid grid-cols-12 gap-4">
             <motion.div 
-              className="col-span-7 row-span-1 relative rounded-2xl overflow-hidden shadow-xl h-60"
+              className="col-span-7 row-span-1 relative rounded-2xl overflow-hidden shadow-xl h-64"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -84,7 +84,7 @@ export default function About() {
             </motion.div>
             
             <motion.div 
-              className="col-span-5 row-span-2 relative rounded-2xl overflow-hidden shadow-xl h-full"
+              className="col-span-5 row-span-1 relative rounded-2xl overflow-hidden shadow-xl h-64"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -93,20 +93,6 @@ export default function About() {
               <img 
                 src="/images/entrata-villa.jpeg" 
                 alt="Entrata di Villa Ingrosso" 
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-            
-            <motion.div 
-              className="col-span-7 row-span-1 relative rounded-2xl overflow-hidden shadow-xl h-60"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1576420258386-70b74ba23549?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
-                alt="Mare della costa tarantina" 
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -143,7 +129,7 @@ export default function About() {
               transition={{ duration: 0.5 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                src="https://images.unsplash.com/photo-1566419808810-658178380987?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
                 alt="Mare cristallino della costa tarantina" 
                 className="w-full h-full object-cover"
               />
@@ -163,7 +149,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1576420258386-70b74ba23549?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                src="https://images.unsplash.com/photo-1595880620035-c534d3334a12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
                 alt="Spiaggia dorata di Leporano" 
                 className="w-full h-full object-cover"
               />
@@ -183,7 +169,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                src="https://images.unsplash.com/photo-1464925257126-6450e871c667?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
                 alt="Tramonto sul mare ionico" 
                 className="w-full h-full object-cover"
               />
