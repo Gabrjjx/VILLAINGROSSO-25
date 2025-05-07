@@ -1,7 +1,9 @@
 import { Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Contact() {
+  const { t } = useLanguage();
   return (
     <section id="contact" className="py-24 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -18,7 +20,7 @@ export default function Contact() {
         >
           <h2 className="text-3xl md:text-4xl font-display font-medium mb-6">
             <span className="relative inline-block">
-              Contattaci
+              {t("contact.title")}
               <span className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-cyan-500 to-blue-500 transform translate-y-2"></span>
             </span>
           </h2>
@@ -34,7 +36,7 @@ export default function Contact() {
           <div className="flex flex-col items-center text-center">
             <div className="mb-8">
               <p className="text-lg md:text-xl text-neutral-700 mb-10 max-w-2xl mx-auto">
-                Per informazioni o prenotazioni, non esitare a contattarci:
+                {t("contact.subtitle")}
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
@@ -48,7 +50,7 @@ export default function Contact() {
                   <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 mb-4 text-cyan-600">
                     <Mail className="h-7 w-7" />
                   </div>
-                  <h3 className="text-xl font-display font-medium mb-2">Email</h3>
+                  <h3 className="text-xl font-display font-medium mb-2">{t("contact.email")}</h3>
                   <a href="mailto:g.ingrosso@villaingrosso.com" className="text-cyan-600 hover:text-cyan-700 transition-colors">
                     g.ingrosso@villaingrosso.com
                   </a>
@@ -64,7 +66,7 @@ export default function Contact() {
                   <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 mb-4 text-cyan-600">
                     <Phone className="h-7 w-7" />
                   </div>
-                  <h3 className="text-xl font-display font-medium mb-2">Telefono</h3>
+                  <h3 className="text-xl font-display font-medium mb-2">{t("contact.phone")}</h3>
                   <div className="flex flex-col space-y-1">
                     <a href="tel:+393470896961" className="text-cyan-600 hover:text-cyan-700 transition-colors">
                       +39 347 089 6961
@@ -85,7 +87,7 @@ export default function Contact() {
               transition={{ duration: 0.5, delay: 0.5 }}
             >
               <p className="text-neutral-500 text-sm">
-                Saremo lieti di rispondere a qualsiasi domanda riguardo la Villa e aiutarti a organizzare il tuo soggiorno perfetto.
+                {t("contact.footer")}
               </p>
             </motion.div>
           </div>

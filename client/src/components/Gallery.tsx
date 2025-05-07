@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Lightbox from "@/components/Lightbox";
+import { useLanguage } from "@/context/LanguageContext";
 
 const galleryImages = [
   {
@@ -31,6 +32,7 @@ const galleryImages = [
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [imageAlt, setImageAlt] = useState<string>("");
+  const { t } = useLanguage();
 
   const openLightbox = (src: string, alt: string) => {
     setSelectedImage(src);
