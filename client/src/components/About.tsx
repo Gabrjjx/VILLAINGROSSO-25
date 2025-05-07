@@ -129,8 +129,8 @@ export default function About() {
               transition={{ duration: 0.5 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1566419808810-658178380987?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
-                alt="Mare cristallino della costa tarantina" 
+                src="https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                alt="Mare cristallino" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
@@ -149,8 +149,8 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1595880620035-c534d3334a12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
-                alt="Spiaggia dorata di Leporano" 
+                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                alt="Spiagge ioniche" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
@@ -169,8 +169,8 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1464925257126-6450e871c667?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
-                alt="Tramonto sul mare ionico" 
+                src="https://images.unsplash.com/photo-1554232682-b9ef9c92f8de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                alt="Tramonto a Taranto" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
