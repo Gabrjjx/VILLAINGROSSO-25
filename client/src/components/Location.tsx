@@ -1,38 +1,50 @@
 import { Umbrella, Utensils, Store, Landmark } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import React from "react";
 
-const localFeatures = [
-  {
-    icon: <Umbrella className="text-secondary-sea" />,
-    title: "Spiagge",
-    description: "A soli 300 metri dalle spiagge cristalline di Leporano."
-  },
-  {
-    icon: <Utensils className="text-secondary-sea" />,
-    title: "Ristoranti",
-    description: "Numerosi ristoranti di pesce e cucina tipica pugliese a breve distanza."
-  },
-  {
-    icon: <Store className="text-secondary-sea" />,
-    title: "Negozi",
-    description: "Supermercati e negozi raggiungibili in pochi minuti a piedi."
-  },
-  {
-    icon: <Landmark className="text-secondary-sea" />,
-    title: "Attrazioni",
-    description: "Vicino al centro storico di Taranto e alle bellezze naturali della costa ionica."
-  }
-];
+interface LocationFeature {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+function getLocalFeatures(t: (key: string) => string): LocationFeature[] {
+  return [
+    {
+      icon: <Umbrella className="text-secondary-sea" />,
+      title: t("location.feature1.title"),
+      description: t("location.feature1.description")
+    },
+    {
+      icon: <Utensils className="text-secondary-sea" />,
+      title: t("location.feature2.title"),
+      description: t("location.feature2.description")
+    },
+    {
+      icon: <Store className="text-secondary-sea" />,
+      title: t("location.feature3.title"),
+      description: t("location.feature3.description")
+    },
+    {
+      icon: <Landmark className="text-secondary-sea" />,
+      title: t("location.feature4.title"),
+      description: t("location.feature4.description")
+    }
+  ];
+};
 
 export default function Location() {
+  const { t } = useLanguage();
+  const localFeatures = getLocalFeatures(t);
   return (
     <section id="location" className="py-20 bg-primary-sea bg-opacity-5 section-fade">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-primary-sea">
-            Posizione
+            {t("location.title")}
           </h2>
           <p className="text-lg max-w-3xl mx-auto">
-            Villa Ingrosso si trova a Leporano, a soli 300 metri dal mare, in una posizione privilegiata che combina tranquillità e vicinanza a tutte le attrazioni.
+            {t("location.description")}
           </p>
         </div>
         
@@ -40,7 +52,7 @@ export default function Location() {
           <div className="w-full md:w-1/2">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <h3 className="text-xl font-display font-semibold mb-4 text-primary-sea">
-                Nei dintorni
+                {t("location.nearby")}
               </h3>
               
               <div className="space-y-4">

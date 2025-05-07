@@ -48,10 +48,10 @@ export default function Gallery() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-primary-sea">
-            Galleria
+            {t("gallery.title")}
           </h2>
           <p className="text-lg max-w-3xl mx-auto">
-            Esplora gli spazi di Villa Ingrosso attraverso la nostra galleria fotografica.
+            {t("gallery.description")}
           </p>
         </div>
         
