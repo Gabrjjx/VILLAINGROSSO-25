@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // Reduced nav links for a more minimalist approach
 const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Gallery", href: "#gallery" },
-  { name: "Location", href: "#location" },
-  { name: "Contact", href: "#contact" },
+  { name: "Chi Siamo", href: "#about" },
+  { name: "Galleria", href: "#gallery" },
+  { name: "Posizione", href: "#location" },
+  { name: "Contatti", href: "#contact" },
 ];
 
 export default function Navbar() {
