@@ -1,12 +1,15 @@
 import { MapPin, Car, Wifi, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function About() {
+  const { t } = useLanguage();
+  
   const features = [
-    { icon: <MapPin className="w-5 h-5" />, text: "A 300m dal mare" },
-    { icon: <Car className="w-5 h-5" />, text: "Parcheggio privato" },
-    { icon: <Wifi className="w-5 h-5" />, text: "Wi-Fi gratuito" },
-    { icon: <Sparkles className="w-5 h-5" />, text: "Design moderno" }
+    { icon: <MapPin className="w-5 h-5" />, text: t("about.feature1") },
+    { icon: <Car className="w-5 h-5" />, text: t("about.feature2") },
+    { icon: <Wifi className="w-5 h-5" />, text: t("about.feature3") },
+    { icon: <Sparkles className="w-5 h-5" />, text: t("about.feature4") }
   ];
 
   return (
@@ -27,20 +30,20 @@ export default function About() {
             transition={{ duration: 0.7 }}
           >
             <h2 className="text-3xl md:text-4xl font-display font-medium mb-8">
-              <span className="block font-light text-lg text-cyan-600 mb-2">LA NOSTRA STORIA</span>
+              <span className="block font-light text-lg text-cyan-600 mb-2">{t("about.subtitle")}</span>
               <span className="relative inline-block">
-                Benvenuti a 
+                {t("about.title1")} 
                 <span className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-cyan-500 to-blue-500 transform translate-y-2"></span>
               </span>
-              <span className="block mt-1">Villa Ingrosso</span>
+              <span className="block mt-1">{t("about.title2")}</span>
             </h2>
             
             <div className="space-y-6 text-neutral-700">
               <p className="text-lg leading-relaxed">
-                Villa Ingrosso è un'<strong>elegante casa vacanza</strong> situata nella pittoresca Leporano, a soli 300 metri dalle acque cristalline del Mediterraneo.
+                {t("about.description1")}
               </p>
               <p className="text-lg leading-relaxed">
-                La nostra villa unisce il fascino tradizionale pugliese con un design contemporaneo e comfort moderni per un soggiorno indimenticabile.
+                {t("about.description2")}
               </p>
             </div>
             

@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
+  const { t } = useLanguage();
   return (
     <section id="home" className="relative h-screen overflow-hidden">
       {/* Split layout design */}
@@ -19,11 +21,11 @@ export default function Hero() {
             transition={{ duration: 1.2, delay: 0.4 }}
             className="text-5xl md:text-6xl lg:text-7xl font-display font-medium pb-4"
           >
-            <span className="block">La tua</span>
+            <span className="block">{t("hero.title1")}</span>
             <span className="block">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">vacanza</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">{t("hero.title2")}</span>
             </span>
-            <span className="block">sul mare</span>
+            <span className="block">{t("hero.title3")}</span>
           </motion.h1>
           
           <motion.p
@@ -32,7 +34,7 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.8 }}
             className="mt-3 md:mt-6 max-w-sm text-neutral-600 font-light text-lg leading-relaxed"
           >
-            Eleganza contemporanea a soli 300m dal mare cristallino di Leporano. Una location esclusiva per vivere la Puglia.
+            {t("hero.description")}
           </motion.p>
           
           <motion.div
@@ -45,7 +47,7 @@ export default function Hero() {
               href="#contact" 
               className="inline-flex items-center justify-center px-8 py-3 border border-transparent bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium rounded-md transition-all duration-300"
             >
-              Prenota Ora
+              {t("hero.cta")}
             </a>
           </motion.div>
         </motion.div>
