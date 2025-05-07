@@ -61,6 +61,7 @@ export default {
     rights: "All rights reserved.",
     privacy: "Privacy",
     contact: "Contact",
+    partners: "Our partners",
   },
   privacy: {
     backHome: "Back to home",

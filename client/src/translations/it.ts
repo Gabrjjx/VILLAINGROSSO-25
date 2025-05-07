@@ -61,6 +61,7 @@ export default {
     rights: "Tutti i diritti riservati.",
     privacy: "Privacy",
     contact: "Contatti",
+    partners: "I nostri partner",
   },
   privacy: {
     backHome: "Torna alla home",
