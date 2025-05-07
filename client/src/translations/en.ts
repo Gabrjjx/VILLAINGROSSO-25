@@ -25,9 +25,9 @@ export default {
     feature4: "Modern design",
     coastTitle: "The Sea of the Taranto Coast",
     coastDescription: "Discover the wonderful beaches and crystal-clear sea just steps away from the villa. The Ionian coast of Taranto offers picturesque coves, golden sand, and turquoise waters for an unforgettable holiday.",
-    beach1: "Gandoli Beach",
-    beach2: "Leporano Shoreline",
-    beach3: "Ionian Coast at Sunset",
+    beach1: "Crystal Clear Waters",
+    beach2: "Ionian Beaches",
+    beach3: "Sunset by the Sea",
   },
   gallery: {
     title: "Gallery",
