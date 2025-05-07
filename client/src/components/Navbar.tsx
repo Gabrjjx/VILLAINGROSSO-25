@@ -2,19 +2,22 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { motion, AnimatePresence } from "framer-motion";
-
-// Reduced nav links for a more minimalist approach
-const navLinks = [
-  { name: "Chi Siamo", href: "#about" },
-  { name: "Galleria", href: "#gallery" },
-  { name: "Posizione", href: "#location" },
-  { name: "Contatti", href: "#contact" },
-];
+import { useLanguage } from "@/context/LanguageContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollY = useScrollPosition();
   const isScrolled = scrollY > 100;
+  const { t } = useLanguage();
+  
+  // Navigation links using translations
+  const navLinks = [
+    { name: t("nav.about"), href: "#about" },
+    { name: t("nav.gallery"), href: "#gallery" },
+    { name: t("nav.location"), href: "#location" },
+    { name: t("nav.contact"), href: "#contact" },
+  ];
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -58,7 +61,7 @@ export default function Navbar() {
           </a>
           
           {/* Minimal Desktop Navigation */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center space-x-6">
             <div className="flex space-x-8">
               {navLinks.map((link) => (
                 <a
@@ -70,6 +73,8 @@ export default function Navbar() {
                 </a>
               ))}
             </div>
+            
+            <LanguageSwitcher />
           </div>
           
           {/* Mobile Menu Button */}
@@ -125,6 +130,15 @@ export default function Navbar() {
                   {link.name}
                 </motion.a>
               ))}
+              
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2, delay: navLinks.length * 0.1 }}
+                className="pt-2"
+              >
+                <LanguageSwitcher />
+              </motion.div>
             </div>
           </motion.div>
         )}
