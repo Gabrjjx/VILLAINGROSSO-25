@@ -169,8 +169,8 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1554232682-b9ef9c92f8de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
-                alt="Tramonto a Taranto" 
+                src="https://images.unsplash.com/photo-1520942702018-0862200e6873?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                alt="Tramonto sul Mare" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
