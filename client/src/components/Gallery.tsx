@@ -4,28 +4,20 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const galleryImages = [
   {
-    src: "https://pixabay.com/get/g5215a310116dc54caf3439a9f9fe3853302d1b0ea856c4894dd58ae8404b5ef38ac1cffa29c784ee1975bd1f9fe22639593771920254116a8ec49953c283fbe1_1280.jpg",
-    alt: "Soggiorno di Villa Ingrosso",
+    src: "/images/camera1.jpg",
+    alt: "Camera da letto di Villa Ingrosso",
   },
   {
-    src: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
+    src: "/images/cucina-1.JPG",
     alt: "Cucina di Villa Ingrosso",
   },
   {
-    src: "https://images.unsplash.com/photo-1600210492493-0946911123ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
-    alt: "Camera da letto principale di Villa Ingrosso",
+    src: "/images/corridoio.JPG",
+    alt: "Corridoio e interni di Villa Ingrosso",
   },
   {
-    src: "https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
-    alt: "Spiaggia vicino a Villa Ingrosso",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1564078516393-cf04bd966897?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
-    alt: "Terrazza esterna di Villa Ingrosso",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80",
-    alt: "Paesaggio costiero vicino a Villa Ingrosso",
+    src: "/images/patio-1.JPG",
+    alt: "Patio esterno di Villa Ingrosso",
   },
 ];
 

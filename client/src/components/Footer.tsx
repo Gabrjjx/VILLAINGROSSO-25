@@ -27,6 +27,22 @@ export default function Footer() {
             </div>
           </div>
         </div>
+        
+        {/* Partner Logos */}
+        <div className="mt-8 pt-6 border-t border-blue-300/30">
+          <p className="text-center text-blue-100 text-sm mb-4">{t("footer.partners")}</p>
+          <div className="flex flex-wrap justify-center items-center gap-8">
+            <a href="https://www.booking.com" target="_blank" rel="noopener noreferrer" className="opacity-80 hover:opacity-100 transition-opacity">
+              <img src="/logos/booking.svg" alt="Booking.com" className="h-6" />
+            </a>
+            <a href="https://www.airbnb.com" target="_blank" rel="noopener noreferrer" className="opacity-80 hover:opacity-100 transition-opacity">
+              <img src="/logos/airbnb.svg" alt="Airbnb" className="h-8" />
+            </a>
+            <a href="https://www.vikey.it" target="_blank" rel="noopener noreferrer" className="opacity-80 hover:opacity-100 transition-opacity">
+              <img src="/logos/vikey.svg" alt="Vikey" className="h-6" />
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   );
