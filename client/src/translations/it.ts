@@ -23,6 +23,11 @@ export default {
     feature2: "Parcheggio privato",
     feature3: "Wi-Fi gratuito",
     feature4: "Design moderno",
+    coastTitle: "Il Mare della Costa Tarantina",
+    coastDescription: "Scopri le meravigliose spiagge e il mare cristallino a pochi passi dalla villa. La costa tarantina offre paesaggi mozzafiato e acque limpide per un'esperienza balneare indimenticabile.",
+    beach1: "Spiaggia di Gandoli",
+    beach2: "Marina di Leporano",
+    beach3: "Costa Meravigliosa",
   },
   gallery: {
     title: "Galleria",

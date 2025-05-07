@@ -23,6 +23,11 @@ export default {
     feature2: "Private parking",
     feature3: "Free Wi-Fi",
     feature4: "Modern design",
+    coastTitle: "The Sea of the Taranto Coast",
+    coastDescription: "Discover the wonderful beaches and crystal-clear sea just steps away from the villa. The Taranto coast offers breathtaking scenery and clear waters for an unforgettable beach experience.",
+    beach1: "Gandoli Beach",
+    beach2: "Marina di Leporano",
+    beach3: "Magnificent Coast",
   },
   gallery: {
     title: "Gallery",

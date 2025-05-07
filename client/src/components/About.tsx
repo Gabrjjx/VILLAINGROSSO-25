@@ -1,4 +1,4 @@
-import { MapPin, Car, Wifi, Sparkles } from "lucide-react";
+import { MapPin, Car, Wifi, Sparkles, Waves, Compass, Anchor } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -77,8 +77,8 @@ export default function About() {
               transition={{ duration: 0.7 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80" 
-                alt="Soggiorno elegante della Villa Ingrosso" 
+                src="/images/giardino 1.jpeg" 
+                alt="Giardino esterno di Villa Ingrosso" 
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -91,8 +91,8 @@ export default function About() {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1615529182904-14819c35db37?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800&q=80" 
-                alt="Vista esterna della Villa Ingrosso" 
+                src="/images/entrata-villa.jpeg" 
+                alt="Entrata di Villa Ingrosso" 
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -105,10 +105,94 @@ export default function About() {
               transition={{ duration: 0.7, delay: 0.4 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
-                alt="Camera da letto di Villa Ingrosso" 
+                src="https://images.unsplash.com/photo-1576420258386-70b74ba23549?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                alt="Mare della costa tarantina" 
                 className="w-full h-full object-cover"
               />
+            </motion.div>
+          </div>
+        </div>
+        
+        {/* Coastal section - Full width */}
+        <div className="mt-24 pt-16 border-t border-blue-100">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <h3 className="text-2xl md:text-3xl font-display font-medium mb-4">
+              <span className="text-cyan-600">
+                <Waves className="inline-block w-6 h-6 mr-2 mb-1" />
+                {t("about.coastTitle")}
+              </span>
+            </h3>
+            <p className="text-lg max-w-3xl mx-auto text-neutral-700">
+              {t("about.coastDescription")}
+            </p>
+          </motion.div>
+          
+          {/* Coastal images */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <motion.div 
+              className="relative rounded-2xl overflow-hidden shadow-xl h-64"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                alt="Mare cristallino della costa tarantina" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                <div className="p-4 text-white">
+                  <Anchor className="w-5 h-5 mb-2" />
+                  <h4 className="font-medium">{t("about.beach1")}</h4>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              className="relative rounded-2xl overflow-hidden shadow-xl h-64"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1576420258386-70b74ba23549?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                alt="Spiaggia dorata di Leporano" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                <div className="p-4 text-white">
+                  <Compass className="w-5 h-5 mb-2" />
+                  <h4 className="font-medium">{t("about.beach2")}</h4>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              className="relative rounded-2xl overflow-hidden shadow-xl h-64"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                alt="Tramonto sul mare ionico" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                <div className="p-4 text-white">
+                  <Waves className="w-5 h-5 mb-2" />
+                  <h4 className="font-medium">{t("about.beach3")}</h4>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
