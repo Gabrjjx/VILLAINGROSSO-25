@@ -24,9 +24,34 @@ export default {
     feature3: "Free Wi-Fi",
     feature4: "Modern design",
   },
+  gallery: {
+    title: "Gallery",
+    description: "Explore the spaces of Villa Ingrosso through our photo gallery.",
+  },
+  location: {
+    title: "Location",
+    description: "Villa Ingrosso is located in Leporano, just 300 meters from the sea, in a privileged position that combines tranquility and proximity to all attractions.",
+    nearby: "Nearby",
+    feature1: {
+      title: "Beaches",
+      description: "Just 300 meters from the crystal-clear beaches of Leporano."
+    },
+    feature2: {
+      title: "Restaurants",
+      description: "Numerous seafood restaurants and typical Apulian cuisine a short distance away."
+    },
+    feature3: {
+      title: "Shops",
+      description: "Supermarkets and shops within a few minutes' walk."
+    },
+    feature4: {
+      title: "Attractions",
+      description: "Close to the historic center of Taranto and the natural beauties of the Ionian coast."
+    }
+  },
   contact: {
     title: "Contact Us",
-    description: "For information or reservations, don't hesitate to contact us:",
+    subtitle: "For information or reservations, don't hesitate to contact us:",
     email: "Email",
     phone: "Phone",
     footer: "We will be happy to answer any questions about the Villa and help you organize your perfect stay.",

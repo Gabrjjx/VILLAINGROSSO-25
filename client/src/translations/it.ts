@@ -24,9 +24,34 @@ export default {
     feature3: "Wi-Fi gratuito",
     feature4: "Design moderno",
   },
+  gallery: {
+    title: "Galleria",
+    description: "Esplora gli spazi di Villa Ingrosso attraverso la nostra galleria fotografica.",
+  },
+  location: {
+    title: "Posizione",
+    description: "Villa Ingrosso si trova a Leporano, a soli 300 metri dal mare, in una posizione privilegiata che combina tranquillità e vicinanza a tutte le attrazioni.",
+    nearby: "Nei dintorni",
+    feature1: {
+      title: "Spiagge",
+      description: "A soli 300 metri dalle spiagge cristalline di Leporano."
+    },
+    feature2: {
+      title: "Ristoranti",
+      description: "Numerosi ristoranti di pesce e cucina tipica pugliese a breve distanza."
+    },
+    feature3: {
+      title: "Negozi",
+      description: "Supermercati e negozi raggiungibili in pochi minuti a piedi."
+    },
+    feature4: {
+      title: "Attrazioni",
+      description: "Vicino al centro storico di Taranto e alle bellezze naturali della costa ionica."
+    }
+  },
   contact: {
     title: "Contattaci",
-    description: "Per informazioni o prenotazioni, non esitare a contattarci:",
+    subtitle: "Per informazioni o prenotazioni, non esitare a contattarci:",
     email: "Email",
     phone: "Telefono",
     footer: "Saremo lieti di rispondere a qualsiasi domanda riguardo la Villa e aiutarti a organizzare il tuo soggiorno perfetto.",
