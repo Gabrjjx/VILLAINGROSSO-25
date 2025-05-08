@@ -60,7 +60,7 @@ export default function Hero() {
             transition={{ duration: 1.5 }}
             className="absolute inset-0 bg-cover bg-center"
             style={{ 
-              backgroundImage: "url('https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&h=1000&q=80')"
+              backgroundImage: "url('/images/leporano.jpg')"
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
