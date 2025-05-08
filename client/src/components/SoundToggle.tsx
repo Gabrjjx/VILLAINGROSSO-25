@@ -3,46 +3,20 @@ import { Volume2, VolumeX } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { createWaveSound } from '../utils/createWaveSound';
 
-// Import audio files directly (Vite will handle this correctly)
-import oceanWavesSound from '../assets/ocean-waves.mp3';
-import oceanWavesAltSound from '../assets/ocean-waves-alt.mp3';
-
-// Audio files array
-const BEACH_SOUNDS_URLS = [
-  oceanWavesSound,
-  oceanWavesAltSound
-];
-
 export default function SoundToggle() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [usingSynthSound, setUsingSynthSound] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const synthAudioRef = useRef<HTMLAudioElement | null>(null);
   const audioObjectURLRef = useRef<string | null>(null);
   
-  // Initialize audio on component mount
+  // Create synthetic sound on first render
   useEffect(() => {
-    const audio = new Audio();
-    audio.loop = true;
-    audio.volume = volume;
-    audio.preload = 'auto';
-    
-    let currentUrlIndex = 0;
-    const tryNextAudioSource = () => {
-      if (currentUrlIndex < BEACH_SOUNDS_URLS.length) {
-        // Try the next audio file in our list
-        audio.src = BEACH_SOUNDS_URLS[currentUrlIndex];
-        currentUrlIndex++;
-      } else {
-        // If we've tried all files, generate a synthetic sound
-        generateSyntheticSound();
-      }
-    };
-    
     const generateSyntheticSound = async () => {
-      console.log("Trying to generate synthetic ocean sounds...");
       try {
+        console.log("Generating synthetic ocean sounds as backup...");
         // Generate a synthetic ocean sound
         const soundBlob = await createWaveSound();
         
@@ -50,36 +24,30 @@ export default function SoundToggle() {
         const objectURL = URL.createObjectURL(soundBlob);
         audioObjectURLRef.current = objectURL;
         
-        // Use the generated sound
-        audio.src = objectURL;
-        setUsingSynthSound(true);
+        // Create a backup audio element with synthetic sound
+        const synthAudio = new Audio(objectURL);
+        synthAudio.loop = true;
+        synthAudio.volume = volume;
+        synthAudioRef.current = synthAudio;
+        
+        // Set as loaded even if real audio fails
+        if (!isLoaded) {
+          setIsLoaded(true);
+          setUsingSynthSound(true);
+        }
       } catch (synthError) {
         console.error('Failed to create synthetic sound:', synthError);
-        setIsLoaded(false);
       }
     };
     
-    // Set up event listeners
-    audio.addEventListener('canplaythrough', () => {
-      setIsLoaded(true);
-    });
-    
-    audio.addEventListener('error', (e) => {
-      console.warn(`Error loading audio file ${currentUrlIndex-1}: ${BEACH_SOUNDS_URLS[currentUrlIndex-1]}`, e);
-      tryNextAudioSource();
-    });
-    
-    // Start with the first audio source
-    tryNextAudioSource();
-    
-    audioRef.current = audio;
+    // Generate synthetic sound as a backup
+    generateSyntheticSound();
     
     // Cleanup on unmount
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = '';
-        audioRef.current.remove();
+      if (synthAudioRef.current) {
+        synthAudioRef.current.pause();
+        synthAudioRef.current.src = '';
       }
       
       // Revoke object URL if we created one
@@ -89,22 +57,67 @@ export default function SoundToggle() {
     };
   }, []);
   
+  // Handle audio element load and error events
+  useEffect(() => {
+    if (!audioRef.current) return;
+    
+    const handleCanPlayThrough = () => {
+      setIsLoaded(true);
+      setUsingSynthSound(false);
+    };
+    
+    const handleError = () => {
+      console.warn("Real audio file couldn't be loaded, using synthetic sound");
+      if (synthAudioRef.current) {
+        setUsingSynthSound(true);
+        setIsLoaded(true);
+      } else {
+        setIsLoaded(false);
+      }
+    };
+    
+    audioRef.current.addEventListener('canplaythrough', handleCanPlayThrough);
+    audioRef.current.addEventListener('error', handleError);
+    
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('canplaythrough', handleCanPlayThrough);
+        audioRef.current.removeEventListener('error', handleError);
+      }
+    };
+  }, []);
+  
   // Update volume when it changes
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
     }
+    
+    if (synthAudioRef.current) {
+      synthAudioRef.current.volume = volume;
+    }
   }, [volume]);
   
   const togglePlay = () => {
-    if (!audioRef.current || !isLoaded) return;
+    // If real audio is loaded
+    if (!isLoaded) return;
     
     if (isPlaying) {
-      audioRef.current.pause();
+      // Stop whichever audio is playing
+      if (!usingSynthSound && audioRef.current) {
+        audioRef.current.pause();
+      } else if (synthAudioRef.current) {
+        synthAudioRef.current.pause();
+      }
       setIsPlaying(false);
     } else {
+      // Play the appropriate audio
+      const audio = usingSynthSound ? synthAudioRef.current : audioRef.current;
+      
+      if (!audio) return;
+      
       // We use the play() Promise to handle autoplay restrictions
-      const playPromise = audioRef.current.play();
+      const playPromise = audio.play();
       
       if (playPromise !== undefined) {
         playPromise
@@ -142,6 +155,15 @@ export default function SoundToggle() {
 
   return (
     <div className="fixed right-6 bottom-6 z-40 flex flex-col items-center">
+      {/* Hidden audio element for loading real ocean sounds */}
+      <audio 
+        ref={audioRef}
+        preload="auto"
+        loop
+        src="/audio/ocean-waves-alt.mp3"
+        style={{ display: 'none' }}
+      />
+      
       {/* Sound wave animation */}
       <div className="mb-2 flex items-end justify-center h-8 space-x-0.5">
         {isPlaying && Array.from({ length: 5 }).map((_, i) => (
