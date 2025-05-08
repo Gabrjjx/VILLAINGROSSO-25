@@ -77,7 +77,7 @@ export default function About() {
               transition={{ duration: 0.7 }}
             >
               <img 
-                src="/images/giardino 1.jpeg" 
+                src="/attached_assets/giardino 1.jpeg" 
                 alt="Giardino esterno di Villa Ingrosso" 
                 className="w-full h-full object-cover"
               />
@@ -91,7 +91,7 @@ export default function About() {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <img 
-                src="/images/entrata-villa.jpeg" 
+                src="/attached_assets/entrata-villa.jpeg" 
                 alt="Entrata di Villa Ingrosso" 
                 className="w-full h-full object-cover"
               />

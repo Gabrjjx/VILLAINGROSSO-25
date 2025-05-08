@@ -88,7 +88,7 @@ export default function Home() {
                   to="/gallery"
                   className="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors duration-300"
                 >
-                  Scopri di più
+                  Visita la galleria
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
                   </svg>
@@ -109,7 +109,7 @@ export default function Home() {
                   to="/location"
                   className="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors duration-300"
                 >
-                  Scopri di più
+                  Vedi la posizione
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
                   </svg>
@@ -130,7 +130,7 @@ export default function Home() {
                   to="/about"
                   className="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors duration-300"
                 >
-                  Scopri di più
+                  Chi siamo
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
                   </svg>
@@ -144,7 +144,7 @@ export default function Home() {
               to="/about"
               className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 transition-colors duration-300"
             >
-              Scopri di più
+              Visita Villa Ingrosso
             </Link>
           </div>
         </div>
