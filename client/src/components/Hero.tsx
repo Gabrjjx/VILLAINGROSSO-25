@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { Link } from "wouter";
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -43,12 +44,12 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 1 }}
             className="mt-8 md:mt-12"
           >
-            <a 
-              href="#contact" 
+            <Link 
+              to="/contact" 
               className="inline-flex items-center justify-center px-8 py-3 border border-transparent bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium rounded-md transition-all duration-300"
             >
               {t("hero.cta")}
-            </a>
+            </Link>
           </motion.div>
         </motion.div>
         
@@ -80,9 +81,9 @@ export default function Hero() {
           repeatDelay: 0.2
         }}
       >
-        <a href="#about">
+        <Link to="/about">
           <ChevronDown className="w-10 h-10 p-2 rounded-full bg-white/20 backdrop-blur-sm text-white" />
-        </a>
+        </Link>
       </motion.div>
     </section>
   );
