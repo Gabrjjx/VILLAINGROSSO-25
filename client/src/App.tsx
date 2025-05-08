@@ -10,6 +10,7 @@ import ContactPage from "@/pages/ContactPage";
 import Privacy from "@/pages/Privacy";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
 import WaveLoader from "@/components/WaveLoader";
+import SoundToggle from "@/components/SoundToggle";
 
 function Router() {
   return (
@@ -31,6 +32,7 @@ function App() {
     <LoadingProvider>
       <TooltipProvider>
         <WaveLoaderWithContext />
+        <SoundToggle />
         <Router />
       </TooltipProvider>
     </LoadingProvider>

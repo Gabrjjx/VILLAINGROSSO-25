@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { createWaveSound } from '@/utils/createWaveSound';
+import { createWaveSound } from '../utils/createWaveSound';
 
 // The URL will point to our beach sounds audio file
 const BEACH_SOUNDS_URL = '/audio/ocean-waves.mp3';
