@@ -52,11 +52,11 @@ export default function Gallery() {
     <section id="gallery" className="py-20 section-fade">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-primary-sea">
-            {t("gallery.title")}
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-cyan-600">
+            Galleria fotografica
           </h2>
           <p className="text-lg max-w-3xl mx-auto">
-            {t("gallery.description")}
+            Esplora gli spazi interni ed esterni di Villa Ingrosso attraverso la nostra galleria fotografica
           </p>
         </div>
         
