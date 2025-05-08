@@ -4,6 +4,7 @@ export default {
     about: "About Us",
     gallery: "Gallery",
     location: "Location",
+    recommendations: "Local Tips",
     contact: "Contact",
   },
   hero: {
@@ -54,6 +55,81 @@ export default {
       description: "Close to the historic center of Taranto and the natural beauties of the Ionian coast."
     }
   },
+  recommendations: {
+    title: "Local Tips",
+    subtitle: "Discover our personalized suggestions to make your stay unforgettable",
+    
+    beaches: {
+      category: "Beaches & Sea",
+      description: "The most beautiful beaches and coves in the area",
+      
+      gandoli: {
+        title: "Gandoli Beach",
+        description: "Wide sandy beach ideal for families with children, with shallow and crystal-clear waters.",
+        distance: "5 minutes walking distance"
+      },
+      saturo: {
+        title: "Saturo Bay",
+        description: "Beautiful bay with a mix of sand and rocks, perfect for snorkeling and admiring the seabed.",
+        distance: "10 minutes by car"
+      }
+    },
+    
+    history: {
+      category: "History & Culture",
+      description: "Discovering the local historical heritage",
+      
+      museum: {
+        title: "Archaeological Museum of Saturo",
+        description: "A small but fascinating museum that houses artifacts from the ancient city of Satyrion, founded by the Spartans.",
+        distance: "15 minutes by car"
+      },
+      park: {
+        title: "Archaeological Park of Saturo",
+        description: "Archaeological area with remains of the ancient Magna Grecian and Roman civilization, immersed in a breathtaking Mediterranean landscape.",
+        distance: "12 minutes by car"
+      }
+    },
+    
+    cuisine: {
+      category: "Local Cuisine",
+      description: "The best flavors of the Apulian tradition",
+      
+      canneto: {
+        title: "Il Canneto Restaurant",
+        description: "Authentic Apulian cuisine with fresh local seafood specialties. Try the orecchiette with mussels or the raw seafood platter.",
+        distance: "8 minutes walking distance"
+      },
+      osteria: {
+        title: "Osteria del Porto",
+        description: "Characteristic small restaurant in Taranto's historic center. Specialties: seafood risotto and grilled octopus.",
+        distance: "20 minutes by car"
+      }
+    },
+    
+    entertainment: {
+      category: "Entertainment & Relaxation",
+      description: "Activities and experiences for all tastes",
+      
+      sunset: {
+        title: "Tramonto Bar",
+        description: "Beach lounge bar where you can enjoy excellent cocktails while admiring the sunset over the Ionian Sea.",
+        distance: "15 minutes walking distance"
+      },
+      lido: {
+        title: "Lido Gandoli",
+        description: "Well-equipped beach establishment with sun loungers, umbrellas, and water sports such as paddle surfing and kayaking.",
+        distance: "7 minutes walking distance"
+      }
+    },
+    
+    personal: {
+      title: "Want personalized recommendations?",
+      description: "As passionate locals, we're always happy to suggest the best activities based on your interests. Whether you're a nature lover, history buff, or simply looking for relaxation, we have the perfect recommendation for you.",
+      cta: "Contact us for suggestions"
+    }
+  },
+  
   contact: {
     title: "Contact Us",
     subtitle: "For information or reservations, don't hesitate to contact us:",

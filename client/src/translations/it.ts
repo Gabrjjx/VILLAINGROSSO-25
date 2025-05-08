@@ -4,6 +4,7 @@ export default {
     about: "Chi Siamo",
     gallery: "Galleria",
     location: "Posizione",
+    recommendations: "Consigli Locali",
     contact: "Contatti",
   },
   hero: {
@@ -54,6 +55,81 @@ export default {
       description: "Vicino al centro storico di Taranto e alle bellezze naturali della costa ionica."
     }
   },
+  recommendations: {
+    title: "Consigli Locali",
+    subtitle: "Scopri i nostri suggerimenti personalizzati per rendere il tuo soggiorno indimenticabile",
+    
+    beaches: {
+      category: "Spiagge e Mare",
+      description: "Le più belle spiagge e calette della zona",
+      
+      gandoli: {
+        title: "Spiaggia di Gandoli",
+        description: "Ampia spiaggia sabbiosa ideale per famiglie con bambini, con acque poco profonde e cristalline.",
+        distance: "A 5 minuti a piedi"
+      },
+      saturo: {
+        title: "Baia di Saturo",
+        description: "Bellissima baia con un mix di sabbia e scogli, perfetta per lo snorkeling e per ammirare i fondali marini.",
+        distance: "A 10 minuti di auto"
+      }
+    },
+    
+    history: {
+      category: "Storia e Cultura",
+      description: "Alla scoperta del patrimonio storico locale",
+      
+      museum: {
+        title: "Museo Archeologico di Saturo",
+        description: "Un piccolo ma affascinante museo che ospita reperti dell'antica città di Satyrion, fondata dagli Spartani.",
+        distance: "A 15 minuti di auto"
+      },
+      park: {
+        title: "Parco Archeologico di Saturo",
+        description: "Area archeologica con resti dell'antica civiltà magnogreca e romana, immersa in un paesaggio mediterraneo mozzafiato.",
+        distance: "A 12 minuti di auto"
+      }
+    },
+    
+    cuisine: {
+      category: "Gastronomia Locale",
+      description: "I migliori sapori della tradizione pugliese",
+      
+      canneto: {
+        title: "Ristorante Il Canneto",
+        description: "Autentica cucina pugliese con specialità di pesce fresco locale. Prova le orecchiette con le cozze o il crudo di mare.",
+        distance: "A 8 minuti a piedi"
+      },
+      osteria: {
+        title: "Osteria del Porto",
+        description: "Ristorantino caratteristico nel centro storico di Taranto. Specialità: risotto ai frutti di mare e polpo alla brace.",
+        distance: "A 20 minuti di auto"
+      }
+    },
+    
+    entertainment: {
+      category: "Divertimento e Relax",
+      description: "Attività ed esperienze per tutti i gusti",
+      
+      sunset: {
+        title: "Bar Tramonto",
+        description: "Lounge bar sulla spiaggia dove gustare ottimi cocktail ammirando il tramonto sul Mar Ionio.",
+        distance: "A 15 minuti a piedi"
+      },
+      lido: {
+        title: "Lido Gandoli",
+        description: "Stabilimento balneare attrezzato con lettini, ombrelloni e sport acquatici come paddle surf e kayak.",
+        distance: "A 7 minuti a piedi"
+      }
+    },
+    
+    personal: {
+      title: "Vuoi consigli personalizzati?",
+      description: "Da locali appassionati del territorio, siamo sempre felici di suggerirti le migliori attività in base ai tuoi interessi. Che tu sia amante della natura, della storia, o semplicemente alla ricerca di relax, abbiamo il consiglio perfetto per te.",
+      cta: "Contattaci per suggerimenti"
+    }
+  },
+  
   contact: {
     title: "Contattaci",
     subtitle: "Per informazioni o prenotazioni, non esitare a contattarci:",

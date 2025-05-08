@@ -16,6 +16,7 @@ export default function Navbar() {
     { name: t("nav.about"), href: "#about" },
     { name: t("nav.gallery"), href: "#gallery" },
     { name: t("nav.location"), href: "#location" },
+    { name: t("nav.recommendations"), href: "#recommendations" },
     { name: t("nav.contact"), href: "#contact" },
   ];
 
