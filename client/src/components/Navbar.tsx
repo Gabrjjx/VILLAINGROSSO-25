@@ -62,24 +62,26 @@ export default function Navbar() {
           </a>
           
           {/* Minimal Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <div className="flex space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
+            <div className="flex space-x-10">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-neutral-800 text-sm uppercase tracking-wider hover:text-cyan-600 transition-colors duration-300"
+                  className="text-neutral-800 text-sm uppercase tracking-wider hover:text-cyan-600 transition-colors duration-300 whitespace-nowrap"
                 >
                   {link.name}
                 </a>
               ))}
             </div>
             
-            <LanguageSwitcher />
+            <div className="ml-4">
+              <LanguageSwitcher />
+            </div>
           </div>
           
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button 
               id="menu-toggle" 
               className="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 shadow-sm"
@@ -115,7 +117,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden backdrop-blur-md bg-white/70 border-t border-neutral-200/50 mt-3"
+            className="lg:hidden backdrop-blur-md bg-white/70 border-t border-neutral-200/50 mt-3"
           >
             <div className="max-w-screen-xl mx-auto px-6 py-5 flex flex-col items-center space-y-5">
               {navLinks.map((link, index) => (
