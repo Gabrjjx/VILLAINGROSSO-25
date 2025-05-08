@@ -305,59 +305,147 @@ export default function WaveLoader({ isLoading = true }: WaveLoaderProps) {
   );
 }
 
-// Animated wave component
+// Animated wave component with enhanced realism
 function Wave() {
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full overflow-hidden">
+      {/* Ocean base */}
+      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-b from-blue-400/30 to-blue-500/40"></div>
+      
+      {/* Dynamic wave layers */}
       <motion.div 
-        className="absolute bottom-0 left-0 right-0 h-40 bg-blue-400/20"
+        className="absolute bottom-0 left-0 right-0 h-[60%]"
         animate={{
           y: [0, -10, 0],
         }}
         transition={{
-          duration: 3,
+          duration: 4,
           repeat: Infinity,
           ease: "easeInOut"
         }}
       >
-        {/* Multiple wave shapes */}
-        <svg className="absolute top-0 left-0 w-full transform -translate-y-full" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        {/* First wave layer - slow moving, deeper */}
+        <svg className="absolute bottom-0 left-0 w-full h-[400px]" viewBox="0 0 1200 400" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgba(56, 189, 248, 0.8)" />
+              <stop offset="100%" stopColor="rgba(59, 130, 246, 0.4)" />
+            </linearGradient>
+          </defs>
           <motion.path
-            d="M0,0 C150,20 350,0 500,20 C650,40 700,60 900,40 C1050,20 1200,40 1200,40 L1200,120 L0,120 Z" 
-            fill="rgba(135, 206, 250, 0.15)"
+            d="M0,200 C200,150 400,250 600,200 C800,150 1000,250 1200,200 L1200,400 L0,400 Z" 
+            fill="url(#waveGradient1)"
             animate={{
               d: [
-                "M0,0 C150,20 350,0 500,20 C650,40 700,60 900,40 C1050,20 1200,40 1200,40 L1200,120 L0,120 Z",
-                "M0,10 C150,40 350,20 500,10 C650,0 700,20 900,30 C1050,40 1200,20 1200,20 L1200,120 L0,120 Z",
-                "M0,0 C150,20 350,0 500,20 C650,40 700,60 900,40 C1050,20 1200,40 1200,40 L1200,120 L0,120 Z"
+                "M0,200 C200,150 400,250 600,200 C800,150 1000,250 1200,200 L1200,400 L0,400 Z",
+                "M0,180 C200,250 400,200 600,250 C800,200 1000,180 1200,230 L1200,400 L0,400 Z",
+                "M0,200 C200,150 400,250 600,200 C800,150 1000,250 1200,200 L1200,400 L0,400 Z"
               ]
             }}
             transition={{
-              duration: 7,
+              duration: 12,
               repeat: Infinity,
               ease: "easeInOut"
             }}
           />
         </svg>
         
-        <svg className="absolute top-0 left-0 w-full transform -translate-y-3/4" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        {/* Second wave layer - medium speed */}
+        <svg className="absolute bottom-0 left-0 w-full h-[350px]" viewBox="0 0 1200 350" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgba(125, 211, 252, 0.7)" />
+              <stop offset="100%" stopColor="rgba(56, 189, 248, 0.3)" />
+            </linearGradient>
+          </defs>
           <motion.path
-            d="M0,20 C250,40 350,20 600,30 C800,40 1000,20 1200,30 L1200,120 L0,120 Z" 
-            fill="rgba(135, 206, 250, 0.2)"
+            d="M0,150 C150,200 350,100 550,170 C750,240 950,130 1200,170 L1200,350 L0,350 Z" 
+            fill="url(#waveGradient2)"
             animate={{
               d: [
-                "M0,20 C250,40 350,20 600,30 C800,40 1000,20 1200,30 L1200,120 L0,120 Z",
-                "M0,30 C250,20 350,40 600,20 C800,10 1000,30 1200,20 L1200,120 L0,120 Z",
-                "M0,20 C250,40 350,20 600,30 C800,40 1000,20 1200,30 L1200,120 L0,120 Z"
+                "M0,150 C150,200 350,100 550,170 C750,240 950,130 1200,170 L1200,350 L0,350 Z",
+                "M0,170 C200,80 400,190 600,120 C800,150 1000,200 1200,150 L1200,350 L0,350 Z",
+                "M0,150 C150,200 350,100 550,170 C750,240 950,130 1200,170 L1200,350 L0,350 Z"
               ]
             }}
             transition={{
-              duration: 5,
+              duration: 8,
               repeat: Infinity,
               ease: "easeInOut"
             }}
           />
         </svg>
+        
+        {/* Third wave layer - faster, surface waves */}
+        <svg className="absolute bottom-0 left-0 w-full h-[300px]" viewBox="0 0 1200 300" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="waveGradient3" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgba(186, 230, 253, 0.9)" />
+              <stop offset="100%" stopColor="rgba(125, 211, 252, 0.5)" />
+            </linearGradient>
+          </defs>
+          <motion.path
+            d="M0,100 C100,120 200,80 300,100 C400,120 500,80 600,100 C700,120 800,80 900,100 C1000,120 1100,80 1200,100 L1200,300 L0,300 Z" 
+            fill="url(#waveGradient3)"
+            animate={{
+              d: [
+                "M0,100 C100,120 200,80 300,100 C400,120 500,80 600,100 C700,120 800,80 900,100 C1000,120 1100,80 1200,100 L1200,300 L0,300 Z",
+                "M0,80 C100,100 200,120 300,80 C400,100 500,120 600,80 C700,100 800,120 900,80 C1000,100 1100,120 1200,80 L1200,300 L0,300 Z",
+                "M0,100 C100,120 200,80 300,100 C400,120 500,80 600,100 C700,120 800,80 900,100 C1000,120 1100,80 1200,100 L1200,300 L0,300 Z"
+              ]
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        </svg>
+        
+        {/* Surface highlights/foam */}
+        <svg className="absolute bottom-0 left-0 w-full h-[280px]" viewBox="0 0 1200 280" preserveAspectRatio="none">
+          <motion.path
+            d="M0,80 C50,90 100,70 150,80 C200,90 250,70 300,80 C350,90 400,70 450,80 C500,90 550,70 600,80 C650,90 700,70 750,80 C800,90 850,70 900,80 C950,90 1000,70 1050,80 C1100,90 1150,70 1200,80 L1200,280 L0,280 Z" 
+            fill="rgba(255, 255, 255, 0.3)"
+            animate={{
+              d: [
+                "M0,80 C50,90 100,70 150,80 C200,90 250,70 300,80 C350,90 400,70 450,80 C500,90 550,70 600,80 C650,90 700,70 750,80 C800,90 850,70 900,80 C950,90 1000,70 1050,80 C1100,90 1150,70 1200,80 L1200,280 L0,280 Z",
+                "M0,70 C50,80 100,90 150,70 C200,80 250,90 300,70 C350,80 400,90 450,70 C500,80 550,90 600,70 C650,80 700,90 750,70 C800,80 850,90 900,70 C950,80 1000,90 1050,70 C1100,80 1150,90 1200,70 L1200,280 L0,280 Z",
+                "M0,80 C50,90 100,70 150,80 C200,90 250,70 300,80 C350,90 400,70 450,80 C500,90 550,70 600,80 C650,90 700,70 750,80 C800,90 850,70 900,80 C950,90 1000,70 1050,80 C1100,90 1150,70 1200,80 L1200,280 L0,280 Z"
+              ]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        </svg>
+        
+        {/* Sparkling highlights */}
+        <div className="absolute inset-0">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 rounded-full bg-white/70"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${70 + Math.random() * 20}%`,
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ 
+                opacity: [0, 0.8, 0],
+                scale: [0.8, 1.2, 0.8]
+              }}
+              transition={{
+                duration: 1.5 + Math.random() * 2,
+                delay: Math.random() * 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
       </motion.div>
     </div>
   );
