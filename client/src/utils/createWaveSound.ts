@@ -24,31 +24,44 @@ export async function createWaveSound(): Promise<Blob> {
       // Multiple sine waves at different frequencies for more natural sound
       const t = i / audioContext.sampleRate;
       
-      // Base wave (0.1Hz) - slow wave pattern
-      const baseWave = Math.sin(2 * Math.PI * 0.1 * t);
+      // Base wave (0.08Hz) - slow wave pattern, like larger ocean swells
+      const baseWave = 0.5 * Math.sin(2 * Math.PI * 0.08 * t);
       
-      // Medium waves (0.3Hz, 0.5Hz) - medium wave patterns
-      const mediumWave1 = 0.3 * Math.sin(2 * Math.PI * 0.3 * t + 0.1);
-      const mediumWave2 = 0.2 * Math.sin(2 * Math.PI * 0.5 * t + 0.2);
+      // Medium waves (0.2Hz, 0.4Hz) - more natural medium wave patterns
+      const mediumWave1 = 0.3 * Math.sin(2 * Math.PI * 0.2 * t + 0.1);
+      const mediumWave2 = 0.25 * Math.sin(2 * Math.PI * 0.4 * t + 0.2);
       
-      // Fast waves (1-3Hz) - surf and bubbles
-      const fastWave1 = 0.1 * Math.sin(2 * Math.PI * 1.0 * t + 0.4);
-      const fastWave2 = 0.05 * Math.sin(2 * Math.PI * 2.0 * t + 0.5);
-      const fastWave3 = 0.025 * Math.sin(2 * Math.PI * 3.0 * t + 0.6);
+      // Slower waves for more realistic ocean sound
+      const slowWave1 = 0.15 * Math.sin(2 * Math.PI * 0.6 * t + 0.3);
+      const slowWave2 = 0.12 * Math.sin(2 * Math.PI * 0.7 * t + 0.4);
       
-      // White noise component - surf foam
-      const whiteNoise = 0.075 * (Math.random() * 2 - 1);
+      // Fast waves (0.9-1.5Hz) - surf and bubbles, quieter to be less harsh
+      const fastWave1 = 0.05 * Math.sin(2 * Math.PI * 0.9 * t + 0.5);
+      const fastWave2 = 0.03 * Math.sin(2 * Math.PI * 1.2 * t + 0.6);
+      const fastWave3 = 0.02 * Math.sin(2 * Math.PI * 1.5 * t + 0.7);
       
-      // Combine all components
-      let sample = baseWave + mediumWave1 + mediumWave2 + fastWave1 + fastWave2 + fastWave3 + whiteNoise;
+      // Apply a smoothed/filtered white noise for surf sound
+      // We use less noise and smooth it for a gentler sound
+      let noise = 0;
+      for (let j = 0; j < 3; j++) { // Smoothing by averaging
+        noise += (Math.random() * 2 - 1);
+      }
+      noise = (noise / 3) * 0.05; // Reduce amplitude for gentler sound
       
-      // Apply amplitude modulation for additional realism
-      const slowAmpMod = 0.5 + 0.5 * Math.sin(2 * Math.PI * 0.05 * t);
-      sample *= 0.4 * slowAmpMod;
+      // Combine all components with better balance
+      let sample = baseWave + mediumWave1 + mediumWave2 + slowWave1 + slowWave2 + fastWave1 + fastWave2 + fastWave3 + noise;
+      
+      // Apply amplitude modulation for additional realism - slower modulation
+      const slowAmpMod = 0.6 + 0.4 * Math.sin(2 * Math.PI * 0.03 * t); // Gentler modulation
+      sample *= 0.35 * slowAmpMod; // Reduced overall volume
+      
+      // Apply a very slow modulation to simulate tide changes
+      const tideEffect = 1.0 + 0.15 * Math.sin(2 * Math.PI * 0.01 * t);
+      sample *= tideEffect;
       
       // Add some randomness to make each channel slightly different
       if (channel === 1) {
-        sample += 0.05 * (Math.random() * 2 - 1);
+        sample += 0.03 * (Math.random() * 2 - 1); // Less stereo difference
       }
       
       // Prevent clipping

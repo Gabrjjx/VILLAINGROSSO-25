@@ -3,8 +3,15 @@ import { Volume2, VolumeX } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { createWaveSound } from '../utils/createWaveSound';
 
-// The URL will point to our beach sounds audio file
-const BEACH_SOUNDS_URL = '/audio/ocean-waves.mp3';
+// Import audio files directly (Vite will handle this correctly)
+import oceanWavesSound from '../assets/ocean-waves.mp3';
+import oceanWavesAltSound from '../assets/ocean-waves-alt.mp3';
+
+// Audio files array
+const BEACH_SOUNDS_URLS = [
+  oceanWavesSound,
+  oceanWavesAltSound
+];
 
 export default function SoundToggle() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -21,18 +28,22 @@ export default function SoundToggle() {
     audio.volume = volume;
     audio.preload = 'auto';
     
-    // First try to load the audio file
-    audio.src = BEACH_SOUNDS_URL;
+    let currentUrlIndex = 0;
+    const tryNextAudioSource = () => {
+      if (currentUrlIndex < BEACH_SOUNDS_URLS.length) {
+        // Try the next audio file in our list
+        audio.src = BEACH_SOUNDS_URLS[currentUrlIndex];
+        currentUrlIndex++;
+      } else {
+        // If we've tried all files, generate a synthetic sound
+        generateSyntheticSound();
+      }
+    };
     
-    // Set up event listeners
-    audio.addEventListener('canplaythrough', () => {
-      setIsLoaded(true);
-    });
-    
-    audio.addEventListener('error', async (e) => {
-      console.warn('Error loading audio file, falling back to generated sound:', e);
+    const generateSyntheticSound = async () => {
+      console.log("Trying to generate synthetic ocean sounds...");
       try {
-        // Try to generate a synthetic sound instead
+        // Generate a synthetic ocean sound
         const soundBlob = await createWaveSound();
         
         // Create an object URL for the blob
@@ -42,14 +53,24 @@ export default function SoundToggle() {
         // Use the generated sound
         audio.src = objectURL;
         setUsingSynthSound(true);
-        
-        // This should now be loadable
-        setIsLoaded(true);
       } catch (synthError) {
         console.error('Failed to create synthetic sound:', synthError);
         setIsLoaded(false);
       }
+    };
+    
+    // Set up event listeners
+    audio.addEventListener('canplaythrough', () => {
+      setIsLoaded(true);
     });
+    
+    audio.addEventListener('error', (e) => {
+      console.warn(`Error loading audio file ${currentUrlIndex-1}: ${BEACH_SOUNDS_URLS[currentUrlIndex-1]}`, e);
+      tryNextAudioSource();
+    });
+    
+    // Start with the first audio source
+    tryNextAudioSource();
     
     audioRef.current = audio;
     
