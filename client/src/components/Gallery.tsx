@@ -2,22 +2,35 @@ import { useState } from "react";
 import Lightbox from "@/components/Lightbox";
 import { useLanguage } from "@/context/LanguageContext";
 
+// Definizione statica delle immagini
 const galleryImages = [
   {
-    src: "/images/camera1.jpg",
+    src: "/attached_assets/camera1.jpg",
     alt: "Camera da letto di Villa Ingrosso",
   },
   {
-    src: "/images/cucina-1.JPG",
+    src: "/attached_assets/cucina-1.JPG",
     alt: "Cucina di Villa Ingrosso",
   },
   {
-    src: "/images/corridoio.JPG",
+    src: "/attached_assets/corridoio.JPG",
     alt: "Corridoio e interni di Villa Ingrosso",
   },
   {
-    src: "/images/patio-1.JPG",
+    src: "/attached_assets/patio-1.JPG",
     alt: "Patio esterno di Villa Ingrosso",
+  },
+  {
+    src: "/attached_assets/corridoio-entrata.jpeg",
+    alt: "Corridoio d'entrata di Villa Ingrosso",
+  },
+  {
+    src: "/attached_assets/entrata-villa.jpeg",
+    alt: "Entrata di Villa Ingrosso",
+  },
+  {
+    src: "/attached_assets/giardino 1.jpeg",
+    alt: "Giardino di Villa Ingrosso",
   },
 ];
 
