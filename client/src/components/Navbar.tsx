@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home as HomeIcon } from "lucide-react";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { Link, useLocation } from "wouter";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -11,13 +12,16 @@ export default function Navbar() {
   const isScrolled = scrollY > 100;
   const { t } = useLanguage();
   
+  const [location] = useLocation();
+  
   // Navigation links using translations
   const navLinks = [
-    { name: t("nav.about"), href: "#about" },
-    { name: t("nav.gallery"), href: "#gallery" },
-    { name: t("nav.location"), href: "#location" },
-    { name: t("nav.recommendations"), href: "#recommendations" },
-    { name: t("nav.contact"), href: "#contact" },
+    { name: t("nav.home"), href: "/" },
+    { name: t("nav.about"), href: "/about" },
+    { name: t("nav.gallery"), href: "/gallery" },
+    { name: t("nav.location"), href: "/location" },
+    { name: t("nav.recommendations"), href: "/recommendations" },
+    { name: t("nav.contact"), href: "/contact" },
   ];
 
   // Close mobile menu when clicking outside
@@ -50,8 +54,8 @@ export default function Navbar() {
     >
       <div className="max-w-screen-xl mx-auto px-6 sm:px-8">
         <div className="flex justify-between items-center">
-          <a 
-            href="#home" 
+          <Link 
+            to="/" 
             className="text-xl sm:text-2xl font-display font-medium text-neutral-900"
           >
             <span className="relative">
@@ -59,19 +63,21 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-cyan-500 to-blue-500"></span>
             </span>
             <span className="ml-1 font-bold">ingrosso</span>
-          </a>
+          </Link>
           
           {/* Minimal Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
             <div className="flex space-x-10">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
-                  className="text-neutral-800 text-sm uppercase tracking-wider hover:text-cyan-600 transition-colors duration-300 whitespace-nowrap"
+                  to={link.href}
+                  className={`text-neutral-800 text-sm uppercase tracking-wider hover:text-cyan-600 transition-colors duration-300 whitespace-nowrap ${
+                    location === link.href ? "text-cyan-600 font-medium" : ""
+                  }`}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
             </div>
             
@@ -121,17 +127,22 @@ export default function Navbar() {
           >
             <div className="max-w-screen-xl mx-auto px-6 py-5 flex flex-col items-center space-y-5">
               {navLinks.map((link, index) => (
-                <motion.a
+                <motion.div
                   key={link.name}
-                  href={link.href}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: index * 0.1 }}
-                  className="text-neutral-800 hover:text-cyan-600 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
                 >
-                  {link.name}
-                </motion.a>
+                  <Link
+                    to={link.href}
+                    className={`text-neutral-800 hover:text-cyan-600 transition-colors ${
+                      location === link.href ? "text-cyan-600 font-medium" : ""
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
               ))}
               
               <motion.div

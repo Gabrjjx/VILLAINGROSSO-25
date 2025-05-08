@@ -1,4 +1,8 @@
 export default {
+  common: {
+    learnMore: "Learn more",
+    discoverMore: "Discover more",
+  },
   nav: {
     home: "Home",
     about: "About Us",
@@ -13,6 +17,34 @@ export default {
     title3: "vacation",
     description: "Contemporary elegance just 300m from the crystal-clear waters of Leporano. An exclusive location to experience Puglia.",
     cta: "Book Now",
+  },
+  features: {
+    title: "Villa Features",
+    subtitle: "Discover what makes Villa Ingrosso special",
+    bedrooms: {
+      title: "Comfortable Bedrooms",
+      description: "Spacious and tastefully furnished bedrooms, equipped with all the comforts for a relaxing stay"
+    },
+    beach: {
+      title: "300m from the sea",
+      description: "Just a few steps from the beautiful crystal-clear beaches of Leporano on the Ionian Sea"
+    },
+    kitchen: {
+      title: "Equipped Kitchen",
+      description: "Fully equipped kitchen with modern appliances and everything needed to prepare great dinners"
+    },
+    parking: {
+      title: "Private Parking",
+      description: "Spacious private parking for your car, with easy access to the villa"
+    },
+    bathroom: {
+      title: "Modern Bathrooms",
+      description: "Elegant bathrooms with spacious showers and quality finishes for maximum comfort"
+    },
+    wifi: {
+      title: "Free Wi-Fi",
+      description: "High-speed Wi-Fi connection available throughout the property"
+    }
   },
   about: {
     subtitle: "OUR STORY",

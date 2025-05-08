@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Gallery from "@/components/Gallery";
-import Location from "@/components/Location";
-import LocalRecommendations from "@/components/LocalRecommendations";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/context/LanguageContext";
+import { Bed, Waves, Wifi } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Home() {
   const { language } = useLanguage();
@@ -65,11 +62,94 @@ export default function Home() {
     <div className="font-body text-neutral-900 bg-white">
       <Navbar />
       <Hero />
-      <About />
-      <Gallery />
-      <Location />
-      <LocalRecommendations />
-      <Contact />
+      
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-semibold text-neutral-800">
+              Caratteristiche della Villa
+            </h2>
+            <p className="mt-4 text-lg text-neutral-600 max-w-3xl mx-auto">
+              Scopri cosa rende Villa Ingrosso speciale
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white bg-opacity-50 backdrop-blur-sm rounded-lg p-6 shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300">
+              <div className="mb-4"><Bed className="w-8 h-8 text-cyan-600" /></div>
+              <h3 className="text-xl font-medium text-neutral-800 mb-3">
+                Camere confortevoli
+              </h3>
+              <p className="text-neutral-600 flex-grow mb-5">
+                Camere spaziose e arredate con gusto, dotate di tutti i comfort per un soggiorno rilassante
+              </p>
+              <div>
+                <Link 
+                  to="/gallery"
+                  className="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors duration-300"
+                >
+                  Scopri di più
+                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </Link>
+              </div>
+            </div>
+            
+            <div className="bg-white bg-opacity-50 backdrop-blur-sm rounded-lg p-6 shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300">
+              <div className="mb-4"><Waves className="w-8 h-8 text-cyan-600" /></div>
+              <h3 className="text-xl font-medium text-neutral-800 mb-3">
+                A 300m dal mare
+              </h3>
+              <p className="text-neutral-600 flex-grow mb-5">
+                A pochi passi dalle splendide spiagge cristalline di Leporano sul Mar Ionio
+              </p>
+              <div>
+                <Link 
+                  to="/location"
+                  className="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors duration-300"
+                >
+                  Scopri di più
+                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </Link>
+              </div>
+            </div>
+            
+            <div className="bg-white bg-opacity-50 backdrop-blur-sm rounded-lg p-6 shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300">
+              <div className="mb-4"><Wifi className="w-8 h-8 text-cyan-600" /></div>
+              <h3 className="text-xl font-medium text-neutral-800 mb-3">
+                Wi-Fi gratuito
+              </h3>
+              <p className="text-neutral-600 flex-grow mb-5">
+                Connessione Wi-Fi ad alta velocità disponibile in tutta la proprietà
+              </p>
+              <div>
+                <Link 
+                  to="/about"
+                  className="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors duration-300"
+                >
+                  Scopri di più
+                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center mt-12">
+            <Link
+              to="/about"
+              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 transition-colors duration-300"
+            >
+              Scopri di più
+            </Link>
+          </div>
+        </div>
+      </section>
+      
       <Footer />
     </div>
   );

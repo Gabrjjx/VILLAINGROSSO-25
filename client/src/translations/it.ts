@@ -1,4 +1,8 @@
 export default {
+  common: {
+    learnMore: "Scopri di più",
+    discoverMore: "Scopri di più",
+  },
   nav: {
     home: "Home",
     about: "Chi Siamo",
@@ -13,6 +17,34 @@ export default {
     title3: "sul mare",
     description: "Eleganza contemporanea a soli 300m dal mare cristallino di Leporano. Una location esclusiva per vivere la Puglia.",
     cta: "Prenota Ora",
+  },
+  features: {
+    title: "Caratteristiche della Villa",
+    subtitle: "Scopri cosa rende Villa Ingrosso speciale",
+    bedrooms: {
+      title: "Camere confortevoli",
+      description: "Camere spaziose e arredate con gusto, dotate di tutti i comfort per un soggiorno rilassante"
+    },
+    beach: {
+      title: "A 300m dal mare",
+      description: "A pochi passi dalle splendide spiagge cristalline di Leporano sul Mar Ionio"
+    },
+    kitchen: {
+      title: "Cucina attrezzata",
+      description: "Cucina completamente equipaggiata con elettrodomestici moderni e tutto il necessario per preparare ottime cene"
+    },
+    parking: {
+      title: "Parcheggio privato",
+      description: "Ampio parcheggio privato per la tua auto, con facile accesso alla villa"
+    },
+    bathroom: {
+      title: "Bagni moderni",
+      description: "Bagni eleganti con docce spaziose e finiture di qualità per il massimo comfort"
+    },
+    wifi: {
+      title: "Wi-Fi gratuito",
+      description: "Connessione Wi-Fi ad alta velocità disponibile in tutta la proprietà"
+    }
   },
   about: {
     subtitle: "LA NOSTRA STORIA",
