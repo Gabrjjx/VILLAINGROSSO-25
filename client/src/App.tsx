@@ -11,6 +11,8 @@ import Privacy from "@/pages/Privacy";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
 import WaveLoader from "@/components/WaveLoader";
 import SoundToggle from "@/components/SoundToggle";
+// Importazione relativa per risolvere problema di moduli
+import GoogleAnalyticsDebug from "./components/GoogleAnalyticsDebug";
 
 function Router() {
   return (
@@ -33,6 +35,7 @@ function App() {
       <TooltipProvider>
         <WaveLoaderWithContext />
         <SoundToggle />
+        <GoogleAnalyticsDebug />
         <Router />
       </TooltipProvider>
     </LoadingProvider>

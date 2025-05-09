@@ -8,6 +8,15 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-4XTWR8TM7C');
+      
+      // Debug mode per development
+      if (window.location.hostname === 'localhost' || window.location.hostname.includes('replit')) {
+        console.log('🔍 Google Analytics Debug Mode attivo');
+        window.dataLayer.push = function() {
+          console.log('📊 Google Analytics Event:', arguments);
+          Array.prototype.push.apply(this, arguments);
+        };
+      }
     </script>
     
     <meta charset="UTF-8" />
