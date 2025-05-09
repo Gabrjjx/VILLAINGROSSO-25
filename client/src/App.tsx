@@ -34,11 +34,9 @@ function App() {
   return (
     <LoadingProvider>
       <TooltipProvider>
-        {/* Setup di Google Analytics */}
-        <GoogleAnalyticsSetup />
+        {/* Temporaneamente disabilitati per test di Google Analytics */}
         <WaveLoaderWithContext />
         <SoundToggle />
-        <GoogleAnalyticsDebug />
         <Router />
       </TooltipProvider>
     </LoadingProvider>
