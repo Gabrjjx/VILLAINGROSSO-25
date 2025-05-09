@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'wouter';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "wouter";
 
-// Definizione del tipo per l'oggetto window con dataLayer
+// Definizione del tipo per l`oggetto window con dataLayer
 declare global {
   interface Window {
-    dataLayer: {
-      push: (...args: any[]) => number;
-    }[];
+    dataLayer: any[];
+    gtag: (...args: any[]) => void;
   }
 }
 
@@ -22,7 +21,7 @@ const GoogleAnalyticsDebug: React.FC = () => {
   
   // Monitora i cambiamenti di URL per simulare il tracciamento di pagina
   useEffect(() => {
-    // Registra l'evento di pageview
+    // Registra l`evento di pageview
     if (location) {
       setEvents(prev => [`Pageview: ${location}`, ...prev.slice(0, 9)]);
     }
@@ -30,42 +29,45 @@ const GoogleAnalyticsDebug: React.FC = () => {
   
   // Intercetta i dataLayer.push se possibile
   useEffect(() => {
-    const originalPush = window.dataLayer?.push;
-    if (originalPush && typeof window !== 'undefined') {
-      window.dataLayer.push = function() {
-        // Converti l'evento in stringa leggibile
-        let eventName = 'Unknown Event';
-        try {
-          if (arguments[0]?.event) {
-            eventName = `Event: ${arguments[0].event}`;
-          } else if (arguments[0]?.[0] === 'config') {
-            eventName = `Config: ${arguments[0][1]}`;
-          } else {
-            eventName = `Data: ${JSON.stringify(arguments[0]).substring(0, 50)}...`;
-          }
-        } catch (e) {
-          console.error('Error parsing GA event', e);
+    if (typeof window === "undefined" || !window.dataLayer) return;
+    
+    const originalPush = Array.prototype.push;
+    
+    window.dataLayer.push = function() {
+      // Converti l`evento in stringa leggibile
+      let eventName = "Unknown Event";
+      try {
+        if (arguments[0]?.event) {
+          eventName = `Event: ${arguments[0].event}`;
+        } else if (arguments[0]?.[0] === "config") {
+          eventName = `Config: ${arguments[0][1]}`;
+        } else {
+          eventName = `Data: ${JSON.stringify(arguments[0]).substring(0, 50)}...`;
         }
-        
-        // Aggiorna gli eventi
-        setEvents(prev => [eventName, ...prev.slice(0, 9)]);
-        
-        // Chiamata originale
-        return originalPush.apply(this, arguments);
-      };
-    }
+      } catch (e) {
+        console.error("Error parsing GA event", e);
+      }
+      
+      // Aggiorna gli eventi
+      setEvents(prev => [eventName, ...prev.slice(0, 9)]);
+      
+      // Chiamata originale
+      // @ts-ignore - Ignora errori di tipo per questo caso specifico
+      return originalPush.apply(this, arguments);
+    };
     
     // Pulizia
     return () => {
-      if (originalPush && window.dataLayer) {
+      if (window.dataLayer) {
         window.dataLayer.push = originalPush;
       }
     };
   }, []);
   
   // Controlla se siamo in ambiente di sviluppo
-  const isDev = window.location.hostname === 'localhost' || 
-                window.location.hostname.includes('replit');
+  const isDev = typeof window !== "undefined" && 
+                (window.location.hostname === "localhost" || 
+                window.location.hostname.includes("replit"));
   
   // Non mostrare nulla in produzione
   if (!isDev) return null;
@@ -73,22 +75,22 @@ const GoogleAnalyticsDebug: React.FC = () => {
   return (
     <div 
       className="fixed bottom-24 right-6 z-40 flex flex-col items-end"
-      style={{ pointerEvents: 'none' }}
+      style={{ pointerEvents: "none" }}
     >
       {/* Toggle button */}
       <button 
         className="bg-blue-500 text-white text-xs px-3 py-1 rounded-full shadow-lg mb-2"
-        style={{ pointerEvents: 'auto' }}
+        style={{ pointerEvents: "auto" }}
         onClick={() => setShowDebugger(prev => !prev)}
       >
-        {showDebugger ? 'Nascondi GA Debug' : 'Mostra GA Debug'}
+        {showDebugger ? "Nascondi GA Debug" : "Mostra GA Debug"}
       </button>
       
       {/* Debug info */}
       {showDebugger && (
         <div 
           className="bg-white/90 backdrop-blur-sm border border-blue-200 rounded-lg shadow-lg p-3 w-72 max-h-60 overflow-y-auto text-xs"
-          style={{ pointerEvents: 'auto' }}
+          style={{ pointerEvents: "auto" }}
         >
           <div className="font-bold text-blue-800 mb-2">Google Analytics Debug</div>
           <div className="text-xs text-gray-500 mb-2">

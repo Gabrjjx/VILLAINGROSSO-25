@@ -11,8 +11,9 @@ import Privacy from "@/pages/Privacy";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
 import WaveLoader from "@/components/WaveLoader";
 import SoundToggle from "@/components/SoundToggle";
-// Importazione relativa per risolvere problema di moduli
+// Importazione componenti di Google Analytics
 import GoogleAnalyticsDebug from "./components/GoogleAnalyticsDebug";
+import GoogleAnalyticsSetup from "./components/GoogleAnalyticsSetup";
 
 function Router() {
   return (
@@ -33,6 +34,8 @@ function App() {
   return (
     <LoadingProvider>
       <TooltipProvider>
+        {/* Setup di Google Analytics */}
+        <GoogleAnalyticsSetup />
         <WaveLoaderWithContext />
         <SoundToggle />
         <GoogleAnalyticsDebug />
