@@ -292,11 +292,11 @@ function AdminPage() {
             </TabsTrigger>
             <TabsTrigger value="messages">
               <Mail className="h-4 w-4 mr-2" />
-              {t("admin.tabs.messages")}
+              {t("admin.tabs.contactForm") || "Richieste di contatto"}
             </TabsTrigger>
             <TabsTrigger value="chat">
               <MessageCircle className="h-4 w-4 mr-2" />
-              {t("admin.tabs.chat") || "Chat"}
+              {t("admin.tabs.chatWithUsers") || "Chat con utenti"}
             </TabsTrigger>
           </TabsList>
 
