@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useAuth } from "@/hooks/use-auth";
-import { Redirect, Link } from "wouter";
+import { Redirect } from "wouter";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -81,10 +81,10 @@ export default function AuthPage() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-muted/40 py-12 px-4 sm:px-6 lg:px-8">
       {/* Pulsante per tornare alla home */}
       <div className="w-full max-w-6xl mb-6 flex justify-start">
-        <Link href="/" className="flex items-center text-primary hover:text-primary/80 transition-colors">
+        <a href="/" className="flex items-center text-primary hover:text-primary/80 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-2" />
-          {t("common.backToHome")}
-        </Link>
+          {t("common.backToHome") || "Torna alla Home"}
+        </a>
       </div>
       
       <div className="w-full max-w-6xl flex flex-col md:flex-row">

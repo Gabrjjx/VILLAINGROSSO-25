@@ -2,6 +2,7 @@ export default {
   common: {
     learnMore: "Scopri di più",
     discoverMore: "Scopri di più",
+    backToHome: "Torna alla Home",
   },
 
   nav: {

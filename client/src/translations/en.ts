@@ -2,6 +2,7 @@ export default {
   common: {
     learnMore: "Learn more",
     discoverMore: "Discover more",
+    backToHome: "Back to Home",
   },
   nav: {
     home: "Home",
