@@ -129,7 +129,7 @@ export default function About() {
               transition={{ duration: 0.5 }}
             >
               <img 
-                src="/img/taranto/mare-cristallino.jpg" 
+                src="/attached_assets/mare-cristallino.jpg" 
                 alt="Mare cristallino" 
                 className="w-full h-full object-cover"
               />
@@ -149,7 +149,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <img 
-                src="/img/taranto/spiagge-ioniche.jpg" 
+                src="/attached_assets/spiagge-ioniche.jpg" 
                 alt="Spiagge ioniche" 
                 className="w-full h-full object-cover"
               />
@@ -169,7 +169,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img 
-                src="/img/taranto/tramonto-mare.jpg" 
+                src="/attached_assets/tramonto-mare.jpg" 
                 alt="Tramonto sul Mare" 
                 className="w-full h-full object-cover"
               />
