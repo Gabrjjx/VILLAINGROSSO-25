@@ -144,6 +144,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Endpoint per gli amministratori per ottenere i messaggi di chat di un utente specifico
+  app.get("/api/admin/chat-messages/:userId", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated() || !req.user.isAdmin) {
+      return res.status(401).json({ error: "Admin privileges required" });
+    }
+    
+    try {
+      const userId = parseInt(req.params.userId);
+      const messages = await storage.getChatMessagesByUser(userId);
+      res.json(messages);
+    } catch (error) {
+      log(`Error fetching admin chat messages: ${error}`, "error");
+      res.status(500).json({ error: "Failed to fetch chat messages" });
+    }
+  });
+  
   app.post("/api/chat-messages", async (req: Request, res: Response) => {
     log(`POST /api/chat-messages - isAuthenticated: ${req.isAuthenticated()} - body: ${JSON.stringify(req.body)}`, "info");
     console.log("POST /api/chat-messages - Headers:", req.headers);

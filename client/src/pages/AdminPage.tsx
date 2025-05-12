@@ -1,20 +1,22 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/context/LanguageContext";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "../lib/queryClient";
-import { Booking, ContactMessage, User } from "@shared/schema";
+import { Booking, ContactMessage, User, ChatMessage } from "@shared/schema";
 import { format } from "date-fns";
 import { it, enUS } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { AdminRoute } from "@/components/ProtectedRoute";
 import { 
   Loader2, LogOut, User as UserIcon, Calendar, Mail, Check, 
-  MoreHorizontal, Home, Users
+  MoreHorizontal, Home, Users, MessageCircle, Send
 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Table,
   TableBody,
@@ -45,6 +47,9 @@ function AdminPage() {
   const { user, logoutMutation } = useAuth();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [selectedUser, setSelectedUser] = useState<number | null>(null);
+  const [newAdminMessage, setNewAdminMessage] = useState("");
+  const adminMessagesEndRef = useRef<HTMLDivElement>(null);
 
   // Carica gli utenti
   const { data: users, isLoading: usersLoading } = useQuery<Omit<User, "password">[]>({
@@ -111,6 +116,91 @@ function AdminPage() {
       }
     },
   });
+  
+  // Carica i messaggi di chat per un utente specifico (quando selezionato)
+  const { data: chatMessages, isLoading: chatMessagesLoading, refetch: refetchChatMessages } = useQuery<ChatMessage[]>({
+    queryKey: ["/api/chat", selectedUser],
+    queryFn: async () => {
+      if (!selectedUser) return [];
+      
+      try {
+        // Qui dovremmo implementare l'endpoint per i messaggi di chat di un utente specifico
+        // Per ora fingiamo che ci sia un endpoint che restituisce i messaggi di chat di un utente
+        const response = await fetch(`/api/admin/chat-messages/${selectedUser}`);
+        
+        if (!response.ok) {
+          if (response.status === 404) {
+            return []; // Nessun messaggio per questo utente
+          }
+          throw new Error('Failed to fetch chat messages');
+        }
+        
+        return await response.json();
+      } catch (error) {
+        console.error('Error fetching chat messages:', error);
+        return [];
+      }
+    },
+    enabled: !!selectedUser, // Esegui la query solo quando è selezionato un utente
+  });
+
+  // Mutation per inviare un messaggio come admin
+  const sendAdminMessage = useMutation({
+    mutationFn: async (messageData: { userId: number, message: string }) => {
+      // Usa il token JWT nell'header Authorization
+      const authToken = localStorage.getItem('auth_token');
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+      
+      if (authToken) {
+        headers['Authorization'] = `Bearer ${authToken}`;
+      }
+      
+      const response = await fetch(`/api/admin/chat-messages/${messageData.userId}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ message: messageData.message })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+      
+      return response.json();
+    },
+    onSuccess: () => {
+      // Resetta il campo di input del messaggio
+      setNewAdminMessage('');
+      
+      // Aggiorna la lista dei messaggi
+      refetchChatMessages();
+      
+      toast({
+        title: t("admin.chat.messageSent") || "Messaggio inviato",
+        description: t("admin.chat.messageSentDescription") || "Il messaggio è stato inviato con successo",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: t("admin.chat.error") || "Errore",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  });
+  
+  // Funzione per inviare un messaggio come admin
+  const handleSendAdminMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!selectedUser || !newAdminMessage.trim()) return;
+    
+    sendAdminMessage.mutate({
+      userId: selectedUser,
+      message: newAdminMessage
+    });
+  };
 
   // Funzione per segnare un messaggio come letto
   const markMessageAsRead = async (id: number) => {
@@ -187,7 +277,7 @@ function AdminPage() {
       {/* Contenuto principale */}
       <div className="container mx-auto py-8 px-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full md:w-[600px] grid-cols-4">
+          <TabsList className="grid w-full md:w-[600px] grid-cols-5">
             <TabsTrigger value="dashboard">
               <Home className="h-4 w-4 mr-2" />
               {t("admin.tabs.dashboard")}
@@ -203,6 +293,10 @@ function AdminPage() {
             <TabsTrigger value="messages">
               <Mail className="h-4 w-4 mr-2" />
               {t("admin.tabs.messages")}
+            </TabsTrigger>
+            <TabsTrigger value="chat">
+              <MessageCircle className="h-4 w-4 mr-2" />
+              {t("admin.tabs.chat") || "Chat"}
             </TabsTrigger>
           </TabsList>
 
@@ -483,6 +577,137 @@ function AdminPage() {
                     <p className="text-muted-foreground">{t("admin.messages.noMessages")}</p>
                   </div>
                 )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          {/* Tab Chat */}
+          <TabsContent value="chat" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("admin.chat.title") || "Chat con gli utenti"}</CardTitle>
+                <CardDescription>{t("admin.chat.description") || "Gestisci le conversazioni con gli utenti della piattaforma"}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Lista degli utenti con chat */}
+                  <div className="border rounded-lg overflow-hidden">
+                    <div className="bg-muted p-3 border-b">
+                      <h3 className="text-sm font-medium">{t("admin.chat.users") || "Utenti"}</h3>
+                    </div>
+                    <div className="h-[400px] overflow-y-auto">
+                      {usersLoading ? (
+                        <div className="flex justify-center items-center h-full">
+                          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                        </div>
+                      ) : users && users.length > 0 ? (
+                        <div className="divide-y">
+                          {users.filter(u => !u.isAdmin).map((u) => (
+                            <div
+                              key={u.id}
+                              className={`p-3 flex items-center hover:bg-accent/50 cursor-pointer ${
+                                selectedUser === u.id ? "bg-accent" : ""
+                              }`}
+                              onClick={() => setSelectedUser(u.id)}
+                            >
+                              <Avatar className="h-9 w-9 mr-3">
+                                <AvatarFallback>
+                                  {u.username?.charAt(0).toUpperCase() || "U"}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <p className="text-sm font-medium">{u.fullName || u.username}</p>
+                                <p className="text-xs text-muted-foreground">{u.email}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex justify-center items-center h-full text-muted-foreground">
+                          <p>{t("admin.chat.noUsers") || "Nessun utente trovato"}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Area dei messaggi */}
+                  <div className="md:col-span-2 border rounded-lg flex flex-col h-[500px]">
+                    {!selectedUser ? (
+                      <div className="flex-grow flex justify-center items-center text-muted-foreground">
+                        <p>{t("admin.chat.selectUser") || "Seleziona un utente per visualizzare la chat"}</p>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="bg-muted p-3 border-b">
+                          <h3 className="text-sm font-medium">
+                            {users?.find(u => u.id === selectedUser)?.username || `Utente #${selectedUser}`}
+                          </h3>
+                        </div>
+                        
+                        <div className="flex-grow overflow-y-auto p-4 space-y-4">
+                          {chatMessagesLoading ? (
+                            <div className="flex justify-center items-center h-full">
+                              <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                            </div>
+                          ) : chatMessages && chatMessages.length > 0 ? (
+                            chatMessages.map((msg) => (
+                              <div
+                                key={msg.id}
+                                className={`flex gap-3 ${
+                                  msg.isFromAdmin ? "flex-row-reverse" : "flex-row"
+                                }`}
+                              >
+                                <Avatar className={`${msg.isFromAdmin ? "bg-primary" : "bg-muted"}`}>
+                                  <AvatarFallback>
+                                    {msg.isFromAdmin ? "A" : users?.find(u => u.id === selectedUser)?.username?.charAt(0).toUpperCase() || "U"}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div
+                                  className={`rounded-lg px-4 py-2 max-w-[80%] ${
+                                    msg.isFromAdmin
+                                      ? "bg-primary text-primary-foreground"
+                                      : "bg-muted text-muted-foreground"
+                                  }`}
+                                >
+                                  <div className="mb-1 text-xs opacity-70">
+                                    {msg.isFromAdmin ? "Admin" : users?.find(u => u.id === selectedUser)?.username || "Utente"}{" "}
+                                    • {formatDate(msg.createdAt)}
+                                  </div>
+                                  <p className="whitespace-pre-wrap break-words">{msg.message}</p>
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="flex justify-center items-center h-full text-muted-foreground">
+                              <p>{t("admin.chat.noMessages") || "Nessun messaggio trovato"}</p>
+                            </div>
+                          )}
+                          <div ref={adminMessagesEndRef} />
+                        </div>
+                        
+                        <div className="p-3 border-t">
+                          <form onSubmit={handleSendAdminMessage} className="flex space-x-2">
+                            <Input
+                              value={newAdminMessage}
+                              onChange={(e) => setNewAdminMessage(e.target.value)}
+                              placeholder={t("admin.chat.messagePlaceholder") || "Scrivi un messaggio..."}
+                              disabled={sendAdminMessage.isPending}
+                              className="flex-1"
+                            />
+                            <Button type="submit" disabled={sendAdminMessage.isPending || !newAdminMessage.trim()}>
+                              {sendAdminMessage.isPending ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <Send className="h-4 w-4" />
+                              )}
+                              <span className="ml-2 hidden sm:inline">{t("admin.chat.send") || "Invia"}</span>
+                            </Button>
+                          </form>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
