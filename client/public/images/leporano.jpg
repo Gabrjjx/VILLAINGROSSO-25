@@ -1,1 +1,970 @@
-File not found: /v1/AUTH_mw/wikipedia-commons-local-public.78/7/78/Torre_Saturo_-_Leporano.jpg
+<!doctype html>
+<html lang="it-IT">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+
+	<script class="map_advanced_shield" type="text/javascript" data-no-minify="1" data-no-optimize="1" data-no-defer="1" consent-skip-blocker="1" nowprocket data-cfasync="false">
+var map_full_config={"config_origin":"myagileprivacy_native","mapx_ga4":0,"map_wl":0,"map_js_basedirectory":"https:\/\/www.madeintaranto.org\/wp-content\/plugins\/myagileprivacy\/local-cache\/my-agile-privacy\/","map_lang_code":"it","cookie_reset_timestamp":null,"cookie_api_key_remote_id_map_active":{"google_tag_manager":"map_cookie_30","vimeo":"map_cookie_31","youtube":"map_cookie_25","google_translate_widget":"map_cookie_417","gravatar":"map_cookie_400","google_recaptcha":"map_cookie_74","addtoany":"map_cookie_27","googlefonts":"map_cookie_33","google_analytics":"map_cookie_15"},"cookie_api_key_remote_id_map_detectable":{"stape":"map_cookie_469","vik_booking":"map_cookie_420","stripe":"map_cookie_388","my_agile_pixel_ga":"map_cookie_407","matomo_on_premise":"map_cookie_404","matomo_cloud":"map_cookie_405","font_awesome":"map_cookie_385","fareharbor":"map_cookie_453","cloudinary":"map_cookie_446","akamai":"map_cookie_79","wisernotify":"map_cookie_468","spotify_widget":"map_cookie_308","wistia":"map_cookie_302","zemanta":"map_cookie_427","yandex_metrica":"map_cookie_389","tidio_chat":"map_cookie_391","survey_monkey":"map_cookie_158","widget_jotform":"map_cookie_164","statcounter":"map_cookie_462","visitortracking":"map_cookie_467","sitebehaviour":"map_cookie_466","trustindex_widget":"map_cookie_459","teads_pixel":"map_cookie_456","tik_tok_analytics":"map_cookie_452","bdow_all":"map_cookie_451","vdo_ai":"map_cookie_441","taboola":"map_cookie_220","mapbox":"map_cookie_301","mailerlite_widget":"map_cookie_416","widget_instagram":"map_cookie_47","activecampaign_widget":"map_cookie_415","localweb_messenger":"map_cookie_410","trustpilot_widget":"map_cookie_397","triptease":"map_cookie_399","tawkto_widget":"map_cookie_150","soundcloud_widget":"map_cookie_401","snazzy_maps":"map_cookie_423","smartsuppchat":"map_cookie_424","simplybook":"map_cookie_425","shinystat":"map_cookie_24","scalapay_widget":"map_cookie_470","plerdy":"map_cookie_464","poinzilla":"map_cookie_465","shopify_button":"map_cookie_458","outbrain":"map_cookie_210","satispay":"map_cookie_444","Nexi":"map_cookie_445","sentry":"map_cookie_438","open_street_map":"map_cookie_436","quic_cloud":"map_cookie_435","rolex":"map_cookie_432","tik_tok":"map_cookie_406","quantcast":"map_cookie_429","pinterest_social_widget":"map_cookie_422","twitter_widget":"map_cookie_5","linkedin_widget":"map_cookie_6","paypal":"map_cookie_172","pinterest_conversion_tag":"map_cookie_395","onesignal":"map_cookie_430","octorate":"map_cookie_412","my_agile_pixel_tiktok":"map_cookie_409","my_agile_pixel_fbq":"map_cookie_408","mr_preno":"map_cookie_414","google_ads":"map_cookie_29","monetyzer":"map_cookie_428","facebook_like":"map_cookie_3","leadchampion":"map_cookie_472","klaviyo":"map_cookie_463","hubspot_crm":"map_cookie_450","lead_rebel":"map_cookie_449","sitewit":"map_cookie_448","leadforensics":"map_cookie_440","microsoft_clarity":"map_cookie_387","microsoft_ads":"map_cookie_66","metricool":"map_cookie_419","mailchimp_widget":"map_cookie_317","madeep":"map_cookie_413","livechat":"map_cookie_42","linkedin":"map_cookie_382","linkedin_ads":"map_cookie_396","leadfeeder_tracking":"map_cookie_418","landbot":"map_cookie_431","jetpack":"map_cookie_392","hoteldoor":"map_cookie_471","hearthis_widget":"map_cookie_457","getresponse":"map_cookie_163","google_pay":"map_cookie_443","hcaptcha":"map_cookie_437","hotel_cc":"map_cookie_434","hubspot_analytics":"map_cookie_283","hotjar":"map_cookie_136","google_adsense":"map_cookie_12","google_audience_manager_audience_extension":"map_cookie_100","google_maps":"map_cookie_17","feedaty_widget":"map_cookie_460","cleantalk":"map_cookie_461","capterra_tracking":"map_cookie_455","capterra_badge":"map_cookie_454","crazyegg":"map_cookie_54","cloudflare_web_analytics":"map_cookie_439","climate_levels":"map_cookie_433","facebook_remarketing":"map_cookie_43","facebook_messenger":"map_cookie_384","disqus":"map_cookie_2","criteo":"map_cookie_9","calendly":"map_cookie_403","adobe_fonts":"map_cookie_447","apple_pay":"map_cookie_442","sendinblue":"map_cookie_121","amazon_advertising":"map_cookie_393","adroll":"map_cookie_96","adobe_analytics":"map_cookie_86","active_campaign_site_tracking":"map_cookie_390","ve_interactive":"map_cookie_398"},"cookie_api_key_remote_id_map_blocked_without_notification":[],"map_cookies_always_allowed":[],"cookie_api_key_friendly_name_map":{"google_tag_manager":{"desc":"Google Tag Manager","is_necessary":true},"vimeo":{"desc":"Video Vimeo","is_necessary":true},"youtube":{"desc":"Widget Video YouTube","is_necessary":true},"google_translate_widget":{"desc":"Google Translate Widget","is_necessary":true},"gravatar":{"desc":"Gravatar","is_necessary":true},"google_recaptcha":{"desc":"Google reCAPTCHA","is_necessary":true},"addtoany":{"desc":"AddToAny","is_necessary":true},"googlefonts":{"desc":"Google Fonts","is_necessary":true},"google_analytics":{"desc":"Google Analytics","is_necessary":true},"stape":{"desc":"Stape","is_necessary":true},"vik_booking":{"desc":"Vik Booking","is_necessary":true},"stripe":{"desc":"Stripe","is_necessary":true},"my_agile_pixel_ga":{"desc":"My Agile Pixel &#8211; Google Analytics","is_necessary":true},"matomo_on_premise":{"desc":"Matomo (On Premise)","is_necessary":true},"matomo_cloud":{"desc":"Matomo (Cloud)","is_necessary":true},"font_awesome":{"desc":"Font Awesome","is_necessary":true},"fareharbor":{"desc":"FareHarbor","is_necessary":true},"cloudinary":{"desc":"Cloudinary","is_necessary":true},"akamai":{"desc":"Akamai Content Delivery Network","is_necessary":true},"wisernotify":{"desc":"Wisernotify","is_necessary":true},"spotify_widget":{"desc":"Widget Spotify","is_necessary":true},"wistia":{"desc":"Wistia","is_necessary":true},"zemanta":{"desc":"Zemanta","is_necessary":true},"yandex_metrica":{"desc":"Yandex Metrica","is_necessary":true},"tidio_chat":{"desc":"Widget Tidio Live Chat","is_necessary":true},"survey_monkey":{"desc":"SurveyMonkey Widget","is_necessary":true},"widget_jotform":{"desc":"Widget JotForm","is_necessary":true},"statcounter":{"desc":"Statcounter","is_necessary":true},"visitortracking":{"desc":"VisitorTracking","is_necessary":true},"sitebehaviour":{"desc":"SiteBehaviour","is_necessary":true},"trustindex_widget":{"desc":"Trustindex widget","is_necessary":true},"teads_pixel":{"desc":"Teads Universal Pixel","is_necessary":true},"tik_tok_analytics":{"desc":"TikTok Analytics","is_necessary":true},"bdow_all":{"desc":"SumoMe \/ Bdow","is_necessary":true},"vdo_ai":{"desc":"Vdo.ai","is_necessary":true},"taboola":{"desc":"Taboola","is_necessary":true},"mapbox":{"desc":"Widget Mapbox","is_necessary":true},"mailerlite_widget":{"desc":"Widget MailerLite","is_necessary":true},"widget_instagram":{"desc":"Widget Instagram","is_necessary":true},"activecampaign_widget":{"desc":"Widget ActiveCampaign","is_necessary":true},"localweb_messenger":{"desc":"Web Instant Messenger","is_necessary":true},"trustpilot_widget":{"desc":"TrustPilot widget","is_necessary":true},"triptease":{"desc":"Triptease.io","is_necessary":true},"tawkto_widget":{"desc":"Tawk.to Widget","is_necessary":true},"soundcloud_widget":{"desc":"SoundCloud Widget","is_necessary":true},"snazzy_maps":{"desc":"Snazzy Maps","is_necessary":true},"smartsuppchat":{"desc":"Smartsupp","is_necessary":true},"simplybook":{"desc":"SimplyBook","is_necessary":true},"shinystat":{"desc":"ShinyStat","is_necessary":true},"scalapay_widget":{"desc":"Scalapay","is_necessary":true},"plerdy":{"desc":"Plerdy","is_necessary":true},"poinzilla":{"desc":"Poinzilla","is_necessary":true},"shopify_button":{"desc":"Pulsante e widget di Shopify","is_necessary":true},"outbrain":{"desc":"Outbrain","is_necessary":true},"satispay":{"desc":"Satispay","is_necessary":true},"Nexi":{"desc":"Nexi","is_necessary":true},"sentry":{"desc":"Sentry","is_necessary":true},"open_street_map":{"desc":"Open Street Map","is_necessary":true},"quic_cloud":{"desc":"QUIC.cloud","is_necessary":true},"rolex":{"desc":"Rolex","is_necessary":true},"tik_tok":{"desc":"Remarketing TikTok","is_necessary":true},"quantcast":{"desc":"Quantcast Advertise","is_necessary":true},"pinterest_social_widget":{"desc":"Pulsante \u201cPin it\u201d e widget sociali di Pinterest","is_necessary":true},"twitter_widget":{"desc":"Pulsante Tweet e widget sociali di Twitter &#8211; X","is_necessary":true},"linkedin_widget":{"desc":"Pulsante e widget sociali di Linkedin","is_necessary":true},"paypal":{"desc":"Pulsante e widget di PayPal","is_necessary":true},"pinterest_conversion_tag":{"desc":"Pinterest Conversion Tag","is_necessary":true},"onesignal":{"desc":"OneSignal","is_necessary":true},"octorate":{"desc":"Octorate","is_necessary":true},"my_agile_pixel_tiktok":{"desc":"My Agile Pixel &#8211; TikTok Pixel","is_necessary":true},"my_agile_pixel_fbq":{"desc":"My Agile Pixel &#8211; Facebook Remarketing","is_necessary":true},"mr_preno":{"desc":"Mr PRENO","is_necessary":true},"google_ads":{"desc":"Monitoraggio conversioni di Google Ads","is_necessary":true},"monetyzer":{"desc":"Monetyzer","is_necessary":true},"facebook_like":{"desc":"Pulsante Mi Piace e widget sociali di Facebook","is_necessary":true},"leadchampion":{"desc":"Lead Champion","is_necessary":true},"klaviyo":{"desc":"Klaviyo","is_necessary":true},"hubspot_crm":{"desc":"HubSpot CRM","is_necessary":true},"lead_rebel":{"desc":"leadREBEL","is_necessary":true},"sitewit":{"desc":"Kliken (Sitewit)","is_necessary":true},"leadforensics":{"desc":"Lead Forensics","is_necessary":true},"microsoft_clarity":{"desc":"Microsoft Clarity","is_necessary":true},"microsoft_ads":{"desc":"Microsoft Advertising","is_necessary":true},"metricool":{"desc":"Metricool","is_necessary":true},"mailchimp_widget":{"desc":"MailChimp Widget","is_necessary":true},"madeep":{"desc":"Madeep","is_necessary":true},"livechat":{"desc":"LiveChat Widget","is_necessary":true},"linkedin":{"desc":"LinkedIn Insight Tag","is_necessary":true},"linkedin_ads":{"desc":"LinkedIn Ads","is_necessary":true},"leadfeeder_tracking":{"desc":"Leadfeeder Tracking","is_necessary":true},"landbot":{"desc":"Landbot","is_necessary":true},"jetpack":{"desc":"Jetpack","is_necessary":true},"hoteldoor":{"desc":"Hoteldoor","is_necessary":true},"hearthis_widget":{"desc":"hearthis.at Widget","is_necessary":true},"getresponse":{"desc":"GetResponse","is_necessary":true},"google_pay":{"desc":"Google Pay","is_necessary":true},"hcaptcha":{"desc":"hCaptcha","is_necessary":true},"hotel_cc":{"desc":"Hotel.cc","is_necessary":true},"hubspot_analytics":{"desc":"HubSpot Analytics","is_necessary":true},"hotjar":{"desc":"Hotjar Heat Maps &amp; Recordings","is_necessary":true},"google_adsense":{"desc":"Google AdSense","is_necessary":true},"google_audience_manager_audience_extension":{"desc":"Google Ad Manager Audience Extension","is_necessary":true},"google_maps":{"desc":"Google Maps widget","is_necessary":true},"feedaty_widget":{"desc":"Feedaty widget","is_necessary":true},"cleantalk":{"desc":"CleanTalk","is_necessary":true},"capterra_tracking":{"desc":"Capterra Tracking","is_necessary":true},"capterra_badge":{"desc":"Capterra Badge","is_necessary":true},"crazyegg":{"desc":"Crazy Egg","is_necessary":true},"cloudflare_web_analytics":{"desc":"Cloudflare Web Analytics","is_necessary":true},"climate_levels":{"desc":"Climate Levels","is_necessary":true},"facebook_remarketing":{"desc":"Facebook Remarketing","is_necessary":true},"facebook_messenger":{"desc":"Facebook Messenger Chat","is_necessary":true},"disqus":{"desc":"Disqus","is_necessary":true},"criteo":{"desc":"Criteo","is_necessary":true},"calendly":{"desc":"Calendly Widget","is_necessary":true},"adobe_fonts":{"desc":"Adobe Fonts","is_necessary":true},"apple_pay":{"desc":"Apple Pay","is_necessary":true},"sendinblue":{"desc":"Brevo","is_necessary":true},"amazon_advertising":{"desc":"Amazon Advertising","is_necessary":true},"adroll":{"desc":"AdRoll","is_necessary":true},"adobe_analytics":{"desc":"Adobe Analytics","is_necessary":true},"active_campaign_site_tracking":{"desc":"ActiveCampaign Site Tracking","is_necessary":true},"ve_interactive":{"desc":"Ve Interactive","is_necessary":true}},"cookie_api_key_not_to_block":["google_tag_manager","vimeo","youtube"],"enforce_youtube_privacy":0,"enforce_youtube_privacy_v2":0,"video_advanced_privacy":1,"manifest_assoc":{"cookie-shield.js":{"filename":"cookie-shield-1.3.50.js","version":"1.3.50"},"purposes-nl.json":{"filename":"purposes-nl-1.0.16.json","version":"1.0.16"},"purposes-de.json":{"filename":"purposes-de-1.0.16.json","version":"1.0.16"},"purposes-es.json":{"filename":"purposes-es-1.0.16.json","version":"1.0.16"},"purposes-pl.json":{"filename":"purposes-pl-1.0.16.json","version":"1.0.16"},"purposes-el.json":{"filename":"purposes-el-1.0.16.json","version":"1.0.16"},"MyAgilePrivacyIabTCF.js":{"filename":"MyAgilePrivacyIabTCF-1.0.16.js","version":"1.0.16"},"purposes-pt.json":{"filename":"purposes-pt-1.0.16.json","version":"1.0.16"},"vendor-list.json":{"filename":"vendor-list-1.0.16.json","version":"1.0.16"},"googleVendors.json":{"filename":"googleVendors-1.0.16.json","version":"1.0.16"},"purposes-en.json":{"filename":"purposes-en-1.0.16.json","version":"1.0.16"},"purposes-fr.json":{"filename":"purposes-fr-1.0.16.json","version":"1.0.16"},"purposes-it.json":{"filename":"purposes-it-1.0.16.json","version":"1.0.16"}},"js_shield_url":"https:\/\/www.madeintaranto.org\/wp-content\/plugins\/myagileprivacy\/local-cache\/my-agile-privacy\/cookie-shield-1.3.50.js","load_iab_tcf":false,"iab_tcf_script_url":null,"enable_cmode_v2":null,"cmode_v2_implementation_type":null,"enable_cmode_url_passthrough":null,"cmode_v2_forced_off_ga4_advanced":null,"cmode_v2_default_consent_obj":null,"cmode_v2_js_on_error":true,"shield_added_pattern":{"js_patterns_src":[]}};
+
+</script>
+<script class="map_advanced_shield" type="text/javascript" src="https://www.madeintaranto.org/wp-content/plugins/myagileprivacy/local-cache/my-agile-privacy/cookie-shield-1.3.50.js" data-no-minify="1" data-no-optimize="1" data-no-defer="1" consent-skip-blocker="1" nowprocket data-cfasync="false"></script>
+<meta name='robots' content='noindex, follow' />
+
+<!-- Google Tag Manager for WordPress by gtm4wp.com -->
+<script data-cfasync="false" data-pagespeed-no-defer>
+	var gtm4wp_datalayer_name = "dataLayer";
+	var dataLayer = dataLayer || [];
+</script>
+<!-- End Google Tag Manager for WordPress by gtm4wp.com -->
+	<!-- This site is optimized with the Yoast SEO plugin v23.3 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Pagina non trovata - Made in Taranto</title>
+	<meta property="og:locale" content="it_IT" />
+	<meta property="og:title" content="Pagina non trovata - Made in Taranto" />
+	<meta property="og:site_name" content="Made in Taranto" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.madeintaranto.org/#website","url":"https://www.madeintaranto.org/","name":"Made in Taranto","description":"Marketing territoriale di Taranto e provincia","publisher":{"@id":"https://www.madeintaranto.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.madeintaranto.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"it-IT"},{"@type":"Organization","@id":"https://www.madeintaranto.org/#organization","name":"Made in Taranto","url":"https://www.madeintaranto.org/","logo":{"@type":"ImageObject","inLanguage":"it-IT","@id":"https://www.madeintaranto.org/#/schema/logo/image/","url":"https://www.madeintaranto.org/wp-content/uploads/2016/11/logo-Made-in-Taranto-e1480204952105.jpg","contentUrl":"https://www.madeintaranto.org/wp-content/uploads/2016/11/logo-Made-in-Taranto-e1480204952105.jpg","width":160,"height":160,"caption":"Made in Taranto"},"image":{"@id":"https://www.madeintaranto.org/#/schema/logo/image/"}}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel="alternate" type="application/rss+xml" title="Made in Taranto &raquo; Feed" href="https://www.madeintaranto.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Made in Taranto &raquo; Feed dei commenti" href="https://www.madeintaranto.org/comments/feed/" />
+<link rel='stylesheet' id='my-agile-privacy-reset-css' href='https://www.madeintaranto.org/wp-content/plugins/myagileprivacy/frontend/css/my-agile-privacy-reset.css?ver=3.1.8' type='text/css' media='all' />
+<link rel='stylesheet' id='my-agile-privacy-animate-css' href='https://www.madeintaranto.org/wp-content/plugins/myagileprivacy/frontend/css/animate.min.css?ver=3.1.8' type='text/css' media='all' />
+<link rel='stylesheet' id='my-agile-privacy-css' href='https://www.madeintaranto.org/wp-content/plugins/myagileprivacy/frontend/css/my-agile-privacy-frontend.css?ver=3.1.8' type='text/css' media='all' />
+<link rel='stylesheet' id='my-agile-privacy-notification-bar-css' href='https://www.madeintaranto.org/wp-content/plugins/myagileprivacy/frontend/css/my-agile-privacy-notification-bar.css?ver=3.1.8' type='text/css' media='all' />
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel='stylesheet' id='wp-block-library-css' href='https://www.madeintaranto.org/wp-includes/css/dist/block-library/style.min.css?ver=6.5.5' type='text/css' media='all' />
+<link rel='stylesheet' id='wpblog-post-layouts-block-style-css' href='https://www.madeintaranto.org/wp-content/plugins/wp-blog-post-layouts/includes/assets/css/build.css?ver=1.1.4' type='text/css' media='all' />
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}body .is-layout-grid{display: grid;}body .is-layout-grid > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='wpblog-post-layouts-google-fonts-css' href='' type='text/css' media='all' class=" my_agile_privacy_activate autoscan_mode css_href_blocked map_blocked_content" unblocked_href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C100%2C300%2C400%2C500%2C700%2C900%7CYanone+Kaffeesatz%3A200%2C300%2C400%2C500%2C600%2C700%7COpen+Sans%3A300%2C400%2C600%2C700%2C800%7CRoboto+Slab%3A100%2C200%2C300%2C400%2C500%2C600%2C700%2C800%2C900%7CPoppins%3A100%2C200%2C300%2C400%2C500%2C600%2C700%2C800%2C900&#038;ver=1.1.4#038;subset=latin%2Clatin-ext" data-cookie-api-key="googlefonts" data-friendly_name="Google Fonts" />
+<link rel='stylesheet' id='fontawesome-css' href='https://www.madeintaranto.org/wp-content/plugins/wp-blog-post-layouts/includes/assets/fontawesome/css/all.min.css?ver=5.12.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wpmagazine-modules-lite-google-fonts-css' href='' type='text/css' media='all' class=" my_agile_privacy_activate autoscan_mode css_href_blocked map_blocked_content" unblocked_href="https://fonts.googleapis.com/css?family=Roboto%3A400%2C100%2C300%2C400%2C500%2C700%2C900%7CYanone+Kaffeesatz%3A200%2C300%2C400%2C500%2C600%2C700%7COpen+Sans%3A300%2C400%2C600%2C700%2C800%7CRoboto+Slab%3A100%2C200%2C300%2C400%2C500%2C600%2C700%2C800%2C900%7CPoppins%3A100%2C200%2C300%2C400%2C500%2C600%2C700%2C800%2C900&#038;subset=latin%2Clatin-ext" data-cookie-api-key="googlefonts" data-friendly_name="Google Fonts" />
+<link rel='stylesheet' id='wpmagazine-modules-lite-frontend-css' href='https://www.madeintaranto.org/wp-content/plugins/wp-magazine-modules-lite/includes/assets/css/build.css?ver=1.1.3' type='text/css' media='all' />
+<style id='wpmagazine-modules-lite-frontend-inline-css' type='text/css'>
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-3{background:#dd9933}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-3 a{background:#dd9933}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-3 a{background:#dd9933}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-3 a{background:#dd9933}
+.cvmm-block-post-block--layout-one .cvmm-cat-3 a{background:#dd9933}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-3:before{background:#dd9933}
+.cvmm-block-post-filter--layout-one .cvmm-cat-3 a{background:#dd9933}
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-2{background:#dd3333}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-2 a{background:#dd3333}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-2 a{background:#dd3333}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-2 a{background:#dd3333}
+.cvmm-block-post-block--layout-one .cvmm-cat-2 a{background:#dd3333}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-2:before{background:#dd3333}
+.cvmm-block-post-filter--layout-one .cvmm-cat-2 a{background:#dd3333}
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-439{background:#1e73be}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-439 a{background:#1e73be}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-439 a{background:#1e73be}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-439 a{background:#1e73be}
+.cvmm-block-post-block--layout-one .cvmm-cat-439 a{background:#1e73be}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-439:before{background:#1e73be}
+.cvmm-block-post-filter--layout-one .cvmm-cat-439 a{background:#1e73be}
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-751{background:#ce692f}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-751 a{background:#ce692f}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-751 a{background:#ce692f}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-751 a{background:#ce692f}
+.cvmm-block-post-block--layout-one .cvmm-cat-751 a{background:#ce692f}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-751:before{background:#ce692f}
+.cvmm-block-post-filter--layout-one .cvmm-cat-751 a{background:#ce692f}
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-5{background:#1db7b7}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-5 a{background:#1db7b7}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-5 a{background:#1db7b7}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-5 a{background:#1db7b7}
+.cvmm-block-post-block--layout-one .cvmm-cat-5 a{background:#1db7b7}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-5:before{background:#1db7b7}
+.cvmm-block-post-filter--layout-one .cvmm-cat-5 a{background:#1db7b7}
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-1426{background:#000000}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-1426 a{background:#000000}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-1426 a{background:#000000}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-1426 a{background:#000000}
+.cvmm-block-post-block--layout-one .cvmm-cat-1426 a{background:#000000}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-1426:before{background:#000000}
+.cvmm-block-post-filter--layout-one .cvmm-cat-1426 a{background:#000000}
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-6{background:#ed9136}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-6 a{background:#ed9136}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-6 a{background:#ed9136}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-6 a{background:#ed9136}
+.cvmm-block-post-block--layout-one .cvmm-cat-6 a{background:#ed9136}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-6:before{background:#ed9136}
+.cvmm-block-post-filter--layout-one .cvmm-cat-6 a{background:#ed9136}
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-750{background:#42912d}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-750 a{background:#42912d}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-750 a{background:#42912d}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-750 a{background:#42912d}
+.cvmm-block-post-block--layout-one .cvmm-cat-750 a{background:#42912d}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-750:before{background:#42912d}
+.cvmm-block-post-filter--layout-one .cvmm-cat-750 a{background:#42912d}
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-747{background:#455e00}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-747 a{background:#455e00}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-747 a{background:#455e00}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-747 a{background:#455e00}
+.cvmm-block-post-block--layout-one .cvmm-cat-747 a{background:#455e00}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-747:before{background:#455e00}
+.cvmm-block-post-filter--layout-one .cvmm-cat-747 a{background:#455e00}
+.cvmm-cats-wrapper .cvmm-cat-count.cvmm-cat-766{background:#00517a}
+.cvmm-block-post-grid--layout-one .cvmm-post-cats-wrap .cvmm-post-cat.cvmm-cat-766 a{background:#00517a}
+.cvmm-post-tiles-block-main-content-wrap .cvmm-post-cat.cvmm-cat-766 a{background:#00517a}
+.cvmm-block-post-carousel--layout-one .cvmm-cat-766 a{background:#00517a}
+.cvmm-block-post-block--layout-one .cvmm-cat-766 a{background:#00517a}
+.cvmm-block-post-block--layout-two .cvmm-post-cat.cvmm-cat-766:before{background:#00517a}
+.cvmm-block-post-filter--layout-one .cvmm-cat-766 a{background:#00517a}
+</style>
+<link rel='stylesheet' id='slick-slider-css' href='https://www.madeintaranto.org/wp-content/plugins/wp-magazine-modules-lite/includes/assets/library/slick-slider/css/slick.css?ver=1.8.0' type='text/css' media='all' />
+<link rel='stylesheet' id='slick-slider-theme-css' href='https://www.madeintaranto.org/wp-content/plugins/wp-magazine-modules-lite/includes/assets/library/slick-slider/css/slick-theme.css?ver=1.8.0' type='text/css' media='all' />
+<link rel='stylesheet' id='color-blog-fonts-css' href='' type='text/css' media='all' class=" my_agile_privacy_activate autoscan_mode css_href_blocked map_blocked_content" unblocked_href="https://fonts.googleapis.com/css?family=Josefin+Sans%3A400%2C700%7CPoppins%3A300%2C400%2C400i%2C500%2C700&#038;subset=latin%2Clatin-ext" data-cookie-api-key="googlefonts" data-friendly_name="Google Fonts" />
+<link rel='stylesheet' id='font-awesome-css' href='https://www.madeintaranto.org/wp-content/themes/color-blog/assets/library/font-awesome/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
+<link rel='stylesheet' id='lightslider-style-css' href='https://www.madeintaranto.org/wp-content/themes/color-blog/assets/library/lightslider/css/lightslider.min.css?ver=6.5.5' type='text/css' media='all' />
+<link rel='stylesheet' id='animate-css' href='https://www.madeintaranto.org/wp-content/themes/color-blog/assets/library/animate/animate.min.css?ver=3.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='preloader-css' href='https://www.madeintaranto.org/wp-content/themes/color-blog/assets/css/mt-preloader.css?ver=1.1.7' type='text/css' media='all' />
+<link rel='stylesheet' id='color-blog-style-css' href='https://www.madeintaranto.org/wp-content/themes/color-blog/style.css?ver=1.1.7' type='text/css' media='all' />
+<style id='color-blog-style-inline-css' type='text/css'>
+.category-button.cb-cat-3 a{background:#3b2d1b}
+.category-button.cb-cat-3 a:hover{background:#090000}
+#site-navigation ul li.cb-cat-3 .menu-item-description{background:#3b2d1b}
+#site-navigation ul li.cb-cat-3 .menu-item-description:after{border-top-color:#3b2d1b}
+.category-button.cb-cat-2 a{background:#661611}
+.category-button.cb-cat-2 a:hover{background:#340000}
+#site-navigation ul li.cb-cat-2 .menu-item-description{background:#661611}
+#site-navigation ul li.cb-cat-2 .menu-item-description:after{border-top-color:#661611}
+.category-button.cb-cat-439 a{background:#1e73be}
+.category-button.cb-cat-439 a:hover{background:#00418c}
+#site-navigation ul li.cb-cat-439 .menu-item-description{background:#1e73be}
+#site-navigation ul li.cb-cat-439 .menu-item-description:after{border-top-color:#1e73be}
+.category-button.cb-cat-751 a{background:#c42d2d}
+.category-button.cb-cat-751 a:hover{background:#920000}
+#site-navigation ul li.cb-cat-751 .menu-item-description{background:#c42d2d}
+#site-navigation ul li.cb-cat-751 .menu-item-description:after{border-top-color:#c42d2d}
+.category-button.cb-cat-5 a{background:#67ad35}
+.category-button.cb-cat-5 a:hover{background:#357b03}
+#site-navigation ul li.cb-cat-5 .menu-item-description{background:#67ad35}
+#site-navigation ul li.cb-cat-5 .menu-item-description:after{border-top-color:#67ad35}
+.category-button.cb-cat-1555 a{background:#3b2d1b}
+.category-button.cb-cat-1555 a:hover{background:#090000}
+#site-navigation ul li.cb-cat-1555 .menu-item-description{background:#3b2d1b}
+#site-navigation ul li.cb-cat-1555 .menu-item-description:after{border-top-color:#3b2d1b}
+.category-button.cb-cat-1426 a{background:#3b2d1b}
+.category-button.cb-cat-1426 a:hover{background:#090000}
+#site-navigation ul li.cb-cat-1426 .menu-item-description{background:#3b2d1b}
+#site-navigation ul li.cb-cat-1426 .menu-item-description:after{border-top-color:#3b2d1b}
+.category-button.cb-cat-1 a{background:#3b2d1b}
+.category-button.cb-cat-1 a:hover{background:#090000}
+#site-navigation ul li.cb-cat-1 .menu-item-description{background:#3b2d1b}
+#site-navigation ul li.cb-cat-1 .menu-item-description:after{border-top-color:#3b2d1b}
+.category-button.cb-cat-687 a{background:#bfc42d}
+.category-button.cb-cat-687 a:hover{background:#8d9200}
+#site-navigation ul li.cb-cat-687 .menu-item-description{background:#bfc42d}
+#site-navigation ul li.cb-cat-687 .menu-item-description:after{border-top-color:#bfc42d}
+.category-button.cb-cat-426 a{background:#3b2d1b}
+.category-button.cb-cat-426 a:hover{background:#090000}
+#site-navigation ul li.cb-cat-426 .menu-item-description{background:#3b2d1b}
+#site-navigation ul li.cb-cat-426 .menu-item-description:after{border-top-color:#3b2d1b}
+.category-button.cb-cat-748 a{background:#005109}
+.category-button.cb-cat-748 a:hover{background:#001f00}
+#site-navigation ul li.cb-cat-748 .menu-item-description{background:#005109}
+#site-navigation ul li.cb-cat-748 .menu-item-description:after{border-top-color:#005109}
+.category-button.cb-cat-333 a{background:#dd9933}
+.category-button.cb-cat-333 a:hover{background:#ab6701}
+#site-navigation ul li.cb-cat-333 .menu-item-description{background:#dd9933}
+#site-navigation ul li.cb-cat-333 .menu-item-description:after{border-top-color:#dd9933}
+.category-button.cb-cat-422 a{background:#ea2323}
+.category-button.cb-cat-422 a:hover{background:#b80000}
+#site-navigation ul li.cb-cat-422 .menu-item-description{background:#ea2323}
+#site-navigation ul li.cb-cat-422 .menu-item-description:after{border-top-color:#ea2323}
+.category-button.cb-cat-6 a{background:#600020}
+.category-button.cb-cat-6 a:hover{background:#2e0000}
+#site-navigation ul li.cb-cat-6 .menu-item-description{background:#600020}
+#site-navigation ul li.cb-cat-6 .menu-item-description:after{border-top-color:#600020}
+.category-button.cb-cat-750 a{background:#d5db1e}
+.category-button.cb-cat-750 a:hover{background:#a3a900}
+#site-navigation ul li.cb-cat-750 .menu-item-description{background:#d5db1e}
+#site-navigation ul li.cb-cat-750 .menu-item-description:after{border-top-color:#d5db1e}
+.category-button.cb-cat-747 a{background:#7a0000}
+.category-button.cb-cat-747 a:hover{background:#480000}
+#site-navigation ul li.cb-cat-747 .menu-item-description{background:#7a0000}
+#site-navigation ul li.cb-cat-747 .menu-item-description:after{border-top-color:#7a0000}
+.category-button.cb-cat-423 a{background:#3b2d1b}
+.category-button.cb-cat-423 a:hover{background:#090000}
+#site-navigation ul li.cb-cat-423 .menu-item-description{background:#3b2d1b}
+#site-navigation ul li.cb-cat-423 .menu-item-description:after{border-top-color:#3b2d1b}
+.category-button.cb-cat-99 a{background:#8321ce}
+.category-button.cb-cat-99 a:hover{background:#51009c}
+#site-navigation ul li.cb-cat-99 .menu-item-description{background:#8321ce}
+#site-navigation ul li.cb-cat-99 .menu-item-description:after{border-top-color:#8321ce}
+.category-button.cb-cat-766 a{background:#3b2d1b}
+.category-button.cb-cat-766 a:hover{background:#090000}
+#site-navigation ul li.cb-cat-766 .menu-item-description{background:#3b2d1b}
+#site-navigation ul li.cb-cat-766 .menu-item-description:after{border-top-color:#3b2d1b}
+.category-button.cb-cat-4 a{background:#3b2d1b}
+.category-button.cb-cat-4 a:hover{background:#090000}
+#site-navigation ul li.cb-cat-4 .menu-item-description{background:#3b2d1b}
+#site-navigation ul li.cb-cat-4 .menu-item-description:after{border-top-color:#3b2d1b}
+.category-button.cb-cat-8 a{background:#2f358c}
+.category-button.cb-cat-8 a:hover{background:#00035a}
+#site-navigation ul li.cb-cat-8 .menu-item-description{background:#2f358c}
+#site-navigation ul li.cb-cat-8 .menu-item-description:after{border-top-color:#2f358c}
+a,a:hover,a:focus,a:active,.entry-cat .cat-links a:hover,.entry-cat a:hover,.entry-footer a:hover,.comment-author .fn .url:hover,.commentmetadata .comment-edit-link,#cancel-comment-reply-link,#cancel-comment-reply-link:before,.logged-in-as a,.widget a:hover,.widget a:hover::before,.widget li:hover::before,.mt-social-icon-wrap li a:hover,#site-navigation ul li:hover>a,#site-navigation ul li.current-menu-item>a,#site-navigation ul li.current_page_ancestor>a,#site-navigation ul li.current-menu-ancestor>a,#site-navigation ul li.current_page_item>a,#site-navigation ul li.focus>a,.banner-sub-title,.entry-title a:hover,.cat-links a:hover,.entry-footer .mt-readmore-btn:hover,.btn-wrapper a:hover,.mt-readmore-btn:hover,.navigation.pagination .nav-links .page-numbers.current,.navigation.pagination .nav-links a.page-numbers:hover,#footer-menu li a:hover,.color_blog_latest_posts .mt-post-title a:hover,#mt-scrollup:hover,.menu-toggle:hover,#top-navigation ul li a:hover,.mt-search-icon:hover,.entry-meta a:hover,.front-slider-block .banner-title a:hover,.post-info-wrap .entry-meta a:hover,.single .mt-single-related-posts .entry-title a:hover,.breadcrumbs .trail-items li a:hover,.wrap-label i,.has-thumbnail .post-info-wrap .entry-title a:hover,.front-slider-block .post-info-wrap .entry-title a:hover,#top-footer a:hover{color:#00a0b2}
+.widget_search .search-submit,.widget_search .search-submit:hover,.navigation.pagination .nav-links .page-numbers.current,.navigation.pagination .nav-links a.page-numbers:hover,.error-404.not-found,.color_blog_social_media a:hover,.custom-header,.widget_tag_cloud .tagcloud a:hover,.widget.widget_tag_cloud a:hover{border-color:#00a0b2}
+.front-slider-block .lSAction > a:hover,.top-featured-post-wrap .post-thumbnail .post-number,.post-cats-list a,#site-navigation .menu-item-description,article .post-thumbnail::before,#secondary .widget .widget-title::before,.mt-related-post-title::before,#colophon .widget .widget-title::before,.features-post-title::before,.mt-menu-search .mt-form-wrap .search-form .search-submit,.widget_tag_cloud .tagcloud a:hover,.widget.widget_tag_cloud a:hover{background:#00a0b2}
+.edit-link .post-edit-link,.reply .comment-reply-link,.widget_search .search-submit,.mt-menu-search .mt-form-wrap .search-form .search-submit:hover,article.sticky::before{background:#00a0b2}
+</style>
+<link rel='stylesheet' id='color-blog-responsive-style-css' href='https://www.madeintaranto.org/wp-content/themes/color-blog/assets/css/mt-responsive.css?ver=1.1.7' type='text/css' media='all' />
+<link rel='stylesheet' id='addtoany-css' href='https://www.madeintaranto.org/wp-content/plugins/add-to-any/addtoany.min.css?ver=1.16' type='text/css' media='all' />
+<link rel='stylesheet' id='boxzilla-css' href='https://www.madeintaranto.org/wp-content/plugins/boxzilla/assets/css/styles.css?ver=3.3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='sib-front-css-css' href='https://www.madeintaranto.org/wp-content/plugins/mailin/css/mailin-front.css?ver=6.5.5' type='text/css' media='all' />
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/plugins/myagileprivacy/frontend/js/anime.min.js?ver=3.1.8" id="my-agile-privacy-anime-js"></script>
+<script type="text/javascript" id="my-agile-privacy-js-extra">
+/* <![CDATA[ */
+var map_cookiebar_settings = {"logged_in_and_admin":"","verbose_remote_log":"","internal_debug":"","notify_div_id":"#my-agile-privacy-notification-area","showagain_tab":"1","notify_position_horizontal":"right","showagain_div_id":"my-agile-privacy-consent-again","blocked_content_text":"Attenzione: alcune funzionalit\u00e0 di questa pagina potrebbero essere bloccate a seguito delle tue scelte privacy.","inline_notify_color":"#444444","inline_notify_background":"#fff3cd","blocked_content_notify_auto_shutdown_time":"3000","scan_mode":"config_finished","cookie_reset_timestamp":null,"show_ntf_bar_on_not_yet_consent_choice":"","enable_cmode_v2":"","enable_cmode_url_passthrough":"","cmode_v2_forced_off_ga4_advanced":"","map_notify_title":"0","map_first_layer_branded":"0","plugin_version":"3.1.8"};
+var map_ajax = {"ajax_url":"https:\/\/www.madeintaranto.org\/wp-admin\/admin-ajax.php","security":"a378469d85","force_js_learning_mode":"0","scanner_compatibility_mode":"","cookie_process_delayed_mode":"0"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/plugins/myagileprivacy/frontend/js/plain/my-agile-privacy-frontend.js?ver=3.1.8" id="my-agile-privacy-js"></script>
+<script type="text/javascript" id="addtoany-core-js-before">
+/* <![CDATA[ */
+window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};a2a_localize = {
+	Share: "Condividi",
+	Save: "Salva",
+	Subscribe: "Abbonati",
+	Email: "Email",
+	Bookmark: "Segnalibro",
+	ShowAll: "espandi",
+	ShowLess: "comprimi",
+	FindServices: "Trova servizi",
+	FindAnyServiceToAddTo: "Trova subito un servizio da aggiungere",
+	PoweredBy: "Powered by",
+	ShareViaEmail: "Condividi via email",
+	SubscribeViaEmail: "Iscriviti via email",
+	BookmarkInYourBrowser: "Aggiungi ai segnalibri",
+	BookmarkInstructions: "Premi Ctrl+D o \u2318+D per mettere questa pagina nei preferiti",
+	AddToYourFavorites: "Aggiungi ai favoriti",
+	SendFromWebOrProgram: "Invia da qualsiasi indirizzo email o programma di posta elettronica",
+	EmailProgram: "Programma di posta elettronica",
+	More: "Di più&#8230;",
+	ThanksForSharing: "Grazie per la condivisione!",
+	ThanksForFollowing: "Thanks for following!"
+};
+/* ]]> */
+</script>
+<script type="text/javascript" defer src="" id="addtoany-core-js" class=" my_agile_privacy_activate autoscan_mode map_src_script_blocked map_blocked_content" unblocked_src="https://static.addtoany.com/menu/page.js" data-cookie-api-key="addtoany" data-friendly_name="AddToAny"></script>
+<script type="text/javascript" defer src="https://www.madeintaranto.org/wp-content/plugins/add-to-any/addtoany.min.js?ver=1.1" id="addtoany-jquery-js"></script>
+<script type="text/javascript" id="sib-front-js-js-extra">
+/* <![CDATA[ */
+var sibErrMsg = {"invalidMail":"Please fill out valid email address","requiredField":"Please fill out required fields","invalidDateFormat":"Please fill out valid date format","invalidSMSFormat":"Please fill out valid phone number"};
+var ajax_sib_front_object = {"ajax_url":"https:\/\/www.madeintaranto.org\/wp-admin\/admin-ajax.php","ajax_nonce":"958a8d93ef","flag_url":"https:\/\/www.madeintaranto.org\/wp-content\/plugins\/mailin\/img\/flags\/"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/plugins/mailin/js/mailin-front.js?ver=1724418236" id="sib-front-js-js"></script>
+<link rel="https://api.w.org/" href="https://www.madeintaranto.org/wp-json/" /><meta name="generator" content="WordPress 6.5.5" />
+
+<!-- Google Tag Manager for WordPress by gtm4wp.com -->
+<!-- GTM Container placement set to automatic -->
+<script data-cfasync="false" data-pagespeed-no-defer type="text/javascript">
+	var dataLayer_content = {"pagePostType":"404-error"};
+	dataLayer.push( dataLayer_content );
+</script>
+<script data-cfasync="false" class=" map_not_to_block">
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N7LJ6L6');
+</script>
+<!-- End Google Tag Manager for WordPress by gtm4wp.com -->		<style type="text/css">
+					.site-title,
+			.site-description {
+				position: absolute;
+				clip: rect(1px, 1px, 1px, 1px);
+			}
+				</style>
+		<link rel="icon" href="https://www.madeintaranto.org/wp-content/uploads/2016/04/cropped-logo-Made-in-Taranto-150x150.jpg" sizes="32x32" />
+<link rel="icon" href="https://www.madeintaranto.org/wp-content/uploads/2016/04/cropped-logo-Made-in-Taranto.jpg" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.madeintaranto.org/wp-content/uploads/2016/04/cropped-logo-Made-in-Taranto-252x250.jpg" />
+<meta name="msapplication-TileImage" content="https://www.madeintaranto.org/wp-content/uploads/2016/04/cropped-logo-Made-in-Taranto.jpg" />
+		<style type="text/css" id="wp-custom-css">
+			.boxzilla{
+	padding:0!important;
+}
+
+.sub-menu{
+		width: 320px!important;
+    z-index: 999!important;
+
+}		</style>
+		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript></head>
+
+<body class="error404 wp-custom-logo hfeed no-sidebar site-layout--wide">
+
+
+<!-- GTM Container placement set to automatic -->
+<!-- Google Tag Manager (noscript) -->
+				<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7LJ6L6" height="0" width="0" style="display:none;visibility:hidden" aria-hidden="true"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->        <div id="preloader-background">
+            <div class="preloader-wrapper">
+                <div class="sk-spinner sk-spinner-pulse"></div>
+            </div><!-- .preloader-wrapper -->
+        </div><!-- #preloader-background -->
+
+<div id="page" class="site">
+<a class="skip-link screen-reader-text" href="#content">Skip To Content</a>
+	<div id="top-header" class="top-header-wrap mt-clearfix"><div class="mt-container">		<div class="top-header-nav">
+			<nav itemscope id="top-navigation" class="main-navigation">
+							</nav><!-- #site-navigation -->
+		</div><!-- .top-header-nav -->
+</div><!-- mt-container --></div><!-- #top-header --><header id="masthead" class="site-header"><div class="mt-logo-row-wrapper mt-clearfix">		<div class="logo-ads-wrap">
+			<div class="mt-container">
+				<div class="site-branding">
+					<a href="https://www.madeintaranto.org/" class="custom-logo-link" rel="home"><img width="160" height="160" src="https://www.madeintaranto.org/wp-content/uploads/2016/11/logo-Made-in-Taranto-e1480204952105.jpg" class="custom-logo" alt="Made in Taranto" decoding="async" /></a>							<p class="site-title"><a href="https://www.madeintaranto.org/" rel="home">Made in Taranto</a></p>
+												<p class="site-description">Marketing territoriale di Taranto e provincia</p>
+									</div><!-- .site-branding -->
+				<div class="header-widget-wrapper">
+									</div>
+			</div> <!-- mt-container -->
+		</div><!-- .logo-ads-wrap -->
+<div class="mt-social-menu-wrapper"><div class="mt-container">		<div class="menu-toggle"><a href="javascript:void(0)"><i class="fa fa-navicon"></i>Menu</a></div>
+		<nav itemscope id="site-navigation" class="main-navigation">
+			<div class="menu-menu-principale-container"><ul id="primary-menu" class="menu"><li id="menu-item-5323" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-5323"><a href="https://www.madeintaranto.org/">Home</a></li>
+<li id="menu-item-6274" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6274"><a href="#">Scopri Taranto e dintorni</a>
+<ul class="sub-menu">
+	<li id="menu-item-12570" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-12570 cb-cat-439"><a href="https://www.madeintaranto.org/category/attrazioni-ed-escursioni/">Attrazioni ed Escursioni</a></li>
+	<li id="menu-item-6275" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6275 cb-cat-751"><a href="https://www.madeintaranto.org/category/borghi-monumenti-e-chiese/">Borghi, Monumenti e Chiese</a></li>
+	<li id="menu-item-6277" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6277 cb-cat-687"><a href="https://www.madeintaranto.org/category/gastronomia/">Gastronomia</a></li>
+	<li id="menu-item-6278" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6278 cb-cat-748"><a href="https://www.madeintaranto.org/category/gravine-e-chiese-rupestri/">Gravine e chiese rupestri</a></li>
+	<li id="menu-item-6279" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6279 cb-cat-2"><a href="https://www.madeintaranto.org/category/artigianato/">Manifattura &#038; Design<span class="menu-item-description">Prodotti e progetti dei maestri di Puglia</span></a></li>
+	<li id="menu-item-6280" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6280 cb-cat-750"><a href="https://www.madeintaranto.org/category/mare-boschi-natura-e-paesaggi/">Mare, boschi, natura e paesaggi</a></li>
+	<li id="menu-item-6281" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6281 cb-cat-747"><a href="https://www.madeintaranto.org/category/masserie-frantoi-oleari-e-cantine-vinicole-di-taranto-e-provincia/">Masserie, frantoi oleari e cantine</a></li>
+	<li id="menu-item-6312" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6312"><a href="https://www.madeintaranto.org/museo-taranto-per-ammirare-i-mosaici-terme-ville-patrizie/">Museo archeologico di Taranto (Mar.Ta.)</a></li>
+	<li id="menu-item-6293" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6293"><a href="https://www.madeintaranto.org/in-mare-con-i-delfini-prenota-ora-la-tua-escursione/">Visita ai Delfini del Golfo di Taranto</a></li>
+</ul>
+</li>
+<li id="menu-item-12531" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12531"><a href="https://www.madeintaranto.org/taranto-migliore/">Chi siamo</a></li>
+<li id="menu-item-5512" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5512"><a href="https://www.madeintaranto.org/strategie-di-marketing-efficaci/">Strategie marketing efficaci</a></li>
+<li id="menu-item-16814" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16814 cb-cat-766"><a href="https://www.madeintaranto.org/category/proposte/">Proposte</a></li>
+<li id="menu-item-5324" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5324"><a href="https://www.madeintaranto.org/contatti/">Contatti</a></li>
+<li id="menu-item-11027" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11027"><a href="https://www.madeintaranto.org/disclaimer/">Disclaimer</a></li>
+</ul></div>		</nav><!-- #site-navigation -->
+<div class="mt-social-search-wrapper">		<div class="mt-social-wrapper">
+			<span class="mt-follow-title">Follow Us: </span>
+						<ul class="mt-social-icon-wrap">
+											<li class="mt-social-icon">
+								<a href="https://www.facebook.com/MadeInTaranto" target="_blank">
+									<i class="fa fa-facebook-square"></i>
+								</a>
+							</li>
+											<li class="mt-social-icon">
+								<a href="https://www.instagram.com/madeintaranto/" target="_blank">
+									<i class="fa fa-instagram"></i>
+								</a>
+							</li>
+											<li class="mt-social-icon">
+								<a href="https://www.linkedin.com/company/made-in-taranto" target="_blank">
+									<i class="fa fa-linkedin-square"></i>
+								</a>
+							</li>
+											<li class="mt-social-icon">
+								<a href="https://www.youtube.com/channel/UC3GqTUCAEPcNeccu4sOD0Mw" target="_blank">
+									<i class="fa fa-youtube-play"></i>
+								</a>
+							</li>
+											<li class="mt-social-icon">
+								<a href="https://twitter.com/madeintaranto" target="_blank">
+									<i class="fa fa-twitter"></i>
+								</a>
+							</li>
+											<li class="mt-social-icon">
+								<a href="https://www.pinterest.it/madeintaranto/" target="_blank">
+									<i class="fa fa-pinterest"></i>
+								</a>
+							</li>
+							</ul>
+		</div>
+		<div class="mt-menu-search">
+			<div class="mt-search-icon"><a href="javascript:void(0)">Search<i class="fa fa-search"></i></a></div>
+			<div class="mt-form-wrap">
+				<div class="mt-form-close"><a href="javascript:void(0)"><i class="fa fa-close"></i></a></div>
+				<form role="search" method="get" class="search-form" action="https://www.madeintaranto.org/">
+				<label>
+					<span class="screen-reader-text">Ricerca per:</span>
+					<input type="search" class="search-field" placeholder="Cerca &hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Cerca" />
+			</form>			</div><!-- .mt-form-wrap -->
+		</div><!-- .mt-menu-search -->
+</div><!-- .mt-social-search-wrapper --></div><!--.mt-container --></div><!--.mt-social-menu-wrapper --></div><!--.mt-logo-row-wrapper --></header><!-- #masthead -->		<div class="custom-header has-bg-img"  style="background-image:url(https://www.madeintaranto.org/wp-content/uploads/2020/05/cropped-Storia-del-Castello-Aragonese-di-Taranto.jpg);background-size:cover;" >
+            <div class="mt-container">
+<h1 class="entry-title">404 Error</h1>		<nav id="breadcrumb" class="mt-breadcrumb">
+			<div role="navigation" aria-label="Breadcrumbs" class="breadcrumb-trail breadcrumbs" itemprop="breadcrumb"><div class="mt-container"><ul class="trail-items" itemscope itemtype="http://schema.org/BreadcrumbList"><meta name="numberOfItems" content="2" /><meta name="itemListOrder" content="Ascending" /><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-begin"><a href="https://www.madeintaranto.org/" rel="home" itemprop="item"><span itemprop="name">Home</span></a><meta itemprop="position" content="1" /></li><li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="trail-item trail-end"><span itemprop="name"><span itemprop="name">404 Not Found</span></span><meta itemprop="position" content="2" /></li></ul></div></div>		</nav>
+			</div><!-- .mt-container -->
+		</div><!-- .custom-header -->
+
+	<div id="content" class="site-content">
+		<div class="mt-container">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main">
+
+			<section class="error-404 not-found">
+				<div class="error-num">404<span>error</span></div>
+				<header class="page-header">
+					<h1 class="page-title">Oops! That page can&rsquo;t be found.</h1>
+				</header><!-- .page-header -->
+				<div class="page-content">
+					<p>It looks like nothing was found at this location.</p>
+			</section><!-- .error-404 -->
+
+						<div class="page-extra-content mt-404-latest-posts-wrapper">
+				<div class="mt-pnf-latest-posts-wrapper mt-related-posts-wrapper"><h2 class="section-title mt-related-post-title">You May Like</h2><article id="post-19857" class="has-thumbnail wow fadeInUp post-19857 post type-post status-publish format-standard has-post-thumbnail hentry category-attrazioni-ed-escursioni category-ultime-news">
+	<div class="thumb-cat-wrap">
+		<a class="post-thumbnail" href="https://www.madeintaranto.org/anello-di-san-cataldo/" aria-hidden="true" tabindex="-1">
+			<img width="1160" height="620" src="https://www.madeintaranto.org/wp-content/uploads/2025/05/anello-di-San-Cataldo-1160x620.jpg" class="attachment-color-blog-full-width size-color-blog-full-width wp-post-image" alt="La leggenda dell’anello di San Cataldo e i famosi citri di Taranto" decoding="async" fetchpriority="high" />		</a>
+
+					<div class="post-cats-list">
+										<span class="category-button cb-cat-439"><a href="https://www.madeintaranto.org/category/attrazioni-ed-escursioni/">Attrazioni ed Escursioni</a></span>
+										<span class="category-button cb-cat-8"><a href="https://www.madeintaranto.org/category/ultime-news/">Ultime news</a></span>
+							</div><!-- .post-cats-list --></div><!-- .thumb-cat-wrap -->		<div class="entry-cat">
+			<span class="posted-on"><a href="https://www.madeintaranto.org/anello-di-san-cataldo/" rel="bookmark"><time class="entry-date published" datetime="2025-05-10T10:22:49+02:00">10 Maggio 2025</time><time class="updated" datetime="2025-05-10T10:23:55+02:00">10 Maggio 2025</time></a></span><span class="byline"><span class="author vcard"><a class="url fn n" href="https://www.madeintaranto.org/author/madeintaranto/">Made in Taranto ®</a></span></span>		</div><!-- .entry-meta -->
+	
+	<header class="entry-header">
+		<h2 class="entry-title"><a href="https://www.madeintaranto.org/anello-di-san-cataldo/" rel="bookmark">La leggenda dell’anello di San Cataldo e i famosi citri di Taranto</a></h2>	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p>Un gesto semplice, una tempesta che si placa, e un vortice limpido che da secoli continua a muoversi nel mare di Taranto: così nasce la leggenda dell’anello di San Cataldo, dove fede e natura si incontrano in un racconto che ancora oggi affascina la città. C’è un anello, a Taranto, che non si trova in [&hellip;]</p>
+<div class="addtoany_share_save_container addtoany_content addtoany_content_bottom"><div class="addtoany_header">CONDIVIDI SUI TUOI SOCIAL</div><div class="a2a_kit a2a_kit_size_32 addtoany_list" data-a2a-url="https://www.madeintaranto.org/anello-di-san-cataldo/" data-a2a-title="La leggenda dell’anello di San Cataldo e i famosi citri di Taranto"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fanello-di-san-cataldo%2F&amp;linkname=La%20leggenda%20dell%E2%80%99anello%20di%20San%20Cataldo%20e%20i%20famosi%20citri%20di%20Taranto" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fanello-di-san-cataldo%2F&amp;linkname=La%20leggenda%20dell%E2%80%99anello%20di%20San%20Cataldo%20e%20i%20famosi%20citri%20di%20Taranto" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_pinterest" href="https://www.addtoany.com/add_to/pinterest?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fanello-di-san-cataldo%2F&amp;linkname=La%20leggenda%20dell%E2%80%99anello%20di%20San%20Cataldo%20e%20i%20famosi%20citri%20di%20Taranto" title="Pinterest" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_whatsapp" href="https://www.addtoany.com/add_to/whatsapp?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fanello-di-san-cataldo%2F&amp;linkname=La%20leggenda%20dell%E2%80%99anello%20di%20San%20Cataldo%20e%20i%20famosi%20citri%20di%20Taranto" title="WhatsApp" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fanello-di-san-cataldo%2F&amp;linkname=La%20leggenda%20dell%E2%80%99anello%20di%20San%20Cataldo%20e%20i%20famosi%20citri%20di%20Taranto" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fanello-di-san-cataldo%2F&amp;linkname=La%20leggenda%20dell%E2%80%99anello%20di%20San%20Cataldo%20e%20i%20famosi%20citri%20di%20Taranto" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_telegram" href="https://www.addtoany.com/add_to/telegram?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fanello-di-san-cataldo%2F&amp;linkname=La%20leggenda%20dell%E2%80%99anello%20di%20San%20Cataldo%20e%20i%20famosi%20citri%20di%20Taranto" title="Telegram" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd a2a_counter addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div></div>	</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+					<a href="https://www.madeintaranto.org/anello-di-san-cataldo/" class="mt-readmore-btn">Scopri di più <i class="fa fa-long-arrow-right"> </i></a>
+		</footer><!-- .entry-footer -->
+</article><!-- #post-19857 --><article id="post-19853" class="has-thumbnail wow fadeInUp post-19853 post type-post status-publish format-standard has-post-thumbnail hentry category-attrazioni-ed-escursioni">
+	<div class="thumb-cat-wrap">
+		<a class="post-thumbnail" href="https://www.madeintaranto.org/storia-di-san-cataldo/" aria-hidden="true" tabindex="-1">
+			<img width="1160" height="620" src="https://www.madeintaranto.org/wp-content/uploads/2025/05/storia-di-san-cataldo-1160x620.jpg" class="attachment-color-blog-full-width size-color-blog-full-width wp-post-image" alt="Storia di San Cataldo: il santo irlandese che scelse Taranto" decoding="async" />		</a>
+
+					<div class="post-cats-list">
+										<span class="category-button cb-cat-439"><a href="https://www.madeintaranto.org/category/attrazioni-ed-escursioni/">Attrazioni ed Escursioni</a></span>
+							</div><!-- .post-cats-list --></div><!-- .thumb-cat-wrap -->		<div class="entry-cat">
+			<span class="posted-on"><a href="https://www.madeintaranto.org/storia-di-san-cataldo/" rel="bookmark"><time class="entry-date published updated" datetime="2025-05-10T09:39:06+02:00">10 Maggio 2025</time></a></span><span class="byline"><span class="author vcard"><a class="url fn n" href="https://www.madeintaranto.org/author/madeintaranto/">Made in Taranto ®</a></span></span>		</div><!-- .entry-meta -->
+	
+	<header class="entry-header">
+		<h2 class="entry-title"><a href="https://www.madeintaranto.org/storia-di-san-cataldo/" rel="bookmark">Storia di San Cataldo: il santo irlandese che scelse Taranto</a></h2>	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p>Come ha fatto un vescovo irlandese a diventare il patrono di Taranto? La storia di San Cataldo è fatta di viaggi, visioni, miracoli e incontri che hanno cambiato il destino di un’intera città. E che, ancora oggi, raccontano il legame profondo tra fede, mare e identità. Chi vive a Taranto sa bene chi è San [&hellip;]</p>
+<div class="addtoany_share_save_container addtoany_content addtoany_content_bottom"><div class="addtoany_header">CONDIVIDI SUI TUOI SOCIAL</div><div class="a2a_kit a2a_kit_size_32 addtoany_list" data-a2a-url="https://www.madeintaranto.org/storia-di-san-cataldo/" data-a2a-title="Storia di San Cataldo: il santo irlandese che scelse Taranto"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fstoria-di-san-cataldo%2F&amp;linkname=Storia%20di%20San%20Cataldo%3A%20il%20santo%20irlandese%20che%20scelse%20Taranto" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fstoria-di-san-cataldo%2F&amp;linkname=Storia%20di%20San%20Cataldo%3A%20il%20santo%20irlandese%20che%20scelse%20Taranto" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_pinterest" href="https://www.addtoany.com/add_to/pinterest?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fstoria-di-san-cataldo%2F&amp;linkname=Storia%20di%20San%20Cataldo%3A%20il%20santo%20irlandese%20che%20scelse%20Taranto" title="Pinterest" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_whatsapp" href="https://www.addtoany.com/add_to/whatsapp?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fstoria-di-san-cataldo%2F&amp;linkname=Storia%20di%20San%20Cataldo%3A%20il%20santo%20irlandese%20che%20scelse%20Taranto" title="WhatsApp" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fstoria-di-san-cataldo%2F&amp;linkname=Storia%20di%20San%20Cataldo%3A%20il%20santo%20irlandese%20che%20scelse%20Taranto" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fstoria-di-san-cataldo%2F&amp;linkname=Storia%20di%20San%20Cataldo%3A%20il%20santo%20irlandese%20che%20scelse%20Taranto" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_telegram" href="https://www.addtoany.com/add_to/telegram?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Fstoria-di-san-cataldo%2F&amp;linkname=Storia%20di%20San%20Cataldo%3A%20il%20santo%20irlandese%20che%20scelse%20Taranto" title="Telegram" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd a2a_counter addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div></div>	</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+					<a href="https://www.madeintaranto.org/storia-di-san-cataldo/" class="mt-readmore-btn">Scopri di più <i class="fa fa-long-arrow-right"> </i></a>
+		</footer><!-- .entry-footer -->
+</article><!-- #post-19853 --><article id="post-19848" class="has-thumbnail wow fadeInUp post-19848 post type-post status-publish format-standard has-post-thumbnail hentry category-attrazioni-ed-escursioni category-ultime-news">
+	<div class="thumb-cat-wrap">
+		<a class="post-thumbnail" href="https://www.madeintaranto.org/fontana-rosa-dei-venti-taranto/" aria-hidden="true" tabindex="-1">
+			<img width="1160" height="620" src="https://www.madeintaranto.org/wp-content/uploads/2025/05/fontana-rosa-dei-venti-1160x620.jpg" class="attachment-color-blog-full-width size-color-blog-full-width wp-post-image" alt="Fontana Rosa dei Venti: le 8 teste raccontano il respiro di Taranto" decoding="async" />		</a>
+
+					<div class="post-cats-list">
+										<span class="category-button cb-cat-439"><a href="https://www.madeintaranto.org/category/attrazioni-ed-escursioni/">Attrazioni ed Escursioni</a></span>
+										<span class="category-button cb-cat-8"><a href="https://www.madeintaranto.org/category/ultime-news/">Ultime news</a></span>
+							</div><!-- .post-cats-list --></div><!-- .thumb-cat-wrap -->		<div class="entry-cat">
+			<span class="posted-on"><a href="https://www.madeintaranto.org/fontana-rosa-dei-venti-taranto/" rel="bookmark"><time class="entry-date published" datetime="2025-05-01T11:46:56+02:00">1 Maggio 2025</time><time class="updated" datetime="2025-05-01T11:49:07+02:00">1 Maggio 2025</time></a></span><span class="byline"><span class="author vcard"><a class="url fn n" href="https://www.madeintaranto.org/author/madeintaranto/">Made in Taranto ®</a></span></span>		</div><!-- .entry-meta -->
+	
+	<header class="entry-header">
+		<h2 class="entry-title"><a href="https://www.madeintaranto.org/fontana-rosa-dei-venti-taranto/" rel="bookmark">Fontana Rosa dei Venti: le 8 teste raccontano il respiro di Taranto</a></h2>	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p>In Piazza Ebalia il vento ha 8 volti, quelli delle teste scolpite sulla Fontana Rosa dei Venti, simbolo del legame profondo con il mare. La Fontana della Rosa dei Venti (nella foto di Bruno Capilli) è una delle opere più affascinanti della città, anche se spesso viene notata solo di sfuggita, dal finestrino della macchina [&hellip;]</p>
+<div class="addtoany_share_save_container addtoany_content addtoany_content_bottom"><div class="addtoany_header">CONDIVIDI SUI TUOI SOCIAL</div><div class="a2a_kit a2a_kit_size_32 addtoany_list" data-a2a-url="https://www.madeintaranto.org/fontana-rosa-dei-venti-taranto/" data-a2a-title="Fontana Rosa dei Venti: le 8 teste raccontano il respiro di Taranto"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Ffontana-rosa-dei-venti-taranto%2F&amp;linkname=Fontana%20Rosa%20dei%20Venti%3A%20le%208%20teste%20raccontano%20il%20respiro%20di%20Taranto" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Ffontana-rosa-dei-venti-taranto%2F&amp;linkname=Fontana%20Rosa%20dei%20Venti%3A%20le%208%20teste%20raccontano%20il%20respiro%20di%20Taranto" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_pinterest" href="https://www.addtoany.com/add_to/pinterest?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Ffontana-rosa-dei-venti-taranto%2F&amp;linkname=Fontana%20Rosa%20dei%20Venti%3A%20le%208%20teste%20raccontano%20il%20respiro%20di%20Taranto" title="Pinterest" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_whatsapp" href="https://www.addtoany.com/add_to/whatsapp?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Ffontana-rosa-dei-venti-taranto%2F&amp;linkname=Fontana%20Rosa%20dei%20Venti%3A%20le%208%20teste%20raccontano%20il%20respiro%20di%20Taranto" title="WhatsApp" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_linkedin" href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Ffontana-rosa-dei-venti-taranto%2F&amp;linkname=Fontana%20Rosa%20dei%20Venti%3A%20le%208%20teste%20raccontano%20il%20respiro%20di%20Taranto" title="LinkedIn" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Ffontana-rosa-dei-venti-taranto%2F&amp;linkname=Fontana%20Rosa%20dei%20Venti%3A%20le%208%20teste%20raccontano%20il%20respiro%20di%20Taranto" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_telegram" href="https://www.addtoany.com/add_to/telegram?linkurl=https%3A%2F%2Fwww.madeintaranto.org%2Ffontana-rosa-dei-venti-taranto%2F&amp;linkname=Fontana%20Rosa%20dei%20Venti%3A%20le%208%20teste%20raccontano%20il%20respiro%20di%20Taranto" title="Telegram" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd a2a_counter addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div></div>	</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+					<a href="https://www.madeintaranto.org/fontana-rosa-dei-venti-taranto/" class="mt-readmore-btn">Scopri di più <i class="fa fa-long-arrow-right"> </i></a>
+		</footer><!-- .entry-footer -->
+</article><!-- #post-19848 --></div><!-- .mt-pnf-latest-posts-wrapper -->			</div><!-- .page-extra-content -->
+
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+	    </div> <!-- mt-container -->
+	</div><!-- #content -->
+
+    <footer itemscope id="colophon" class="site-footer">
+<div id="top-footer" class="footer-widgets-wrapper footer-column-two mt-clearfix">
+	<div class="mt-container">
+		<div class="footer-widgets-area mt-clearfix">
+			<div class="mt-footer-widget-wrapper mt-column-wrapper mt-clearfix">
+				<div class="mt-footer-widget wow fadeInLeft" data-wow-duration="0.3s">
+					<section id="nav_menu-25" class="widget widget_nav_menu"><h4 class="widget-title">Menu principale</h4><div class="menu-menu-principale-container"><ul id="menu-menu-principale" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-5323"><a href="https://www.madeintaranto.org/">Home</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6274"><a href="#">Scopri Taranto e dintorni</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-12570 cb-cat-439"><a href="https://www.madeintaranto.org/category/attrazioni-ed-escursioni/">Attrazioni ed Escursioni</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6275 cb-cat-751"><a href="https://www.madeintaranto.org/category/borghi-monumenti-e-chiese/">Borghi, Monumenti e Chiese</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6277 cb-cat-687"><a href="https://www.madeintaranto.org/category/gastronomia/">Gastronomia</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6278 cb-cat-748"><a href="https://www.madeintaranto.org/category/gravine-e-chiese-rupestri/">Gravine e chiese rupestri</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6279 cb-cat-2"><a href="https://www.madeintaranto.org/category/artigianato/">Manifattura &#038; Design<span class="menu-item-description">Prodotti e progetti dei maestri di Puglia</span></a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6280 cb-cat-750"><a href="https://www.madeintaranto.org/category/mare-boschi-natura-e-paesaggi/">Mare, boschi, natura e paesaggi</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6281 cb-cat-747"><a href="https://www.madeintaranto.org/category/masserie-frantoi-oleari-e-cantine-vinicole-di-taranto-e-provincia/">Masserie, frantoi oleari e cantine</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6312"><a href="https://www.madeintaranto.org/museo-taranto-per-ammirare-i-mosaici-terme-ville-patrizie/">Museo archeologico di Taranto (Mar.Ta.)</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6293"><a href="https://www.madeintaranto.org/in-mare-con-i-delfini-prenota-ora-la-tua-escursione/">Visita ai Delfini del Golfo di Taranto</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12531"><a href="https://www.madeintaranto.org/taranto-migliore/">Chi siamo</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5512"><a href="https://www.madeintaranto.org/strategie-di-marketing-efficaci/">Strategie marketing efficaci</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16814 cb-cat-766"><a href="https://www.madeintaranto.org/category/proposte/">Proposte</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5324"><a href="https://www.madeintaranto.org/contatti/">Contatti</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11027"><a href="https://www.madeintaranto.org/disclaimer/">Disclaimer</a></li>
+</ul></div></section>				</div>
+
+									<div class="mt-footer-widget wow fadeInLeft" data-woww-duration="0.6s">
+						
+		<section id="recent-posts-10" class="widget widget_recent_entries">
+		<h4 class="widget-title">Articoli recenti</h4>
+		<ul>
+											<li>
+					<a href="https://www.madeintaranto.org/anello-di-san-cataldo/">La leggenda dell’anello di San Cataldo e i famosi citri di Taranto</a>
+									</li>
+											<li>
+					<a href="https://www.madeintaranto.org/storia-di-san-cataldo/">Storia di San Cataldo: il santo irlandese che scelse Taranto</a>
+									</li>
+											<li>
+					<a href="https://www.madeintaranto.org/fontana-rosa-dei-venti-taranto/">Fontana Rosa dei Venti: le 8 teste raccontano il respiro di Taranto</a>
+									</li>
+											<li>
+					<a href="https://www.madeintaranto.org/qualita-del-mare/">La Puglia al 1° Posto per Qualità del Mare!</a>
+									</li>
+											<li>
+					<a href="https://www.madeintaranto.org/pupe-scarcelle-pasqua/">Pupe e scarcelle: il sapore della Pasqua Tarantina</a>
+									</li>
+											<li>
+					<a href="https://www.madeintaranto.org/pecorella-pasquale/">La dolce tradizione tarantina della Pecorella pasquale</a>
+									</li>
+											<li>
+					<a href="https://www.madeintaranto.org/riti-della-settimana-santa-taranto/">I Riti della Settimana Santa a Taranto sono tra i più antichi d&#8217;Italia</a>
+									</li>
+											<li>
+					<a href="https://www.madeintaranto.org/virtual-play/">apre Virtual Play, la 1° Sala Giochi Virtuale con food experience</a>
+									</li>
+											<li>
+					<a href="https://www.madeintaranto.org/taranto-premiata-a-bari/">Taranto premiata a Bari: Nuova Luce tra le eccellenze del Mezzogiorno</a>
+									</li>
+											<li>
+					<a href="https://www.madeintaranto.org/atelier-parsifal/">Dal talento di una madre al sogno di una figlia: così nasce Atelier Parsifal</a>
+									</li>
+					</ul>
+
+		</section>					</div>
+				
+				
+							</div><!-- .mt-footer-widget-wrapper -->
+		</div><!-- .footer-widgets-area -->
+	</div><!-- .mt-container -->
+</div><!-- .footer-widgets-wrapper -->		<div id="bottom-footer">
+            <div class="mt-container">
+        		        				<nav id="footer-navigation" class="footer-navigation">
+    						        				</nav><!-- #footer-navigation -->
+        		
+        		<div class="site-info">
+        			<span class="mt-copyright-text">
+        				Made in Taranto è un marchio di Digida srl P.Iva 02598550735        			</span>
+        			<span class="sep"> | </span>
+        				Theme: Color Blog by <a  itemprop="url" href="https://mysterythemes.com/wp-themes/color-blog" rel="noopener noreferrer nofollow">Mystery Themes</a>.        		</div><!-- .site-info -->
+            </div><!-- .mt-container -->
+        </div><!-- #bottom-footer -->
+</footer><!-- #colophon --><div id="mt-scrollup" class="animated arrow-hide">Back To Top</div>	
+</div><!-- #page -->
+
+<div style="display: none;"><div id="boxzilla-box-18345-content"><p><a href="https://www.imprenditoridisuccesso.it/"><img class="alignnone wp-image-18346 size-full" src="https://www.madeintaranto.org/wp-content/uploads/2022/12/pop_libro.jpg" alt="" width="1080" height="1080" /></a></p>
+</div></div><!--googleoff: all--><div
+				id="my-agile-privacy-notification-area"
+				class="mapPositionBottomCenter mapSizeWide  withEffects map_animation_none false mapButtonsAside"
+				data-nosnippet="true"
+				style="color:#333333 !important;background-color:#ffffff;border-radius:15px;font-size:18px!important;line-height:35px!important" data-animation="none"><div class="map_notify_title map_displayNone" style="background-color:#f14307; color: #ffffff;;"><div class="banner-title-logo" style="background:#ffffff;"></div> My Agile Privacy</div><div class="map-closebutton-right"><a role="button" class="map-button map-reject-button" data-map_action="reject" style="color: #333333;">&#x2715;</a></div><div id="my-agile-privacy-notification-content"><div class="map-area-container"><div data-nosnippet class="map_notification-message  map_flex"><p class="map_p_splitted" style="font-size:18px!important;line-height:35px!important;color:#333333 !important">Questo sito utilizza cookie tecnici e di profilazione.&nbsp;</p><p class="map_p_splitted" style="font-size:18px!important;line-height:35px!important;color:#333333 !important">Puoi accettare, rifiutare o personalizzare i cookie premendo i pulsanti desiderati.&nbsp;</p><p class="map_p_splitted" style="font-size:18px!important;line-height:35px!important;color:#333333 !important">Chiudendo questa informativa continuerai senza accettare.&nbsp;</p></div><div class="map_notification_container"><a role="button" tabindex="0" aria-pressed="false" data-map_action="accept" id="map-accept-button" class="map-button map-button-style map-accept-button" style=";  color:#ffffff !important ;  background-color:#34c659 !important ; border-radius:15px !important; font-size:18px!important;" ><span style="  background-color:#ffffff !important;"></span>Accetta</a><a role="button" tabindex="0" aria-pressed="false" data-map_action="reject" id="map-reject-button" class="map-button map-button-style map-reject-button" style=";  color:#ffffff !important;  background-color:#636366 !important ; border-radius:15px !important; font-size:18px !important;"><span style="  background-color:#ffffff !important;"></span>Rifiuta</a><a role="button" tabindex="0" aria-pressed="false" data-map_action="customize" id="map-customize-button" class="map-button map-button-style map-customize-button" style=";  color:#ffffff !important;  background-color:#8e8e93 !important; border-radius:15px !important; font-size:18px !important;"><span style="  background-color:#ffffff !important ;"></span>Personalizza</a></div></div></div></div><div data-nosnippet class="map_displayNone withEffects right_position" id="my-agile-privacy-consent-again" style="border-radius:15px"><div class="map_logo_container" style="background-color:#f14307;"></div><a role="button" class="showConsent" href="#" data-nosnippet>Gestisci il consenso</a></div>
+<div class="map-modal"
+	id="mapSettingsPopup"
+	data-nosnippet="true"
+	role="dialog"
+	aria-labelledby="mapSettingsPopup"
+	aria-hidden="true"
+	>
+  <div class="map-modal-dialog" role="document">
+	<div class="map-modal-content map-bar-popup withEffects">
+	  <button type="button" class="map-modal-close" id="mapModalClose" tabindex='-1'>
+			&#x2715;
+		  <span class="map-sr-only">Chiudi</span>
+	  </button>
+	  <div class="map-modal-body">
+
+		<div class="map-container-fluid map-tab-container">
+
+			<div class="map-privacy-overview">
+				<p class="map-h4-heading" data-nosnippet>Impostazioni privacy</p>
+			</div>
+
+			<p data-nosnippet
+				style="font-size:18px!important;line-height:35px!important"
+
+				>
+				Questo sito utilizza i cookie per migliorare la tua esperienza di navigazione su questo sito.<br>
+				<span class="map-modal-cookie-policy-link"><a target="blank" href="https://www.madeintaranto.org/cookie-policy/" tabindex="-1">Visualizza la Cookie Policy</a> <a target="blank" href="https://www.madeintaranto.org/privacy-policy/" tabindex="-1">Visualizza l&#039;Informativa Privacy</a></span>
+			</p>
+			<div class="map-cookielist-overflow-container">
+				
+				
+					<div
+						class="map-tab-section map_cookie_description_wrapper  _always_on"
+						data-cookie-baseindex="30"
+						data-cookie-name="Google Tag Manager"
+						data-cookie-api-key="google_tag_manager">
+						<div class="map-tab-header map-standard-header withEffects">
+							<a role="button" class="map_expandItem map-nav-link map-settings-mobile" data-toggle="map-toggle-tab" tabindex='-1'>
+							Google Tag Manager							</a>
+															<span class="map-necessary-caption">Sempre Abilitato</span>
+													</div>
+						<div class="map-tab-content"
+								style="display:none;"
+						>
+							<div data-nosnippet class="map-tab-pane map-fade">
+								<p>Google Tag Manager &egrave; un servizio di gestione dei tag fornito da Google Ireland Limited.I dati inviati vengono collezionati per gli scopi di personalizzazione dell'esperienza e il tracciamento statistico. Trovi maggiori informazioni alla pagina <a href="https://business.safety.google/privacy">"Ulteriori informazioni sulla modalit&agrave; di trattamento delle informazioni personali da parte di Google"</a>.</p><p>Luogo del trattamento: Irlanda - <a target="_blank" href="https://business.safety.google/privacy/" rel="noopener">Privacy Policy</a></p>							</div>
+
+								
+
+						</div>
+
+						
+				</div>
+
+				
+					<div
+						class="map-tab-section map_cookie_description_wrapper  _always_on"
+						data-cookie-baseindex="31"
+						data-cookie-name="Video Vimeo"
+						data-cookie-api-key="vimeo">
+						<div class="map-tab-header map-standard-header withEffects">
+							<a role="button" class="map_expandItem map-nav-link map-settings-mobile" data-toggle="map-toggle-tab" tabindex='-1'>
+							Video Vimeo							</a>
+															<span class="map-necessary-caption">Sempre Abilitato</span>
+													</div>
+						<div class="map-tab-content"
+								style="display:none;"
+						>
+							<div data-nosnippet class="map-tab-pane map-fade">
+								<p>Vimeo &egrave; un servizio di visualizzazione di contenuti video gestito da Vimeo, LLC. Questo servizio serve per integrare tali contenuti nelle proprie pagine.</p><p>Luogo del trattamento: Stati Uniti - <a target="_blank" href="https://vimeo.com/privacy" rel="noopener">Privacy Policy</a></p>							</div>
+
+								
+
+						</div>
+
+						
+				</div>
+
+				
+					<div
+						class="map-tab-section map_cookie_description_wrapper  _always_on"
+						data-cookie-baseindex="25"
+						data-cookie-name="Widget Video YouTube"
+						data-cookie-api-key="youtube">
+						<div class="map-tab-header map-standard-header withEffects">
+							<a role="button" class="map_expandItem map-nav-link map-settings-mobile" data-toggle="map-toggle-tab" tabindex='-1'>
+							Widget Video YouTube							</a>
+															<span class="map-necessary-caption">Sempre Abilitato</span>
+													</div>
+						<div class="map-tab-content"
+								style="display:none;"
+						>
+							<div data-nosnippet class="map-tab-pane map-fade">
+								<p>YouTube &egrave; un servizio di visualizzazione di contenuti video gestito da Google Ireland Limited e permette a questo Sito Web di integrare tali contenuti all&rsquo;interno delle proprie pagine.<br>Questo widget &egrave; impostato in modo che YouTube non salvi informazioni e cookie inerenti agli Utenti su questo Sito Web, a meno che non riproducano il video.</p><p>Luogo del trattamento: Irlanda - <a target="_blank" href="https://policies.google.com/privacy" rel="noopener">Privacy Policy</a></p>							</div>
+
+								
+
+						</div>
+
+						
+				</div>
+
+				
+					<div
+						class="map-tab-section map_cookie_description_wrapper"
+						data-cookie-baseindex="417"
+						data-cookie-name="Google Translate Widget"
+						data-cookie-api-key="google_translate_widget">
+						<div class="map-tab-header map-standard-header withEffects">
+							<a role="button" class="map_expandItem map-nav-link map-settings-mobile" data-toggle="map-toggle-tab" tabindex='-1'>
+							Google Translate Widget							</a>
+							<div class="map-switch">
+														<input data-cookie-baseindex="417" type="checkbox" id="map-checkbox-417" class="map-user-preference-checkbox MapDoNotTouch" />
+														<label for="map-checkbox-417" class="map-slider" data-map-enable="Abilitato" data-map-disable="Disabilitato">
+															<span class="map-sr-only">Google Translate Widget</span>
+														</label>
+													</div>
+													</div>
+						<div class="map-tab-content"
+								style="display:none;"
+						>
+							<div data-nosnippet class="map-tab-pane map-fade">
+								<p>Google Traduttore &egrave; un servizio di traduzione automatica multilingue fornito da Google LLC.</p><p>Luogo del trattamento: Stati Uniti - <a target="_blank" href="https://policies.google.com/privacy" rel="noopener">Privacy Policy</a></p>							</div>
+
+								
+
+						</div>
+
+						
+				</div>
+
+				
+					<div
+						class="map-tab-section map_cookie_description_wrapper"
+						data-cookie-baseindex="400"
+						data-cookie-name="Gravatar"
+						data-cookie-api-key="gravatar">
+						<div class="map-tab-header map-standard-header withEffects">
+							<a role="button" class="map_expandItem map-nav-link map-settings-mobile" data-toggle="map-toggle-tab" tabindex='-1'>
+							Gravatar							</a>
+							<div class="map-switch">
+														<input data-cookie-baseindex="400" type="checkbox" id="map-checkbox-400" class="map-user-preference-checkbox MapDoNotTouch" />
+														<label for="map-checkbox-400" class="map-slider" data-map-enable="Abilitato" data-map-disable="Disabilitato">
+															<span class="map-sr-only">Gravatar</span>
+														</label>
+													</div>
+													</div>
+						<div class="map-tab-content"
+								style="display:none;"
+						>
+							<div data-nosnippet class="map-tab-pane map-fade">
+								<p>Gravatar &egrave; un servizio di visualizzazione di immagini gestito da Automattic Inc. che permette a Automattic Inc. di integrare tali contenuti all&rsquo;interno delle proprie pagine.</p><p>Luogo del trattamento: Stati Uniti - <a target="_blank" href="https://automattic.com/privacy/" rel="noopener">Privacy Policy</a></p>							</div>
+
+								
+
+						</div>
+
+						
+				</div>
+
+				
+					<div
+						class="map-tab-section map_cookie_description_wrapper"
+						data-cookie-baseindex="74"
+						data-cookie-name="Google reCAPTCHA"
+						data-cookie-api-key="google_recaptcha">
+						<div class="map-tab-header map-standard-header withEffects">
+							<a role="button" class="map_expandItem map-nav-link map-settings-mobile" data-toggle="map-toggle-tab" tabindex='-1'>
+							Google reCAPTCHA							</a>
+							<div class="map-switch">
+														<input data-cookie-baseindex="74" type="checkbox" id="map-checkbox-74" class="map-user-preference-checkbox MapDoNotTouch" />
+														<label for="map-checkbox-74" class="map-slider" data-map-enable="Abilitato" data-map-disable="Disabilitato">
+															<span class="map-sr-only">Google reCAPTCHA</span>
+														</label>
+													</div>
+													</div>
+						<div class="map-tab-content"
+								style="display:none;"
+						>
+							<div data-nosnippet class="map-tab-pane map-fade">
+								<p>Google reCAPTCHA &egrave; un servizio di protezione dallo SPAM fornito da Google Ireland Limited.</p>
+<p>L'utilizzo del sistema reCAPTCHA &egrave; soggetto alla&nbsp;<a href="https://www.google.com/intl/it/policies/privacy/" target="_blank" rel="noopener">privacy policy</a><span class="Apple-converted-space">&nbsp; secondo&nbsp;</span><a href="https://www.google.com/intl/it/policies/terms/" target="_blank" rel="noopener">termini di utilizzo</a>&nbsp;di Google.</p><p>Luogo del trattamento: Irlanda - <a target="_blank" href="https://policies.google.com/privacy" rel="noopener">Privacy Policy</a></p>							</div>
+
+								
+
+						</div>
+
+						
+				</div>
+
+				
+					<div
+						class="map-tab-section map_cookie_description_wrapper"
+						data-cookie-baseindex="27"
+						data-cookie-name="AddToAny"
+						data-cookie-api-key="addtoany">
+						<div class="map-tab-header map-standard-header withEffects">
+							<a role="button" class="map_expandItem map-nav-link map-settings-mobile" data-toggle="map-toggle-tab" tabindex='-1'>
+							AddToAny							</a>
+							<div class="map-switch">
+														<input data-cookie-baseindex="27" type="checkbox" id="map-checkbox-27" class="map-user-preference-checkbox MapDoNotTouch" />
+														<label for="map-checkbox-27" class="map-slider" data-map-enable="Abilitato" data-map-disable="Disabilitato">
+															<span class="map-sr-only">AddToAny</span>
+														</label>
+													</div>
+													</div>
+						<div class="map-tab-content"
+								style="display:none;"
+						>
+							<div data-nosnippet class="map-tab-pane map-fade">
+								<p>AddToAny &egrave; un servizio fornito da AddToAny LLC che visualizza un widget usato per la condivisione dei dati con social network e piattaforme esterne.</p><p>Luogo del trattamento: Stati Uniti - <a target="_blank" href="https://www.addtoany.com/privacy" rel="noopener">Privacy Policy</a></p>							</div>
+
+								
+
+						</div>
+
+						
+				</div>
+
+				
+					<div
+						class="map-tab-section map_cookie_description_wrapper"
+						data-cookie-baseindex="33"
+						data-cookie-name="Google Fonts"
+						data-cookie-api-key="googlefonts">
+						<div class="map-tab-header map-standard-header withEffects">
+							<a role="button" class="map_expandItem map-nav-link map-settings-mobile" data-toggle="map-toggle-tab" tabindex='-1'>
+							Google Fonts							</a>
+							<div class="map-switch">
+														<input data-cookie-baseindex="33" type="checkbox" id="map-checkbox-33" class="map-user-preference-checkbox MapDoNotTouch" />
+														<label for="map-checkbox-33" class="map-slider" data-map-enable="Abilitato" data-map-disable="Disabilitato">
+															<span class="map-sr-only">Google Fonts</span>
+														</label>
+													</div>
+													</div>
+						<div class="map-tab-content"
+								style="display:none;"
+						>
+							<div data-nosnippet class="map-tab-pane map-fade">
+								<p>Google Fonts &egrave; un servizio per visualizzare gli stili dei caratteri di scrittura gestito da&nbsp;Google Ireland Limited e serve ad integrare tali contenuti all&rsquo;interno delle proprie pagine.</p><p>Luogo del trattamento: Irlanda - <a target="_blank" href="https://policies.google.com/privacy" rel="noopener">Privacy Policy</a></p>							</div>
+
+								
+
+						</div>
+
+						
+				</div>
+
+				
+					<div
+						class="map-tab-section map_cookie_description_wrapper"
+						data-cookie-baseindex="15"
+						data-cookie-name="Google Analytics"
+						data-cookie-api-key="google_analytics">
+						<div class="map-tab-header map-standard-header withEffects">
+							<a role="button" class="map_expandItem map-nav-link map-settings-mobile" data-toggle="map-toggle-tab" tabindex='-1'>
+							Google Analytics							</a>
+							<div class="map-switch">
+														<input data-cookie-baseindex="15" type="checkbox" id="map-checkbox-15" class="map-user-preference-checkbox MapDoNotTouch" />
+														<label for="map-checkbox-15" class="map-slider" data-map-enable="Abilitato" data-map-disable="Disabilitato">
+															<span class="map-sr-only">Google Analytics</span>
+														</label>
+													</div>
+													</div>
+						<div class="map-tab-content"
+								style="display:none;"
+						>
+							<div data-nosnippet class="map-tab-pane map-fade">
+								<p>Google Analytics è un servizio di analisi web fornito da Google Ireland Limited (“Google”). Google utilizza i dati personali raccolti per tracciare ed esaminare l’uso di questo sito web, compilare report sulle sue attività e condividerli con gli altri servizi sviluppati da Google. Google può utilizzare i tuoi dati personali per contestualizzare e personalizzare gli annunci del proprio network pubblicitario. Questa integrazione di Google Analytics rende anonimo il tuo indirizzo IP. I dati inviati vengono collezionati per gli scopi di personalizzazione dell'esperienza e il tracciamento statistico. Trovi maggiori informazioni alla pagina <a href="https://business.safety.google/privacy">"Ulteriori informazioni sulla modalità di trattamento delle informazioni personali da parte di Google"</a>.</p><p>Luogo del trattamento: Irlanda - <a target="_blank" href="https://business.safety.google/privacy/" rel="noopener">Privacy Policy</a></p>							</div>
+
+								
+
+						</div>
+
+						
+				</div>
+
+				
+							</div> <!-- overflow-cookielist-container -->
+
+		</div> <!-- map-container-fluid -->
+
+						<div data-nosnippet class="modal_credits">
+											<a href="https://www.myagileprivacy.com/about/?utm_source=referral&amp;utm_medium=plugin-pro&amp;utm_campaign=customize" target="_blank" rel="nofollow" tabindex='-1'><img src="https://www.madeintaranto.org/wp-content/plugins/myagileprivacy/frontend/img/privacy-by-pro.png" alt="Privacy by My Agile Privacy"  width="111" height="50"></a>
+									</div>
+
+			
+
+		
+
+	</div> <!-- map-modal-body -->
+	</div>
+  </div>
+</div>
+<div class="map-modal-backdrop map-fade map-settings-overlay"></div>
+<div class="map-modal-backdrop map-fade map-popupbar-overlay"></div>
+
+<!--googleon: all--><script type="text/javascript" src="https://www.madeintaranto.org/wp-includes/js/imagesloaded.min.js?ver=5.0.0" id="imagesloaded-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-includes/js/masonry.min.js?ver=4.2.2" id="masonry-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/plugins/wp-blog-post-layouts/includes/assets/js/frontend.js?ver=1.1.4" id="wpblog-post-layouts-public-script-js"></script>
+<script type="text/javascript" id="wpmagazine-modules-lite-public-script-js-extra">
+/* <![CDATA[ */
+var wpmagazineModulesObject = {"ajax_url":"https:\/\/www.madeintaranto.org\/wp-admin\/admin-ajax.php","_wpnonce":"54cf4f61bd"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/plugins/wp-magazine-modules-lite/includes/assets/js/frontend.js?ver=1.1.3" id="wpmagazine-modules-lite-public-script-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/plugins/wp-magazine-modules-lite/includes/assets/library/slick-slider/js/slick.min.js?ver=1.8.0" id="slick-slider-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/plugins/wp-magazine-modules-lite/includes/assets/library/jQuery.Marquee/jquery.marquee.min.js?ver=1.0.0" id="jquery-marquee-js"></script>
+<script type="text/javascript" id="rocket-browser-checker-js-after">
+/* <![CDATA[ */
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+/* ]]> */
+</script>
+<script type="text/javascript" id="rocket-preload-links-js-extra">
+/* <![CDATA[ */
+var RocketPreloadLinksConfig = {"excludeUris":"\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index.php\/)?(.*)wp-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/www.madeintaranto.org","onHoverDelay":"100","rateThrottle":"3"};
+/* ]]> */
+</script>
+<script type="text/javascript" id="rocket-preload-links-js-after">
+/* <![CDATA[ */
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+/* ]]> */
+</script>
+<script type="text/javascript" id="rocket_lazyload_css-js-extra">
+/* <![CDATA[ */
+var rocket_lazyload_css_data = {"threshold":"300"};
+/* ]]> */
+</script>
+<script type="text/javascript" id="rocket_lazyload_css-js-after">
+/* <![CDATA[ */
+!function o(n,c,a){function u(t,e){if(!c[t]){if(!n[t]){var r="function"==typeof require&&require;if(!e&&r)return r(t,!0);if(s)return s(t,!0);throw(e=new Error("Cannot find module '"+t+"'")).code="MODULE_NOT_FOUND",e}r=c[t]={exports:{}},n[t][0].call(r.exports,function(e){return u(n[t][1][e]||e)},r,r.exports,o,n,c,a)}return c[t].exports}for(var s="function"==typeof require&&require,e=0;e<a.length;e++)u(a[e]);return u}({1:[function(e,t,r){"use strict";{const c="undefined"==typeof rocket_pairs?[]:rocket_pairs,a=(("undefined"==typeof rocket_excluded_pairs?[]:rocket_excluded_pairs).map(t=>{var e=t.selector;document.querySelectorAll(e).forEach(e=>{e.setAttribute("data-rocket-lazy-bg-"+t.hash,"excluded")})}),document.querySelector("#wpr-lazyload-bg-container"));var o=rocket_lazyload_css_data.threshold||300;const u=new IntersectionObserver(e=>{e.forEach(t=>{t.isIntersecting&&c.filter(e=>t.target.matches(e.selector)).map(t=>{var e;t&&((e=document.createElement("style")).textContent=t.style,a.insertAdjacentElement("afterend",e),t.elements.forEach(e=>{u.unobserve(e),e.setAttribute("data-rocket-lazy-bg-"+t.hash,"loaded")}))})})},{rootMargin:o+"px"});function n(){0<(0<arguments.length&&void 0!==arguments[0]?arguments[0]:[]).length&&c.forEach(t=>{try{document.querySelectorAll(t.selector).forEach(e=>{"loaded"!==e.getAttribute("data-rocket-lazy-bg-"+t.hash)&&"excluded"!==e.getAttribute("data-rocket-lazy-bg-"+t.hash)&&(u.observe(e),(t.elements||=[]).push(e))})}catch(e){console.error(e)}})}n(),function(){const r=window.MutationObserver;return function(e,t){if(e&&1===e.nodeType)return(t=new r(t)).observe(e,{attributes:!0,childList:!0,subtree:!0}),t}}()(document.querySelector("body"),n)}},{}]},{},[1]);
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/themes/color-blog/assets/js/mt-combine-scripts.js?ver=1.1.7" id="color-blog-combine-scripts-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/themes/color-blog/assets/js/navigation.js?ver=1.1.7" id="color-blog-navigation-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/themes/color-blog/assets/js/skip-link-focus-fix.js?ver=1.1.7" id="color-blog-skip-link-focus-fix-js"></script>
+<script type="text/javascript" id="color-blog-custom-scripts-js-extra">
+/* <![CDATA[ */
+var color_blogObject = {"menu_sticky":"on","wow_effect":"on"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/themes/color-blog/assets/js/mt-custom-scripts.js?ver=1.1.7" id="color-blog-custom-scripts-js"></script>
+<script type="text/javascript" src="" id="google-recaptcha-js" class=" my_agile_privacy_activate autoscan_mode map_src_script_blocked map_blocked_content" unblocked_src="https://www.google.com/recaptcha/api.js?render=6LfLzfElAAAAAE2Scw0CpqysftZdTME4s7PfocBr&amp;ver=3.0" data-cookie-api-key="google_recaptcha" data-friendly_name="Google reCAPTCHA"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-includes/js/dist/vendor/wp-polyfill-inert.min.js?ver=3.1.2" id="wp-polyfill-inert-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.14.0" id="regenerator-runtime-js"></script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0" id="wp-polyfill-js"></script>
+<script type="text/javascript" id="wpcf7-recaptcha-js-extra">
+/* <![CDATA[ */
+var wpcf7_recaptcha = {"sitekey":"6LfLzfElAAAAAE2Scw0CpqysftZdTME4s7PfocBr","actions":{"homepage":"homepage","contactform":"contactform"}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="" id="wpcf7-recaptcha-js" class=" my_agile_privacy_activate autoscan_mode map_src_script_blocked map_blocked_content mapWait custom_patch_apply map_trigger_custom_patch_1" unblocked_src="https://www.madeintaranto.org/wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.9.8" data-cookie-api-key="google_recaptcha" data-friendly_name="Google reCAPTCHA"></script>
+<script type="text/javascript" id="boxzilla-js-extra">
+/* <![CDATA[ */
+var boxzilla_options = {"testMode":"","boxes":[{"id":18345,"icon":"&times;","content":"","css":{"width":600,"position":"center"},"trigger":{"method":"percentage","value":65},"animation":"fade","cookie":{"triggered":24,"dismissed":0},"rehide":false,"position":"center","screenWidthCondition":null,"closable":true,"post":{"id":18345,"title":"Sample Box","slug":"sample-box"}}]};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.madeintaranto.org/wp-content/plugins/boxzilla/assets/js/script.js?ver=3.3.1" id="boxzilla-js"></script>
+<script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.madeintaranto.org/wp-content/plugins/wp-rocket/assets/js/lazyload/17.8.3/lazyload.min.js"></script></body>
+</html>
