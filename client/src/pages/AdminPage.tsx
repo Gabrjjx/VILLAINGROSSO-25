@@ -297,12 +297,12 @@ function AdminPage() {
     twoMonthsAgoDate.setMonth(twoMonthsAgoDate.getMonth() - 2);
     
     const lastMonthBookings = bookings.filter(booking => {
-      const bookingDate = new Date(booking.createdAt);
+      const bookingDate = booking.createdAt ? new Date(booking.createdAt) : new Date();
       return bookingDate >= lastMonthDate;
     }).length;
     
     const twoMonthsAgoBookings = bookings.filter(booking => {
-      const bookingDate = new Date(booking.createdAt);
+      const bookingDate = booking.createdAt ? new Date(booking.createdAt) : new Date();
       return bookingDate >= twoMonthsAgoDate && bookingDate < lastMonthDate;
     }).length;
     
@@ -623,9 +623,9 @@ function AdminPage() {
                                     <TableCell className="font-medium">{booking.guestName}</TableCell>
                                     <TableCell className="text-xs">
                                       <div className="flex flex-col">
-                                        <span>{format(new Date(booking.startDate), "dd MMM", { locale: language === "it" ? it : enUS })}</span>
+                                        <span>{booking.startDate ? format(new Date(booking.startDate), "dd MMM", { locale: language === "it" ? it : enUS }) : "-"}</span>
                                         <span className="text-muted-foreground">
-                                          {format(new Date(booking.endDate), "dd MMM", { locale: language === "it" ? it : enUS })}
+                                          {booking.endDate ? format(new Date(booking.endDate), "dd MMM", { locale: language === "it" ? it : enUS }) : "-"}
                                         </span>
                                       </div>
                                     </TableCell>
