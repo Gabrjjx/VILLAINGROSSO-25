@@ -153,7 +153,7 @@ function AccountPage() {
                               </h3>
                               <p className="text-sm text-muted-foreground">
                                 <Clock className="h-4 w-4 inline mr-1" />
-                                {t("account.bookings.nights", { count: Math.ceil((new Date(booking.endDate).getTime() - new Date(booking.startDate).getTime()) / (1000 * 60 * 60 * 24)) })}
+                                {t("account.bookings.nights").replace("{{count}}", Math.ceil((new Date(booking.endDate).getTime() - new Date(booking.startDate).getTime()) / (1000 * 60 * 60 * 24)).toString())}
                               </p>
                             </div>
                             <div className="text-right">

@@ -155,6 +155,21 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2, delay: navLinks.length * 0.1 }}
+                className="w-full max-w-[200px] mt-2"
+              >
+                <Link 
+                  to="/auth" 
+                  className="flex justify-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {t("navbar.login")}
+                </Link>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2, delay: (navLinks.length + 1) * 0.1 }}
                 className="pt-2"
               >
                 <LanguageSwitcher />
