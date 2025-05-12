@@ -10,6 +10,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Configurazione dell'autenticazione
   setupAuth(app);
+  
+  // Middleware di debug per sessioni e autenticazione
+  app.use((req, res, next) => {
+    log(`[Session Debug] Path: ${req.path}, isAuthenticated: ${req.isAuthenticated()}, SessionID: ${req.sessionID}`, "info");
+    if (req.isAuthenticated()) {
+      log(`[Session Debug] User: ${req.user?.username}, UserID: ${req.user?.id}`, "info");
+    }
+    next();
+  });
 
   // API per i messaggi di contatto
   app.post("/api/contact", async (req: Request, res: Response) => {

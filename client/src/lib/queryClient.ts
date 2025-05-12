@@ -23,19 +23,30 @@ export const apiRequest = async (
 ) => {
   const headers: HeadersInit = {
     "Content-Type": "application/json",
+    "Accept": "application/json",
   };
 
   const config: RequestInit = {
     method,
     headers,
-    credentials: "include",
+    credentials: "same-origin", // Cambiato da "include" a "same-origin"
+    mode: "same-origin",        // Aggiungi questa riga
   };
 
   if (body) {
     config.body = JSON.stringify(body);
   }
 
-  return fetch(url, config);
+  // Aggiungi un timestamp per evitare cache
+  const timestamp = new Date().getTime();
+  const urlWithTimestamp = url.includes("?") 
+    ? `${url}&_t=${timestamp}` 
+    : `${url}?_t=${timestamp}`;
+
+  // Log dell'API request
+  console.log(`API Request: ${method} ${urlWithTimestamp}`);
+  
+  return fetch(urlWithTimestamp, config);
 };
 
 // Funzione getQueryFn per usare con useQuery
