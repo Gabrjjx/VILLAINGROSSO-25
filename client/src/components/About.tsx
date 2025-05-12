@@ -129,7 +129,7 @@ export default function About() {
               transition={{ duration: 0.5 }}
             >
               <img 
-                src="/attached_assets/shutterstock_1699899871.jpg" 
+                src="/img/taranto/shutterstock_1699899871.jpg" 
                 alt="Mare cristallino" 
                 className="w-full h-full object-cover"
               />
@@ -149,7 +149,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <img 
-                src="/attached_assets/Torre-Lapillo-e-Punta-Prosciutto-1.jpg" 
+                src="/img/taranto/Torre-Lapillo-e-Punta-Prosciutto-1.jpg" 
                 alt="Spiagge ioniche" 
                 className="w-full h-full object-cover"
               />
@@ -169,7 +169,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img 
-                src="/attached_assets/tramonti-taranto-2.jpg" 
+                src="/img/taranto/tramonti-taranto-2.jpg" 
                 alt="Tramonto sul Mare" 
                 className="w-full h-full object-cover"
               />
