@@ -331,7 +331,8 @@ export default {
       dashboard: "Dashboard",
       users: "Users",
       bookings: "Bookings",
-      messages: "Messages",
+      contactForm: "Contact Requests",
+      chatWithUsers: "Chat with Users",
     },
     dashboard: {
       users: "Users",
