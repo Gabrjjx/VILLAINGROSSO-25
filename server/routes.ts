@@ -117,12 +117,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Endpoints per la chat
   app.get("/api/chat-messages", async (req: Request, res: Response) => {
+    log(`GET /api/chat-messages - isAuthenticated: ${req.isAuthenticated()}`, "info");
+    
     if (!req.isAuthenticated()) {
       return res.status(401).json({ error: "Authentication required" });
     }
     
     try {
+      log(`Fetching chat messages for user ID: ${req.user.id}`, "info");
       const messages = await storage.getChatMessagesByUser(req.user.id);
+      log(`Found ${messages.length} messages`, "info");
       res.json(messages);
     } catch (error) {
       log(`Error fetching chat messages: ${error}`, "error");
@@ -131,17 +135,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   app.post("/api/chat-messages", async (req: Request, res: Response) => {
+    log(`POST /api/chat-messages - isAuthenticated: ${req.isAuthenticated()} - body: ${JSON.stringify(req.body)}`, "info");
+    
     if (!req.isAuthenticated()) {
       return res.status(401).json({ error: "Authentication required" });
     }
     
     try {
+      log(`Creating chat message for user ID: ${req.user.id} - message: ${req.body.message}`, "info");
       const newMessage = await storage.createChatMessage({
         userId: req.user.id,
         isFromAdmin: false,
         message: req.body.message,
       });
       
+      log(`Created new message with ID: ${newMessage.id}`, "info");
       res.status(201).json(newMessage);
     } catch (error) {
       log(`Error creating chat message: ${error}`, "error");
