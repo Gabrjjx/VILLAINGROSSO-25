@@ -1,25 +1,33 @@
 import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useAuth } from "@/hooks/use-auth";
-import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Loader2, Send, User } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Loader2, Send } from "lucide-react";
 import { format } from "date-fns";
 import { it, enUS } from "date-fns/locale";
 
 // Tipo per i messaggi di chat
 interface ChatMessage {
   id: number;
-  userId: number;
   isFromAdmin: boolean;
   message: string;
   createdAt: string;
 }
+
+// Demo risposte predefinite dell'amministratore (versione demo)
+const ADMIN_RESPONSES: Record<string, string> = {
+  default: "Grazie per il tuo messaggio! Un membro dello staff ti risponderà presto.",
+  prezzo: "Il prezzo varia in base alla stagione. In che periodo vorresti soggiornare?",
+  disponibilità: "Per verificare la disponibilità, ti consigliamo di procedere con una prenotazione. Sarei felice di aiutarti!",
+  servizi: "La villa è dotata di WiFi gratuito, aria condizionata, parcheggio privato e accesso alla spiaggia a 300m di distanza.",
+  animali: "Siamo lieti di informarti che gli animali domestici sono i benvenuti nella nostra struttura!",
+  "check-in": "Il check-in è disponibile dalle 15:00 alle 20:00. Se hai esigenze particolari, faccelo sapere!",
+  "check-out": "Il check-out è previsto entro le 10:00. È possibile concordare un late check-out con un piccolo supplemento.",
+};
 
 export default function ChatInterface() {
   const { t, language } = useLanguage();
@@ -30,13 +38,23 @@ export default function ChatInterface() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [nextId, setNextId] = useState(1);
 
-  // Carica i messaggi all'avvio
+  // Carica i messaggi di benvenuto all'avvio (simulazione)
   useEffect(() => {
-    fetchMessages();
-    // Aggiorna i messaggi ogni 10 secondi
-    const interval = setInterval(fetchMessages, 10000);
-    return () => clearInterval(interval);
+    // Simulazione di caricamento
+    setTimeout(() => {
+      setMessages([
+        {
+          id: 1,
+          isFromAdmin: true,
+          message: "Benvenuto nella chat di Villa Ingrosso! Come possiamo aiutarti?",
+          createdAt: new Date().toISOString(),
+        },
+      ]);
+      setIsLoading(false);
+      setNextId(2);
+    }, 1000);
   }, []);
 
   // Scorre automaticamente fino all'ultimo messaggio
@@ -48,44 +66,52 @@ export default function ChatInterface() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Recupera i messaggi dal server
-  const fetchMessages = async () => {
-    try {
-      const res = await apiRequest("GET", "/api/chat-messages");
-      if (!res.ok) {
-        throw new Error("Failed to fetch messages");
-      }
-      const data = await res.json();
-      setMessages(data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching messages:", error);
-      if (isLoading) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  // Invia un nuovo messaggio
+  // Invia un nuovo messaggio (simulazione)
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
 
     setIsSending(true);
+    
     try {
-      const res = await apiRequest("POST", "/api/chat-messages", {
+      // Crea il messaggio dell'utente
+      const userMessage: ChatMessage = {
+        id: nextId,
+        isFromAdmin: false,
         message: newMessage,
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to send message");
-      }
-
-      const sentMessage = await res.json();
-      setMessages([...messages, sentMessage]);
+        createdAt: new Date().toISOString(),
+      };
+      
+      setMessages((prevMessages) => [...prevMessages, userMessage]);
+      setNextId(nextId + 1);
+      
+      // Simula la risposta ritardata dell'amministratore
+      setTimeout(() => {
+        // Cerca parole chiave nel messaggio per fornire risposte pertinenti
+        const lowerMessage = newMessage.toLowerCase();
+        let responseMessage = ADMIN_RESPONSES.default;
+        
+        for (const [keyword, response] of Object.entries(ADMIN_RESPONSES)) {
+          if (lowerMessage.includes(keyword.toLowerCase()) && keyword !== 'default') {
+            responseMessage = response;
+            break;
+          }
+        }
+        
+        const adminResponse: ChatMessage = {
+          id: nextId + 1,
+          isFromAdmin: true,
+          message: responseMessage,
+          createdAt: new Date().toISOString(),
+        };
+        
+        setMessages((prevMessages) => [...prevMessages, adminResponse]);
+        setNextId(nextId + 2);
+      }, 1500);
+      
       setNewMessage("");
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error("Error in chat simulation:", error);
       toast({
         title: t("chat.error"),
         description: t("chat.sendError"),
@@ -129,7 +155,7 @@ export default function ChatInterface() {
               >
                 <Avatar className={`${msg.isFromAdmin ? "bg-primary" : "bg-muted"}`}>
                   <AvatarFallback>
-                    {msg.isFromAdmin ? "A" : user?.username?.charAt(0).toUpperCase()}
+                    {msg.isFromAdmin ? "A" : user?.username?.charAt(0).toUpperCase() || "U"}
                   </AvatarFallback>
                 </Avatar>
                 <div
@@ -140,7 +166,7 @@ export default function ChatInterface() {
                   }`}
                 >
                   <div className="mb-1 text-xs opacity-70">
-                    {msg.isFromAdmin ? t("chat.admin") : user?.username}{" "}
+                    {msg.isFromAdmin ? t("chat.admin") : user?.username || "Ospite"}{" "}
                     • {formatMessageDate(msg.createdAt)}
                   </div>
                   <p className="whitespace-pre-wrap break-words">{msg.message}</p>
