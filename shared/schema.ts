@@ -1,4 +1,4 @@
-import { pgTable, serial, text, varchar, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, varchar, boolean, timestamp, integer, real } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -18,9 +18,11 @@ export const users = pgTable("users", {
 export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
   userId: serial("user_id").references(() => users.id),
+  guestName: varchar("guest_name", { length: 100 }).notNull(),
   startDate: timestamp("start_date").notNull(),
   endDate: timestamp("end_date").notNull(),
-  numberOfGuests: serial("number_of_guests").notNull(),
+  guestCount: integer("guest_count").notNull(),
+  totalAmount: real("total_amount").notNull(),
   status: varchar("status", { length: 20 }).default("pending"),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow(),

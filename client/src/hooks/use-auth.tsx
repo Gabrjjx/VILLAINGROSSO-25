@@ -6,7 +6,7 @@ import {
 import { User, InsertUser } from "@shared/schema";
 import { apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "wouter";
+import { useLocation } from "wouter";
 
 type AuthContextType = {
   user: Omit<User, "password"> | null;
@@ -42,7 +42,7 @@ const useUserQuery = () => {
 
 const useLoginMutation = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
 
   return useMutation({
     mutationFn: async (credentials: LoginData) => {
@@ -78,7 +78,7 @@ const useLoginMutation = () => {
 
 const useRegisterMutation = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
 
   return useMutation({
     mutationFn: async (userData: InsertUser) => {
@@ -114,7 +114,7 @@ const useRegisterMutation = () => {
 
 const useLogoutMutation = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
 
   return useMutation({
     mutationFn: async () => {
