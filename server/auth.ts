@@ -163,16 +163,28 @@ export function setupAuth(app: Express) {
       }
       
       // Autenticazione manuale
-      req.login(user, (err) => {
+      req.login(user, async (err) => {
         if (err) {
           console.error("Errore durante login:", err);
           return next(err);
         }
         
         console.log("Login completato con successo per utente:", username);
+        
+        // Importa la funzione per generare token JWT
+        const { generateToken } = await import('./jwt');
+        
+        // Genera un token JWT per l'utente
+        const token = generateToken(user);
+        
         // Elimina la password dalla risposta
         const { password, ...userWithoutPassword } = user;
-        res.status(200).json(userWithoutPassword);
+        
+        // Invia il token e i dati utente
+        res.status(200).json({ 
+          user: userWithoutPassword,
+          token 
+        });
       });
     } catch (err) {
       console.error("Errore durante il login:", err);

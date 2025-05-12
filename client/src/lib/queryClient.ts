@@ -25,12 +25,18 @@ export const apiRequest = async (
     "Content-Type": "application/json",
     "Accept": "application/json",
   };
+  
+  // Aggiungi il token JWT all'header Authorization se esiste nel localStorage
+  const authToken = localStorage.getItem('auth_token');
+  if (authToken) {
+    headers["Authorization"] = `Bearer ${authToken}`;
+  }
 
   const config: RequestInit = {
     method,
     headers,
-    credentials: "same-origin", // Cambiato da "include" a "same-origin"
-    mode: "same-origin",        // Aggiungi questa riga
+    credentials: "same-origin",
+    mode: "same-origin",
   };
 
   if (body) {
@@ -44,7 +50,7 @@ export const apiRequest = async (
     : `${url}?_t=${timestamp}`;
 
   // Log dell'API request
-  console.log(`API Request: ${method} ${urlWithTimestamp}`);
+  console.log(`API Request: ${method} ${urlWithTimestamp} ${authToken ? '(with JWT)' : '(without JWT)'}`);
   
   return fetch(urlWithTimestamp, config);
 };

@@ -51,7 +51,16 @@ const useLoginMutation = () => {
         const errorData = await res.json();
         throw new Error(errorData.error || "Login failed");
       }
-      return await res.json();
+      const data = await res.json();
+      
+      // Salva il token JWT nel localStorage
+      if (data.token) {
+        localStorage.setItem('auth_token', data.token);
+        console.log("Token JWT salvato nel localStorage");
+      }
+      
+      // Restituisci l'utente (sia che sia in data.user o direttamente in data)
+      return data.user || data;
     },
     onSuccess: (user) => {
       queryClient.setQueryData(["/api/user"], user);
@@ -122,6 +131,10 @@ const useLogoutMutation = () => {
       if (!res.ok) {
         throw new Error("Logout failed");
       }
+      
+      // Rimuovi il token JWT dal localStorage
+      localStorage.removeItem('auth_token');
+      console.log("Token JWT rimosso dal localStorage");
     },
     onSuccess: () => {
       queryClient.setQueryData(["/api/user"], null);

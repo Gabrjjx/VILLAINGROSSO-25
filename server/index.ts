@@ -5,6 +5,7 @@ import { setupAuth } from "./auth";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { serveImageStatic } from "./images";
+import { jwtMiddleware } from "./jwt";
 
 const app = express();
 
@@ -23,6 +24,9 @@ if (process.env.NODE_ENV === "development") {
   }));
 }
 
+// Middleware JWT per autenticazione tramite token
+app.use(jwtMiddleware);
+
 // Debugging middleware per i problemi di sessione
 app.use((req, res, next) => {
   const isAuthenticated = req.isAuthenticated ? req.isAuthenticated() : false;
@@ -38,7 +42,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Setup autenticazione
+// Setup autenticazione tradizionale con sessioni
 setupAuth(app);
 
 // Serve static images
