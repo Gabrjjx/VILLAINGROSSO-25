@@ -11,6 +11,7 @@ import Privacy from "@/pages/Privacy";
 import AuthPage from "@/pages/AuthPage";
 import AccountPage from "@/pages/AccountPage";
 import AdminPage from "@/pages/AdminPage";
+import BookingPage from "@/pages/BookingPage";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
 import { AuthProvider } from "@/hooks/use-auth";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -35,6 +36,7 @@ function Router() {
       <Route path="/auth" component={AuthPage} />
       <Route path="/account" component={AccountPage} />
       <Route path="/admin" component={AdminPage} />
+      <Route path="/booking" component={BookingPage} />
       <Route component={NotFound} />
     </Switch>
   );

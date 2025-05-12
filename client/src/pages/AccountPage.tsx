@@ -187,7 +187,7 @@ function AccountPage() {
                 ) : (
                   <div className="py-8 text-center">
                     <p className="text-muted-foreground">{t("account.bookings.noBookings")}</p>
-                    <Button className="mt-4">
+                    <Button className="mt-4" onClick={() => window.location.href = "/booking"}>
                       {t("account.bookings.bookNow")}
                     </Button>
                   </div>

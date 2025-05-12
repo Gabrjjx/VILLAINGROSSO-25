@@ -283,6 +283,35 @@ export default {
     },
   },
   
+  // Traduzioni per la pagina di prenotazione
+  bookingPage: {
+    title: "Prenota il tuo soggiorno",
+    description: "Compila il modulo per prenotare il tuo soggiorno a Villa Ingrosso",
+  },
+  
+  booking: {
+    title: "Prenotazione",
+    description: "Inserisci i dettagli per la tua prenotazione",
+    dateRange: "Periodo di soggiorno",
+    selectDates: "Seleziona le date",
+    night: "notte",
+    nights: "notti",
+    guestCount: "Numero di ospiti",
+    guestInfo: "Massimo 10 persone",
+    notes: "Note aggiuntive (opzionali)",
+    notesPlaceholder: "Inserisci eventuali richieste speciali o informazioni aggiuntive",
+    submit: "Prenota ora",
+    submitting: "Prenotazione in corso...",
+    success: {
+      title: "Prenotazione effettuata",
+      message: "La tua prenotazione è stata inviata con successo. Riceverai presto una conferma via email.",
+    },
+    error: {
+      title: "Errore di prenotazione",
+      message: "Si è verificato un errore durante la prenotazione. Riprova più tardi.",
+    }
+  },
+  
   // Traduzioni per l'area amministrativa
   admin: {
     title: "Pannello di amministrazione",

@@ -282,6 +282,35 @@ export default {
     },
   },
   
+  // Booking page translations
+  bookingPage: {
+    title: "Book Your Stay",
+    description: "Fill out the form to book your stay at Villa Ingrosso",
+  },
+  
+  booking: {
+    title: "Booking",
+    description: "Enter the details for your reservation",
+    dateRange: "Stay period",
+    selectDates: "Select dates",
+    night: "night",
+    nights: "nights",
+    guestCount: "Number of guests",
+    guestInfo: "Maximum 10 people",
+    notes: "Additional notes (optional)",
+    notesPlaceholder: "Enter any special requests or additional information",
+    submit: "Book now",
+    submitting: "Booking...",
+    success: {
+      title: "Booking Completed",
+      message: "Your booking has been submitted successfully. You will receive a confirmation email soon.",
+    },
+    error: {
+      title: "Booking Error",
+      message: "An error occurred during booking. Please try again later.",
+    }
+  },
+  
   // Admin area translations
   admin: {
     title: "Administration panel",
