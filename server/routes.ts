@@ -127,6 +127,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Endpoints per la chat
   app.get("/api/chat-messages", async (req: Request, res: Response) => {
     log(`GET /api/chat-messages - isAuthenticated: ${req.isAuthenticated()}`, "info");
+    console.log("GET /api/chat-messages - Headers:", req.headers);
     
     if (!req.isAuthenticated()) {
       return res.status(401).json({ error: "Authentication required" });
@@ -145,6 +146,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   app.post("/api/chat-messages", async (req: Request, res: Response) => {
     log(`POST /api/chat-messages - isAuthenticated: ${req.isAuthenticated()} - body: ${JSON.stringify(req.body)}`, "info");
+    console.log("POST /api/chat-messages - Headers:", req.headers);
     
     if (!req.isAuthenticated()) {
       return res.status(401).json({ error: "Authentication required" });
