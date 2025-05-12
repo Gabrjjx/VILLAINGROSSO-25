@@ -1,4 +1,15 @@
 export default {
+  // Chat translations
+  chat: {
+    title: "Chat with administration",
+    noMessages: "No messages yet",
+    startConversation: "Send a message to start a conversation",
+    messagePlaceholder: "Write a message...",
+    send: "Send",
+    error: "Error",
+    sendError: "Failed to send message. Please try again later.",
+    admin: "Administration",
+  },
   common: {
     learnMore: "Learn more",
     discoverMore: "Discover more",
@@ -253,6 +264,7 @@ export default {
     tabs: {
       profile: "Profile",
       bookings: "Bookings",
+      chat: "Chat",
     },
     profile: {
       title: "Your profile",

@@ -39,13 +39,30 @@ export const contactMessages = pgTable("contact_messages", {
 });
 
 // Relazioni tra le tabelle
+// Chat messages table
+export const chatMessages = pgTable("chat_messages", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  isFromAdmin: boolean("is_from_admin").notNull().default(false),
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const usersRelations = relations(users, ({ many }) => ({
   bookings: many(bookings),
+  chatMessages: many(chatMessages),
 }));
 
 export const bookingsRelations = relations(bookings, ({ one }) => ({
   user: one(users, {
     fields: [bookings.userId],
+    references: [users.id],
+  }),
+}));
+
+export const chatMessagesRelations = relations(chatMessages, ({ one }) => ({
+  user: one(users, {
+    fields: [chatMessages.userId],
     references: [users.id],
   }),
 }));

@@ -1,4 +1,15 @@
 export default {
+  // Traduzioni per la chat
+  chat: {
+    title: "Chat con l'amministrazione",
+    noMessages: "Non ci sono ancora messaggi",
+    startConversation: "Invia un messaggio per iniziare una conversazione",
+    messagePlaceholder: "Scrivi un messaggio...",
+    send: "Invia",
+    error: "Errore",
+    sendError: "Impossibile inviare il messaggio. Riprova più tardi.",
+    admin: "Amministrazione",
+  },
   common: {
     learnMore: "Scopri di più",
     discoverMore: "Scopri di più",
@@ -254,6 +265,7 @@ export default {
     tabs: {
       profile: "Profilo",
       bookings: "Prenotazioni",
+      chat: "Chat"
     },
     profile: {
       title: "Il tuo profilo",
