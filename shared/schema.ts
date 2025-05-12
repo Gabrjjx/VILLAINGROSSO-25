@@ -8,9 +8,9 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: varchar("username", { length: 50 }).notNull().unique(),
   password: text("password").notNull(),
-  fullName: varchar("full_name", { length: 100 }),
+  fullName: varchar("full_name", { length: 100 }).notNull().default(""),
   email: varchar("email", { length: 100 }).notNull(),
-  isAdmin: boolean("is_admin").default(false),
+  isAdmin: boolean("is_admin").notNull().default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

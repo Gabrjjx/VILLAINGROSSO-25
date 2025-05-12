@@ -35,7 +35,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     try {
-      const userId = req.user!.id;
+      const userId = (req.user as Express.User).id;
       const bookings = await storage.getBookingsByUser(userId);
       res.json(bookings);
     } catch (error) {
@@ -51,7 +51,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     
     try {
       const bookingData = req.body as InsertBooking;
-      bookingData.userId = req.user!.id;
+      bookingData.userId = (req.user as Express.User).id;
       
       const newBooking = await storage.createBooking(bookingData);
       res.status(201).json(newBooking);

@@ -34,11 +34,11 @@ export interface IStorage {
   deleteContactMessage(id: number): Promise<boolean>;
   
   // Sessioni per l'autenticazione
-  sessionStore: session.SessionStore;
+  sessionStore: session.Store;
 }
 
 export class DatabaseStorage implements IStorage {
-  sessionStore: session.SessionStore;
+  sessionStore: session.Store;
   
   constructor() {
     this.sessionStore = new PostgresSessionStore({

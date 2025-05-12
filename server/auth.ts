@@ -5,11 +5,18 @@ import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
-import { User } from "@shared/schema";
+import { User, users } from "@shared/schema";
 
 declare global {
   namespace Express {
-    interface User extends User {}
+    // Estende User con le proprietà del nostro schema
+    interface User {
+      id: number;
+      username: string;
+      email: string;
+      fullName?: string;
+      isAdmin: boolean;
+    }
   }
 }
 
