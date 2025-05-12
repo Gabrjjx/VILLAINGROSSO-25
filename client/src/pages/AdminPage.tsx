@@ -519,12 +519,12 @@ function AdminPage() {
             </Card>
           </TabsContent>
 
-          {/* Tab Messaggi */}
+          {/* Tab Richieste di contatto */}
           <TabsContent value="messages" className="mt-6">
             <Card>
               <CardHeader>
-                <CardTitle>{t("admin.messages.title")}</CardTitle>
-                <CardDescription>{t("admin.messages.description")}</CardDescription>
+                <CardTitle>{t("admin.messages.formTitle") || "Richieste di contatto"}</CardTitle>
+                <CardDescription>{t("admin.messages.formDescription") || "Gestisci le richieste degli utenti inviate tramite il modulo di contatto"}</CardDescription>
               </CardHeader>
               <CardContent>
                 {messagesLoading ? (
@@ -581,12 +581,12 @@ function AdminPage() {
             </Card>
           </TabsContent>
           
-          {/* Tab Chat */}
+          {/* Tab Chat con utenti */}
           <TabsContent value="chat" className="mt-6">
             <Card>
               <CardHeader>
                 <CardTitle>{t("admin.chat.title") || "Chat con gli utenti"}</CardTitle>
-                <CardDescription>{t("admin.chat.description") || "Gestisci le conversazioni con gli utenti della piattaforma"}</CardDescription>
+                <CardDescription>{t("admin.chat.chatDescription") || "Conversazioni in tempo reale con gli utenti della piattaforma"}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
