@@ -63,8 +63,8 @@ export default {
     beach3: "Sunset by the Sea",
   },
   gallery: {
-    title: "Gallery",
-    description: "Explore the spaces of Villa Ingrosso through our photo gallery.",
+    title: "Photo Gallery",
+    description: "Explore the indoor and outdoor spaces of Villa Ingrosso through our rich photo gallery with authentic images.",
   },
   location: {
     title: "Location",

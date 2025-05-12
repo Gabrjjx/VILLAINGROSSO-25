@@ -3,10 +3,7 @@ export default {
     learnMore: "Scopri di più",
     discoverMore: "Scopri di più",
   },
-  gallery: {
-    title: "Galleria fotografica",
-    description: "Esplora gli spazi interni ed esterni di Villa Ingrosso attraverso la nostra ricca galleria fotografica",
-  },
+
   nav: {
     home: "Home",
     about: "Chi Siamo",
@@ -67,8 +64,8 @@ export default {
     beach3: "Tramonto sul Mare",
   },
   gallery: {
-    title: "Galleria",
-    description: "Esplora gli spazi di Villa Ingrosso attraverso la nostra galleria fotografica.",
+    title: "Galleria fotografica",
+    description: "Esplora gli spazi interni ed esterni di Villa Ingrosso attraverso la nostra ricca galleria fotografica con immagini autentiche.",
   },
   location: {
     title: "Posizione",
