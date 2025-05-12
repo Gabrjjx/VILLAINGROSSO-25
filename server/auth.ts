@@ -62,13 +62,27 @@ export function setupAuth(app: Express) {
   passport.use(
     new LocalStrategy(async (username, password, done) => {
       try {
+        console.log("Auth attempt for username:", username);
         const user = await storage.getUserByUsername(username);
-        if (!user || !(await comparePasswords(password, user.password))) {
+        console.log("User found:", user ? "YES" : "NO");
+        
+        if (!user) {
+          console.log("Authentication failed: User not found");
+          return done(null, false);
+        }
+        
+        const passwordMatches = await comparePasswords(password, user.password);
+        console.log("Password matches:", passwordMatches ? "YES" : "NO");
+        
+        if (!passwordMatches) {
+          console.log("Authentication failed: Password does not match");
           return done(null, false);
         } else {
+          console.log("Authentication successful for user:", username);
           return done(null, user);
         }
       } catch (err) {
+        console.error("Authentication error:", err);
         return done(err);
       }
     }),
@@ -119,19 +133,47 @@ export function setupAuth(app: Express) {
     }
   });
 
-  app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", (err: any, user: User | false, info: any) => {
-      if (err) return next(err);
-      if (!user) return res.status(401).json({ error: "Invalid credentials" });
+  app.post("/api/login", async (req, res, next) => {
+    try {
+      const { username, password } = req.body;
+      console.log("Tentativo di login per utente:", username);
+
+      // Verifica se l'utente esiste
+      const user = await storage.getUserByUsername(username);
+      console.log("Utente trovato?", user ? "SÌ" : "NO");
       
+      if (!user) {
+        console.log("Utente non trovato:", username);
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+      
+      // Verifica la password
+      const isPasswordValid = await comparePasswords(password, user.password);
+      console.log("Password valida?", isPasswordValid ? "SÌ" : "NO");
+      console.log("Password inserita:", password);
+      console.log("Password hash nel DB:", user.password);
+      
+      if (!isPasswordValid) {
+        console.log("Password non valida per utente:", username);
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+      
+      // Autenticazione manuale
       req.login(user, (err) => {
-        if (err) return next(err);
+        if (err) {
+          console.error("Errore durante login:", err);
+          return next(err);
+        }
         
+        console.log("Login completato con successo per utente:", username);
         // Elimina la password dalla risposta
         const { password, ...userWithoutPassword } = user;
         res.status(200).json(userWithoutPassword);
       });
-    })(req, res, next);
+    } catch (err) {
+      console.error("Errore durante il login:", err);
+      next(err);
+    }
   });
 
   app.post("/api/logout", (req, res, next) => {
