@@ -12,6 +12,9 @@ export default {
     recommendations: "Consigli Locali",
     contact: "Contatti",
   },
+  navbar: {
+    login: "Accedi",
+  },
   hero: {
     title1: "La tua",
     title2: "vacanza",
@@ -208,6 +211,155 @@ export default {
     contact: {
       title: "Contattaci",
       description: "Per ulteriori informazioni sulle nostre pratiche in materia di privacy, se hai domande o se desideri presentare un reclamo, contattaci via e-mail all'indirizzo g.ingrosso@villaingrosso.com.",
+    },
+  },
+  
+  // Traduzioni per l'area di autenticazione
+  authPage: {
+    hero: {
+      title: "Benvenuto su Villa Ingrosso",
+      description: "Accedi al tuo account per gestire le prenotazioni e visualizzare i dettagli del tuo soggiorno.",
+      features: {
+        title: "I vantaggi dell'area utente:",
+        booking: "Gestione semplificata delle prenotazioni",
+        personalArea: "Area personale dedicata",
+        history: "Storico delle prenotazioni",
+      }
+    },
+    login: {
+      title: "Accedi",
+      description: "Inserisci le tue credenziali per accedere",
+      username: "Nome utente",
+      password: "Password",
+      submit: "Accedi",
+      loggingIn: "Accesso in corso...",
+    },
+    register: {
+      title: "Registrati",
+      description: "Crea un nuovo account",
+      fullName: "Nome completo",
+      email: "Email",
+      username: "Nome utente",
+      password: "Password",
+      submit: "Registrati",
+      registering: "Registrazione in corso...",
+    },
+  },
+  
+  // Traduzioni per l'area utente
+  account: {
+    welcome: "Benvenuto nell'area personale",
+    logout: "Esci",
+    tabs: {
+      profile: "Profilo",
+      bookings: "Prenotazioni",
+    },
+    profile: {
+      title: "Il tuo profilo",
+      description: "Visualizza e gestisci le informazioni del tuo account",
+      fullName: "Nome completo",
+      username: "Nome utente",
+      email: "Email",
+      accountType: "Tipo di account",
+      admin: "Amministratore",
+      user: "Utente",
+    },
+    bookings: {
+      title: "Le tue prenotazioni",
+      description: "Visualizza tutte le tue prenotazioni passate e future",
+      noBookings: "Non hai ancora effettuato prenotazioni",
+      bookNow: "Prenota ora",
+      error: "Errore",
+      errorFetching: "Si è verificato un errore nel recupero delle prenotazioni",
+      guests: "Ospiti",
+      nights: "{{count}} notti",
+      noNotes: "Nessuna nota",
+      status: {
+        confirmed: "Confermata",
+        pending: "In attesa",
+        cancelled: "Cancellata",
+      },
+    },
+  },
+  
+  // Traduzioni per l'area amministrativa
+  admin: {
+    title: "Pannello di amministrazione",
+    logout: "Esci",
+    tabs: {
+      dashboard: "Dashboard",
+      users: "Utenti",
+      bookings: "Prenotazioni",
+      messages: "Messaggi",
+    },
+    dashboard: {
+      users: "Utenti",
+      registeredUsers: "Utenti registrati",
+      bookings: "Prenotazioni",
+      totalBookings: "Prenotazioni totali",
+      pending: "In attesa",
+      pendingBookings: "Prenotazioni in attesa",
+      messages: "Messaggi",
+      unreadMessages: "Messaggi non letti",
+      recentBookings: "Prenotazioni recenti",
+    },
+    users: {
+      title: "Gestione utenti",
+      description: "Visualizza e gestisci gli utenti registrati",
+      noUsers: "Nessun utente trovato",
+      error: "Errore",
+      errorFetching: "Si è verificato un errore nel recupero degli utenti",
+      table: {
+        id: "ID",
+        name: "Nome",
+        email: "Email",
+        username: "Username",
+        role: "Ruolo",
+        created: "Registrato il",
+      },
+      roles: {
+        admin: "Admin",
+        user: "Utente",
+      },
+    },
+    bookings: {
+      title: "Gestione prenotazioni",
+      description: "Visualizza e gestisci tutte le prenotazioni",
+      noBookings: "Nessuna prenotazione trovata",
+      error: "Errore",
+      errorFetching: "Si è verificato un errore nel recupero delle prenotazioni",
+      openMenu: "Apri menu",
+      actions: "Azioni",
+      viewDetails: "Visualizza dettagli",
+      confirm: "Conferma prenotazione",
+      cancel: "Cancella prenotazione",
+      table: {
+        id: "ID",
+        guest: "Ospite",
+        dates: "Date",
+        guests: "Ospiti",
+        status: "Stato",
+        amount: "Importo",
+        actions: "Azioni",
+      },
+      status: {
+        confirmed: "Confermata",
+        pending: "In attesa",
+        cancelled: "Cancellata",
+      },
+    },
+    messages: {
+      title: "Messaggi di contatto",
+      description: "Visualizza e gestisci i messaggi ricevuti",
+      noMessages: "Nessun messaggio trovato",
+      error: "Errore",
+      errorFetching: "Si è verificato un errore nel recupero dei messaggi",
+      errorMarking: "Si è verificato un errore nel segnare il messaggio come letto",
+      success: "Successo",
+      markedAsRead: "Messaggio segnato come letto",
+      markAsRead: "Segna come letto",
+      unread: "Non letto",
+      read: "Letto",
     },
   },
 };

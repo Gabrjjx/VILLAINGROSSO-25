@@ -11,6 +11,9 @@ export default {
     recommendations: "Local Tips",
     contact: "Contact",
   },
+  navbar: {
+    login: "Login",
+  },
   hero: {
     title1: "Your",
     title2: "seaside",
@@ -207,6 +210,155 @@ export default {
     contact: {
       title: "Contact Us",
       description: "For more information about our privacy practices, if you have questions, or if you would like to make a complaint, please contact us by e-mail at g.ingrosso@villaingrosso.com.",
+    },
+  },
+  
+  // Authentication area translations
+  authPage: {
+    hero: {
+      title: "Welcome to Villa Ingrosso",
+      description: "Access your account to manage bookings and view your stay details.",
+      features: {
+        title: "User area benefits:",
+        booking: "Simplified booking management",
+        personalArea: "Dedicated personal area",
+        history: "Booking history",
+      }
+    },
+    login: {
+      title: "Login",
+      description: "Enter your credentials to access",
+      username: "Username",
+      password: "Password",
+      submit: "Login",
+      loggingIn: "Logging in...",
+    },
+    register: {
+      title: "Register",
+      description: "Create a new account",
+      fullName: "Full name",
+      email: "Email",
+      username: "Username",
+      password: "Password",
+      submit: "Register",
+      registering: "Registering...",
+    },
+  },
+  
+  // User area translations
+  account: {
+    welcome: "Welcome to your personal area",
+    logout: "Logout",
+    tabs: {
+      profile: "Profile",
+      bookings: "Bookings",
+    },
+    profile: {
+      title: "Your profile",
+      description: "View and manage your account information",
+      fullName: "Full name",
+      username: "Username",
+      email: "Email",
+      accountType: "Account type",
+      admin: "Administrator",
+      user: "User",
+    },
+    bookings: {
+      title: "Your bookings",
+      description: "View all your past and upcoming bookings",
+      noBookings: "You haven't made any bookings yet",
+      bookNow: "Book now",
+      error: "Error",
+      errorFetching: "An error occurred while retrieving bookings",
+      guests: "Guests",
+      nights: "{{count}} nights",
+      noNotes: "No notes",
+      status: {
+        confirmed: "Confirmed",
+        pending: "Pending",
+        cancelled: "Cancelled",
+      },
+    },
+  },
+  
+  // Admin area translations
+  admin: {
+    title: "Administration panel",
+    logout: "Logout",
+    tabs: {
+      dashboard: "Dashboard",
+      users: "Users",
+      bookings: "Bookings",
+      messages: "Messages",
+    },
+    dashboard: {
+      users: "Users",
+      registeredUsers: "Registered users",
+      bookings: "Bookings",
+      totalBookings: "Total bookings",
+      pending: "Pending",
+      pendingBookings: "Pending bookings",
+      messages: "Messages",
+      unreadMessages: "Unread messages",
+      recentBookings: "Recent bookings",
+    },
+    users: {
+      title: "User management",
+      description: "View and manage registered users",
+      noUsers: "No users found",
+      error: "Error",
+      errorFetching: "An error occurred while retrieving users",
+      table: {
+        id: "ID",
+        name: "Name",
+        email: "Email",
+        username: "Username",
+        role: "Role",
+        created: "Registered on",
+      },
+      roles: {
+        admin: "Admin",
+        user: "User",
+      },
+    },
+    bookings: {
+      title: "Booking management",
+      description: "View and manage all bookings",
+      noBookings: "No bookings found",
+      error: "Error",
+      errorFetching: "An error occurred while retrieving bookings",
+      openMenu: "Open menu",
+      actions: "Actions",
+      viewDetails: "View details",
+      confirm: "Confirm booking",
+      cancel: "Cancel booking",
+      table: {
+        id: "ID",
+        guest: "Guest",
+        dates: "Dates",
+        guests: "Guests",
+        status: "Status",
+        amount: "Amount",
+        actions: "Actions",
+      },
+      status: {
+        confirmed: "Confirmed",
+        pending: "Pending",
+        cancelled: "Cancelled",
+      },
+    },
+    messages: {
+      title: "Contact messages",
+      description: "View and manage received messages",
+      noMessages: "No messages found",
+      error: "Error",
+      errorFetching: "An error occurred while retrieving messages",
+      errorMarking: "An error occurred while marking the message as read",
+      success: "Success",
+      markedAsRead: "Message marked as read",
+      markAsRead: "Mark as read",
+      unread: "Unread",
+      read: "Read",
     },
   },
 };

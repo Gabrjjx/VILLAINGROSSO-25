@@ -81,7 +81,13 @@ export default function Navbar() {
               ))}
             </div>
             
-            <div className="ml-4">
+            <div className="ml-4 flex items-center space-x-4">
+              <Link 
+                to="/auth" 
+                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-300 hover:shadow-lg"
+              >
+                {t("navbar.login")}
+              </Link>
               <LanguageSwitcher />
             </div>
           </div>
