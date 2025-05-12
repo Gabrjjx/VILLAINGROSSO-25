@@ -1,10 +1,122 @@
-import type { Express } from "express";
+import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
+import { storage } from "./storage";
+import { setupAuth } from "./auth";
+import { type InsertBooking, type InsertContactMessage } from "@shared/schema";
+import { log } from "./vite";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // This site doesn't use any API routes as it's a static site
-  // All contact information is displayed directly on the page
+  // Configurazione dell'autenticazione
+  setupAuth(app);
+
+  // API per i messaggi di contatto
+  app.post("/api/contact", async (req: Request, res: Response) => {
+    try {
+      const contactData = req.body as InsertContactMessage;
+      const newMessage = await storage.createContactMessage(contactData);
+      res.status(201).json({
+        success: true,
+        message: "Thank you for your message! We'll get back to you soon.",
+        id: newMessage.id
+      });
+    } catch (error) {
+      log(`Error saving contact message: ${error}`, "error");
+      res.status(500).json({
+        success: false,
+        error: "Failed to save your message. Please try again later."
+      });
+    }
+  });
+
+  // API per le prenotazioni (richiede autenticazione)
+  app.get("/api/bookings", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+    
+    try {
+      const userId = req.user!.id;
+      const bookings = await storage.getBookingsByUser(userId);
+      res.json(bookings);
+    } catch (error) {
+      log(`Error fetching bookings: ${error}`, "error");
+      res.status(500).json({ error: "Failed to fetch bookings" });
+    }
+  });
+
+  app.post("/api/bookings", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+    
+    try {
+      const bookingData = req.body as InsertBooking;
+      bookingData.userId = req.user!.id;
+      
+      const newBooking = await storage.createBooking(bookingData);
+      res.status(201).json(newBooking);
+    } catch (error) {
+      log(`Error creating booking: ${error}`, "error");
+      res.status(500).json({ error: "Failed to create booking" });
+    }
+  });
+
+  // API per gli amministratori
+  app.get("/api/admin/users", async (req: Request, res: Response) => {
+    // La verifica dei permessi avviene nel middleware /api/admin in auth.ts
+    try {
+      const users = await db.select().from(schema.users);
+      // Rimuovi le password dalla risposta
+      const usersWithoutPasswords = users.map(user => {
+        const { password, ...userWithoutPassword } = user;
+        return userWithoutPassword;
+      });
+      res.json(usersWithoutPasswords);
+    } catch (error) {
+      log(`Error fetching users: ${error}`, "error");
+      res.status(500).json({ error: "Failed to fetch users" });
+    }
+  });
+
+  app.get("/api/admin/bookings", async (req: Request, res: Response) => {
+    try {
+      const bookings = await db.select().from(schema.bookings);
+      res.json(bookings);
+    } catch (error) {
+      log(`Error fetching all bookings: ${error}`, "error");
+      res.status(500).json({ error: "Failed to fetch bookings" });
+    }
+  });
+
+  app.get("/api/admin/messages", async (req: Request, res: Response) => {
+    try {
+      const messages = await storage.getAllContactMessages();
+      res.json(messages);
+    } catch (error) {
+      log(`Error fetching messages: ${error}`, "error");
+      res.status(500).json({ error: "Failed to fetch messages" });
+    }
+  });
+
+  app.patch("/api/admin/messages/:id/read", async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const success = await storage.markContactMessageAsRead(id);
+      if (success) {
+        res.json({ success: true });
+      } else {
+        res.status(404).json({ error: "Message not found" });
+      }
+    } catch (error) {
+      log(`Error marking message as read: ${error}`, "error");
+      res.status(500).json({ error: "Failed to update message" });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;
 }
+
+// Importa gli schemi e il database per le query dirette nelle API admin
+import * as schema from "@shared/schema";
+import { db } from "./db";
