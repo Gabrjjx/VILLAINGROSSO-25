@@ -123,7 +123,7 @@ function AdminPage() {
     },
   });
   
-  // Carica i messaggi di chat per un utente specifico (quando selezionato)
+  // Carica i messaggi di chat
   const { data: chatMessages = [], isLoading: chatMessagesLoading, refetch: refetchChatMessages } = useQuery<ChatMessage[]>({
     queryKey: ["/api/chat", selectedUser],
     queryFn: async () => {
@@ -149,10 +149,10 @@ function AdminPage() {
     },
     enabled: !!selectedUser, // Esegui la query solo quando è selezionato un utente
   });
-
+  
   // Scroll al fondo della chat quando arrivano nuovi messaggi
   useEffect(() => {
-    if (adminMessagesEndRef.current && chatMessages.length > 0) {
+    if (adminMessagesEndRef.current && chatMessages?.length > 0) {
       adminMessagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chatMessages]);
@@ -254,6 +254,7 @@ function AdminPage() {
 
   // Helper per formattare le date in base alla lingua
   const formatDate = (date: string | Date) => {
+    if (!date) return "-";
     const localeObj = language === "it" ? it : enUS;
     return format(new Date(date), "PPP", { locale: localeObj });
   };
@@ -275,7 +276,8 @@ function AdminPage() {
     
     // Filtra le prenotazioni per il mese corrente
     const currentMonthBookings = bookings.filter(booking => {
-      const startDate = booking.startDate ? new Date(booking.startDate) : new Date();
+      if (!booking.startDate) return false;
+      const startDate = new Date(booking.startDate);
       return startDate.getMonth() === currentMonth && 
              startDate.getFullYear() === currentYear &&
              booking.status !== "cancelled";
@@ -297,12 +299,14 @@ function AdminPage() {
     twoMonthsAgoDate.setMonth(twoMonthsAgoDate.getMonth() - 2);
     
     const lastMonthBookings = bookings.filter(booking => {
-      const bookingDate = booking.createdAt ? new Date(booking.createdAt) : new Date();
+      if (!booking.createdAt) return false;
+      const bookingDate = new Date(booking.createdAt);
       return bookingDate >= lastMonthDate;
     }).length;
     
     const twoMonthsAgoBookings = bookings.filter(booking => {
-      const bookingDate = booking.createdAt ? new Date(booking.createdAt) : new Date();
+      if (!booking.createdAt) return false;
+      const bookingDate = new Date(booking.createdAt);
       return bookingDate >= twoMonthsAgoDate && bookingDate < lastMonthDate;
     }).length;
     
