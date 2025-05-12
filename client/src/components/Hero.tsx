@@ -75,7 +75,7 @@ export default function Hero() {
             transition={{ duration: 1.5 }}
             className="absolute inset-0 bg-cover bg-center"
             style={{ 
-              backgroundImage: "url('/images/leporano.jpg')"
+              backgroundImage: "url('/images/mare-azzurro.jpg')"
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
