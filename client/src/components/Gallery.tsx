@@ -32,6 +32,19 @@ const galleryImages = [
     src: "/attached_assets/giardino 1.jpeg",
     alt: "Giardino di Villa Ingrosso",
   },
+  // Nuove immagini aggiunte
+  {
+    src: "/img/villa/vista-terrazzo.jpg",
+    alt: "Vista panoramica dal terrazzo di Villa Ingrosso",
+  },
+  {
+    src: "/img/villa/veranda-relax.jpg",
+    alt: "Area relax sulla veranda di Villa Ingrosso",
+  },
+  {
+    src: "/img/villa/giardino-esterno.jpg",
+    alt: "Zona living esterna nel giardino di Villa Ingrosso",
+  },
 ];
 
 export default function Gallery() {
@@ -53,10 +66,10 @@ export default function Gallery() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-cyan-600">
-            Galleria fotografica
+            {t("gallery.title")}
           </h2>
           <p className="text-lg max-w-3xl mx-auto">
-            Esplora gli spazi interni ed esterni di Villa Ingrosso attraverso la nostra galleria fotografica
+            {t("gallery.description")}
           </p>
         </div>
         
