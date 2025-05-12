@@ -46,12 +46,14 @@ export function setupAuth(app: Express) {
     secret: process.env.SESSION_SECRET || "villa-ingrosso-default-secret",
     resave: true,
     saveUninitialized: true,
+    rolling: true,
     store: storage.sessionStore,
     cookie: {
       secure: false, // Set to true only in production with HTTPS
       httpOnly: false,
+      path: '/',
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 giorni
-      sameSite: 'lax'
+      sameSite: 'lax',
     }
   };
 

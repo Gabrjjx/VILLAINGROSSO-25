@@ -1,15 +1,48 @@
 import express from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { setupAuth } from "./auth";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import { serveImageStatic } from "./images";
 
 const app = express();
 
 // Aggiungi middleware per parsing del corpo delle richieste
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Sito completamente statico senza API
-// Completely static site without API functionality
+// Configurazione CORS per lo sviluppo
+if (process.env.NODE_ENV === "development") {
+  app.use(cors({ 
+    origin: true, 
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  }));
+}
+
+// Debugging middleware per i problemi di sessione
+app.use((req, res, next) => {
+  const isAuthenticated = req.isAuthenticated ? req.isAuthenticated() : false;
+  const sessionID = req.sessionID;
+  const path = req.path;
+  
+  console.log(`[Session Debug] Path: ${path}, isAuthenticated: ${isAuthenticated}, SessionID: ${sessionID}`);
+  
+  if (path.startsWith('/api')) {
+    console.log(`${req.method} ${path} - isAuthenticated: ${isAuthenticated}${req.method === 'POST' ? ` - body: ${JSON.stringify(req.body)}` : ''}`);
+  }
+  
+  next();
+});
+
+// Setup autenticazione
+setupAuth(app);
+
+// Serve static images
+serveImageStatic(app);
 
 (async () => {
   const server = await registerRoutes(app);
