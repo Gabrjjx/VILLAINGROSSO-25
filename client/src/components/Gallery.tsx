@@ -4,6 +4,20 @@ import { useLanguage } from "@/context/LanguageContext";
 
 // Definizione statica delle immagini
 const galleryImages = [
+  // Le nuove immagini in primo piano
+  {
+    src: "/img/villa/vista-terrazzo.jpg",
+    alt: "Vista panoramica dal terrazzo di Villa Ingrosso",
+  },
+  {
+    src: "/img/villa/veranda-relax.jpg",
+    alt: "Area relax sulla veranda di Villa Ingrosso",
+  },
+  {
+    src: "/img/villa/giardino-esterno.jpg",
+    alt: "Zona living esterna nel giardino di Villa Ingrosso",
+  },
+  // Immagini originali
   {
     src: "/attached_assets/camera1.jpg",
     alt: "Camera da letto di Villa Ingrosso",
@@ -32,25 +46,16 @@ const galleryImages = [
     src: "/attached_assets/giardino 1.jpeg",
     alt: "Giardino di Villa Ingrosso",
   },
-  // Nuove immagini aggiunte
-  {
-    src: "/img/villa/vista-terrazzo.jpg",
-    alt: "Vista panoramica dal terrazzo di Villa Ingrosso",
-  },
-  {
-    src: "/img/villa/veranda-relax.jpg",
-    alt: "Area relax sulla veranda di Villa Ingrosso",
-  },
-  {
-    src: "/img/villa/giardino-esterno.jpg",
-    alt: "Zona living esterna nel giardino di Villa Ingrosso",
-  },
 ];
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [imageAlt, setImageAlt] = useState<string>("");
   const { t } = useLanguage();
+  
+  // Log delle immagini per verifica
+  console.log("Numero immagini galleria:", galleryImages.length);
+  console.log("Prime 3 immagini:", galleryImages.slice(0, 3).map(img => img.src));
 
   const openLightbox = (src: string, alt: string) => {
     setSelectedImage(src);
