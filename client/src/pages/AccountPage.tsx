@@ -11,7 +11,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { Loader2, LogOut, User as UserIcon, Calendar, Clock } from "lucide-react";
+import { Loader2, LogOut, User as UserIcon, Calendar, Clock, MessageCircle } from "lucide-react";
+import ChatInterface from "@/components/ChatInterface";
 
 export default function AccountPageWrapper() {
   return (
@@ -84,7 +85,7 @@ function AccountPage() {
       {/* Contenuto principale */}
       <div className="container mx-auto py-8 px-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full md:w-[400px] grid-cols-2">
+          <TabsList className="grid w-full md:w-[600px] grid-cols-3">
             <TabsTrigger value="profile">
               <UserIcon className="h-4 w-4 mr-2" />
               {t("account.tabs.profile")}
@@ -92,6 +93,10 @@ function AccountPage() {
             <TabsTrigger value="bookings">
               <Calendar className="h-4 w-4 mr-2" />
               {t("account.tabs.bookings")}
+            </TabsTrigger>
+            <TabsTrigger value="chat">
+              <MessageCircle className="h-4 w-4 mr-2" />
+              {t("account.tabs.chat")}
             </TabsTrigger>
           </TabsList>
 
@@ -194,6 +199,11 @@ function AccountPage() {
                 )}
               </CardContent>
             </Card>
+          </TabsContent>
+          
+          {/* Tab chat */}
+          <TabsContent value="chat" className="mt-6">
+            <ChatInterface />
           </TabsContent>
         </Tabs>
       </div>

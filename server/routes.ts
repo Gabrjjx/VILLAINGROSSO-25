@@ -115,6 +115,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Endpoints per la chat
+  app.get("/api/chat-messages", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+    
+    try {
+      const messages = await storage.getChatMessagesByUser(req.user.id);
+      res.json(messages);
+    } catch (error) {
+      log(`Error fetching chat messages: ${error}`, "error");
+      res.status(500).json({ error: "Failed to fetch chat messages" });
+    }
+  });
+  
+  app.post("/api/chat-messages", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+    
+    try {
+      const newMessage = await storage.createChatMessage({
+        userId: req.user.id,
+        isFromAdmin: false,
+        message: req.body.message,
+      });
+      
+      res.status(201).json(newMessage);
+    } catch (error) {
+      log(`Error creating chat message: ${error}`, "error");
+      res.status(500).json({ error: "Failed to send message" });
+    }
+  });
+  
+  // Endpoint per gli amministratori per rispondere ai messaggi di chat
+  app.post("/api/admin/chat-messages/:userId", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated() || !req.user.isAdmin) {
+      return res.status(401).json({ error: "Admin privileges required" });
+    }
+    
+    try {
+      const userId = parseInt(req.params.userId);
+      const newMessage = await storage.createChatMessage({
+        userId,
+        isFromAdmin: true,
+        message: req.body.message,
+      });
+      
+      res.status(201).json(newMessage);
+    } catch (error) {
+      log(`Error creating admin chat message: ${error}`, "error");
+      res.status(500).json({ error: "Failed to send admin message" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
