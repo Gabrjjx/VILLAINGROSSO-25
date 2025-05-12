@@ -129,7 +129,7 @@ export default function About() {
               transition={{ duration: 0.5 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                src="/img/taranto/mare-cristallino.jpg" 
                 alt="Mare cristallino" 
                 className="w-full h-full object-cover"
               />
@@ -149,7 +149,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                src="/img/taranto/spiagge-ioniche.jpg" 
                 alt="Spiagge ioniche" 
                 className="w-full h-full object-cover"
               />
@@ -169,7 +169,7 @@ export default function About() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1471922694854-ff1b63b20054?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400&q=80" 
+                src="/img/taranto/tramonto-mare.jpg" 
                 alt="Tramonto sul Mare" 
                 className="w-full h-full object-cover"
               />
