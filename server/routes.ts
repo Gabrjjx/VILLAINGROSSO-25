@@ -1,4 +1,4 @@
-import type { Express, Request, Response } from "express";
+import { type Express, type Request, type Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
@@ -6,6 +6,8 @@ import { type InsertBooking, type InsertContactMessage } from "@shared/schema";
 import { log } from "./vite";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Middleware già configurati nel file index.ts
+  
   // Configurazione dell'autenticazione
   setupAuth(app);
 

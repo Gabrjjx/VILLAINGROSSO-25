@@ -4,6 +4,10 @@ import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
 
+// Aggiungi middleware per parsing del corpo delle richieste
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Sito completamente statico senza API
 // Completely static site without API functionality
 
