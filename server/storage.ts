@@ -1,7 +1,7 @@
-import { users, bookings, contactMessages } from "@shared/schema";
-import { eq, and, gte, lte } from "drizzle-orm";
+import { users, bookings, contactMessages, chatMessages } from "@shared/schema";
+import { eq, and, gte, lte, desc } from "drizzle-orm";
 import { db } from "./db";
-import type { User, InsertUser, Booking, InsertBooking, ContactMessage, InsertContactMessage } from "@shared/schema";
+import type { User, InsertUser, Booking, InsertBooking, ContactMessage, InsertContactMessage, ChatMessage, InsertChatMessage } from "@shared/schema";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import { pool } from "./db";
@@ -33,6 +33,10 @@ export interface IStorage {
   markContactMessageAsRead(id: number): Promise<boolean>;
   deleteContactMessage(id: number): Promise<boolean>;
   
+  // Operazioni sui messaggi di chat
+  getChatMessagesByUser(userId: number): Promise<ChatMessage[]>;
+  createChatMessage(message: InsertChatMessage): Promise<ChatMessage>;
+  
   // Sessioni per l'autenticazione
   sessionStore: session.Store;
 }
@@ -45,6 +49,16 @@ export class DatabaseStorage implements IStorage {
       pool,
       createTableIfMissing: true
     });
+  }
+  
+  // Implementazioni dei metodi per la chat
+  async getChatMessagesByUser(userId: number): Promise<ChatMessage[]> {
+    return db.select().from(chatMessages).where(eq(chatMessages.userId, userId)).orderBy(chatMessages.createdAt);
+  }
+
+  async createChatMessage(message: InsertChatMessage): Promise<ChatMessage> {
+    const [newMessage] = await db.insert(chatMessages).values(message).returning();
+    return newMessage;
   }
   
   // Implementazioni delle operazioni sugli utenti
