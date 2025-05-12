@@ -297,12 +297,12 @@ function AdminPage() {
     twoMonthsAgoDate.setMonth(twoMonthsAgoDate.getMonth() - 2);
     
     const lastMonthBookings = bookings.filter(booking => {
-      const bookingDate = new Date(booking.createdAt);
+      const bookingDate = booking.createdAt ? new Date(booking.createdAt) : new Date();
       return bookingDate >= lastMonthDate;
     }).length;
     
     const twoMonthsAgoBookings = bookings.filter(booking => {
-      const bookingDate = new Date(booking.createdAt);
+      const bookingDate = booking.createdAt ? new Date(booking.createdAt) : new Date();
       return bookingDate >= twoMonthsAgoDate && bookingDate < lastMonthDate;
     }).length;
     
