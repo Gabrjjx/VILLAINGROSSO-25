@@ -589,13 +589,13 @@ function AdminPage() {
                 <CardDescription>{t("admin.chat.chatDescription") || "Conversazioni in tempo reale con gli utenti della piattaforma"}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="flex flex-col md:flex-row gap-6 h-[550px]">
                   {/* Lista degli utenti con chat */}
-                  <div className="border rounded-lg overflow-hidden">
-                    <div className="bg-muted p-3 border-b">
+                  <div className="border rounded-lg overflow-hidden md:w-1/3 h-full flex flex-col">
+                    <div className="bg-muted p-3 border-b flex-shrink-0">
                       <h3 className="text-sm font-medium">{t("admin.chat.users") || "Utenti"}</h3>
                     </div>
-                    <div className="h-[400px] overflow-y-auto">
+                    <div className="flex-1 overflow-y-auto">
                       {usersLoading ? (
                         <div className="flex justify-center items-center h-full">
                           <Loader2 className="h-6 w-6 animate-spin text-primary" />
@@ -631,7 +631,7 @@ function AdminPage() {
                   </div>
                   
                   {/* Area dei messaggi */}
-                  <div className="md:col-span-2 border rounded-lg flex flex-col h-[500px]">
+                  <div className="md:w-2/3 border rounded-lg flex flex-col h-full">
                     {!selectedUser ? (
                       <div className="flex-grow flex justify-center items-center text-muted-foreground">
                         <p>{t("admin.chat.selectUser") || "Seleziona un utente per visualizzare la chat"}</p>
