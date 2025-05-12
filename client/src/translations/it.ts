@@ -56,10 +56,10 @@ export default {
     feature2: "Parcheggio privato",
     feature3: "Wi-Fi gratuito",
     feature4: "Design moderno",
-    coastTitle: "Il Mare della Costa Tarantina",
-    coastDescription: "Scopri le meravigliose spiagge e il mare cristallino a pochi passi dalla villa. La costa ionica tarantina offre insenature suggestive, sabbia dorata e acque turchesi per una vacanza indimenticabile.",
+    coastTitle: "Le meraviglie marine del Salento",
+    coastDescription: "Scopri le bellezze naturali delle coste ioniche, con acque cristalline, spiagge incontaminate e tramonti mozzafiato sul Mediterraneo.",
     beach1: "Mare Cristallino",
-    beach2: "Spiagge Ioniche",
+    beach2: "Spiagge ioniche", 
     beach3: "Tramonto sul Mare",
   },
   gallery: {
