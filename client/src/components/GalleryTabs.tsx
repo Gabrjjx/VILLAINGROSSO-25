@@ -6,6 +6,26 @@ import Lightbox from "@/components/Lightbox";
 // INTERNI DELLA CASA
 const interiorImages = [
   {
+    src: "/attached_assets/PHOTO-2025-03-21-10-45-10.jpg",
+    alt: "Soggiorno con divani e area pranzo",
+    category: "interior"
+  },
+  {
+    src: "/attached_assets/PHOTO-2025-03-21-10-45-12 2.jpg",
+    alt: "Bagno moderno con doccia a vetro",
+    category: "interior"
+  },
+  {
+    src: "/attached_assets/PHOTO-2025-03-21-10-45-12.jpg",
+    alt: "Altro angolo del bagno moderno",
+    category: "interior"
+  },
+  {
+    src: "/attached_assets/PHOTO-2025-03-21-11-55-28.jpg",
+    alt: "Camera da letto matrimoniale",
+    category: "interior"
+  },
+  {
     src: "/attached_assets/camera1.jpg",
     alt: "Camera da letto principale",
     category: "interior"
@@ -20,16 +40,7 @@ const interiorImages = [
     alt: "Corridoio e spazi interni",
     category: "interior"
   },
-  {
-    src: "/attached_assets/corridoio-entrata.jpeg",
-    alt: "Ingresso e corridoio",
-    category: "interior"
-  },
-  {
-    src: "/attached_assets/WhatsApp%20Image%202025-05-02%20at%2018.28.51%20(1).jpeg",
-    alt: "Dettaglio degli interni",
-    category: "interior"
-  }
+  
 ];
 
 // ESTERNI DELLA CASA
