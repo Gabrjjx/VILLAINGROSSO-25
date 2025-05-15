@@ -5,8 +5,28 @@ import { useLanguage } from "@/context/LanguageContext";
 // Definizione statica delle immagini
 // Utilizziamo percorsi diretti invece dell'importazione delle immagini
 
-const galleryImages = [
-  // Le nuove immagini in primo piano
+// Immagini WhatsApp da includere nella galleria
+const whatsappImages = [
+  {
+    src: "/attached_assets/WhatsApp%20Image%202025-05-02%20at%2018.28.50.jpeg",
+    alt: "Dettaglio panoramico di Villa Ingrosso",
+  },
+  {
+    src: "/attached_assets/WhatsApp%20Image%202025-05-02%20at%2018.28.51.jpeg",
+    alt: "Scorcio esterno di Villa Ingrosso",
+  },
+  {
+    src: "/attached_assets/WhatsApp%20Image%202025-05-02%20at%2018.28.51%20(1).jpeg",
+    alt: "Dettaglio interno di Villa Ingrosso",
+  },
+  {
+    src: "/attached_assets/WhatsApp%20Image%202025-05-02%20at%2018.31.24.jpeg", 
+    alt: "Vista laterale di Villa Ingrosso",
+  }
+];
+
+// Immagini in evidenza
+const featuredImages = [
   {
     src: "/attached_assets/PHOTO-2025-05-02-18-28-51.jpg",
     alt: "Vista panoramica dal terrazzo di Villa Ingrosso",
@@ -18,8 +38,11 @@ const galleryImages = [
   {
     src: "/attached_assets/PHOTO-2025-03-21-14-47-14.jpg",
     alt: "Zona living esterna nel giardino di Villa Ingrosso",
-  },
-  // Immagini originali
+  }
+];
+
+// Immagini originali
+const originalImages = [
   {
     src: "/attached_assets/camera1.jpg",
     alt: "Camera da letto di Villa Ingrosso",
@@ -47,34 +70,20 @@ const galleryImages = [
   {
     src: "/attached_assets/giardino 1.jpeg",
     alt: "Giardino di Villa Ingrosso",
-  },
-  // Nuove immagini aggiunte da WhatsApp
-  {
-    src: "/attached_assets/WhatsApp Image 2025-05-02 at 18.28.50.jpeg",
-    alt: "Dettaglio panoramico di Villa Ingrosso",
-  },
-  {
-    src: "/attached_assets/WhatsApp Image 2025-05-02 at 18.28.51.jpeg",
-    alt: "Scorcio esterno di Villa Ingrosso",
-  },
-  {
-    src: "/attached_assets/WhatsApp Image 2025-05-02 at 18.28.51 (1).jpeg",
-    alt: "Dettaglio interno di Villa Ingrosso",
-  },
-  {
-    src: "/attached_assets/WhatsApp Image 2025-05-02 at 18.31.24.jpeg",
-    alt: "Vista laterale di Villa Ingrosso",
-  },
+  }
 ];
+
+// Unisci tutte le immagini prioritizzando le nuove
+const galleryImages = [...whatsappImages, ...featuredImages, ...originalImages];
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [imageAlt, setImageAlt] = useState<string>("");
   const { t } = useLanguage();
   
-  // Log delle immagini per verifica
-  console.log("Numero immagini galleria:", galleryImages.length);
-  console.log("Prime 3 immagini:", galleryImages.slice(0, 3).map(img => img.src));
+  // Debug: verifica immagini WhatsApp nella console
+  console.log("Immagini WhatsApp:", whatsappImages.map(img => img.src));
+  console.log("Numero totale immagini:", galleryImages.length);
 
   const openLightbox = (src: string, alt: string) => {
     setSelectedImage(src);
