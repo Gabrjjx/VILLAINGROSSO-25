@@ -3,23 +3,20 @@ import Lightbox from "@/components/Lightbox";
 import { useLanguage } from "@/context/LanguageContext";
 
 // Definizione statica delle immagini
-// Nuove foto importate direttamente dal filesystem
-import entrata from '/attached_assets/PHOTO-2025-05-02-18-28-51.jpg';
-import vista1 from '/attached_assets/PHOTO-2025-05-02-18-28-51 2.jpg';
-import vista2 from '/attached_assets/PHOTO-2025-03-21-14-47-14.jpg';
+// Utilizziamo percorsi diretti invece dell'importazione delle immagini
 
 const galleryImages = [
   // Le nuove immagini in primo piano
   {
-    src: entrata,
+    src: "/attached_assets/PHOTO-2025-05-02-18-28-51.jpg",
     alt: "Vista panoramica dal terrazzo di Villa Ingrosso",
   },
   {
-    src: vista1,
+    src: "/attached_assets/PHOTO-2025-05-02-18-28-51 2.jpg",
     alt: "Area relax sulla veranda di Villa Ingrosso",
   },
   {
-    src: vista2,
+    src: "/attached_assets/PHOTO-2025-03-21-14-47-14.jpg",
     alt: "Zona living esterna nel giardino di Villa Ingrosso",
   },
   // Immagini originali

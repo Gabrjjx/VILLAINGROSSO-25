@@ -10,6 +10,7 @@ export function serveImageStatic(app: Express) {
   
   // Servi anche le immagini da attached_assets
   app.use("/assets", express.static(path.join(process.cwd(), "attached_assets")));
+  app.use("/attached_assets", express.static(path.join(process.cwd(), "attached_assets")));
   
   // Servi i file audio
   app.use("/audio", express.static(path.join(process.cwd(), "audio")));
