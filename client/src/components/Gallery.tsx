@@ -28,6 +28,10 @@ const whatsappImages = [
 // Nuovi screenshot aggiunti
 const newScreenshots = [
   {
+    src: "/attached_assets/Screenshot 2025-05-15 alle 15.28.20.png",
+    alt: "Visualizzazione galleria della villa",
+  },
+  {
     src: "/attached_assets/Screenshot 2025-05-12 alle 10.31.34.png",
     alt: "Dettaglio della villa vista 1",
   },
@@ -50,6 +54,18 @@ const newScreenshots = [
   {
     src: "/attached_assets/Screenshot 2025-05-12 alle 16.12.43.png",
     alt: "Dettaglio della villa vista 6",
+  },
+  {
+    src: "/attached_assets/Screenshot 2025-05-09 alle 09.50.17.png",
+    alt: "Vista supplementare della villa 1",
+  },
+  {
+    src: "/attached_assets/Screenshot 2025-05-09 alle 10.06.46.png",
+    alt: "Vista supplementare della villa 2",
+  },
+  {
+    src: "/attached_assets/Screenshot 2025-05-09 alle 10.15.50 (2).png",
+    alt: "Vista supplementare della villa 3",
   }
 ];
 
