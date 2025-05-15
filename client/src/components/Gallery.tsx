@@ -25,6 +25,34 @@ const whatsappImages = [
   }
 ];
 
+// Nuovi screenshot aggiunti
+const newScreenshots = [
+  {
+    src: "/attached_assets/Screenshot 2025-05-12 alle 10.31.34.png",
+    alt: "Dettaglio della villa vista 1",
+  },
+  {
+    src: "/attached_assets/Screenshot 2025-05-12 alle 10.32.47.png",
+    alt: "Dettaglio della villa vista 2",
+  },
+  {
+    src: "/attached_assets/Screenshot 2025-05-12 alle 12.21.02.png",
+    alt: "Dettaglio della villa vista 3",
+  },
+  {
+    src: "/attached_assets/Screenshot 2025-05-12 alle 16.06.56.png",
+    alt: "Dettaglio della villa vista 4",
+  },
+  {
+    src: "/attached_assets/Screenshot 2025-05-12 alle 16.09.59.png",
+    alt: "Dettaglio della villa vista 5",
+  },
+  {
+    src: "/attached_assets/Screenshot 2025-05-12 alle 16.12.43.png",
+    alt: "Dettaglio della villa vista 6",
+  }
+];
+
 // Immagini in evidenza
 const featuredImages = [
   {
@@ -74,7 +102,7 @@ const originalImages = [
 ];
 
 // Unisci tutte le immagini prioritizzando le nuove
-const galleryImages = [...whatsappImages, ...featuredImages, ...originalImages];
+const galleryImages = [...newScreenshots, ...whatsappImages, ...featuredImages, ...originalImages];
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
