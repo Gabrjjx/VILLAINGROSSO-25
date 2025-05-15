@@ -80,6 +80,8 @@ export default {
   gallery: {
     title: "Photo Gallery",
     description: "Explore the indoor and outdoor spaces of Villa Ingrosso through our rich photo gallery with authentic images.",
+    interior: "Interior",
+    exterior: "Exterior",
   },
   location: {
     title: "Location",
