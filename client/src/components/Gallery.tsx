@@ -3,18 +3,23 @@ import Lightbox from "@/components/Lightbox";
 import { useLanguage } from "@/context/LanguageContext";
 
 // Definizione statica delle immagini
+// Nuove foto importate direttamente dal filesystem
+import entrata from '/attached_assets/PHOTO-2025-05-02-18-28-51.jpg';
+import vista1 from '/attached_assets/PHOTO-2025-05-02-18-28-51 2.jpg';
+import vista2 from '/attached_assets/PHOTO-2025-03-21-14-47-14.jpg';
+
 const galleryImages = [
   // Le nuove immagini in primo piano
   {
-    src: "/img/villa/vista-terrazzo.jpg",
+    src: entrata,
     alt: "Vista panoramica dal terrazzo di Villa Ingrosso",
   },
   {
-    src: "/img/villa/veranda-relax.jpg",
+    src: vista1,
     alt: "Area relax sulla veranda di Villa Ingrosso",
   },
   {
-    src: "/img/villa/giardino-esterno.jpg",
+    src: vista2,
     alt: "Zona living esterna nel giardino di Villa Ingrosso",
   },
   // Immagini originali
@@ -45,6 +50,23 @@ const galleryImages = [
   {
     src: "/attached_assets/giardino 1.jpeg",
     alt: "Giardino di Villa Ingrosso",
+  },
+  // Nuove immagini aggiunte da WhatsApp
+  {
+    src: "/attached_assets/WhatsApp Image 2025-05-02 at 18.28.50.jpeg",
+    alt: "Dettaglio panoramico di Villa Ingrosso",
+  },
+  {
+    src: "/attached_assets/WhatsApp Image 2025-05-02 at 18.28.51.jpeg",
+    alt: "Scorcio esterno di Villa Ingrosso",
+  },
+  {
+    src: "/attached_assets/WhatsApp Image 2025-05-02 at 18.28.51 (1).jpeg",
+    alt: "Dettaglio interno di Villa Ingrosso",
+  },
+  {
+    src: "/attached_assets/WhatsApp Image 2025-05-02 at 18.31.24.jpeg",
+    alt: "Vista laterale di Villa Ingrosso",
   },
 ];
 
