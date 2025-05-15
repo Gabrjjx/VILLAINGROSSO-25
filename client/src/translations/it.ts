@@ -81,6 +81,8 @@ export default {
   gallery: {
     title: "Galleria fotografica",
     description: "Esplora gli spazi interni ed esterni di Villa Ingrosso attraverso la nostra ricca galleria fotografica con immagini autentiche.",
+    interior: "Interni",
+    exterior: "Esterni",
   },
   location: {
     title: "Posizione",
