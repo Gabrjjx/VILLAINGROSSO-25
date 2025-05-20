@@ -21,6 +21,7 @@ export default function Navbar() {
     { name: t("nav.gallery"), href: "/gallery" },
     { name: t("nav.location"), href: "/location" },
     { name: t("nav.recommendations"), href: "/recommendations" },
+    { name: t("nav.prices"), href: "/prices" },
     { name: t("nav.contact"), href: "/contact" },
   ];
 
