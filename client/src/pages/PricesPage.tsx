@@ -110,7 +110,9 @@ export default function PricesPage() {
                 </ul>
                 <div className="mt-6">
                   <a 
-                    href="/booking" 
+                    href="https://app.business.booking.com/xapp/it/stay/details/13998845?adultCount=1&aid=356980&aid_label=gog235jc-1DCAsocUIOdmlsbGEtaW5ncm9zc29IFFgDaHGIAQGYARS4ARjIAQ3YAQPoAQH4AQKIAgGoAgS4Aq3wsMEGwAIB0gIkZWZmMmQ1Y2QtNzRiZS00OTk0LWFjMGMtY2ZiYTNkZGYwOWE22AIE4AIB&checkinDate=2025-05-20&checkoutDate=2025-05-21&destinationId=900061340&destinationType=city&guestAccountCountryCode=IT&guestCurrency=EUR&label=zenodeeplinkpp&roomCount=1&searchLocation=Leporano+Marina" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`inline-block w-full py-3 px-4 rounded-lg bg-white ${season.textColor} border ${season.borderColor} text-center font-medium transition-colors hover:bg-opacity-90`}
                   >
                     {t("prices.book_now")}
