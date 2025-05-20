@@ -1,4 +1,24 @@
 export default {
+  // Traduzioni per la pagina dei prezzi
+  prices: {
+    title: "I Nostri Prezzi",
+    subtitle: "Scopri le tariffe settimanali per il tuo soggiorno a Villa Ingrosso",
+    june: "Giugno",
+    july: "Luglio",
+    august: "Agosto",
+    early_summer: "Inizio estate",
+    mid_summer: "Piena estate",
+    peak_summer: "Alta stagione",
+    week: "settimana",
+    feature1: "Accesso completo alla villa",
+    feature2: "Pulizia iniziale e finale inclusa",
+    feature3: "Parcheggio privato incluso",
+    book_now: "Prenota ora",
+    note_title: "Informazioni aggiuntive",
+    note_text: "I prezzi si riferiscono all'affitto dell'intera villa per una settimana. Per soggiorni più brevi o per periodi diversi, contattateci direttamente.",
+    disclaimer: "I prezzi possono subire variazioni. Contattaci per confermare la disponibilità e il prezzo per le date selezionate.",
+  },
+  
   // Traduzioni per la chat
   chat: {
     title: "Chat con l'amministrazione",

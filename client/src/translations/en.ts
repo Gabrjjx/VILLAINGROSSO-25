@@ -1,4 +1,24 @@
 export default {
+  // Prices page translations
+  prices: {
+    title: "Our Prices",
+    subtitle: "Discover weekly rates for your stay at Villa Ingrosso",
+    june: "June",
+    july: "July",
+    august: "August",
+    early_summer: "Early summer",
+    mid_summer: "Mid summer",
+    peak_summer: "Peak season",
+    week: "week",
+    feature1: "Full access to the villa",
+    feature2: "Initial and final cleaning included",
+    feature3: "Private parking included",
+    book_now: "Book now",
+    note_title: "Additional Information",
+    note_text: "Prices refer to renting the entire villa for one week. For shorter stays or different periods, please contact us directly.",
+    disclaimer: "Prices may vary. Contact us to confirm availability and price for your selected dates.",
+  },
+  
   // Chat translations
   chat: {
     title: "Chat with administration",
