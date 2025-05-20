@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useTranslation } from "@/hooks/use-translation";
+import { useLanguage } from "@/context/LanguageContext";
 import { Calendar, EuroIcon, Sun, Waves } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function PricesPage() {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
 
   const seasonalPrices = [
     {

@@ -7,6 +7,7 @@ import GalleryPage from "@/pages/GalleryPage";
 import LocationPage from "@/pages/LocationPage";
 import RecommendationsPage from "@/pages/RecommendationsPage";
 import ContactPage from "@/pages/ContactPage";
+import PricesPage from "@/pages/PricesPage";
 import Privacy from "@/pages/Privacy";
 import AuthPage from "@/pages/AuthPage";
 import AccountPage from "@/pages/AccountPage";

@@ -41,6 +41,7 @@ export default {
     gallery: "Gallery",
     location: "Location",
     recommendations: "Local Tips",
+    prices: "Prices",
     contact: "Contact",
   },
   navbar: {

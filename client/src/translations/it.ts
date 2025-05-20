@@ -42,6 +42,7 @@ export default {
     gallery: "Galleria",
     location: "Posizione",
     recommendations: "Consigli Locali",
+    prices: "Prezzi",
     contact: "Contatti",
   },
   navbar: {
