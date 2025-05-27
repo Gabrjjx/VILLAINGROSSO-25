@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/context/LanguageContext";
 import { Calendar, EuroIcon, Sun, Waves } from "lucide-react";
 import { motion } from "framer-motion";
+import { trackContactConversion } from "@/lib/google-ads";
 
 export default function PricesPage() {
   const { t } = useLanguage();
@@ -114,6 +115,7 @@ export default function PricesPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`inline-block w-full py-3 px-4 rounded-lg bg-white ${season.textColor} border ${season.borderColor} text-center font-medium transition-colors hover:bg-opacity-90`}
+                    onClick={() => trackContactConversion()}
                   >
                     {t("prices.book_now")}
                   </a>
