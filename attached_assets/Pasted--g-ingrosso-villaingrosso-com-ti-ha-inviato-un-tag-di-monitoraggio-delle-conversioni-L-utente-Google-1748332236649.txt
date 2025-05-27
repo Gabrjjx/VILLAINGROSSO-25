@@ -1,0 +1,49 @@
+
+g.ingrosso@villaingrosso.com ti ha inviato un tag di monitoraggio delle conversioni
+L'utente Google Ads g.ingrosso@villaingrosso.com ha condiviso un tag di monitoraggio per monitorare le conversioni sul tuo sito web. Per aggiungerlo, segui le istruzioni riportate di seguito.
+
+Come utilizzare il tag
+Affinché il monitoraggio delle conversioni funzioni, devi installare il tag Google. Se installi il tag con Google Tag Manager, segui queste istruzioni.
+
+Se una delle pagine web è stata creata con il framework AMP, devi aggiungere i tag sia alla versione AMP che a quella HTML. Sono disponibili istruzioni per entrambe.
+
+PAGINE HTML
+
+Installa il tag Google in ogni pagina del tuo sito web.
+Apri il file HTML di ogni pagina.
+Scegli una delle seguenti opzioni:
+Se non hai installato il tag Google nel tuo sito web, copia il tag riportato di seguito e incollalo tra i tag head (<head></head>):
+
+<!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17038146595"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-17038146595'); </script>
+
+Consulta altre linee guida sulla configurazione del tag Google.
+
+Se hai installato il tag Google nel tuo sito web da un altro prodotto Google, ad esempio Google Analytics, o da un altro account Google Ads, copia il comando "config" riportato di seguito e aggiungilo a ogni istanza del tag Google, subito sopra il tag di chiusura </script>.
+
+gtag('config', 'AW-17038146595');
+
+Se tu o un account amministratore avete già installato il tag Google nel tuo sito web durante la configurazione del tag per un'altra azione di conversione, assicurati che il tag sia presente in ogni pagina del tuo sito web e verifica che il comando "config" includa questo ID conversione dell'account Google Ads: AW-17038146595
+Salva le modifiche apportate alle pagine web.
+PAGINE AMP
+
+Segui queste istruzioni per tutte le pagine create con il framework AMP.
+
+Installa il tag Google in ogni pagina del tuo sito web.
+Apri il file HTML di ogni pagina.
+Scegli una delle seguenti opzioni:
+Se hai installato il tag Google nel tuo sito web, aggiungi questi due tag:
+Innanzitutto copia il tag riportato di seguito e incollalo tra i tag head (<head></head>), prima della libreria AMP JS.
+
+<script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+
+Ora copia il tag riportato di seguito e incollalo tra i tag body (<body></body>) di tutte le pagine AMP
+
+<!-- Google tag (gtag.js) --> <amp-analytics type="gtag" data-credentials="include"> <script type="application/json"> { "vars": { "gtag_id": "AW-17038146595", "config": { "AW-17038146595": { "groups": "default" } } }, "triggers": { } } </script> </amp-analytics>
+
+Consulta altre linee guida sulla configurazione del tag Google.
+Se hai installato il tag Google nel tuo sito web da un altro prodotto Google, ad esempio Google Analytics, o da un altro account Google Ads, copia la riga riportata di seguito e includila nella sezione "config" di ogni istanza del tag Google.
+
+"AW-17038146595": { "groups": "default" }
+
+* Se tu o un account amministratore avete già installato il tag Google nel tuo sito web durante la configurazione del tag per un'altra azione di conversione, assicurati che il tag sia presente in ogni pagina del tuo sito web e verifica che la sezione "config" includa questo ID conversione dell'account Google Ads: AW-17038146595
+Salva le modifiche apportate alle pagine web.
