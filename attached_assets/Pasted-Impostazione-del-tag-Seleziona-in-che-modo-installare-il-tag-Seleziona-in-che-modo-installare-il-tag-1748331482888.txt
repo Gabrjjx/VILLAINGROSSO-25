@@ -1,0 +1,34 @@
+Impostazione del tag
+Seleziona in che modo installare il tag
+Seleziona in che modo installare il tag
+
+Aggiungi il tag al codice del tuo sito web
+
+Invia il tag al tuo webmaster tramite email
+
+Installa il tag utilizzando Google Tag Manager
+Istruzioni
+Per impostare il monitoraggio delle conversioni per Contatto, nel codice utilizzato dalla pagina devono essere presenti il tag Google e uno snippet evento. Per aggiungere il tag e lo snippet, seleziona il framework utilizzato dalla pagina e segui le istruzioni.
+Visualizza codice per 
+HTML
+Tag Google
+Il tag Google aggiunge i visitatori agli elenchi per il remarketing di base e imposta nuovi cookie sul tuo dominio, che memorizzeranno le informazioni relative al clic sull'annuncio che ha portato un utente sul tuo sito web. Dovrai installare questo tag su ogni pagina del tuo sito.
+Il tag Google non è installato su tutte le tue pagine HTML
+Il tag Google è già installato su tutte le pagine, ma appartiene a un altro prodotto Google (ad esempio Google Analytics) o di un altro account Google Ads
+Il tag Google era già stato installato su tutte le pagine quando hai creato un'altra azione di conversione in questo account Google Ads (623-013-0158)
+Copia il tag riportato di seguito e incollalo tra i tag <head></head> di ogni pagina del tuo sito web. Dovrai installare il tag Google solo una volta per ogni account, anche se sta monitorando più azioni.
+
+
+Snippet evento
+Lo snippet evento userà il tag Google per misurare le azioni da conteggiare come conversioni.
+Caricamento pagina
+Aggiungi lo snippet alla pagina a cui vengono indirizzati i clienti che completano una conversione
+Clic
+Aggiungi lo snippet alla pagina contenente un pulsante o un link per misurare i clic prima che si verifichi una conversione
+ Per utilizzare lo snippet
+ 1. Copia lo snippet di seguito.
+ 2. Incollalo tra i tag <head></head> delle pagine da monitorare, subito dopo il tag Google.
+ 3. Chiama gtag_report_conversion quando un utente fa clic sul link o sul pulsante scelto.
+
+
+© Google, 2025.

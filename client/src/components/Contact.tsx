@@ -1,6 +1,7 @@
 import { Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+import { trackContactConversion } from "@/lib/google-ads";
 
 export default function Contact() {
   const { t } = useLanguage();
@@ -51,7 +52,11 @@ export default function Contact() {
                     <Mail className="h-7 w-7" />
                   </div>
                   <h3 className="text-xl font-display font-medium mb-2">{t("contact.email")}</h3>
-                  <a href="mailto:g.ingrosso@villaingrosso.com" className="text-cyan-600 hover:text-cyan-700 transition-colors">
+                  <a 
+                    href="mailto:g.ingrosso@villaingrosso.com" 
+                    className="text-cyan-600 hover:text-cyan-700 transition-colors"
+                    onClick={() => trackContactConversion()}
+                  >
                     g.ingrosso@villaingrosso.com
                   </a>
                 </motion.div>
@@ -68,10 +73,18 @@ export default function Contact() {
                   </div>
                   <h3 className="text-xl font-display font-medium mb-2">{t("contact.phone")}</h3>
                   <div className="flex flex-col space-y-1">
-                    <a href="tel:+393470896961" className="text-cyan-600 hover:text-cyan-700 transition-colors">
+                    <a 
+                      href="tel:+393470896961" 
+                      className="text-cyan-600 hover:text-cyan-700 transition-colors"
+                      onClick={() => trackContactConversion()}
+                    >
                       +39 347 089 6961
                     </a>
-                    <a href="tel:+393292747374" className="text-cyan-600 hover:text-cyan-700 transition-colors">
+                    <a 
+                      href="tel:+393292747374" 
+                      className="text-cyan-600 hover:text-cyan-700 transition-colors"
+                      onClick={() => trackContactConversion()}
+                    >
                       +39 329 274 7374
                     </a>
                   </div>
