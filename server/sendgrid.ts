@@ -9,7 +9,7 @@ mailService.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Template IDs per le email automatiche
 const EMAIL_TEMPLATES = {
-  WELCOME: 'd-welcome-template-id', // Da sostituire con l'ID del template SendGrid
+  WELCOME: 'd-2ae238e2dc764ddea6b7113154694d26', // Template di benvenuto Villa Ingrosso
   BOOKING_CONFIRMATION: 'd-booking-confirmation-id',
   CHECKOUT_REMINDER: 'd-checkout-reminder-id',
   REVIEW_REQUEST: 'd-review-request-id',
