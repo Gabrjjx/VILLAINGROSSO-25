@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { type InsertBooking, type InsertContactMessage } from "@shared/schema";
 import { log } from "./vite";
+import { sendEmail, createContactNotificationEmail, createBookingConfirmationEmail } from "./sendgrid";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Middleware già configurati nel file index.ts
@@ -25,6 +26,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const contactData = req.body as InsertContactMessage;
       const newMessage = await storage.createContactMessage(contactData);
+      
+      // Invia notifica email al proprietario
+      try {
+        const emailData = createContactNotificationEmail(
+          contactData.name,
+          contactData.email,
+          contactData.message
+        );
+        await sendEmail(emailData);
+        log(`Contact notification email sent for message ${newMessage.id}`, "info");
+      } catch (emailError) {
+        log(`Failed to send contact notification email: ${emailError}`, "error");
+        // Non blocchiamo la risposta se l'email fallisce
+      }
+      
       res.status(201).json({
         success: true,
         message: "Thank you for your message! We'll get back to you soon.",
@@ -35,6 +51,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({
         success: false,
         error: "Failed to save your message. Please try again later."
+      });
+    }
+  });
+
+  // API per inviare email di conferma prenotazione
+  app.post("/api/send-booking-confirmation", async (req: Request, res: Response) => {
+    try {
+      const { guestEmail, guestName, checkIn, checkOut, guests } = req.body;
+      
+      if (!guestEmail || !guestName || !checkIn || !checkOut || !guests) {
+        return res.status(400).json({
+          success: false,
+          error: "Missing required booking information"
+        });
+      }
+      
+      const emailData = createBookingConfirmationEmail(
+        guestEmail,
+        guestName,
+        checkIn,
+        checkOut,
+        guests
+      );
+      
+      const emailSent = await sendEmail(emailData);
+      
+      if (emailSent) {
+        log(`Booking confirmation email sent to ${guestEmail}`, "info");
+        res.json({
+          success: true,
+          message: "Booking confirmation email sent successfully"
+        });
+      } else {
+        res.status(500).json({
+          success: false,
+          error: "Failed to send booking confirmation email"
+        });
+      }
+    } catch (error) {
+      log(`Error sending booking confirmation email: ${error}`, "error");
+      res.status(500).json({
+        success: false,
+        error: "Failed to send booking confirmation email"
+      });
+    }
+  });
+
+  // API per testare l'invio di email
+  app.post("/api/test-email", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+    
+    try {
+      const { to, subject, message } = req.body;
+      
+      if (!to || !subject || !message) {
+        return res.status(400).json({
+          success: false,
+          error: "Missing required email fields"
+        });
+      }
+      
+      const emailSent = await sendEmail({
+        to,
+        from: 'g.ingrosso@villaingrosso.com',
+        subject,
+        text: message,
+        html: `<p>${message}</p>`
+      });
+      
+      if (emailSent) {
+        res.json({
+          success: true,
+          message: "Test email sent successfully"
+        });
+      } else {
+        res.status(500).json({
+          success: false,
+          error: "Failed to send test email"
+        });
+      }
+    } catch (error) {
+      log(`Error sending test email: ${error}`, "error");
+      res.status(500).json({
+        success: false,
+        error: "Failed to send test email"
       });
     }
   });

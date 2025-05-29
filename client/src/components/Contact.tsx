@@ -1,10 +1,62 @@
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, Send } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { trackContactConversion } from "@/lib/google-ads";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Contact() {
   const { t } = useLanguage();
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const contactMutation = useMutation({
+    mutationFn: async (data: typeof formData) => {
+      const response = await apiRequest("POST", "/api/contact", data);
+      return response.json();
+    },
+    onSuccess: () => {
+      trackContactConversion();
+      toast({
+        title: t("contact.success_title"),
+        description: t("contact.success_message"),
+      });
+      setFormData({ name: '', email: '', message: '' });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: t("contact.error_title"),
+        description: t("contact.error_message"),
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Errore",
+        description: "Tutti i campi sono obbligatori",
+        variant: "destructive",
+      });
+      return;
+    }
+    contactMutation.mutate(formData);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
   return (
     <section id="contact" className="py-24 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -92,14 +144,72 @@ export default function Contact() {
               </div>
             </div>
             
+            {/* Modulo di contatto */}
             <motion.div 
               className="mt-12 pt-8 border-t border-gray-100"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <p className="text-neutral-500 text-sm">
+              <h3 className="text-xl font-display font-medium mb-6 text-center">{t("contact.form_title")}</h3>
+              <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder={t("contact.form_name")}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-colors"
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder={t("contact.form_email")}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-colors"
+                    required
+                  />
+                </div>
+                <div>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder={t("contact.form_message")}
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-colors resize-none"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={contactMutation.isPending}
+                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white py-3 px-6 rounded-lg font-medium transition-all duration-200 hover:from-cyan-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {contactMutation.isPending ? (
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Send className="h-4 w-4" />
+                  )}
+                  {contactMutation.isPending ? t("contact.form_sending") : t("contact.form_submit")}
+                </button>
+              </form>
+            </motion.div>
+
+            <motion.div 
+              className="mt-8 pt-6 border-t border-gray-100"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <p className="text-neutral-500 text-sm text-center">
                 {t("contact.footer")}
               </p>
             </motion.div>
