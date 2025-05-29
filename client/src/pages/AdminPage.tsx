@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { AdminRoute } from "@/components/ProtectedRoute";
+import SendGridManager from "@/components/SendGridManager";
 import { 
   Loader2, LogOut, User as UserIcon, Calendar, Mail, Check, 
   MoreHorizontal, Home, Users, MessageCircle, Send, 
@@ -404,6 +405,18 @@ function AdminPage() {
                 >
                   <MessageCircle className="h-5 w-5 mr-3" />
                   {t("admin.tabs.chatWithUsers")}
+                </button>
+                
+                <button
+                  onClick={() => setActiveTab("sendgrid")}
+                  className={`w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-md ${
+                    activeTab === "sendgrid"
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                >
+                  <Send className="h-5 w-5 mr-3" />
+                  Email e SMS
                 </button>
               </nav>
             </div>
@@ -1076,6 +1089,13 @@ function AdminPage() {
               </div>
             )}
             
+            {/* Tab SendGrid */}
+            {activeTab === "sendgrid" && (
+              <div>
+                <SendGridManager />
+              </div>
+            )}
+
             {/* Tab Chat con utenti */}
             {activeTab === "chat" && (
               <div>
