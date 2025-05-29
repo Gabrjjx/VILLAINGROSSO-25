@@ -217,6 +217,19 @@ export default {
     error_title: "Error",
     error_message: "Unable to send message. Please try again later.",
   },
+  
+  newsletter: {
+    title: "Stay Updated",
+    description: "Receive exclusive offers, travel tips and updates about Villa Ingrosso",
+    first_name: "Name (optional)",
+    email: "Your email",
+    subscribe_button: "Subscribe to newsletter",
+    subscribing: "Subscribing...",
+    success_title: "Subscription completed!",
+    success_message: "Thank you for subscribing to Villa Ingrosso newsletter",
+    error_title: "Error",
+    privacy_note: "We never share your data. You can unsubscribe at any time.",
+  },
   footer: {
     tagline: "Your seaside retreat in Leporano",
     rights: "All rights reserved.",

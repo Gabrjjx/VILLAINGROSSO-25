@@ -29,7 +29,7 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
     await mailService.send({
       to: params.to,
       from: params.from,
-      subject: params.subject,
+      subject: params.subject || '',
       text: params.text,
       html: params.html,
       trackingSettings: {
@@ -113,7 +113,7 @@ export async function addToNewsletter(email: string, firstName: string = ''): Pr
 export async function sendNewsletter(subject: string, content: string, listId?: string): Promise<boolean> {
   try {
     await mailService.send({
-      to: listId ? { listId } : 'newsletter@villaingrosso.com',
+      to: 'newsletter@villaingrosso.com', // Simplified for now
       from: 'g.ingrosso@villaingrosso.com',
       subject: subject,
       html: content,
