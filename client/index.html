@@ -21,6 +21,27 @@
       gtag('config', 'AW-17038146595');
     </script>
     
+    <!-- Event snippet for Contatto conversion page -->
+    <script>
+      gtag('event', 'conversion', {'send_to': 'AW-17038146595/T1_zCLvx5r4aEKP4tbw_'});
+    </script>
+    
+    <!-- Snippet evento per conversioni di contatto -->
+    <script>
+      function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'conversion', {
+            'send_to': 'AW-17038146595/T1_zCLvx5r4aEKP4tbw_',
+            'event_callback': callback
+        });
+        return false;
+      }
+    </script>
+    
     <!-- ConsentManager Accessibility Widget -->
     <script type="text/javascript" src="https://cdn.consentmanager.net/delivery/js/accessibility.min.js" data-acc-accid="77e7cf81356b" data-acc-host="delivery.consentmanager.net" data-acc-cdn="cdn.consentmanager.net"></script>
     
