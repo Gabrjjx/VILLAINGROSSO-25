@@ -229,6 +229,7 @@ export default {
     success_message: "Thank you for subscribing to Villa Ingrosso newsletter",
     error_title: "Error",
     privacy_note: "We never share your data. You can unsubscribe at any time.",
+    no_thanks: "No, thanks"
   },
   footer: {
     tagline: "Your seaside retreat in Leporano",

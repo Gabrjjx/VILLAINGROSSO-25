@@ -230,6 +230,7 @@ export default {
     success_message: "Grazie per esserti iscritto alla newsletter di Villa Ingrosso",
     error_title: "Errore",
     privacy_note: "Non condividiamo mai i tuoi dati. Puoi disiscriverti in qualsiasi momento.",
+    no_thanks: "No, grazie"
   },
   footer: {
     tagline: "Il tuo rifugio sul mare a Leporano",

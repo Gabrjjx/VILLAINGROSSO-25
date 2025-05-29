@@ -13,6 +13,7 @@ import AuthPage from "@/pages/AuthPage";
 import AccountPage from "@/pages/AccountPage";
 import AdminPage from "@/pages/AdminPage";
 import BookingPage from "@/pages/BookingPage";
+import NewsletterModal from "@/components/NewsletterModal";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
 import { AuthProvider } from "@/hooks/use-auth";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -53,6 +54,7 @@ function App() {
             <WaveLoaderWithContext />
             <SoundToggle />
             <Router />
+            <NewsletterModal />
             <Toaster />
           </TooltipProvider>
         </LoadingProvider>
