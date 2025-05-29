@@ -1,4 +1,5 @@
 import { MailService } from '@sendgrid/mail';
+import twilio from 'twilio';
 
 if (!process.env.SENDGRID_API_KEY) {
   throw new Error("SENDGRID_API_KEY environment variable must be set");
@@ -6,6 +7,12 @@ if (!process.env.SENDGRID_API_KEY) {
 
 const mailService = new MailService();
 mailService.setApiKey(process.env.SENDGRID_API_KEY);
+
+// Inizializza Twilio client
+let twilioClient: any = null;
+if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
+  twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+}
 
 // Template IDs per le email automatiche
 const EMAIL_TEMPLATES = {
@@ -130,23 +137,24 @@ export async function sendNewsletter(subject: string, content: string, listId?: 
   }
 }
 
-// SMS tramite SendGrid (richiede integrazione con provider SMS)
+// Invio SMS tramite Twilio
 export async function sendSMS(phoneNumber: string, message: string): Promise<boolean> {
+  if (!twilioClient || !process.env.TWILIO_PHONE_NUMBER) {
+    console.error('Twilio not configured properly');
+    return false;
+  }
+
   try {
-    // Nota: SendGrid non gestisce SMS direttamente, ma può integrarsi con Twilio
-    // Per ora implementiamo un placeholder che può essere esteso
-    console.log(`SMS to ${phoneNumber}: ${message}`);
-    
-    // In futuro, integrare con Twilio o altro provider SMS
-    // const twilioResponse = await twilioClient.messages.create({
-    //   body: message,
-    //   from: process.env.TWILIO_PHONE_NUMBER,
-    //   to: phoneNumber
-    // });
-    
+    const sms = await twilioClient.messages.create({
+      body: message,
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: phoneNumber
+    });
+
+    console.log(`SMS inviato con successo a ${phoneNumber}. SID: ${sms.sid}`);
     return true;
   } catch (error) {
-    console.error('Error sending SMS:', error);
+    console.error('Errore invio SMS Twilio:', error);
     return false;
   }
 }
