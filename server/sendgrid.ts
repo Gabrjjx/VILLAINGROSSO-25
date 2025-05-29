@@ -7,6 +7,15 @@ if (!process.env.SENDGRID_API_KEY) {
 const mailService = new MailService();
 mailService.setApiKey(process.env.SENDGRID_API_KEY);
 
+// Template IDs per le email automatiche
+const EMAIL_TEMPLATES = {
+  WELCOME: 'd-welcome-template-id', // Da sostituire con l'ID del template SendGrid
+  BOOKING_CONFIRMATION: 'd-booking-confirmation-id',
+  CHECKOUT_REMINDER: 'd-checkout-reminder-id',
+  REVIEW_REQUEST: 'd-review-request-id',
+  NEWSLETTER: 'd-newsletter-template-id'
+};
+
 interface EmailParams {
   to: string;
   from: string;
@@ -23,10 +32,121 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
       subject: params.subject,
       text: params.text,
       html: params.html,
+      trackingSettings: {
+        clickTracking: {
+          enable: true,
+          enableText: true
+        },
+        openTracking: {
+          enable: true
+        }
+      }
     });
     return true;
   } catch (error) {
     console.error('SendGrid email error:', error);
+    return false;
+  }
+}
+
+// Email di benvenuto per nuovi ospiti
+export async function sendWelcomeEmail(guestEmail: string, guestName: string): Promise<boolean> {
+  try {
+    await mailService.send({
+      to: guestEmail,
+      from: 'g.ingrosso@villaingrosso.com',
+      templateId: EMAIL_TEMPLATES.WELCOME,
+      dynamicTemplateData: {
+        guest_name: guestName,
+        villa_name: 'Villa Ingrosso',
+        location: 'Leporano, Puglia',
+        wifi_password: 'VillaIngrosso2025',
+        checkin_time: '16:00',
+        checkout_time: '10:00',
+        contact_phone: '+39 347 089 6961',
+        emergency_phone: '+39 329 274 7374'
+      },
+      trackingSettings: {
+        clickTracking: { enable: true, enableText: true },
+        openTracking: { enable: true }
+      }
+    });
+    return true;
+  } catch (error) {
+    console.error('Error sending welcome email:', error);
+    return false;
+  }
+}
+
+// Newsletter subscription
+export async function addToNewsletter(email: string, firstName: string = ''): Promise<boolean> {
+  try {
+    // Aggiunge contatto alla lista newsletter di SendGrid
+    const contactData = {
+      contacts: [{
+        email: email,
+        first_name: firstName,
+        custom_fields: {
+          signup_date: new Date().toISOString(),
+          source: 'villa_website'
+        }
+      }]
+    };
+
+    const response = await fetch('https://api.sendgrid.com/v3/marketing/contacts', {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(contactData)
+    });
+
+    return response.ok;
+  } catch (error) {
+    console.error('Error adding to newsletter:', error);
+    return false;
+  }
+}
+
+// Invio newsletter
+export async function sendNewsletter(subject: string, content: string, listId?: string): Promise<boolean> {
+  try {
+    await mailService.send({
+      to: listId ? { listId } : 'newsletter@villaingrosso.com',
+      from: 'g.ingrosso@villaingrosso.com',
+      subject: subject,
+      html: content,
+      trackingSettings: {
+        clickTracking: { enable: true, enableText: true },
+        openTracking: { enable: true },
+        subscriptionTracking: { enable: true }
+      }
+    });
+    return true;
+  } catch (error) {
+    console.error('Error sending newsletter:', error);
+    return false;
+  }
+}
+
+// SMS tramite SendGrid (richiede integrazione con provider SMS)
+export async function sendSMS(phoneNumber: string, message: string): Promise<boolean> {
+  try {
+    // Nota: SendGrid non gestisce SMS direttamente, ma può integrarsi con Twilio
+    // Per ora implementiamo un placeholder che può essere esteso
+    console.log(`SMS to ${phoneNumber}: ${message}`);
+    
+    // In futuro, integrare con Twilio o altro provider SMS
+    // const twilioResponse = await twilioClient.messages.create({
+    //   body: message,
+    //   from: process.env.TWILIO_PHONE_NUMBER,
+    //   to: phoneNumber
+    // });
+    
+    return true;
+  } catch (error) {
+    console.error('Error sending SMS:', error);
     return false;
   }
 }

@@ -4,7 +4,15 @@ import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { type InsertBooking, type InsertContactMessage } from "@shared/schema";
 import { log } from "./vite";
-import { sendEmail, createContactNotificationEmail, createBookingConfirmationEmail } from "./sendgrid";
+import { 
+  sendEmail, 
+  createContactNotificationEmail, 
+  createBookingConfirmationEmail,
+  sendWelcomeEmail,
+  addToNewsletter,
+  sendNewsletter,
+  sendSMS
+} from "./sendgrid";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Middleware già configurati nel file index.ts
@@ -139,6 +147,102 @@ export async function registerRoutes(app: Express): Promise<Server> {
         success: false,
         error: "Failed to send test email"
       });
+    }
+  });
+
+  // Email di benvenuto per nuovi ospiti
+  app.post("/api/send-welcome-email", async (req: Request, res: Response) => {
+    try {
+      const { email, name } = req.body;
+      
+      if (!email || !name) {
+        return res.status(400).json({ error: "Email and name are required" });
+      }
+
+      const success = await sendWelcomeEmail(email, name);
+      
+      if (success) {
+        res.json({ success: true, message: "Welcome email sent successfully" });
+      } else {
+        res.status(500).json({ success: false, message: "Failed to send welcome email" });
+      }
+    } catch (error) {
+      console.error("Error sending welcome email:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  // Iscrizione alla newsletter
+  app.post("/api/newsletter/subscribe", async (req: Request, res: Response) => {
+    try {
+      const { email, firstName } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+
+      const success = await addToNewsletter(email, firstName || '');
+      
+      if (success) {
+        res.json({ success: true, message: "Successfully subscribed to newsletter" });
+      } else {
+        res.status(500).json({ success: false, message: "Failed to subscribe to newsletter" });
+      }
+    } catch (error) {
+      console.error("Error subscribing to newsletter:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  // Invio newsletter (solo admin)
+  app.post("/api/newsletter/send", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { subject, content, listId } = req.body;
+      
+      if (!subject || !content) {
+        return res.status(400).json({ error: "Subject and content are required" });
+      }
+
+      const success = await sendNewsletter(subject, content, listId);
+      
+      if (success) {
+        res.json({ success: true, message: "Newsletter sent successfully" });
+      } else {
+        res.status(500).json({ success: false, message: "Failed to send newsletter" });
+      }
+    } catch (error) {
+      console.error("Error sending newsletter:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  // Invio SMS (solo admin)
+  app.post("/api/send-sms", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { phoneNumber, message } = req.body;
+      
+      if (!phoneNumber || !message) {
+        return res.status(400).json({ error: "Phone number and message are required" });
+      }
+
+      const success = await sendSMS(phoneNumber, message);
+      
+      if (success) {
+        res.json({ success: true, message: "SMS sent successfully" });
+      } else {
+        res.status(500).json({ success: false, message: "Failed to send SMS" });
+      }
+    } catch (error) {
+      console.error("Error sending SMS:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
     }
   });
 

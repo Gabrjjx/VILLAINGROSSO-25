@@ -218,6 +218,19 @@ export default {
     error_title: "Errore",
     error_message: "Impossibile inviare il messaggio. Riprova più tardi.",
   },
+  
+  newsletter: {
+    title: "Rimani aggiornato",
+    description: "Ricevi offerte esclusive, consigli di viaggio e aggiornamenti su Villa Ingrosso",
+    first_name: "Nome (opzionale)",
+    email: "La tua email",
+    subscribe_button: "Iscriviti alla newsletter",
+    subscribing: "Iscrizione in corso...",
+    success_title: "Iscrizione completata!",
+    success_message: "Grazie per esserti iscritto alla newsletter di Villa Ingrosso",
+    error_title: "Errore",
+    privacy_note: "Non condividiamo mai i tuoi dati. Puoi disiscriverti in qualsiasi momento.",
+  },
   footer: {
     tagline: "Il tuo rifugio sul mare a Leporano",
     rights: "Tutti i diritti riservati.",
