@@ -1,6 +1,5 @@
 import { Link } from "wouter";
 import { useLanguage } from "@/context/LanguageContext";
-import NewsletterSignup from "./NewsletterSignup";
 
 // Importazioni dei loghi dei partner
 import airbnbLogo from "../assets/partners/airbmb.png";
@@ -35,12 +34,7 @@ export default function Footer() {
           </div>
         </div>
         
-        {/* Newsletter Section */}
-        <div className="mt-8 pt-6 border-t border-blue-300/30">
-          <div className="max-w-2xl mx-auto">
-            <NewsletterSignup />
-          </div>
-        </div>
+
 
         {/* Partner Logos */}
         <div className="mt-8 pt-6 border-t border-blue-300/30">
