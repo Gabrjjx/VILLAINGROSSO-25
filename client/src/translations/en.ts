@@ -231,6 +231,23 @@ export default {
     privacy_note: "We never share your data. You can unsubscribe at any time.",
     no_thanks: "No, thanks"
   },
+  
+  whatsapp: {
+    title: "Villa Ingrosso",
+    subtitle: "Usually replies within a few minutes",
+    welcome_title: "Hello! 👋",
+    welcome_message: "Welcome to Villa Ingrosso. How can we help you today?",
+    quick_messages: "Quick messages:",
+    custom_message: "Or write your own message:",
+    placeholder: "Write your message...",
+    call_button: "Call",
+    send_button: "Send on WhatsApp",
+    redirect_note: "You will be redirected to WhatsApp",
+    quick_msg_1: "Hi! I would like information about Villa Ingrosso for my vacation.",
+    quick_msg_2: "I'm interested in booking. Could you send me the availability?",
+    quick_msg_3: "I would like to know the prices for the next few weeks.",
+    quick_msg_4: "I need help organizing my stay."
+  },
   footer: {
     tagline: "Your seaside retreat in Leporano",
     rights: "All rights reserved.",

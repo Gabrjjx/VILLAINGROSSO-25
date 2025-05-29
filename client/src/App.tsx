@@ -14,6 +14,7 @@ import AccountPage from "@/pages/AccountPage";
 import AdminPage from "@/pages/AdminPage";
 import BookingPage from "@/pages/BookingPage";
 import NewsletterModal from "@/components/NewsletterModal";
+import WhatsAppChat from "@/components/WhatsAppChat";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
 import { AuthProvider } from "@/hooks/use-auth";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -55,6 +56,7 @@ function App() {
             <SoundToggle />
             <Router />
             <NewsletterModal />
+            <WhatsAppChat />
             <Toaster />
           </TooltipProvider>
         </LoadingProvider>
