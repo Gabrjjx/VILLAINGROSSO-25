@@ -155,35 +155,38 @@ export default function SendGridManager() {
           </CardContent>
         </Card>
 
-        {/* Invio SMS */}
+        {/* Invio WhatsApp */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <MessageSquare className="h-5 w-5" />
-              Invio SMS
+              <MessageSquare className="h-5 w-5 text-green-600" />
+              Invio WhatsApp
             </CardTitle>
             <CardDescription>
-              Invia notifiche SMS urgenti agli ospiti
+              Invia messaggi WhatsApp istantanei agli ospiti via Twilio
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Input
-              placeholder="Numero di telefono (+39...)"
+              placeholder="Numero WhatsApp (+39...)"
               value={sms.phoneNumber}
               onChange={(e) => setSms(prev => ({ ...prev, phoneNumber: e.target.value }))}
             />
             <Textarea
-              placeholder="Messaggio SMS"
+              placeholder="Messaggio WhatsApp (supporta *grassetto* e formattazione)"
               value={sms.message}
               onChange={(e) => setSms(prev => ({ ...prev, message: e.target.value }))}
-              rows={3}
+              rows={4}
             />
+            <div className="text-sm text-gray-600 bg-green-50 p-3 rounded">
+              💡 <strong>Suggerimento:</strong> Usa *testo* per grassetto e formatta il messaggio per WhatsApp
+            </div>
             <Button
               onClick={() => smsMutation.mutate(sms)}
               disabled={!sms.phoneNumber || !sms.message || smsMutation.isPending}
-              className="w-full"
+              className="w-full bg-green-600 hover:bg-green-700"
             >
-              {smsMutation.isPending ? "Invio..." : "Invia SMS"}
+              {smsMutation.isPending ? "Invio..." : "📱 Invia WhatsApp"}
             </Button>
           </CardContent>
         </Card>

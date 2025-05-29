@@ -220,7 +220,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Invio SMS (solo admin)
+  // Invio WhatsApp (solo admin)
   app.post("/api/send-sms", async (req: Request, res: Response) => {
     try {
       if (!req.isAuthenticated() || !req.user?.isAdmin) {
@@ -233,16 +233,89 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Phone number and message are required" });
       }
 
+      // Ora invia via WhatsApp invece di SMS
       const success = await sendSMS(phoneNumber, message);
       
       if (success) {
-        res.json({ success: true, message: "SMS sent successfully" });
+        res.json({ success: true, message: "WhatsApp message sent successfully" });
       } else {
-        res.status(500).json({ success: false, message: "Failed to send SMS" });
+        res.status(500).json({ success: false, message: "Failed to send WhatsApp message. Check Twilio configuration." });
       }
     } catch (error) {
-      console.error("Error sending SMS:", error);
+      console.error("Error sending WhatsApp:", error);
       res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  // Invio WhatsApp di conferma prenotazione
+  app.post("/api/send-booking-whatsapp", async (req: Request, res: Response) => {
+    try {
+      const { phoneNumber, guestName, checkIn, checkOut } = req.body;
+
+      if (!phoneNumber || !guestName || !checkIn || !checkOut) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Dati mancanti per l'invio WhatsApp" 
+        });
+      }
+
+      const { createBookingConfirmationWhatsApp } = await import('./sendgrid');
+      const whatsappMessage = createBookingConfirmationWhatsApp(guestName, checkIn, checkOut);
+      const success = await sendSMS(phoneNumber, whatsappMessage);
+      
+      if (success) {
+        res.json({ 
+          success: true, 
+          message: "WhatsApp di conferma prenotazione inviato" 
+        });
+      } else {
+        res.status(500).json({ 
+          success: false, 
+          message: "Errore nell'invio WhatsApp di conferma" 
+        });
+      }
+    } catch (error) {
+      console.error('Booking WhatsApp error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Errore interno del server" 
+      });
+    }
+  });
+
+  // Invio WhatsApp di benvenuto
+  app.post("/api/send-welcome-whatsapp", async (req: Request, res: Response) => {
+    try {
+      const { phoneNumber, guestName } = req.body;
+
+      if (!phoneNumber || !guestName) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Numero WhatsApp e nome ospite richiesti" 
+        });
+      }
+
+      const { createWelcomeWhatsApp } = await import('./sendgrid');
+      const whatsappMessage = createWelcomeWhatsApp(guestName);
+      const success = await sendSMS(phoneNumber, whatsappMessage);
+      
+      if (success) {
+        res.json({ 
+          success: true, 
+          message: "WhatsApp di benvenuto inviato" 
+        });
+      } else {
+        res.status(500).json({ 
+          success: false, 
+          message: "Errore nell'invio WhatsApp di benvenuto" 
+        });
+      }
+    } catch (error) {
+      console.error('Welcome WhatsApp error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Errore interno del server" 
+      });
     }
   });
 
