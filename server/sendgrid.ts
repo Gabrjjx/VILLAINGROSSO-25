@@ -10,8 +10,17 @@ mailService.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Inizializza Twilio client
 let twilioClient: any = null;
-if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
-  twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+try {
+  if (process.env.TWILIO_ACCOUNT_SID && 
+      process.env.TWILIO_AUTH_TOKEN && 
+      process.env.TWILIO_ACCOUNT_SID.startsWith('AC')) {
+    twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    console.log('Twilio client inizializzato correttamente');
+  } else {
+    console.warn('Credenziali Twilio non configurate correttamente. SMS non disponibile.');
+  }
+} catch (error) {
+  console.error('Errore inizializzazione Twilio:', error);
 }
 
 // Template IDs per le email automatiche
@@ -261,4 +270,36 @@ Messaggio:
 ${message}
     `
   };
+}
+
+// Template SMS per Villa Ingrosso
+export function createBookingConfirmationSMS(guestName: string, checkIn: string, checkOut: string): string {
+  return `🏖️ Villa Ingrosso - Conferma Prenotazione
+Ciao ${guestName}! La tua prenotazione è confermata:
+📅 Check-in: ${checkIn}
+📅 Check-out: ${checkOut}
+📍 Leporano (TA), 300m dal mare
+Info: g.ingrosso@villaingrosso.com
+Ti aspettiamo! 🌊`;
+}
+
+export function createWelcomeSMS(guestName: string): string {
+  return `🌊 Benvenuto a Villa Ingrosso, ${guestName}!
+La tua vacanza da sogno inizia ora. La villa ti aspetta con tutti i comfort per un soggiorno indimenticabile.
+Per qualsiasi necessità: 347 089 6961
+Buona vacanza! 🏖️`;
+}
+
+export function createCheckoutReminderSMS(guestName: string, checkOut: string): string {
+  return `🏠 Villa Ingrosso - Promemoria Check-out
+Ciao ${guestName}, ricordati del check-out previsto per ${checkOut} entro le ore 10:00.
+Grazie per aver scelto Villa Ingrosso!
+Lascia una recensione: la tua opinione è importante! ⭐`;
+}
+
+export function createAdminNotificationSMS(guestName: string, checkIn: string): string {
+  return `🔔 Villa Ingrosso - Nuova Prenotazione
+Ospite: ${guestName}
+Check-in: ${checkIn}
+Controlla i dettagli nel pannello admin.`;
 }
