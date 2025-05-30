@@ -267,6 +267,11 @@ export default function BookingForm() {
                 type="submit" 
                 className="w-full md:w-auto" 
                 disabled={bookingMutation.isPending}
+                onClick={() => {
+                  console.log("Button clicked!");
+                  console.log("Form errors:", form.formState.errors);
+                  console.log("Form is valid:", form.formState.isValid);
+                }}
               >
                 {bookingMutation.isPending ? (
                   <>
