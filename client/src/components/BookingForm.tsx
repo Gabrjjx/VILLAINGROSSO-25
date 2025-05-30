@@ -130,6 +130,15 @@ export default function BookingForm() {
   function onSubmit(data: BookingFormValues) {
     console.log("Form submitted with data:", data);
     console.log("Form errors:", form.formState.errors);
+    console.log("Form is valid:", form.formState.isValid);
+    console.log("Date range:", dateRange);
+    
+    // Assicuriamoci che le date siano impostate correttamente
+    if (dateRange?.from && dateRange?.to) {
+      data.startDate = dateRange.from;
+      data.endDate = dateRange.to;
+    }
+    
     bookingMutation.mutate(data);
   }
 
@@ -168,6 +177,8 @@ export default function BookingForm() {
       <CardContent className="pt-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+
+
             {/* Selezione date */}
             <div className="space-y-4">
               <FormLabel>{t("booking.dateRange")}</FormLabel>
