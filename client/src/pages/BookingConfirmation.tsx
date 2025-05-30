@@ -24,20 +24,15 @@ export default function BookingConfirmation() {
   useEffect(() => {
     // Recupera i dati salvati dal form di prenotazione
     const savedBooking = sessionStorage.getItem('lastBooking');
-    console.log('BookingConfirmation - Data from sessionStorage:', savedBooking);
     
     if (savedBooking) {
       try {
         const data = JSON.parse(savedBooking);
-        console.log('BookingConfirmation - Parsed data:', data);
         setBookingData(data);
         sessionStorage.removeItem('lastBooking');
       } catch (error) {
-        console.error('Errore nel parsing dei dati della prenotazione:', error);
         setBookingData(null);
       }
-    } else {
-      console.log('BookingConfirmation - No data found in sessionStorage');
     }
   }, []);
 

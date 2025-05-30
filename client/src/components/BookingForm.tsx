@@ -117,11 +117,9 @@ export default function BookingForm() {
       return await res.json();
     },
     onSuccess: (data) => {
-      console.log("Booking created successfully:", data);
-      
       // Salva i dati della prenotazione per la pagina di conferma
       const bookingData = {
-        id: data.id, // Includi l'ID nei dati salvati
+        id: data.id,
         guestName: form.getValues().guestName,
         startDate: form.getValues().startDate,
         endDate: form.getValues().endDate,
@@ -130,11 +128,9 @@ export default function BookingForm() {
         createdAt: new Date().toISOString()
       };
       
-      console.log("Saving booking data to sessionStorage:", bookingData);
       sessionStorage.setItem('lastBooking', JSON.stringify(bookingData));
       
       // Reindirizza alla pagina di conferma
-      console.log("Redirecting to confirmation page");
       setLocation("/booking-confirmation");
       
       queryClient.invalidateQueries({ queryKey: ["/api/bookings"] });
