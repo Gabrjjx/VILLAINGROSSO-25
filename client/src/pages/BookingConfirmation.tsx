@@ -1,8 +1,9 @@
 import { useLocation, Link } from "wouter";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Calendar, Users, MapPin, Home, MessageCircle } from "lucide-react";
+import { CheckCircle, Calendar, Users, MapPin, Home, MessageCircle, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { it } from "date-fns/locale";
 
@@ -21,27 +22,32 @@ export default function BookingConfirmation() {
   const [bookingData, setBookingData] = useState<BookingData | null>(null);
 
   useEffect(() => {
-    // Ottieni i dati della prenotazione dall'URL o sessionStorage
+    // Ottieni i dati della prenotazione dall'URL e sessionStorage
     const urlParams = new URLSearchParams(location.split('?')[1] || '');
     const bookingId = urlParams.get('id');
     
     if (bookingId) {
-      // In un caso reale, faresti una chiamata API per ottenere i dettagli
-      // Per ora usiamo i dati dal sessionStorage se disponibili
+      // Recupera i dati salvati dal form di prenotazione
       const savedBooking = sessionStorage.getItem('lastBooking');
       if (savedBooking) {
-        const data = JSON.parse(savedBooking);
-        setBookingData({ ...data, id: parseInt(bookingId) });
-        sessionStorage.removeItem('lastBooking'); // Pulizia
+        try {
+          const data = JSON.parse(savedBooking);
+          setBookingData({ ...data, id: parseInt(bookingId) });
+          sessionStorage.removeItem('lastBooking');
+        } catch (error) {
+          console.error('Errore nel parsing dei dati della prenotazione:', error);
+          setBookingData(null);
+        }
       }
     }
   }, [location]);
 
-  if (!bookingData) {
+  if (!bookingData || !bookingData.id) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardContent className="p-8 text-center">
+            <Loader2 className="h-8 w-8 animate-spin text-cyan-600 mx-auto mb-4" />
             <p className="text-muted-foreground">Caricamento dettagli prenotazione...</p>
             <Link href="/">
               <Button variant="outline" className="mt-4">
