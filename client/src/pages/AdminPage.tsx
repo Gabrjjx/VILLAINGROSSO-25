@@ -1395,7 +1395,9 @@ function AdminPage() {
                     selectedBooking.status === "confirmed" ? "bg-green-500" :
                     selectedBooking.status === "pending" ? "bg-amber-500" : "bg-red-500"
                   }>
-                    {t(`admin.bookings.status.${selectedBooking.status}`) || selectedBooking.status}
+                    {selectedBooking.status === "confirmed" ? (t("admin.bookings.status.confirmed") || "Confermata") :
+                     selectedBooking.status === "pending" ? (t("admin.bookings.status.pending") || "In attesa") :
+                     (t("admin.bookings.status.cancelled") || "Cancellata")}
                   </Badge>
                 </div>
               </div>
