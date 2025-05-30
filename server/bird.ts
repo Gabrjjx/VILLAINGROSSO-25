@@ -24,7 +24,7 @@ if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID) {
   console.warn('Bird credentials not configured. WhatsApp/SMS features will be disabled.');
 }
 
-// Funzione per inviare messaggi WhatsApp tramite Bird
+// Funzione per inviare messaggi WhatsApp tramite Bird usando template approvato
 export async function sendWhatsApp(phoneNumber: string, message: string): Promise<boolean> {
   if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID) {
     console.error('Bird API not configured properly');
@@ -44,16 +44,22 @@ export async function sendWhatsApp(phoneNumber: string, message: string): Promis
       formattedNumber = `+${cleanNumber}`;
     }
 
-    const payload: BirdMessagePayload = {
+    const payload = {
       receiver: {
         contact: {
           identifierValue: formattedNumber
         }
       },
-      body: {
-        text: {
-          text: message
-        }
+      template: {
+        projectId: 'bf03f44-54d8-4f74-a07c-c20f95a7061c',
+        version: 'latest',
+        locale: 'it',
+        parameters: [
+          {
+            type: 'text',
+            text: message
+          }
+        ]
       },
       channelId: '00e334fd-7b63-5dbc-b011-b0d512f0895e'
     };
