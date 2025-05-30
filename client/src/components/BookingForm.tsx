@@ -144,6 +144,7 @@ export default function BookingForm() {
 
   // Gestisce il cambio di date
   const handleDateRangeChange = (range: DateRange | undefined) => {
+    console.log("Date range changed:", range);
     if (range?.from) {
       form.setValue("startDate", range.from);
       setDateRange(range);
