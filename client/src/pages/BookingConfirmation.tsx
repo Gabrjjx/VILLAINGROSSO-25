@@ -26,19 +26,29 @@ export default function BookingConfirmation() {
     const urlParams = new URLSearchParams(location.split('?')[1] || '');
     const bookingId = urlParams.get('id');
     
+    console.log('BookingConfirmation - URL:', location);
+    console.log('BookingConfirmation - Booking ID from URL:', bookingId);
+    
     if (bookingId) {
       // Recupera i dati salvati dal form di prenotazione
       const savedBooking = sessionStorage.getItem('lastBooking');
+      console.log('BookingConfirmation - Data from sessionStorage:', savedBooking);
+      
       if (savedBooking) {
         try {
           const data = JSON.parse(savedBooking);
+          console.log('BookingConfirmation - Parsed data:', data);
           setBookingData({ ...data, id: parseInt(bookingId) });
           sessionStorage.removeItem('lastBooking');
         } catch (error) {
           console.error('Errore nel parsing dei dati della prenotazione:', error);
           setBookingData(null);
         }
+      } else {
+        console.log('BookingConfirmation - No data found in sessionStorage');
       }
+    } else {
+      console.log('BookingConfirmation - No booking ID in URL');
     }
   }, [location]);
 
