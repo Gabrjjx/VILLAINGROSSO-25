@@ -139,8 +139,8 @@ export default function BookingForm() {
     if (dateRange?.from && dateRange?.to) {
       data.startDate = dateRange.from;
       data.endDate = dateRange.to;
-      // Calcola l'importo totale automaticamente
-      data.totalAmount = 150 * numberOfNights;
+      // Importo da definire dopo la conferma
+      data.totalAmount = 0;
     }
     
     bookingMutation.mutate(data);
@@ -175,9 +175,9 @@ export default function BookingForm() {
       <CardHeader className="bg-primary text-white">
         <CardTitle className="flex items-center">
           <Calendar className="mr-2 h-5 w-5" />
-          {t("booking.title")}
+          Richiesta di Prenotazione
         </CardTitle>
-        <CardDescription className="text-primary-foreground/90">{t("booking.description")}</CardDescription>
+        <CardDescription className="text-primary-foreground/90">Invia una richiesta per il tuo soggiorno presso Villa Ingrosso</CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
         <Form {...form}>
@@ -266,17 +266,15 @@ export default function BookingForm() {
               )}
             />
 
-            {/* Riepilogo prezzo */}
+            {/* Informazioni soggiorno */}
             {numberOfNights > 0 && (
-              <div className="bg-muted/50 p-4 rounded-lg space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>€150 x {numberOfNights} {numberOfNights === 1 ? "notte" : "notti"}</span>
-                  <span>€{(150 * numberOfNights).toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between font-semibold border-t pt-2">
-                  <span>Totale</span>
-                  <span>€{(150 * numberOfNights).toFixed(2)}</span>
-                </div>
+              <div className="bg-muted/50 p-4 rounded-lg">
+                <p className="text-sm text-muted-foreground">
+                  Soggiorno di {numberOfNights} {numberOfNights === 1 ? "notte" : "notti"}
+                </p>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Il prezzo finale verrà concordato dopo la verifica della disponibilità.
+                </p>
               </div>
             )}
 
@@ -312,7 +310,7 @@ export default function BookingForm() {
                     {t("booking.submitting")}
                   </>
                 ) : (
-                  t("booking.submit")
+                  "Invia Richiesta"
                 )}
               </Button>
             </CardFooter>
