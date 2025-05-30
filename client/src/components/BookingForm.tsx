@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLocation } from "wouter";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { insertBookingSchema } from "@shared/schema";
@@ -53,6 +54,7 @@ export default function BookingForm() {
   const { toast } = useToast();
   const { user, isLoading } = useAuth();
   const queryClient = useQueryClient();
+  const [location, setLocation] = useLocation();
 
   // Se l'utente non è autenticato, mostra il messaggio di login
   if (isLoading) {
@@ -114,16 +116,20 @@ export default function BookingForm() {
       }
       return await res.json();
     },
-    onSuccess: () => {
-      toast({
-        title: t("booking.success.title"),
-        description: t("booking.success.message"),
-      });
-      form.reset();
-      setDateRange({
-        from: addDays(today, 1),
-        to: addDays(today, 8)
-      });
+    onSuccess: (data) => {
+      // Salva i dati della prenotazione per la pagina di conferma
+      sessionStorage.setItem('lastBooking', JSON.stringify({
+        guestName: form.getValues().guestName,
+        startDate: form.getValues().startDate,
+        endDate: form.getValues().endDate,
+        guestCount: form.getValues().guestCount,
+        notes: form.getValues().notes,
+        createdAt: new Date().toISOString()
+      }));
+      
+      // Reindirizza alla pagina di conferma con l'ID della prenotazione
+      setLocation(`/booking-confirmation?id=${data.id}`);
+      
       queryClient.invalidateQueries({ queryKey: ["/api/bookings"] });
     },
     onError: (error: Error) => {
