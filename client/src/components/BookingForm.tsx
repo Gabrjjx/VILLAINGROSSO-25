@@ -139,6 +139,8 @@ export default function BookingForm() {
     if (dateRange?.from && dateRange?.to) {
       data.startDate = dateRange.from;
       data.endDate = dateRange.to;
+      // Calcola l'importo totale automaticamente
+      data.totalAmount = 150 * numberOfNights;
     }
     
     bookingMutation.mutate(data);
@@ -264,27 +266,19 @@ export default function BookingForm() {
               )}
             />
 
-            {/* Importo totale */}
-            <FormField
-              control={form.control}
-              name="totalAmount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Importo totale (€)</FormLabel>
-                  <FormControl>
-                    <Input 
-                      type="number" 
-                      min={0} 
-                      step="0.01"
-                      {...field} 
-                      onChange={e => field.onChange(parseFloat(e.target.value))}
-                      placeholder="0.00"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* Riepilogo prezzo */}
+            {numberOfNights > 0 && (
+              <div className="bg-muted/50 p-4 rounded-lg space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>€150 x {numberOfNights} {numberOfNights === 1 ? "notte" : "notti"}</span>
+                  <span>€{(150 * numberOfNights).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between font-semibold border-t pt-2">
+                  <span>Totale</span>
+                  <span>€{(150 * numberOfNights).toFixed(2)}</span>
+                </div>
+              </div>
+            )}
 
             {/* Note aggiuntive */}
             <FormField
