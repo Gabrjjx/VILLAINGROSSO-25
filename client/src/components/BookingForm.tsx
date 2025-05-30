@@ -265,7 +265,7 @@ export default function BookingForm() {
                     />
                   </FormControl>
                   <FormDescription>
-                    {t("booking.guestInfo")}
+                    Massimo 5 ospiti
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
