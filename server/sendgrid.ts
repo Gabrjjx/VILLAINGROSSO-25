@@ -27,7 +27,7 @@ const EMAIL_TEMPLATES = {
 interface EmailParams {
   to: string;
   from: string;
-  subject: string;
+  subject?: string;
   text?: string;
   html?: string;
 }
@@ -37,7 +37,7 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
     await mailService.send({
       to: params.to,
       from: params.from,
-      subject: params.subject || '',
+      subject: params.subject || 'Villa Ingrosso',
       text: params.text,
       html: params.html,
       trackingSettings: {
@@ -252,75 +252,14 @@ ${message}
   };
 }
 
-// Template WhatsApp per Villa Ingrosso
-export function createBookingConfirmationWhatsApp(guestName: string, checkIn: string, checkOut: string): string {
-  return `🏖️ *Villa Ingrosso* - Conferma Prenotazione
-
-Ciao *${guestName}*! La tua prenotazione è confermata:
-
-📅 *Check-in:* ${checkIn}
-📅 *Check-out:* ${checkOut}
-📍 *Ubicazione:* Leporano (TA), 300m dal mare
-
-Per informazioni:
-📧 g.ingrosso@villaingrosso.com
-📞 347 089 6961
-
-Ti aspettiamo per una vacanza indimenticabile! 🌊`;
-}
-
-export function createWelcomeWhatsApp(guestName: string): string {
-  return `🌊 *Benvenuto a Villa Ingrosso*, ${guestName}!
-
-La tua vacanza da sogno inizia ora. La villa ti aspetta con tutti i comfort per un soggiorno indimenticabile.
-
-🏖️ *Servizi disponibili:*
-• WiFi gratuito
-• Parcheggio privato
-• Aria condizionata
-• Cucina attrezzata
-
-*Per qualsiasi necessità:* 347 089 6961
-
-Buona vacanza! 🏖️`;
-}
-
-export function createCheckoutReminderWhatsApp(guestName: string, checkOut: string): string {
-  return `🏠 *Villa Ingrosso* - Promemoria Check-out
-
-Ciao *${guestName}*, ricordati del check-out previsto per *${checkOut}* entro le ore *10:00*.
-
-🧹 *Prima di partire:*
-• Chiudi tutte le finestre
-• Spegni luci e condizionatori
-• Lascia le chiavi nell'apposito contenitore
-
-Grazie per aver scelto Villa Ingrosso!
-⭐ Lascia una recensione: la tua opinione è importante!`;
-}
-
-export function createAdminNotificationWhatsApp(guestName: string, checkIn: string): string {
-  return `🔔 *Villa Ingrosso* - Nuova Prenotazione
-
-*Ospite:* ${guestName}
-*Check-in:* ${checkIn}
-
-Controlla i dettagli nel pannello admin.`;
-}
-
-// Manteniamo i template SMS per compatibilità
-export function createBookingConfirmationSMS(guestName: string, checkIn: string, checkOut: string): string {
-  return createBookingConfirmationWhatsApp(guestName, checkIn, checkOut);
-}
-
-export function createWelcomeSMS(guestName: string): string {
-  return createWelcomeWhatsApp(guestName);
-}
-
-export function createCheckoutReminderSMS(guestName: string, checkOut: string): string {
-  return createCheckoutReminderWhatsApp(guestName, checkOut);
-}
-
-export function createAdminNotificationSMS(guestName: string, checkIn: string): string {
-  return createAdminNotificationWhatsApp(guestName, checkIn);
-}
+// Re-export Bird templates for backward compatibility
+export {
+  createBookingConfirmationWhatsApp,
+  createWelcomeWhatsApp,
+  createCheckoutReminderWhatsApp,
+  createAdminNotificationWhatsApp,
+  createBookingConfirmationSMS,
+  createWelcomeSMS,
+  createCheckoutReminderSMS,
+  createAdminNotificationSMS
+} from './bird';
