@@ -52,9 +52,10 @@ export default {
       wifi: {
         title: "Wi-Fi gratuito",
         description: "Connessione Wi-Fi ad alta velocità disponibile in tutta la proprietà",
-        link: "Scopri di più"
+        link: "Chi siamo"
       }
-    }
+    },
+    cta: "Visita Villa Ingrosso"
   },
 
   nav: {

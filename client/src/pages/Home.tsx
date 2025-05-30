@@ -99,17 +99,17 @@ export default function Home() {
             <div className="bg-white bg-opacity-50 backdrop-blur-sm rounded-lg p-6 shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300">
               <div className="mb-4"><Waves className="w-8 h-8 text-cyan-600" /></div>
               <h3 className="text-xl font-medium text-neutral-800 mb-3">
-                A 300m dal mare
+                {t("homePage.features.sea.title")}
               </h3>
               <p className="text-neutral-600 flex-grow mb-5">
-                A pochi passi dalle splendide spiagge cristalline di Leporano sul Mar Ionio
+                {t("homePage.features.sea.description")}
               </p>
               <div>
                 <Link 
                   to="/location"
                   className="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors duration-300"
                 >
-                  Vedi la posizione
+                  {t("homePage.features.sea.link")}
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
                   </svg>
@@ -120,17 +120,17 @@ export default function Home() {
             <div className="bg-white bg-opacity-50 backdrop-blur-sm rounded-lg p-6 shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300">
               <div className="mb-4"><Wifi className="w-8 h-8 text-cyan-600" /></div>
               <h3 className="text-xl font-medium text-neutral-800 mb-3">
-                Wi-Fi gratuito
+                {t("homePage.features.wifi.title")}
               </h3>
               <p className="text-neutral-600 flex-grow mb-5">
-                Connessione Wi-Fi ad alta velocità disponibile in tutta la proprietà
+                {t("homePage.features.wifi.description")}
               </p>
               <div>
                 <Link 
                   to="/about"
                   className="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors duration-300"
                 >
-                  Chi siamo
+                  {t("homePage.features.wifi.link")}
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
                   </svg>
@@ -144,7 +144,7 @@ export default function Home() {
               to="/about"
               className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 transition-colors duration-300"
             >
-              Visita Villa Ingrosso
+              {t("homePage.cta")}
             </Link>
           </div>
         </div>
