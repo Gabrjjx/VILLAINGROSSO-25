@@ -32,9 +32,17 @@ export async function sendWhatsApp(phoneNumber: string, message: string): Promis
   }
 
   try {
-    // Formatta il numero di telefono (rimuovi spazi e caratteri speciali)
+    // Formatta il numero di telefono per WhatsApp
     const cleanNumber = phoneNumber.replace(/\D/g, '');
-    const formattedNumber = cleanNumber.startsWith('39') ? `+${cleanNumber}` : `+39${cleanNumber}`;
+    // Usa il formato corretto per il numero di destinazione
+    let formattedNumber;
+    if (cleanNumber.startsWith('39')) {
+      formattedNumber = `+${cleanNumber}`;
+    } else if (cleanNumber.startsWith('3')) {
+      formattedNumber = `+39${cleanNumber}`;
+    } else {
+      formattedNumber = `+${cleanNumber}`;
+    }
 
     const payload: BirdMessagePayload = {
       receiver: {
@@ -82,9 +90,17 @@ export async function sendSMS(phoneNumber: string, message: string): Promise<boo
   }
 
   try {
-    // Formatta il numero di telefono
+    // Formatta il numero di telefono per SMS
     const cleanNumber = phoneNumber.replace(/\D/g, '');
-    const formattedNumber = cleanNumber.startsWith('39') ? `+${cleanNumber}` : `+39${cleanNumber}`;
+    // Usa il formato corretto per il numero di destinazione
+    let formattedNumber;
+    if (cleanNumber.startsWith('39')) {
+      formattedNumber = `+${cleanNumber}`;
+    } else if (cleanNumber.startsWith('3')) {
+      formattedNumber = `+39${cleanNumber}`;
+    } else {
+      formattedNumber = `+${cleanNumber}`;
+    }
 
     const payload: BirdMessagePayload = {
       receiver: {
