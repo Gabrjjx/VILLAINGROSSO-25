@@ -485,6 +485,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Endpoint per calcolare distanze reali tramite Google Maps API
+  app.post("/api/calculate-distances", async (req: Request, res: Response) => {
+    try {
+      const { origin, destinations } = req.body;
+      const apiKey = process.env.VITE_GOOGLE_MAPS_API_KEY;
+
+      if (!apiKey) {
+        return res.status(500).json({ error: "Google Maps API key not configured" });
+      }
+
+      const origins = `${origin.lat},${origin.lng}`;
+      const destinationsString = destinations.map((dest: any) => 
+        `${dest.lat},${dest.lng}`
+      ).join('|');
+
+      const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origins}&destinations=${destinationsString}&units=metric&mode=driving&language=it&key=${apiKey}`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.status === 'OK') {
+        res.json(data);
+      } else {
+        res.status(400).json({ error: `Google Maps API error: ${data.status}` });
+      }
+    } catch (error) {
+      console.error("Error calculating distances:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

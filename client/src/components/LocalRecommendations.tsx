@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Clock, Star, Phone, Globe, Car, Utensils, Coffee, ShoppingBag, Waves, Camera } from "lucide-react";
 import NeighborhoodMap from './NeighborhoodMap';
+
+// Coordinate di Villa Ingrosso a Leporano
+const VILLA_COORDINATES = { lat: 40.3745, lng: 17.3098 };
 
 const localPlaces = [
   {
@@ -11,13 +14,13 @@ const localPlaces = [
     name: "Torre Lapillo",
     category: "Spiagge",
     type: "beach",
-    distance: "350m",
-    duration: "5 min a piedi / 1 min in auto",
+    distance: "Calcolando...",
+    duration: "Calcolando...",
     rating: 4.8,
     description: "Spiaggia di sabbia bianca finissima con mare cristallino e fondale basso, ideale per famiglie.",
     highlights: ["Mare cristallino", "Sabbia bianca", "Fondali bassi", "Attrezzata"],
     openHours: "Sempre aperta",
-    coordinates: { lat: 40.3758, lng: 17.3089 },
+    coordinates: { lat: 40.3757, lng: 17.3089 },
     image: "/images/torre-lapillo.jpg"
   },
   {
@@ -25,8 +28,8 @@ const localPlaces = [
     name: "Punta Prosciutto",
     category: "Spiagge",
     type: "beach",
-    distance: "8 km",
-    duration: "12 min in auto",
+    distance: "Calcolando...",
+    duration: "Calcolando...",
     rating: 4.9,
     description: "Una delle spiagge più fotografate del Salento, perfetta per il tramonto con vista sulle isole Cheradi.",
     highlights: ["Vista panoramica", "Tramonto mozzafiato", "Acque turchesi", "Instagrammabile"],
@@ -36,58 +39,56 @@ const localPlaces = [
   },
   {
     id: 3,
-    name: "Ristorante da Mario",
-    category: "Ristoranti",
-    type: "restaurant",
-    distance: "1.5 km",
-    duration: "18 min a piedi / 4 min in auto",
-    rating: 4.6,
-    description: "Cucina tipica salentina con pesce fresco del giorno e specialità della nonna. Ambiente familiare e autentico.",
-    highlights: ["Pesce fresco", "Cucina casalinga", "Prezzi onesti", "Vista mare"],
-    openHours: "19:30-23:30 (chiuso lunedì)",
-    phone: "+39 099 533 2147",
-    coordinates: { lat: 40.3721, lng: 17.3045 }
-  },
-  {
-    id: 4,
-    name: "Bar Centrale",
-    category: "Bar & Caffè",
-    type: "cafe",
-    distance: "2.1 km",
-    duration: "25 min a piedi / 6 min in auto",
-    rating: 4.4,
-    description: "Bar storico di Leporano, punto di ritrovo mattutino per la colazione italiana con pasticciotti freschi.",
-    highlights: ["Pasticciotti fatti in casa", "Caffè espresso", "Atmosfera locale", "Aperitivo serale"],
-    openHours: "6:00-14:00, 17:00-24:00",
-    phone: "+39 099 533 1085",
+    name: "Centro Storico di Leporano",
+    category: "Cultura",
+    type: "attraction",
+    distance: "Calcolando...",
+    duration: "Calcolando...",
+    rating: 4.3,
+    description: "Centro storico con vista panoramica sul golfo di Taranto e architettura tipica pugliese.",
+    highlights: ["Vista panoramica", "Architettura storica", "Belvedere", "Atmosfera autentica"],
+    openHours: "Sempre accessibile",
     coordinates: { lat: 40.3789, lng: 17.3112 }
   },
   {
-    id: 5,
-    name: "Supermercato Conad",
-    category: "Servizi",
-    type: "shopping",
-    distance: "1.8 km",
-    duration: "22 min a piedi / 5 min in auto",
-    rating: 4.2,
-    description: "Supermercato ben fornito per tutte le necessità quotidiane, con prodotti locali e specialità pugliesi.",
-    highlights: ["Prodotti locali", "Orario prolungato", "Parcheggio gratuito", "Freschi di qualità"],
-    openHours: "8:00-20:30 (domenica 8:30-13:00, 17:00-20:30)",
-    coordinates: { lat: 40.3734, lng: 17.3078 }
-  },
-  {
-    id: 6,
+    id: 4,
     name: "Centro Storico di Taranto",
-    category: "Cultura",
+    category: "Cultura", 
     type: "attraction",
-    distance: "28 km",
-    duration: "35 min in auto",
+    distance: "Calcolando...",
+    duration: "Calcolando...",
     rating: 4.5,
     description: "Città vecchia con il maestoso Castello Aragonese, cattedrale e il prestigioso Museo Archeologico Nazionale.",
     highlights: ["Castello Aragonese", "Museo Archeologico", "Centro storico", "Ponte girevole"],
     openHours: "Varia per attrazione",
     website: "www.comune.taranto.it",
-    coordinates: { lat: 40.3945, lng: 17.2876 }
+    coordinates: { lat: 40.4668, lng: 17.2707 }
+  },
+  {
+    id: 5,
+    name: "Porto Cesareo",
+    category: "Spiagge",
+    type: "beach",
+    distance: "Calcolando...",
+    duration: "Calcolando...",
+    rating: 4.7,
+    description: "Località marina famosa per le sue acque cristalline e l'area marina protetta.",
+    highlights: ["Area marina protetta", "Acque cristalline", "Snorkeling", "Spiagge attrezzate"],
+    openHours: "Sempre aperta",
+    coordinates: { lat: 40.2623, lng: 17.8939 }
+  },
+  {
+    id: 6,
+    name: "Gallipoli Centro Storico",
+    category: "Cultura",
+    type: "attraction", 
+    distance: "Calcolando...",
+    duration: "Calcolando...",
+    rating: 4.6,
+    description: "Splendida città fortificata su un'isola, con cattedrale barocca e mura di cinta medievali.",
+    highlights: ["Centro storico", "Cattedrale barocca", "Mura medievali", "Porto antico"],
+    openHours: "Sempre accessibile",
+    coordinates: { lat: 40.0542, lng: 17.9934 }
   }
 ];
 
@@ -96,10 +97,83 @@ const categories = ["Tutte", "Spiagge", "Ristoranti", "Bar & Caffè", "Servizi",
 export default function LocalRecommendations() {
   const [selectedCategory, setSelectedCategory] = useState("Tutte");
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [placesWithDistances, setPlacesWithDistances] = useState(localPlaces);
+
+  // Calcola le distanze reali usando Google Maps API tramite il nostro backend
+  useEffect(() => {
+    const calculateDistances = async () => {
+      try {
+        const response = await fetch('/api/calculate-distances', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            origin: VILLA_COORDINATES,
+            destinations: localPlaces.map(place => place.coordinates)
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch distance data');
+        }
+        
+        const data = await response.json();
+        
+        if (data.status === 'OK') {
+          const updatedPlaces = localPlaces.map((place, index) => {
+            const element = data.rows[0].elements[index];
+            if (element.status === 'OK') {
+              return {
+                ...place,
+                distance: element.distance.text,
+                duration: element.duration.text
+              };
+            }
+            return place;
+          });
+          
+          setPlacesWithDistances(updatedPlaces);
+        }
+      } catch (error) {
+        console.error('Error calculating distances:', error);
+        // Fallback to basic calculation using Haversine formula
+        const updatedPlaces = localPlaces.map(place => {
+          const distance = calculateHaversineDistance(
+            VILLA_COORDINATES.lat, 
+            VILLA_COORDINATES.lng,
+            place.coordinates.lat, 
+            place.coordinates.lng
+          );
+          return {
+            ...place,
+            distance: `${distance.toFixed(1)} km`,
+            duration: `${Math.round(distance * 3)} min in auto`
+          };
+        });
+        setPlacesWithDistances(updatedPlaces);
+      }
+    };
+
+    calculateDistances();
+  }, []);
+
+  // Calcolo distanza Haversine come fallback
+  const calculateHaversineDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    const R = 6371; // Raggio della Terra in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  };
 
   const filteredPlaces = selectedCategory === "Tutte" 
-    ? localPlaces 
-    : localPlaces.filter(place => place.category === selectedCategory);
+    ? placesWithDistances 
+    : placesWithDistances.filter(place => place.category === selectedCategory);
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
