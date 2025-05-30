@@ -5,8 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, Clock, Star, Phone, Globe, Car, Utensils, Coffee, ShoppingBag, Waves, Camera } from "lucide-react";
 import NeighborhoodMap from './NeighborhoodMap';
 
-// Coordinate di Villa Ingrosso a Leporano
-const VILLA_COORDINATES = { lat: 40.3745, lng: 17.3098 };
+// Indirizzo di Villa Ingrosso
+const VILLA_ADDRESS = "Via Gabriele d'Annunzio 51, Leporano, TA, Italy";
 
 const localPlaces = [
   {
@@ -109,7 +109,7 @@ export default function LocalRecommendations() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            origin: VILLA_COORDINATES,
+            origin: VILLA_ADDRESS,
             destinations: localPlaces.map(place => place.coordinates)
           })
         });
@@ -138,10 +138,12 @@ export default function LocalRecommendations() {
       } catch (error) {
         console.error('Error calculating distances:', error);
         // Fallback to basic calculation using Haversine formula
+        // Coordinate approssimative di Villa Ingrosso per il fallback
+        const villaCoords = { lat: 40.3745, lng: 17.3098 };
         const updatedPlaces = localPlaces.map(place => {
           const distance = calculateHaversineDistance(
-            VILLA_COORDINATES.lat, 
-            VILLA_COORDINATES.lng,
+            villaCoords.lat, 
+            villaCoords.lng,
             place.coordinates.lat, 
             place.coordinates.lng
           );

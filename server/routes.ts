@@ -495,20 +495,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(500).json({ error: "Google Maps API key not configured" });
       }
 
-      const origins = `${origin.lat},${origin.lng}`;
+      // Gestisce sia indirizzi che coordinate per l'origine
+      const origins = typeof origin === 'string' ? encodeURIComponent(origin) : `${origin.lat},${origin.lng}`;
       const destinationsString = destinations.map((dest: any) => 
         `${dest.lat},${dest.lng}`
       ).join('|');
 
       const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origins}&destinations=${destinationsString}&units=metric&mode=driving&language=it&key=${apiKey}`;
 
+      console.log('Making request to Google Maps API:', url.replace(apiKey, 'API_KEY_HIDDEN'));
+
       const response = await fetch(url);
       const data = await response.json();
+
+      console.log('Google Maps API response:', data);
 
       if (data.status === 'OK') {
         res.json(data);
       } else {
-        res.status(400).json({ error: `Google Maps API error: ${data.status}` });
+        res.status(400).json({ error: `Google Maps API error: ${data.status}`, details: data });
       }
     } catch (error) {
       console.error("Error calculating distances:", error);
