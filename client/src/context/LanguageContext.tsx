@@ -74,6 +74,12 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
       value = value[k];
     }
     
+    // Se il valore è un oggetto, non può essere renderizzato come stringa
+    if (typeof value === 'object' && value !== null) {
+      console.warn(`Translation key "${key}" returns an object, not a string`);
+      return key;
+    }
+    
     // Se non è stato trovato un valore, restituisce la chiave stessa
     return value !== undefined ? value : key;
   };
