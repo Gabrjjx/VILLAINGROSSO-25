@@ -7,7 +7,7 @@ import { Bed, Waves, Wifi } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Home() {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   
   useEffect(() => {
     // Set page title and meta description for SEO based on language
@@ -67,10 +67,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-semibold text-neutral-800">
-              Caratteristiche della Villa
+              {t("homePage.features.title")}
             </h2>
             <p className="mt-4 text-lg text-neutral-600 max-w-3xl mx-auto">
-              Scopri cosa rende Villa Ingrosso speciale
+              {t("homePage.features.subtitle")}
             </p>
           </div>
           
@@ -78,17 +78,17 @@ export default function Home() {
             <div className="bg-white bg-opacity-50 backdrop-blur-sm rounded-lg p-6 shadow-sm border border-neutral-200 hover:shadow-md transition-all duration-300">
               <div className="mb-4"><Bed className="w-8 h-8 text-cyan-600" /></div>
               <h3 className="text-xl font-medium text-neutral-800 mb-3">
-                Camere confortevoli
+                {t("homePage.features.rooms.title")}
               </h3>
               <p className="text-neutral-600 flex-grow mb-5">
-                Camere spaziose e arredate con gusto, dotate di tutti i comfort per un soggiorno rilassante
+                {t("homePage.features.rooms.description")}
               </p>
               <div>
                 <Link 
                   to="/gallery"
                   className="inline-flex items-center text-sm font-medium text-cyan-600 hover:text-cyan-700 transition-colors duration-300"
                 >
-                  Visita la galleria
+                  {t("homePage.features.rooms.link")}
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
                   </svg>

@@ -35,6 +35,27 @@ export default {
     discoverMore: "Scopri di più",
     backToHome: "Torna alla Home",
   },
+  homePage: {
+    features: {
+      title: "Caratteristiche della Villa",
+      subtitle: "Scopri cosa rende Villa Ingrosso speciale",
+      rooms: {
+        title: "Camere confortevoli",
+        description: "Camere spaziose e arredate con gusto, dotate di tutti i comfort per un soggiorno rilassante",
+        link: "Visita la galleria"
+      },
+      sea: {
+        title: "A 300m dal mare",
+        description: "A pochi passi dalle splendide spiagge cristalline di Leporano sul Mar Ionio",
+        link: "Vedi la posizione"
+      },
+      wifi: {
+        title: "Wi-Fi gratuito",
+        description: "Connessione Wi-Fi ad alta velocità disponibile in tutta la proprietà",
+        link: "Scopri di più"
+      }
+    }
+  },
 
   nav: {
     home: "Home",

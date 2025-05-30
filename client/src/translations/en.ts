@@ -35,6 +35,27 @@ export default {
     discoverMore: "Discover more",
     backToHome: "Back to Home",
   },
+  homePage: {
+    features: {
+      title: "Villa Features",
+      subtitle: "Discover what makes Villa Ingrosso special",
+      rooms: {
+        title: "Comfortable Rooms",
+        description: "Spacious and tastefully furnished rooms, equipped with all the comforts for a relaxing stay",
+        link: "Visit the gallery"
+      },
+      sea: {
+        title: "300m from the sea",
+        description: "Just a few steps from the stunning crystal-clear beaches of Leporano on the Ionian Sea",
+        link: "See the location"
+      },
+      wifi: {
+        title: "Free Wi-Fi",
+        description: "High-speed Wi-Fi connection available throughout the property",
+        link: "Learn more"
+      }
+    }
+  },
   nav: {
     home: "Home",
     about: "About Us",
