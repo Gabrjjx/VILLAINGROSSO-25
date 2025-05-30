@@ -1,5 +1,5 @@
 import { MailService } from '@sendgrid/mail';
-import twilio from 'twilio';
+import { sendWhatsApp as birdSendWhatsApp, sendSMS as birdSendSMS } from './bird';
 
 if (!process.env.SENDGRID_API_KEY) {
   throw new Error("SENDGRID_API_KEY environment variable must be set");
@@ -8,19 +8,11 @@ if (!process.env.SENDGRID_API_KEY) {
 const mailService = new MailService();
 mailService.setApiKey(process.env.SENDGRID_API_KEY);
 
-// Inizializza Twilio client
-let twilioClient: any = null;
-try {
-  if (process.env.TWILIO_ACCOUNT_SID && 
-      process.env.TWILIO_AUTH_TOKEN && 
-      process.env.TWILIO_ACCOUNT_SID.startsWith('AC')) {
-    twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-    console.log('Twilio client inizializzato correttamente');
-  } else {
-    console.warn('Credenziali Twilio non configurate correttamente. SMS non disponibile.');
-  }
-} catch (error) {
-  console.error('Errore inizializzazione Twilio:', error);
+// Verifica configurazione Bird
+if (process.env.BIRD_API_KEY && process.env.BIRD_WORKSPACE_ID) {
+  console.log('Bird API configurata correttamente per WhatsApp/SMS');
+} else {
+  console.warn('Credenziali Bird mancanti. Le funzionalità WhatsApp/SMS saranno disabilitate.');
 }
 
 // Template IDs per le email automatiche
@@ -146,36 +138,14 @@ export async function sendNewsletter(subject: string, content: string, listId?: 
   }
 }
 
-// Invio messaggio WhatsApp tramite Twilio
+// Invio WhatsApp tramite Bird
 export async function sendWhatsApp(phoneNumber: string, message: string): Promise<boolean> {
-  if (!twilioClient || !process.env.TWILIO_PHONE_NUMBER) {
-    console.error('Twilio not configured properly');
-    return false;
-  }
-
-  try {
-    // Formato WhatsApp: whatsapp:+numero
-    const whatsappFrom = `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`;
-    const whatsappTo = `whatsapp:${phoneNumber}`;
-
-    const whatsappMessage = await twilioClient.messages.create({
-      body: message,
-      from: whatsappFrom,
-      to: whatsappTo
-    });
-
-    console.log(`WhatsApp inviato con successo a ${phoneNumber}. SID: ${whatsappMessage.sid}`);
-    return true;
-  } catch (error) {
-    console.error('Errore invio WhatsApp Twilio:', error);
-    return false;
-  }
+  return await birdSendWhatsApp(phoneNumber, message);
 }
 
-// Manteniamo anche la funzione SMS per compatibilità
+// Invio SMS tramite Bird
 export async function sendSMS(phoneNumber: string, message: string): Promise<boolean> {
-  // Ora invierà via WhatsApp invece di SMS
-  return sendWhatsApp(phoneNumber, message);
+  return await birdSendSMS(phoneNumber, message);
 }
 
 // Template per email di conferma prenotazione
