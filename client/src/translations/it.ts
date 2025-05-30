@@ -83,6 +83,7 @@ export default {
     openMenu: "Apri menu di navigazione",
     closeMenu: "Chiudi menu di navigazione",
     loginTooltip: "Accedi al tuo account o registrati",
+    location: "Leporano Marina",
   },
   hero: {
     title1: "La tua",

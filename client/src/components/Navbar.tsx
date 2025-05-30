@@ -79,7 +79,7 @@ export default function Navbar() {
               <span className={`text-cyan-600 font-medium uppercase tracking-wider transition-all duration-300 ${
                 isScrolled ? "text-xs" : "text-sm"
               }`}>
-                Leporano Marina
+                {t("navbar.location")}
               </span>
             </div>
           </Link>

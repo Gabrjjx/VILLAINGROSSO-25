@@ -82,6 +82,7 @@ export default {
     openMenu: "Open navigation menu",
     closeMenu: "Close navigation menu",
     loginTooltip: "Sign in to your account or register",
+    location: "Leporano Marina",
   },
   hero: {
     title1: "Your",
