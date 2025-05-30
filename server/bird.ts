@@ -51,9 +51,9 @@ export async function sendWhatsApp(phoneNumber: string, message: string): Promis
         }
       },
       template: {
-        projectId: 'bf03f44-54d8-4f74-a07c-c20f95a7061c',
+        projectId: '632db922-85ed-48db-9b61-01848c5c7111',
         version: 'latest',
-        locale: 'it',
+        locale: 'en',
         parameters: [
           {
             type: 'text',
