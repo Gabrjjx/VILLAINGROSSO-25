@@ -345,6 +345,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       bookingData.userId = (req.user as Express.User).id;
       
       const newBooking = await storage.createBooking(bookingData);
+      
+      // Invia notifica WhatsApp automatica al proprietario
+      try {
+        const user = req.user as Express.User;
+        const startDate = new Date(bookingData.startDate).toLocaleDateString('it-IT');
+        const endDate = new Date(bookingData.endDate).toLocaleDateString('it-IT');
+        
+        const notificationMessage = `🏖️ *NUOVA RICHIESTA DI PRENOTAZIONE*
+
+📋 *Dettagli prenotazione:*
+👤 Cliente: ${user.fullName || user.username}
+📧 Email: ${user.email}
+📅 Check-in: ${startDate}
+📅 Check-out: ${endDate}
+👥 Ospiti: ${bookingData.guestCount}
+
+${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
+
+*Villa Ingrosso* - Sistema Prenotazioni`;
+
+        // Invia al numero del proprietario
+        await sendSMS("+39 3470896961", notificationMessage);
+        log("Notifica WhatsApp inviata al proprietario per nuova prenotazione", "info");
+      } catch (notificationError) {
+        log(`Errore invio notifica WhatsApp: ${notificationError}`, "error");
+        // Non bloccare la prenotazione se l'invio della notifica fallisce
+      }
+      
       res.status(201).json(newBooking);
     } catch (error) {
       log(`Error creating booking: ${error}`, "error");

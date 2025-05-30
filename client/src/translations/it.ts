@@ -368,6 +368,11 @@ export default {
   booking: {
     title: "Prenotazione",
     description: "Inserisci i dettagli per la tua prenotazione",
+    loginRequired: {
+      title: "Accesso Richiesto",
+      message: "Per effettuare una prenotazione devi prima registrarti o accedere al tuo account.",
+      button: "Accedi o Registrati",
+    },
     dateRange: "Periodo di soggiorno",
     selectDates: "Seleziona le date",
     night: "notte",

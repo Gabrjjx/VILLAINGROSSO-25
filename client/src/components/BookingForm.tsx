@@ -7,6 +7,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/use-auth";
 import { Loader2, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,7 +45,39 @@ type BookingFormValues = z.infer<typeof bookingSchema>;
 export default function BookingForm() {
   const { t, language } = useLanguage();
   const { toast } = useToast();
+  const { user, isLoading } = useAuth();
   const queryClient = useQueryClient();
+
+  // Se l'utente non è autenticato, mostra il messaggio di login
+  if (isLoading) {
+    return (
+      <Card className="max-w-2xl mx-auto">
+        <CardContent className="flex items-center justify-center p-8">
+          <Loader2 className="h-8 w-8 animate-spin text-cyan-600" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (!user) {
+    return (
+      <Card className="max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-2xl text-center text-cyan-600">
+            {t("booking.loginRequired.title")}
+          </CardTitle>
+          <CardDescription className="text-center">
+            {t("booking.loginRequired.message")}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="text-center">
+          <Button onClick={() => window.location.href = '/auth'} className="bg-cyan-600 hover:bg-cyan-700">
+            {t("booking.loginRequired.button")}
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
   const today = new Date();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
