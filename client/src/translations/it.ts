@@ -56,6 +56,11 @@ export default {
   },
   navbar: {
     login: "Accedi",
+    menu: "Menu",
+    close: "Chiudi",
+    openMenu: "Apri menu di navigazione",
+    closeMenu: "Chiudi menu di navigazione",
+    loginTooltip: "Accedi al tuo account o registrati",
   },
   hero: {
     title1: "La tua",

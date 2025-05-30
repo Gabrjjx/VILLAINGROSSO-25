@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, Mail, MapPin, Calendar } from "lucide-react";
-import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/context/LanguageContext";
+import { Menu, X, Waves } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
+import { useScrollPosition } from "../hooks/useScrollPosition";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { Link, useLocation } from "wouter";
 import Tooltip from "@/components/ui/tooltip";
@@ -10,7 +10,7 @@ import Tooltip from "@/components/ui/tooltip";
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollY = useScrollPosition();
-  const isScrolled = scrollY > 100;
+  const isScrolled = scrollY > 50;
   const { t } = useLanguage();
   
   const [location] = useLocation();
@@ -30,10 +30,11 @@ export default function Navbar() {
   useEffect(() => {
     function handleOutsideClick(e: MouseEvent) {
       const target = e.target as HTMLElement;
-      const isNavbarToggle = target.closest("#menu-toggle");
-      const isNavbarContent = target.closest("#mobile-menu");
+      const menu = document.getElementById("mobile-menu");
+      const menuToggle = document.getElementById("menu-toggle");
       
-      if (!isNavbarToggle && !isNavbarContent && mobileMenuOpen) {
+      if (mobileMenuOpen && menu && menuToggle && 
+          !menu.contains(target) && !menuToggle.contains(target)) {
         setMobileMenuOpen(false);
       }
     }
@@ -43,209 +44,181 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   return (
-    <>
-      {/* Top Contact Bar */}
-      <div className={`fixed w-full z-50 transition-all duration-500 ${
-        isScrolled ? "translate-y-[-100%]" : "translate-y-0"
-      }`}>
-        <div className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-2 text-xs">
-          <div className="max-w-screen-xl mx-auto px-6 flex justify-between items-center">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-1">
-                <Phone className="h-3 w-3" />
-                <span>+39 347 089 6961</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <Mail className="h-3 w-3" />
-                <span>g.ingrosso@villaingrosso.com</span>
-              </div>
-              <div className="hidden sm:flex items-center space-x-1">
-                <MapPin className="h-3 w-3" />
-                <span>Leporano (TA) - 300m dal mare</span>
-              </div>
+    <motion.nav 
+      id="navbar" 
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`fixed w-full z-50 transition-all duration-700 ease-out ${
+        isScrolled 
+          ? "bg-white/95 backdrop-blur-xl shadow-xl border-b border-white/20 py-3" 
+          : "bg-white/80 backdrop-blur-md py-5"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center">
+          
+          {/* Logo */}
+          <Link 
+            to="/" 
+            className="flex items-center space-x-3 group"
+          >
+            <div className={`bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl ${
+              isScrolled ? "w-10 h-10" : "w-12 h-12"
+            }`}>
+              <Waves className={`text-white transition-all duration-300 ${
+                isScrolled ? "h-5 w-5" : "h-6 w-6"
+              }`} />
             </div>
-            <div className="flex items-center space-x-4">
-              <Link 
-                to="/booking" 
-                className="flex items-center space-x-1 bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-colors"
+            <div className="flex flex-col">
+              <span className={`font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent transition-all duration-300 ${
+                isScrolled ? "text-lg" : "text-xl"
+              }`}>
+                Villa Ingrosso
+              </span>
+              <span className={`text-cyan-600 font-medium uppercase tracking-wider transition-all duration-300 ${
+                isScrolled ? "text-xs" : "text-sm"
+              }`}>
+                Leporano Marina
+              </span>
+            </div>
+          </Link>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-1">
+            {navLinks.map((link) => (
+              <Tooltip
+                key={link.name}
+                content={t(`nav.tooltips.${link.tooltipKey}`)}
+                position="bottom"
+                delay={300}
               >
-                <Calendar className="h-3 w-3" />
-                <span className="hidden sm:inline">Prenota Ora</span>
-                <span className="sm:hidden">Prenota</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <motion.nav 
-        id="navbar" 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className={`fixed w-full z-40 transition-all duration-500 ${
-          isScrolled 
-            ? "py-3 backdrop-blur-md bg-white/95 shadow-lg top-0" 
-            : "py-4 bg-white/80 backdrop-blur-sm top-8"
-        }`}
-      >
-        <div className="max-w-screen-xl mx-auto px-6 sm:px-8">
-          <div className="flex justify-between items-center">
-            <Link 
-              to="/" 
-              className="flex items-center space-x-3"
-            >
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">🏖️</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-display font-bold text-neutral-900">
-                  Villa Ingrosso
-                </span>
-                <span className="text-xs text-cyan-600 uppercase tracking-wider">
-                  Leporano • Costa Ionica
-                </span>
-              </div>
-            </Link>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8">
-              <div className="flex space-x-8">
-                {navLinks.map((link) => (
-                  <Tooltip
-                    key={link.name}
-                    content={t(`nav.tooltips.${link.tooltipKey}`)}
-                    position="bottom"
-                    delay={200}
-                  >
-                    <Link
-                      to={link.href}
-                      className={`relative text-neutral-800 text-sm font-medium hover:text-cyan-600 transition-colors duration-300 whitespace-nowrap group ${
-                        location === link.href ? "text-cyan-600" : ""
-                      }`}
-                    >
-                      {link.name}
-                      <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 transform transition-transform duration-300 ${
-                        location === link.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                      }`}></span>
-                    </Link>
-                  </Tooltip>
-                ))}
-              </div>
-              
-              <div className="ml-4 flex items-center space-x-4">
-                <Tooltip
-                  content="Accedi al tuo account o registrati"
-                  position="bottom"
-                  delay={200}
+                <Link
+                  to={link.href}
+                  className={`relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 group ${
+                    location === link.href 
+                      ? "text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg" 
+                      : "text-gray-700 hover:text-cyan-600 hover:bg-cyan-50/80"
+                  }`}
                 >
-                  <Link 
-                    to="/auth" 
-                    className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all duration-300 hover:shadow-lg transform hover:scale-105"
-                  >
-                    {t("navbar.login")}
-                  </Link>
-                </Tooltip>
+                  <span className="relative z-10">{link.name}</span>
+                  {location !== link.href && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  )}
+                </Link>
+              </Tooltip>
+            ))}
+            
+            <div className="ml-6 flex items-center space-x-3">
+              <Tooltip
+                content={t("navbar.loginTooltip")}
+                position="bottom"
+                delay={300}
+              >
+                <Link 
+                  to="/auth" 
+                  className="group relative px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-xl transition-all duration-300 hover:shadow-xl hover:scale-105 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="relative z-10">{t("navbar.login")}</span>
+                </Link>
+              </Tooltip>
+              
+              <div className="ml-2">
                 <LanguageSwitcher />
               </div>
             </div>
-            
-            {/* Mobile Menu Button */}
-            <div className="lg:hidden">
-              <Tooltip
-                content={mobileMenuOpen ? "Chiudi menu di navigazione" : "Apri menu di navigazione"}
-                position="bottom"
-                delay={200}
+          </div>
+          
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden">
+            <Tooltip
+              content={mobileMenuOpen ? t("navbar.closeMenu") : t("navbar.openMenu")}
+              position="bottom"
+              delay={200}
+            >
+              <button 
+                id="menu-toggle" 
+                className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white/90 backdrop-blur-sm shadow-lg border border-white/30 transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? t("navbar.close") : t("navbar.menu")}
               >
-                <button 
-                  id="menu-toggle" 
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm shadow-sm border border-white/20"
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.div
-                      key={mobileMenuOpen ? "close" : "open"}
-                      initial={{ opacity: 0, rotate: 90 }}
-                      animate={{ opacity: 1, rotate: 0 }}
-                      exit={{ opacity: 0, rotate: -90 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {mobileMenuOpen ? (
-                        <X className="h-5 w-5 text-neutral-800" />
-                      ) : (
-                        <Menu className="h-5 w-5 text-neutral-800" />
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-                </button>
-              </Tooltip>
-            </div>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={mobileMenuOpen ? "close" : "open"}
+                    initial={{ opacity: 0, rotate: 90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: -90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {mobileMenuOpen ? (
+                      <X className="h-5 w-5 text-gray-700" />
+                    ) : (
+                      <Menu className="h-5 w-5 text-gray-700" />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </button>
+            </Tooltip>
           </div>
         </div>
         
         {/* Mobile Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
-            <motion.div 
+            <motion.div
               id="mobile-menu"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="lg:hidden backdrop-blur-md bg-white/95 border-t border-neutral-200/50 mt-3 shadow-lg"
+              initial={{ opacity: 0, height: 0, y: -20 }}
+              animate={{ opacity: 1, height: "auto", y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="lg:hidden mt-6 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden"
             >
-              <div className="max-w-screen-xl mx-auto px-6 py-6 flex flex-col items-center space-y-6">
+              <div className="p-6 space-y-2">
                 {navLinks.map((link, index) => (
                   <motion.div
                     key={link.name}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2, delay: index * 0.1 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.3 }}
                   >
                     <Link
                       to={link.href}
-                      className={`text-lg font-medium text-neutral-800 hover:text-cyan-600 transition-colors relative ${
-                        location === link.href ? "text-cyan-600" : ""
+                      className={`block px-4 py-3 text-base font-medium rounded-xl transition-all duration-300 ${
+                        location === link.href 
+                          ? "text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg" 
+                          : "text-gray-700 hover:text-cyan-600 hover:bg-cyan-50/80"
                       }`}
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {link.name}
-                      {location === link.href && (
-                        <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500"></span>
-                      )}
                     </Link>
                   </motion.div>
                 ))}
                 
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2, delay: navLinks.length * 0.1 }}
-                  className="w-full max-w-[200px] mt-4"
+                <motion.div 
+                  className="pt-4 mt-4 border-t border-gray-200/50 space-y-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.3 }}
                 >
                   <Link 
                     to="/auth" 
-                    className="flex justify-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full transition-all duration-300"
+                    className="block text-center text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 font-semibold rounded-xl py-3 px-6 transition-all duration-300 hover:shadow-lg hover:scale-105"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t("navbar.login")}
                   </Link>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2, delay: (navLinks.length + 1) * 0.1 }}
-                  className="pt-2"
-                >
-                  <LanguageSwitcher />
+                  
+                  <div className="flex justify-center">
+                    <LanguageSwitcher />
+                  </div>
                 </motion.div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
-    </>
+      </div>
+    </motion.nav>
   );
 }

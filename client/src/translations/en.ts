@@ -55,6 +55,11 @@ export default {
   },
   navbar: {
     login: "Login",
+    menu: "Menu",
+    close: "Close",
+    openMenu: "Open navigation menu",
+    closeMenu: "Close navigation menu",
+    loginTooltip: "Sign in to your account or register",
   },
   hero: {
     title1: "Your",
