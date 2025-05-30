@@ -62,6 +62,9 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   // Funzione per ottenere le traduzioni basate su chiavi nidificate
   // esempio: t("nav.home") restituisce "Home" o "Home" a seconda della lingua
   const translate = (key: string): string => {
+    // Debug per verificare la lingua corrente
+    console.log(`Translating "${key}" with language: ${language}`);
+    
     // Scompone la chiave per accedere a oggetti nidificati
     const keys = key.split(".");
     
@@ -70,7 +73,10 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     
     // Naviga attraverso le chiavi nidificate
     for (const k of keys) {
-      if (value === undefined) return key;
+      if (value === undefined) {
+        console.warn(`Translation key "${key}" not found, missing part: ${k}`);
+        return key;
+      }
       value = value[k];
     }
     
@@ -81,7 +87,9 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     }
     
     // Se non è stato trovato un valore, restituisce la chiave stessa
-    return value !== undefined ? value : key;
+    const result = value !== undefined ? value : key;
+    console.log(`Translation result for "${key}": "${result}"`);
+    return result;
   };
 
   return (
