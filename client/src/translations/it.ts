@@ -44,6 +44,15 @@ export default {
     recommendations: "Consigli Locali",
     prices: "Prezzi",
     contact: "Contatti",
+    tooltips: {
+      home: "Vai alla pagina principale di Villa Ingrosso",
+      about: "Scopri la storia e i servizi della villa",
+      gallery: "Sfoglia le foto degli interni ed esterni",
+      location: "Visualizza la posizione e come raggiungerci",
+      recommendations: "Consigli locali per la tua vacanza",
+      prices: "Informazioni su tariffe e disponibilità",
+      contact: "Contattaci per informazioni e prenotazioni",
+    },
   },
   navbar: {
     login: "Accedi",

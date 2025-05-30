@@ -17,13 +17,13 @@ export default function Navbar() {
   
   // Navigation links using translations
   const navLinks = [
-    { name: t("nav.home"), href: "/" },
-    { name: t("nav.about"), href: "/about" },
-    { name: t("nav.gallery"), href: "/gallery" },
-    { name: t("nav.location"), href: "/location" },
-    { name: t("nav.recommendations"), href: "/recommendations" },
-    { name: t("nav.prices"), href: "/prices" },
-    { name: t("nav.contact"), href: "/contact" },
+    { name: t("nav.home"), href: "/", tooltipKey: "home" },
+    { name: t("nav.about"), href: "/about", tooltipKey: "about" },
+    { name: t("nav.gallery"), href: "/gallery", tooltipKey: "gallery" },
+    { name: t("nav.location"), href: "/location", tooltipKey: "location" },
+    { name: t("nav.recommendations"), href: "/recommendations", tooltipKey: "recommendations" },
+    { name: t("nav.prices"), href: "/prices", tooltipKey: "prices" },
+    { name: t("nav.contact"), href: "/contact", tooltipKey: "contact" },
   ];
 
   // Close mobile menu when clicking outside
@@ -112,56 +112,74 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center space-x-8">
               <div className="flex space-x-8">
                 {navLinks.map((link) => (
-                  <Link
+                  <Tooltip
                     key={link.name}
-                    to={link.href}
-                    className={`relative text-neutral-800 text-sm font-medium hover:text-cyan-600 transition-colors duration-300 whitespace-nowrap group ${
-                      location === link.href ? "text-cyan-600" : ""
-                    }`}
+                    content={t(`nav.tooltips.${link.tooltipKey}`)}
+                    position="bottom"
+                    delay={200}
                   >
-                    {link.name}
-                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 transform transition-transform duration-300 ${
-                      location === link.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                    }`}></span>
-                  </Link>
+                    <Link
+                      to={link.href}
+                      className={`relative text-neutral-800 text-sm font-medium hover:text-cyan-600 transition-colors duration-300 whitespace-nowrap group ${
+                        location === link.href ? "text-cyan-600" : ""
+                      }`}
+                    >
+                      {link.name}
+                      <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 transform transition-transform duration-300 ${
+                        location === link.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                      }`}></span>
+                    </Link>
+                  </Tooltip>
                 ))}
               </div>
               
               <div className="ml-4 flex items-center space-x-4">
-                <Link 
-                  to="/auth" 
-                  className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all duration-300 hover:shadow-lg transform hover:scale-105"
+                <Tooltip
+                  content="Accedi al tuo account o registrati"
+                  position="bottom"
+                  delay={200}
                 >
-                  {t("navbar.login")}
-                </Link>
+                  <Link 
+                    to="/auth" 
+                    className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all duration-300 hover:shadow-lg transform hover:scale-105"
+                  >
+                    {t("navbar.login")}
+                  </Link>
+                </Tooltip>
                 <LanguageSwitcher />
               </div>
             </div>
             
             {/* Mobile Menu Button */}
             <div className="lg:hidden">
-              <button 
-                id="menu-toggle" 
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm shadow-sm border border-white/20"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              <Tooltip
+                content={mobileMenuOpen ? "Chiudi menu di navigazione" : "Apri menu di navigazione"}
+                position="bottom"
+                delay={200}
               >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={mobileMenuOpen ? "close" : "open"}
-                    initial={{ opacity: 0, rotate: 90 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: -90 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {mobileMenuOpen ? (
-                      <X className="h-5 w-5 text-neutral-800" />
-                    ) : (
-                      <Menu className="h-5 w-5 text-neutral-800" />
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              </button>
+                <button 
+                  id="menu-toggle" 
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm shadow-sm border border-white/20"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.div
+                      key={mobileMenuOpen ? "close" : "open"}
+                      initial={{ opacity: 0, rotate: 90 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: -90 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {mobileMenuOpen ? (
+                        <X className="h-5 w-5 text-neutral-800" />
+                      ) : (
+                        <Menu className="h-5 w-5 text-neutral-800" />
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                </button>
+              </Tooltip>
             </div>
           </div>
         </div>

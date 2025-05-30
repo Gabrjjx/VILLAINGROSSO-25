@@ -43,6 +43,15 @@ export default {
     recommendations: "Local Tips",
     prices: "Prices",
     contact: "Contact",
+    tooltips: {
+      home: "Go to Villa Ingrosso main page",
+      about: "Discover the villa's story and services",
+      gallery: "Browse interior and exterior photos",
+      location: "View location and directions",
+      recommendations: "Local tips for your vacation",
+      prices: "Information about rates and availability",
+      contact: "Contact us for information and bookings",
+    },
   },
   navbar: {
     login: "Login",
