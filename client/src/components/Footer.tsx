@@ -27,73 +27,101 @@ export default function Footer() {
   ];
   
   return (
-    <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900 text-white overflow-hidden">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 left-10 w-72 h-72 bg-cyan-500 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl"></div>
+    <footer className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        {/* Gradient mesh */}
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10"></div>
+        
+        {/* Floating elements */}
+        <div className="absolute top-20 left-1/4 w-64 h-64 bg-gradient-to-r from-cyan-400/20 to-blue-500/20 rounded-full filter blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-32 right-1/3 w-80 h-80 bg-gradient-to-r from-blue-400/15 to-purple-500/15 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-16 w-48 h-48 bg-gradient-to-r from-teal-400/10 to-cyan-500/10 rounded-full filter blur-2xl animate-pulse delay-500"></div>
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+          backgroundSize: '32px 32px'
+        }}></div>
       </div>
       
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20">
         
-        {/* Top Section - Villa Info & CTA */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
-          
-          {/* Villa Brand */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-4 mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center shadow-2xl">
-                <Waves className="h-8 w-8 text-white" />
-              </div>
-              <div>
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-white to-cyan-100 bg-clip-text text-transparent">
-                  Villa Ingrosso
-                </h3>
-                <p className="text-cyan-300 text-sm font-medium uppercase tracking-widest">
-                  Leporano Marina • Puglia
-                </p>
-              </div>
+        {/* Hero Section */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center space-x-4 bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 mb-8">
+            <div className="w-20 h-20 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl">
+              <Waves className="h-10 w-10 text-white" />
             </div>
-            
-            <p className="text-gray-300 text-xl leading-relaxed mb-8 max-w-2xl">
-              La tua casa vacanze esclusiva sulla costa ionica pugliese. Un'esperienza autentica a 300 metri 
-              dalle spiagge cristalline, dove comfort moderni incontrano la bellezza del mare.
-            </p>
-            
-            {/* Amenities Grid */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              {amenities.map((amenity, index) => (
-                <div key={index} className="flex items-center space-x-3 bg-white/5 rounded-xl p-4 backdrop-blur-sm border border-white/10">
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
-                    <amenity.icon className="h-5 w-5 text-white" />
-                  </div>
-                  <span className="text-gray-200 font-medium">{amenity.name}</span>
-                </div>
-              ))}
+            <div className="text-left">
+              <h3 className="text-4xl font-bold bg-gradient-to-r from-white via-cyan-100 to-blue-200 bg-clip-text text-transparent">
+                Villa Ingrosso
+              </h3>
+              <p className="text-cyan-300 text-sm font-semibold uppercase tracking-[0.2em]">
+                Leporano Marina • Costa Ionica
+              </p>
             </div>
           </div>
           
+          <p className="text-gray-300 text-2xl leading-relaxed mb-12 max-w-4xl mx-auto font-light">
+            La tua casa vacanze esclusiva sulla costa ionica pugliese. Un'esperienza autentica a 300 metri 
+            dalle spiagge cristalline, dove comfort moderni incontrano la bellezza del mare.
+          </p>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
+          
+          {/* Amenities Cards */}
+          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {amenities.map((amenity, index) => (
+              <div key={index} className="group relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:border-cyan-400/30 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-600/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative">
+                  <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <amenity.icon className="h-7 w-7 text-white" />
+                  </div>
+                  <h4 className="text-white font-semibold text-lg mb-2">{amenity.name}</h4>
+                  <div className="w-12 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full group-hover:w-20 transition-all duration-300"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
           {/* Booking CTA Card */}
-          <div className="bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-3xl p-8 backdrop-blur-sm border border-cyan-500/20">
-            <h4 className="text-2xl font-bold mb-4 text-white">Inizia la tua vacanza</h4>
-            <p className="text-cyan-100 mb-6 leading-relaxed">
-              Prenota ora la tua esperienza indimenticabile sulla costa ionica pugliese
-            </p>
-            
-            <Link 
-              to="/booking" 
-              className="group w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/25 transform hover:scale-105 flex items-center justify-center space-x-3"
-            >
-              <Calendar className="h-5 w-5" />
-              <span>Prenota Ora</span>
-            </Link>
-            
-            <div className="mt-6 flex justify-center items-center space-x-1">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              ))}
-              <span className="ml-2 text-cyan-100 text-sm font-medium">4.9/5 • 150+ recensioni</span>
+          <div className="lg:col-span-2 relative">
+            <div className="sticky top-8 bg-gradient-to-br from-cyan-500/20 via-blue-600/20 to-purple-600/20 backdrop-blur-xl rounded-3xl p-8 border border-cyan-500/30 shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-blue-600/5 rounded-3xl"></div>
+              <div className="relative">
+                <div className="text-center mb-6">
+                  <h4 className="text-3xl font-bold mb-3 bg-gradient-to-r from-white to-cyan-100 bg-clip-text text-transparent">
+                    Inizia la tua vacanza
+                  </h4>
+                  <p className="text-cyan-100 text-lg leading-relaxed">
+                    Prenota ora la tua esperienza indimenticabile sulla costa ionica pugliese
+                  </p>
+                </div>
+                
+                <Link 
+                  to="/booking" 
+                  className="group relative w-full bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-400 hover:via-blue-500 hover:to-purple-500 text-white font-bold px-8 py-5 rounded-2xl transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/40 transform hover:scale-105 flex items-center justify-center space-x-3 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <Calendar className="h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
+                  <span className="text-xl">Prenota Ora</span>
+                </Link>
+                
+                <div className="mt-8 text-center">
+                  <div className="flex justify-center items-center space-x-1 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                    <span className="ml-3 text-white text-lg font-semibold">4.9/5</span>
+                  </div>
+                  <p className="text-cyan-100 text-sm">Oltre 150 recensioni verificate</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

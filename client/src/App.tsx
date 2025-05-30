@@ -1,5 +1,4 @@
 import { Route, Switch } from "wouter";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import AboutPage from "@/pages/AboutPage";
@@ -53,14 +52,12 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <LoadingProvider>
-          <TooltipProvider>
-            <WaveLoaderWithContext />
-            <SoundToggle />
-            <Router />
-            <NewsletterModal />
-            <WhatsAppChat />
-            <Toaster />
-          </TooltipProvider>
+          <WaveLoaderWithContext />
+          <SoundToggle />
+          <Router />
+          <NewsletterModal />
+          <WhatsAppChat />
+          <Toaster />
         </LoadingProvider>
       </AuthProvider>
     </QueryClientProvider>

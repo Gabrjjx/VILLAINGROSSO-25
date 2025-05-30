@@ -1,30 +1,102 @@
-"use client"
+import React, { useState, useRef, useId } from 'react';
 
-import * as React from "react"
-import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+interface TooltipProps {
+  content: string;
+  children: React.ReactNode;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  delay?: number;
+  className?: string;
+}
 
-import { cn } from "@/lib/utils"
+export function Tooltip({ 
+  content, 
+  children, 
+  position = 'top', 
+  delay = 300,
+  className = '' 
+}: TooltipProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const tooltipId = useId();
+  const triggerRef = useRef<HTMLDivElement>(null);
 
-const TooltipProvider = TooltipPrimitive.Provider
+  const showTooltip = () => {
+    if (timeoutId) clearTimeout(timeoutId);
+    const id = setTimeout(() => setIsVisible(true), delay);
+    setTimeoutId(id);
+  };
 
-const Tooltip = TooltipPrimitive.Root
+  const hideTooltip = () => {
+    if (timeoutId) clearTimeout(timeoutId);
+    setIsVisible(false);
+  };
 
-const TooltipTrigger = TooltipPrimitive.Trigger
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      hideTooltip();
+    }
+  };
 
-const TooltipContent = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
-  <TooltipPrimitive.Content
-    ref={ref}
-    sideOffset={sideOffset}
-    className={cn(
-      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-tooltip-content-transform-origin]",
-      className
-    )}
-    {...props}
-  />
-))
-TooltipContent.displayName = TooltipPrimitive.Content.displayName
+  const getPositionClasses = () => {
+    const baseClasses = "absolute z-50 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-lg backdrop-blur-sm border border-white/10";
+    
+    switch (position) {
+      case 'top':
+        return `${baseClasses} bottom-full left-1/2 transform -translate-x-1/2 mb-2`;
+      case 'bottom':
+        return `${baseClasses} top-full left-1/2 transform -translate-x-1/2 mt-2`;
+      case 'left':
+        return `${baseClasses} right-full top-1/2 transform -translate-y-1/2 mr-2`;
+      case 'right':
+        return `${baseClasses} left-full top-1/2 transform -translate-y-1/2 ml-2`;
+      default:
+        return `${baseClasses} bottom-full left-1/2 transform -translate-x-1/2 mb-2`;
+    }
+  };
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+  const getArrowClasses = () => {
+    const baseArrow = "absolute w-2 h-2 bg-gray-900 border border-white/10 transform rotate-45";
+    
+    switch (position) {
+      case 'top':
+        return `${baseArrow} top-full left-1/2 -translate-x-1/2 -mt-1 border-t-0 border-l-0`;
+      case 'bottom':
+        return `${baseArrow} bottom-full left-1/2 -translate-x-1/2 -mb-1 border-b-0 border-r-0`;
+      case 'left':
+        return `${baseArrow} left-full top-1/2 -translate-y-1/2 -ml-1 border-l-0 border-b-0`;
+      case 'right':
+        return `${baseArrow} right-full top-1/2 -translate-y-1/2 -mr-1 border-r-0 border-t-0`;
+      default:
+        return `${baseArrow} top-full left-1/2 -translate-x-1/2 -mt-1 border-t-0 border-l-0`;
+    }
+  };
+
+  return (
+    <div 
+      ref={triggerRef}
+      className={`relative inline-block ${className}`}
+      onMouseEnter={showTooltip}
+      onMouseLeave={hideTooltip}
+      onFocus={showTooltip}
+      onBlur={hideTooltip}
+      onKeyDown={handleKeyDown}
+      aria-describedby={isVisible ? tooltipId : undefined}
+    >
+      {children}
+      
+      {isVisible && (
+        <div
+          id={tooltipId}
+          role="tooltip"
+          className={`${getPositionClasses()} animate-in fade-in-0 zoom-in-95 duration-200`}
+          aria-hidden={!isVisible}
+        >
+          <div className={getArrowClasses()}></div>
+          {content}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default Tooltip;
