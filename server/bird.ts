@@ -47,7 +47,7 @@ export async function sendWhatsApp(phoneNumber: string, message: string): Promis
           text: message
         }
       },
-      channelId: 'whatsapp' // Assumiamo che questo sia il canale WhatsApp configurato
+      channelId: process.env.BIRD_WHATSAPP_CHANNEL_ID || 'whatsapp'
     };
 
     const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/messages`, {
@@ -97,7 +97,7 @@ export async function sendSMS(phoneNumber: string, message: string): Promise<boo
           text: message
         }
       },
-      channelId: 'sms' // Assumiamo che questo sia il canale SMS configurato
+      channelId: process.env.BIRD_SMS_CHANNEL_ID || 'sms'
     };
 
     const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/messages`, {
