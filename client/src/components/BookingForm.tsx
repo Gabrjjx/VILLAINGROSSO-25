@@ -91,7 +91,9 @@ export default function BookingForm() {
     defaultValues: {
       startDate: addDays(today, 1),
       endDate: addDays(today, 8),
+      guestName: "",
       guestCount: 2,
+      totalAmount: 0,
       notes: "",
       status: "pending", // Tutte le nuove prenotazioni vengono create con stato "pending"
     },
@@ -223,6 +225,21 @@ export default function BookingForm() {
               )}
             </div>
 
+            {/* Nome dell'ospite */}
+            <FormField
+              control={form.control}
+              name="guestName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome dell'ospite</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Inserisci il nome completo" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Numero di ospiti */}
             <FormField
               control={form.control}
@@ -242,6 +259,28 @@ export default function BookingForm() {
                   <FormDescription>
                     {t("booking.guestInfo")}
                   </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Importo totale */}
+            <FormField
+              control={form.control}
+              name="totalAmount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Importo totale (€)</FormLabel>
+                  <FormControl>
+                    <Input 
+                      type="number" 
+                      min={0} 
+                      step="0.01"
+                      {...field} 
+                      onChange={e => field.onChange(parseFloat(e.target.value))}
+                      placeholder="0.00"
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
