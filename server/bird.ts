@@ -47,7 +47,7 @@ export async function sendWhatsApp(phoneNumber: string, message: string): Promis
           text: message
         }
       },
-      channelId: process.env.BIRD_WHATSAPP_CHANNEL_ID || 'whatsapp'
+      channelId: '00e334fd-7b63-5dbc-b011-b0d512f0895e'
     };
 
     const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/messages`, {
@@ -97,7 +97,7 @@ export async function sendSMS(phoneNumber: string, message: string): Promise<boo
           text: message
         }
       },
-      channelId: process.env.BIRD_SMS_CHANNEL_ID || 'sms'
+      channelId: '00e334fd-7b63-5dbc-b011-b0d512f0895e'
     };
 
     const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/messages`, {
