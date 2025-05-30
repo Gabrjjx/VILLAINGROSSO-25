@@ -102,7 +102,7 @@ export async function sendSMS(phoneNumber: string, message: string): Promise<boo
       formattedNumber = `+${cleanNumber}`;
     }
 
-    const payload: BirdMessagePayload = {
+    const payload = {
       receiver: {
         contact: {
           identifierValue: formattedNumber
@@ -113,7 +113,7 @@ export async function sendSMS(phoneNumber: string, message: string): Promise<boo
           text: message
         }
       },
-      channelId: '00e334fd-7b63-5dbc-b011-b0d512f0895e'
+      channelId: 'c2d69d8b-b7ac-58f0-936a-bf65c306a'
     };
 
     const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/messages`, {
