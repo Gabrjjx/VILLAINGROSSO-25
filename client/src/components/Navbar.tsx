@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Home as HomeIcon } from "lucide-react";
+import { Menu, X, Phone, Mail, MapPin, Calendar } from "lucide-react";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
@@ -42,143 +42,191 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   return (
-    <motion.nav 
-      id="navbar" 
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed w-full z-50 transition-all duration-500 ${
-        isScrolled 
-          ? "py-3 backdrop-blur-md bg-white/40" 
-          : "py-6 bg-transparent"
-      }`}
-    >
-      <div className="max-w-screen-xl mx-auto px-6 sm:px-8">
-        <div className="flex justify-between items-center">
-          <Link 
-            to="/" 
-            className="text-xl sm:text-2xl font-display font-medium text-neutral-900"
-          >
-            <span className="relative">
-              villa
-              <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-cyan-500 to-blue-500"></span>
-            </span>
-            <span className="ml-1 font-bold">ingrosso</span>
-          </Link>
-          
-          {/* Minimal Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            <div className="flex space-x-10">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className={`text-neutral-800 text-sm uppercase tracking-wider hover:text-cyan-600 transition-colors duration-300 whitespace-nowrap ${
-                    location === link.href ? "text-cyan-600 font-medium" : ""
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+    <>
+      {/* Top Contact Bar */}
+      <div className={`fixed w-full z-50 transition-all duration-500 ${
+        isScrolled ? "translate-y-[-100%]" : "translate-y-0"
+      }`}>
+        <div className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-2 text-xs">
+          <div className="max-w-screen-xl mx-auto px-6 flex justify-between items-center">
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-1">
+                <Phone className="h-3 w-3" />
+                <span>+39 347 089 6961</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Mail className="h-3 w-3" />
+                <span>g.ingrosso@villaingrosso.com</span>
+              </div>
+              <div className="hidden sm:flex items-center space-x-1">
+                <MapPin className="h-3 w-3" />
+                <span>Leporano (TA) - 300m dal mare</span>
+              </div>
             </div>
-            
-            <div className="ml-4 flex items-center space-x-4">
+            <div className="flex items-center space-x-4">
               <Link 
-                to="/auth" 
-                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-300 hover:shadow-lg"
+                to="/booking" 
+                className="flex items-center space-x-1 bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-colors"
               >
-                {t("navbar.login")}
+                <Calendar className="h-3 w-3" />
+                <span className="hidden sm:inline">Prenota Ora</span>
+                <span className="sm:hidden">Prenota</span>
               </Link>
-              <LanguageSwitcher />
             </div>
-          </div>
-          
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
-            <button 
-              id="menu-toggle" 
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 shadow-sm"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={mobileMenuOpen ? "close" : "open"}
-                  initial={{ opacity: 0, rotate: 90 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: -90 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {mobileMenuOpen ? (
-                    <X className="h-5 w-5 text-neutral-800" />
-                  ) : (
-                    <Menu className="h-5 w-5 text-neutral-800" />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </button>
           </div>
         </div>
       </div>
-      
-      {/* Mobile Menu - Animated */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div 
-            id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="lg:hidden backdrop-blur-md bg-white/70 border-t border-neutral-200/50 mt-3"
-          >
-            <div className="max-w-screen-xl mx-auto px-6 py-5 flex flex-col items-center space-y-5">
-              {navLinks.map((link, index) => (
-                <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2, delay: index * 0.1 }}
-                >
+
+      <motion.nav 
+        id="navbar" 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className={`fixed w-full z-40 transition-all duration-500 ${
+          isScrolled 
+            ? "py-3 backdrop-blur-md bg-white/95 shadow-lg top-0" 
+            : "py-4 bg-white/80 backdrop-blur-sm top-8"
+        }`}
+      >
+        <div className="max-w-screen-xl mx-auto px-6 sm:px-8">
+          <div className="flex justify-between items-center">
+            <Link 
+              to="/" 
+              className="flex items-center space-x-3"
+            >
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-lg">🏖️</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xl font-display font-bold text-neutral-900">
+                  Villa Ingrosso
+                </span>
+                <span className="text-xs text-cyan-600 uppercase tracking-wider">
+                  Leporano • Costa Ionica
+                </span>
+              </div>
+            </Link>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-8">
+              <div className="flex space-x-8">
+                {navLinks.map((link) => (
                   <Link
+                    key={link.name}
                     to={link.href}
-                    className={`text-neutral-800 hover:text-cyan-600 transition-colors ${
-                      location === link.href ? "text-cyan-600 font-medium" : ""
+                    className={`relative text-neutral-800 text-sm font-medium hover:text-cyan-600 transition-colors duration-300 whitespace-nowrap group ${
+                      location === link.href ? "text-cyan-600" : ""
                     }`}
-                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {link.name}
+                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 transform transition-transform duration-300 ${
+                      location === link.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    }`}></span>
                   </Link>
-                </motion.div>
-              ))}
+                ))}
+              </div>
               
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2, delay: navLinks.length * 0.1 }}
-                className="w-full max-w-[200px] mt-2"
-              >
+              <div className="ml-4 flex items-center space-x-4">
                 <Link 
                   to="/auth" 
-                  className="flex justify-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full"
-                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all duration-300 hover:shadow-lg transform hover:scale-105"
                 >
                   {t("navbar.login")}
                 </Link>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2, delay: (navLinks.length + 1) * 0.1 }}
-                className="pt-2"
-              >
                 <LanguageSwitcher />
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+            
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden">
+              <button 
+                id="menu-toggle" 
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm shadow-sm border border-white/20"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={mobileMenuOpen ? "close" : "open"}
+                    initial={{ opacity: 0, rotate: 90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: -90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {mobileMenuOpen ? (
+                      <X className="h-5 w-5 text-neutral-800" />
+                    ) : (
+                      <Menu className="h-5 w-5 text-neutral-800" />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              id="mobile-menu"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="lg:hidden backdrop-blur-md bg-white/95 border-t border-neutral-200/50 mt-3 shadow-lg"
+            >
+              <div className="max-w-screen-xl mx-auto px-6 py-6 flex flex-col items-center space-y-6">
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2, delay: index * 0.1 }}
+                  >
+                    <Link
+                      to={link.href}
+                      className={`text-lg font-medium text-neutral-800 hover:text-cyan-600 transition-colors relative ${
+                        location === link.href ? "text-cyan-600" : ""
+                      }`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.name}
+                      {location === link.href && (
+                        <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500"></span>
+                      )}
+                    </Link>
+                  </motion.div>
+                ))}
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: navLinks.length * 0.1 }}
+                  className="w-full max-w-[200px] mt-4"
+                >
+                  <Link 
+                    to="/auth" 
+                    className="flex justify-center text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full transition-all duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {t("navbar.login")}
+                  </Link>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: (navLinks.length + 1) * 0.1 }}
+                  className="pt-2"
+                >
+                  <LanguageSwitcher />
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </>
   );
 }
