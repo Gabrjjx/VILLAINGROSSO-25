@@ -1,0 +1,496 @@
+Sending SMS messages
+In order to send a message, you must have an active SMS channel and perform a HTTP request to the following endpoint with a valid access key
+Send a message
+POST
+/workspaces/{workspaceId}/channels/{channelId}/messages
+Send a message to a channel
+
+Authorizations
+
+user
+
+Path parameters
+workspaceId
+string · uuid
+The ID of the workspace
+channelId
+string · uuid
+The ID for a channel
+Body
+all of
+
+object · CreateChannelMessage
+AND
+any of
+object · ChannelMessageCreateWithTemplate
+OR
+object · ChannelMessageCreateWithBody
+Responses
+202
+Message was accepted for processing
+application/json
+Response
+all of
+
+object
+AND
+any of
+
+object
+OR
+
+object
+400
+The request did not pass validation
+application/json
+404
+The request did not pass validation
+application/json
+409
+Creating the message was not possible because of conflicting conditions
+application/json
+422
+The request did not pass validation
+application/json
+POST
+/workspaces/{workspaceId}/channels/{channelId}/messages
+
+HTTP
+
+Copy
+POST /workspaces/{workspaceId}/channels/{channelId}/messages HTTP/1.1
+Host: 
+Authorization: Bearer jwt
+Content-Type: application/json
+Accept: */*
+Content-Length: 2663
+
+{
+  "sender": {
+    "connector": {
+      "identifierValue": "channels@bird.com",
+      "annotations": {
+        "name": "text"
+      }
+    }
+  },
+  "receiver": {
+    "contacts": [
+      {
+        "id": "a1405560-c8d3-4b1a-877d-3f449ad95352",
+        "identifierKey": "emailaddress",
+        "identifierValue": "channels@bird.com",
+        "type": "cc",
+        "identifiers": [
+          {
+            "identifierKey": "emailaddress",
+            "identifierValue": "channels@bird.com"
+          }
+        ],
+        "platformAddress": "text",
+        "platformAddressSelector": "text"
+      }
+    ]
+  },
+  "reference": "my-own-identifier",
+  "template": {
+    "name": "text",
+    "projectId": "a1405560-c8d3-4b1a-877d-3f449ad95352",
+    "version": "a1405560-c8d3-4b1a-877d-3f449ad95352",
+    "locale": "text",
+    "attachments": [
+      {
+        "mediaUrl": "https://example.com",
+        "filename": "text",
+        "inline": true
+      }
+    ],
+    "shortLinks": {
+      "enabled": true,
+      "domain": "text"
+    },
+    "variables": {
+      "default": "text",
+      "ANY_ADDITIONAL_PROPERTY": "text"
+    },
+    "utmParameters": [
+      {
+        "key": "text",
+        "value": "text"
+      }
+    ],
+    "parameters": [
+      {
+        "type": "string",
+        "key": "text",
+        "value": "text"
+      }
+    ],
+    "settings": {
+      "useMmLite": true
+    }
+  },
+  "meta": {
+    "extraInformation": {
+      "ANY_ADDITIONAL_PROPERTY": "anything"
+    },
+    "referral": {
+      "source": "text",
+      "title": "text",
+      "text": "text",
+      "group": "text",
+      "metadata": {
+        "source_id": "text",
+        "source_url": "text",
+        "media_url": "text",
+        "tracking_id": "text"
+      }
+    },
+    "order": {
+      "products": [
+        {
+          "externalCatalogId": "text",
+          "externalProductId": "text",
+          "quantity": 1,
+          "price": {
+            "amount": 1,
+            "exponent": 1,
+            "currencyCode": "text"
+          }
+        }
+      ]
+    },
+    "referredProduct": {
+      "externalCatalogId": "text",
+      "externalProductId": "text"
+    },
+    "email": {
+      "subject": "text",
+      "headers": {
+        "ANY_ADDITIONAL_PROPERTY": "text"
+      },
+      "from": {
+        "username": "text",
+        "displayName": "text"
+      }
+    },
+    "pushNotifications": {
+      "gatewayTypeOverride": "apns"
+    },
+    "navigatorId": "123e4567-e89b-12d3-a456-426614174000",
+    "navigatorMessageId": "123e4567-e89b-12d3-a456-426614174000",
+    "flow": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "name": "text",
+      "stepId": "text",
+      "runId": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "journey": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "name": "text",
+      "stepId": "text",
+      "runId": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "campaign": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "name": "text"
+    }
+  },
+  "replyTo": {
+    "id": "text",
+    "order": 1,
+    "type": "message"
+  },
+  "body": {
+    "type": "text",
+    "text": {
+      "text": "text",
+      "attachments": [
+        {
+          "mediaUrl": "https://example.com",
+          "filename": "text",
+          "inline": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "link",
+          "link": {
+            "text": "text",
+            "url": "text"
+          }
+        }
+      ],
+      "metadata": {
+        "subject": "text",
+        "headers": {
+          "ANY_ADDITIONAL_PROPERTY": "text"
+        },
+        "whatsapp": {
+          "previewUrl": true
+        },
+        "line": {
+          "emoji": {
+            "items": [
+              {
+                "index": 1,
+                "productId": "text",
+                "emojiId": "text"
+              }
+            ]
+          }
+        },
+        "telegram": {
+          "parseMode": "Markdown"
+        }
+      }
+    }
+  },
+  "notification": {
+    "url": "text"
+  },
+  "capFrequency": true,
+  "enableLinkTracking": true,
+  "ignoreQuietHours": true,
+  "ignoreGlobalHoldout": true,
+  "tags": [
+    "text"
+  ],
+  "shortLinks": {
+    "domain": "text"
+  },
+  "scheduledFor": "2025-05-30T14:22:34.340Z",
+  "validity": 1
+}
+Test it
+
+202
+Message was accepted for processing
+
+Copy
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "channelId": "123e4567-e89b-12d3-a456-426614174000",
+  "sender": {
+    "connector": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "identifierValue": "text",
+      "annotations": {
+        "name": "text"
+      },
+      "types": [
+        "text"
+      ]
+    }
+  },
+  "receiver": {
+    "connector": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "identifierValue": "text",
+      "annotations": {
+        "name": "text"
+      },
+      "types": [
+        "text"
+      ]
+    }
+  },
+  "meta": {
+    "extraInformation": {
+      "ANY_ADDITIONAL_PROPERTY": "anything"
+    },
+    "referral": {
+      "source": "text",
+      "title": "text",
+      "text": "text",
+      "group": "text",
+      "metadata": {
+        "source_id": "text",
+        "source_url": "text",
+        "media_url": "text",
+        "tracking_id": "text"
+      }
+    },
+    "order": {
+      "products": [
+        {
+          "externalCatalogId": "text",
+          "externalProductId": "text",
+          "quantity": 1,
+          "price": {
+            "amount": 1,
+            "exponent": 1,
+            "currencyCode": "text"
+          }
+        }
+      ]
+    },
+    "referredProduct": {
+      "externalCatalogId": "text",
+      "externalProductId": "text"
+    },
+    "email": {
+      "subject": "text",
+      "headers": {
+        "ANY_ADDITIONAL_PROPERTY": "text"
+      },
+      "from": {
+        "username": "text",
+        "displayName": "text"
+      }
+    },
+    "pushNotifications": {
+      "gatewayTypeOverride": "apns"
+    },
+    "navigatorId": "123e4567-e89b-12d3-a456-426614174000",
+    "navigatorMessageId": "123e4567-e89b-12d3-a456-426614174000",
+    "flow": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "name": "text",
+      "stepId": "text",
+      "runId": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "journey": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "name": "text",
+      "stepId": "text",
+      "runId": "123e4567-e89b-12d3-a456-426614174000"
+    },
+    "campaign": {
+      "id": "123e4567-e89b-12d3-a456-426614174000",
+      "name": "text"
+    }
+  },
+  "reference": "my-own-identifier",
+  "parts": [
+    {
+      "platformReference": "text"
+    }
+  ],
+  "status": "accepted",
+  "reason": "text",
+  "direction": "incoming",
+  "origin": {
+    "type": "text",
+    "id": "text"
+  },
+  "replyTo": {
+    "id": "text",
+    "order": 1,
+    "type": "message"
+  },
+  "lastStatusAt": "2025-05-30T14:22:34.340Z",
+  "createdAt": "2025-05-30T14:22:34.340Z",
+  "updatedAt": "2025-05-30T14:22:34.340Z",
+  "details": "text",
+  "failure": {
+    "code": 1,
+    "description": "Unsupported media type",
+    "source": {
+      "code": "text",
+      "name": "text"
+    }
+  },
+  "tags": [
+    "text"
+  ],
+  "shortLinks": {
+    "domain": "text"
+  },
+  "scheduledFor": "2025-05-30T14:22:34.340Z",
+  "body": {
+    "type": "text",
+    "text": {
+      "text": "text",
+      "attachments": [
+        {
+          "mediaUrl": "https://example.com",
+          "filename": "text",
+          "inline": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "link",
+          "link": {
+            "text": "text",
+            "url": "text"
+          }
+        }
+      ],
+      "metadata": {
+        "subject": "text",
+        "headers": {
+          "ANY_ADDITIONAL_PROPERTY": "text"
+        },
+        "whatsapp": {
+          "previewUrl": true
+        },
+        "line": {
+          "emoji": {
+            "items": [
+              {
+                "index": 1,
+                "productId": "text",
+                "emojiId": "text",
+                "length": 1
+              }
+            ]
+          }
+        },
+        "telegram": {
+          "parseMode": "Markdown"
+        }
+      }
+    }
+  }
+}
+When sending outbound messages as well as setting the receiver information you must set message body field in all cases except for sending a message template when you must only set the template field
+Body
+Copy
+{
+ "receiver": {
+   "contacts": [
+     {
+       "identifierKey": "phonenumber",
+       "identifierValue": "+31612345678"
+     }
+   ]
+ },
+ "body": {...}
+}
+Template
+Copy
+{
+ "receiver": {
+   "contacts": [
+     {
+       "identifierKey": "phonenumber",
+       "identifierValue": "+31612345678"
+     }
+   ]
+ },
+ "template": {...}
+}
+SMS messages
+All SMS channels support sending basic text based messages using SMS. The example below must be set in the message body field
+Copy
+{
+ "receiver": {
+   "contacts": [
+     {
+       "identifierValue": "+31612345678"
+     }
+   ]
+ },
+ "body": {...}
+}
+Send an SMS message
+To send an SMS text message set the message body as follows:
+Copy
+ {
+  "type": "text",
+  "text": {
+    "text": "Single text message"
+  }
+}

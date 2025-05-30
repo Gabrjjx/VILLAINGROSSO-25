@@ -104,19 +104,22 @@ export async function sendSMS(phoneNumber: string, message: string): Promise<boo
 
     const payload = {
       receiver: {
-        contact: {
-          identifierValue: formattedNumber
-        }
+        contacts: [
+          {
+            identifierKey: "phonenumber",
+            identifierValue: formattedNumber
+          }
+        ]
       },
       body: {
+        type: "text",
         text: {
           text: message
         }
-      },
-      channelId: 'c2d69d8b-b7ac-5810-936a-bf65c306ace5'
+      }
     };
 
-    const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/messages`, {
+    const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/channels/c2d69d8b-b7ac-5810-936a-bf65c306ace5/messages`, {
       method: 'POST',
       headers: {
         'Authorization': `AccessKey ${BIRD_API_KEY}`,
