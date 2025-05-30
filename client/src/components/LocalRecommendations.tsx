@@ -20,7 +20,7 @@ const localPlaces = [
     description: "Spiaggia di sabbia bianca finissima con mare cristallino e fondale basso, ideale per famiglie.",
     highlights: ["Mare cristallino", "Sabbia bianca", "Fondali bassi", "Attrezzata"],
     openHours: "Sempre aperta",
-    coordinates: { lat: 40.3757, lng: 17.3089 },
+    coordinates: { lat: 40.3742, lng: 17.3101 },
     image: "/images/torre-lapillo.jpg"
   },
   {
@@ -34,7 +34,7 @@ const localPlaces = [
     description: "Una delle spiagge più fotografate del Salento, perfetta per il tramonto con vista sulle isole Cheradi.",
     highlights: ["Vista panoramica", "Tramonto mozzafiato", "Acque turchesi", "Instagrammabile"],
     openHours: "Sempre aperta",
-    coordinates: { lat: 40.3698, lng: 17.3156 },
+    coordinates: { lat: 40.3595, lng: 17.3234 },
     image: "/images/punta-prosciutto.jpg"
   },
   {
