@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Waves } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
-import { useScrollPosition } from "../hooks/useScrollPosition";
+import { useScrollPosition } from "../hooks/use-scroll-position";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { Link, useLocation } from "wouter";
 import Tooltip from "@/components/ui/tooltip";
