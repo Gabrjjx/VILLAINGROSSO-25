@@ -30,12 +30,18 @@ const bookingSchema = insertBookingSchema.extend({
   }),
   guestCount: z.number()
     .min(1, "Numero di ospiti minimo: 1")
-    .max(10, "Numero di ospiti massimo: 10"),
+    .max(5, "Numero di ospiti massimo: 5"),
   notes: z.string().optional(),
 }).refine(
   data => isAfter(data.endDate, data.startDate),
   {
     message: "La data di fine deve essere successiva alla data di inizio",
+    path: ["endDate"],
+  }
+).refine(
+  data => differenceInDays(data.endDate, data.startDate) >= 3,
+  {
+    message: "Soggiorno minimo: 3 notti",
     path: ["endDate"],
   }
 );
@@ -253,7 +259,7 @@ export default function BookingForm() {
                     <Input 
                       type="number" 
                       min={1} 
-                      max={10} 
+                      max={5} 
                       {...field} 
                       onChange={e => field.onChange(parseInt(e.target.value))}
                     />
@@ -272,6 +278,11 @@ export default function BookingForm() {
                 <p className="text-sm text-muted-foreground">
                   Soggiorno di {numberOfNights} {numberOfNights === 1 ? "notte" : "notti"}
                 </p>
+                {numberOfNights < 3 && (
+                  <p className="text-sm text-amber-600 mt-1">
+                    ⚠️ Soggiorno minimo: 3 notti
+                  </p>
+                )}
                 <p className="text-sm text-muted-foreground mt-2">
                   Il prezzo finale verrà concordato dopo la verifica della disponibilità.
                 </p>
