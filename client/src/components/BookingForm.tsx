@@ -134,7 +134,9 @@ export default function BookingForm() {
       
       // Reindirizza alla pagina di conferma con l'ID della prenotazione
       console.log("Redirecting to confirmation page with ID:", data.id);
-      setLocation(`/booking-confirmation?id=${data.id}`);
+      const confirmationUrl = `/booking-confirmation?id=${data.id}`;
+      console.log("Full URL:", confirmationUrl);
+      setLocation(confirmationUrl);
       
       queryClient.invalidateQueries({ queryKey: ["/api/bookings"] });
     },
