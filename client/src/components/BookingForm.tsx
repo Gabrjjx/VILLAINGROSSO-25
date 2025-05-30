@@ -128,6 +128,8 @@ export default function BookingForm() {
   });
 
   function onSubmit(data: BookingFormValues) {
+    console.log("Form submitted with data:", data);
+    console.log("Form errors:", form.formState.errors);
     bookingMutation.mutate(data);
   }
 
