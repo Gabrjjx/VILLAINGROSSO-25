@@ -415,6 +415,50 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
   });
 
+  app.delete("/api/admin/bookings/:id", async (req: Request, res: Response) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      if (isNaN(bookingId)) {
+        return res.status(400).json({ error: "Invalid booking ID" });
+      }
+
+      const success = await storage.deleteBooking(bookingId);
+      if (success) {
+        res.json({ success: true, message: "Booking deleted successfully" });
+      } else {
+        res.status(404).json({ error: "Booking not found" });
+      }
+    } catch (error) {
+      log(`Error deleting booking: ${error}`, "error");
+      res.status(500).json({ error: "Failed to delete booking" });
+    }
+  });
+
+  app.patch("/api/admin/bookings/:id/status", async (req: Request, res: Response) => {
+    try {
+      const bookingId = parseInt(req.params.id);
+      const { status } = req.body;
+      
+      if (isNaN(bookingId)) {
+        return res.status(400).json({ error: "Invalid booking ID" });
+      }
+      
+      if (!["pending", "confirmed", "cancelled"].includes(status)) {
+        return res.status(400).json({ error: "Invalid status" });
+      }
+
+      const updatedBooking = await storage.updateBooking(bookingId, { status });
+      if (updatedBooking) {
+        res.json(updatedBooking);
+      } else {
+        res.status(404).json({ error: "Booking not found" });
+      }
+    } catch (error) {
+      log(`Error updating booking status: ${error}`, "error");
+      res.status(500).json({ error: "Failed to update booking status" });
+    }
+  });
+
   app.get("/api/admin/messages", async (req: Request, res: Response) => {
     try {
       const messages = await storage.getAllContactMessages();

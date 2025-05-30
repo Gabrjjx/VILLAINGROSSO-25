@@ -36,6 +36,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
@@ -251,6 +258,82 @@ function AdminPage() {
 
   const handleLogout = () => {
     logoutMutation.mutate();
+  };
+
+  // Stati per la gestione dei dettagli delle prenotazioni
+  const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  const [showBookingDetails, setShowBookingDetails] = useState(false);
+
+  // Mutation per cancellare una prenotazione
+  const deleteBookingMutation = useMutation({
+    mutationFn: async (bookingId: number) => {
+      const res = await apiRequest("DELETE", `/api/admin/bookings/${bookingId}`);
+      if (!res.ok) {
+        throw new Error("Failed to delete booking");
+      }
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/bookings"] });
+      toast({
+        title: t("admin.bookings.deleteSuccess") || "Prenotazione cancellata",
+        description: t("admin.bookings.deleteSuccessDesc") || "La prenotazione è stata cancellata con successo",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: t("admin.bookings.deleteError") || "Errore",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  });
+
+  // Mutation per cambiare lo status di una prenotazione
+  const updateBookingStatusMutation = useMutation({
+    mutationFn: async ({ bookingId, status }: { bookingId: number; status: string }) => {
+      const res = await apiRequest("PATCH", `/api/admin/bookings/${bookingId}/status`, { status });
+      if (!res.ok) {
+        throw new Error("Failed to update booking status");
+      }
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/bookings"] });
+      toast({
+        title: t("admin.bookings.statusUpdateSuccess") || "Status aggiornato",
+        description: t("admin.bookings.statusUpdateSuccessDesc") || "Lo status della prenotazione è stato aggiornato",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: t("admin.bookings.statusUpdateError") || "Errore",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  });
+
+  // Funzioni per gestire le azioni delle prenotazioni
+  const handleViewBookingDetails = (booking: Booking) => {
+    setSelectedBooking(booking);
+    setShowBookingDetails(true);
+  };
+
+  const handleConfirmBooking = (bookingId: number) => {
+    updateBookingStatusMutation.mutate({ bookingId, status: "confirmed" });
+  };
+
+  const handleCancelBooking = (bookingId: number) => {
+    if (window.confirm(t("admin.bookings.confirmCancel") || "Sei sicuro di voler cancellare questa prenotazione?")) {
+      updateBookingStatusMutation.mutate({ bookingId, status: "cancelled" });
+    }
+  };
+
+  const handleDeleteBooking = (bookingId: number) => {
+    if (window.confirm(t("admin.bookings.confirmDelete") || "Sei sicuro di voler eliminare definitivamente questa prenotazione?")) {
+      deleteBookingMutation.mutate(bookingId);
+    }
   };
 
   // Helper per formattare le date in base alla lingua
@@ -950,22 +1033,29 @@ function AdminPage() {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                       <DropdownMenuLabel>{t("admin.bookings.actions")}</DropdownMenuLabel>
-                                      <DropdownMenuItem>
+                                      <DropdownMenuItem onClick={() => handleViewBookingDetails(booking)}>
                                         <Eye className="h-4 w-4 mr-2" />
                                         {t("admin.bookings.viewDetails")}
                                       </DropdownMenuItem>
                                       {booking.status === "pending" && (
-                                        <DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleConfirmBooking(booking.id)}>
                                           <CheckCircle className="h-4 w-4 mr-2" />
                                           {t("admin.bookings.confirm")}
                                         </DropdownMenuItem>
                                       )}
                                       {booking.status !== "cancelled" && (
-                                        <DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleCancelBooking(booking.id)}>
                                           <XCircle className="h-4 w-4 mr-2" />
                                           {t("admin.bookings.cancel")}
                                         </DropdownMenuItem>
                                       )}
+                                      <DropdownMenuItem 
+                                        onClick={() => handleDeleteBooking(booking.id)}
+                                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                      >
+                                        <XCircle className="h-4 w-4 mr-2" />
+                                        {t("admin.bookings.delete") || "Elimina"}
+                                      </DropdownMenuItem>
                                     </DropdownMenuContent>
                                   </DropdownMenu>
                                 </TableCell>
@@ -1267,6 +1357,139 @@ function AdminPage() {
           </div>
         </div>
       </div>
+
+      {/* Modale per i dettagli della prenotazione */}
+      <Dialog open={showBookingDetails} onOpenChange={setShowBookingDetails}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+              {t("admin.bookings.detailsTitle") || "Dettagli Prenotazione"}
+            </DialogTitle>
+            <DialogDescription>
+              {t("admin.bookings.detailsDescription") || "Informazioni complete sulla prenotazione selezionata"}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedBooking && (
+            <div className="space-y-6">
+              {/* Informazioni ospite */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground mb-2">
+                    {t("admin.bookings.guestInfo") || "Informazioni Ospite"}
+                  </h4>
+                  <div className="space-y-1">
+                    <p className="font-medium">{selectedBooking.guestName}</p>
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <Users className="h-4 w-4 mr-1" />
+                      {selectedBooking.guestCount} {t("admin.bookings.guests") || "ospiti"}
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground mb-2">
+                    {t("admin.bookings.status") || "Status"}
+                  </h4>
+                  <Badge className={
+                    selectedBooking.status === "confirmed" ? "bg-green-500" :
+                    selectedBooking.status === "pending" ? "bg-amber-500" : "bg-red-500"
+                  }>
+                    {t(`admin.bookings.status.${selectedBooking.status}`) || selectedBooking.status}
+                  </Badge>
+                </div>
+              </div>
+
+              {/* Date */}
+              <div>
+                <h4 className="font-medium text-sm text-muted-foreground mb-2">
+                  {t("admin.bookings.dates") || "Date"}
+                </h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center">
+                    <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                    <div>
+                      <p className="text-sm font-medium">Check-in</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedBooking.startDate ? formatDate(selectedBooking.startDate) : "-"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                    <div>
+                      <p className="text-sm font-medium">Check-out</p>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedBooking.endDate ? formatDate(selectedBooking.endDate) : "-"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Note */}
+              {selectedBooking.notes && (
+                <div>
+                  <h4 className="font-medium text-sm text-muted-foreground mb-2">
+                    {t("admin.bookings.notes") || "Note"}
+                  </h4>
+                  <p className="text-sm bg-muted p-3 rounded-md">
+                    {selectedBooking.notes}
+                  </p>
+                </div>
+              )}
+
+              {/* Data creazione */}
+              <div>
+                <h4 className="font-medium text-sm text-muted-foreground mb-2">
+                  {t("admin.bookings.createdAt") || "Data Richiesta"}
+                </h4>
+                <p className="text-sm">
+                  {selectedBooking.createdAt ? formatDate(selectedBooking.createdAt) : "-"}
+                </p>
+              </div>
+
+              {/* Azioni rapide */}
+              <div className="flex gap-2 pt-4 border-t">
+                {selectedBooking.status === "pending" && (
+                  <Button 
+                    onClick={() => {
+                      handleConfirmBooking(selectedBooking.id);
+                      setShowBookingDetails(false);
+                    }}
+                    className="bg-green-600 hover:bg-green-700"
+                  >
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    {t("admin.bookings.confirm") || "Conferma"}
+                  </Button>
+                )}
+                {selectedBooking.status !== "cancelled" && (
+                  <Button 
+                    variant="outline"
+                    onClick={() => {
+                      handleCancelBooking(selectedBooking.id);
+                      setShowBookingDetails(false);
+                    }}
+                  >
+                    <XCircle className="h-4 w-4 mr-2" />
+                    {t("admin.bookings.cancel") || "Cancella"}
+                  </Button>
+                )}
+                <Button 
+                  variant="destructive"
+                  onClick={() => {
+                    handleDeleteBooking(selectedBooking.id);
+                    setShowBookingDetails(false);
+                  }}
+                >
+                  <XCircle className="h-4 w-4 mr-2" />
+                  {t("admin.bookings.delete") || "Elimina"}
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
