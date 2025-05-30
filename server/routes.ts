@@ -344,6 +344,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const bookingData = req.body as InsertBooking;
       bookingData.userId = (req.user as Express.User).id;
       
+      // Converti le date in oggetti Date se sono stringhe
+      if (typeof bookingData.startDate === 'string') {
+        bookingData.startDate = new Date(bookingData.startDate);
+      }
+      if (typeof bookingData.endDate === 'string') {
+        bookingData.endDate = new Date(bookingData.endDate);
+      }
+      
       const newBooking = await storage.createBooking(bookingData);
       
       // Invia notifica WhatsApp automatica al proprietario
