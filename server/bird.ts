@@ -53,13 +53,7 @@ export async function sendWhatsApp(phoneNumber: string, message: string): Promis
       template: {
         projectId: '632db922-85ed-48db-9b61-01848c5c7111',
         version: 'latest',
-        locale: 'en',
-        parameters: [
-          {
-            type: 'text',
-            text: message
-          }
-        ]
+        locale: 'en'
       },
       channelId: '00e334fd-7b63-5dbc-b011-b0d512f0895e'
     };
