@@ -346,6 +346,7 @@ export default {
       password: "Password",
       submit: "Accedi",
       loggingIn: "Accesso in corso...",
+      forgotPassword: "Password dimenticata?",
     },
     register: {
       title: "Registrati",

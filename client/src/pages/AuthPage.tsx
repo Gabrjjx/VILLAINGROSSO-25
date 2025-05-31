@@ -161,7 +161,7 @@ export default function AuthPage() {
                       )}
                     </div>
                   </CardContent>
-                  <CardFooter>
+                  <CardFooter className="flex flex-col space-y-4">
                     <Button 
                       type="submit" 
                       className="w-full"
@@ -176,6 +176,14 @@ export default function AuthPage() {
                         t("authPage.login.submit")
                       )}
                     </Button>
+                    <div className="text-center">
+                      <a 
+                        href="/reset-password" 
+                        className="text-sm text-primary hover:underline"
+                      >
+                        {t("authPage.login.forgotPassword") || "Password dimenticata?"}
+                      </a>
+                    </div>
                   </CardFooter>
                 </form>
               </Card>

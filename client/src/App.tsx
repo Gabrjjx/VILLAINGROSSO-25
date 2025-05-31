@@ -43,6 +43,7 @@ function Router() {
       <Route path="/admin" component={AdminPage} />
       <Route path="/booking" component={BookingPage} />
       <Route path="/booking-confirmation" component={BookingConfirmation} />
+      <Route path="/reset-password" component={ResetPasswordPage} />
       <Route component={NotFound} />
     </Switch>
   );
