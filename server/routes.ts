@@ -395,7 +395,7 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
 
     try {
-      const { fullName, email } = req.body;
+      const { fullName, email, dateOfBirth } = req.body;
       const userId = req.user!.id;
 
       // Validazione dei dati
@@ -414,7 +414,8 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
       // Aggiorna l'utente
       const updatedUser = await storage.updateUser(userId, {
         fullName,
-        email
+        email,
+        dateOfBirth
       });
 
       if (!updatedUser) {
