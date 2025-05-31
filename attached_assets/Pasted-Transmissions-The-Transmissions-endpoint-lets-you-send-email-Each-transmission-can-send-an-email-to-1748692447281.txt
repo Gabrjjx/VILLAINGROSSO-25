@@ -1,0 +1,233 @@
+Transmissions
+The Transmissions endpoint lets you send email. Each transmission can send an email to a single recipient or thousands. Reach Email API generates and sends messages using the options you've defined, a list of recipients, and the content given in transmissions call.
+When creating a transmission, the options allow you to configure engagement tracking, sending optimization, global substitution data, and more to control how your emails are sent.
+To set the recipients you can include all recipients in the request or use a stored recipient list. For each recipient, you can specify metadata and substitution data to personalize each email. You can also set the transmission to treat certain recipients as CC'd or BCC'd.
+The content of the messages can be set in 4 different ways: inline content, a stored template, an A/B test, or raw RFC822 content. Each method is best suited for different use cases. All of these types of content can use the substitution data and metadata to create a unique message for each recipient.
+Create a Transmission
+POST
+https://email.eu-west-1.api.bird.com/api/workspaces/{workspaceId}/reach/transmissions
+Create a new email transmission. A transmission is a collection of recipients and email content.
+Note: The transmission content (text + html + attachments + inline images) is limited to 20 MBs.
+Sending Modes:
+Using stored templates (recommended)
+Using inline content
+Using RFC822 content
+Using A/B test
+
+Authorizations
+Path parameters
+workspaceId
+string · uuid
+The ID of the workspace
+Query parameters
+num_rcpt_errors
+integer
+Maximum number of recipient errors to return
+Default: 1
+Body
+
+options
+object
+recipients
+one of
+Recipients of the transmission. Can be an array of recipients or a stored recipient list.
+
+object[]
+OR
+
+object
+content
+one of
+Content used to generate the messages. Must be one of: inline content, stored template, A/B test, or RFC822 content
+
+object
+OR
+
+object
+OR
+
+object
+OR
+
+object
+campaign_id
+string · max: 64
+Name of the campaign
+Example: christmas_campaign
+metadata
+object
+Transmission level metadata. Metadata is available in Webhook events and can also be used in the template language. Recipient metadata takes precedence over transmission metadata. Maximum length - 10KB.
+description
+string · max: 1024
+Description of the transmission
+Example: Christmas Campaign Email
+substitution_data
+object
+Key/value pairs that are provided to the substitution engine. Recipient substitution data takes precedence over transmission substitution data. Maximum length - 100KB.
+Example: {"sender":"Big Store Team","holiday_name":"Christmas"}
+Responses
+200
+Transmission created successfully
+application/json
+
+Response
+object
+400
+Request validation error
+application/json
+420
+Sending limit exceeded
+application/json
+422
+Unprocessable Entity
+application/json
+POST
+/workspaces/{workspaceId}/reach/transmissions
+
+HTTP
+
+Copy
+POST /api/workspaces/{workspaceId}/reach/transmissions HTTP/1.1
+Host: email.eu-west-1.api.bird.com
+Authorization: YOUR_API_KEY
+Content-Type: application/json
+Accept: */*
+Content-Length: 1285
+
+{
+  "options": {
+    "start_time": "2025-05-31T09:14:07.053Z",
+    "open_tracking": true,
+    "initial_open": true,
+    "click_tracking": true,
+    "transactional": false,
+    "sandbox": false,
+    "skip_suppression": false,
+    "ip_pool": "marketing_ip_pool",
+    "inline_css": false,
+    "perform_substitutions": true
+  },
+  "recipients": [
+    {
+      "address": {
+        "email": "wilma@flintstone.com",
+        "name": "Wilma Flintstone"
+      },
+      "tags": [
+        "prehistoric"
+      ],
+      "metadata": {
+        "age": "24",
+        "place": "Bedrock"
+      },
+      "substitution_data": {
+        "customer_type": "Platinum",
+        "year": "Freshman"
+      },
+      "return_path": "name@gmail.com",
+      "rcpt_type": "to"
+    }
+  ],
+  "content": {
+    "from": "deals@example.com",
+    "subject": "Big Christmas savings!",
+    "text": "Hi {{address.name}}\nSave big this Christmas in your area!",
+    "html": "<p>Hi {{address.name}}</p><p>Save big this Christmas in your area!</p>",
+    "amp_html": "text",
+    "reply_to": "Christmas Sales <sales@flintstone.com>",
+    "headers": {
+      "X-Customer-Campaign-ID": "christmas_campaign"
+    },
+    "attachments": [
+      {
+        "name": "billing.pdf",
+        "type": "application/pdf",
+        "data": "Q29uZ3JhdHVsYXRpb25zLCB5b3UgY2FuIGJhc2U2NCBkZWNvZGUh"
+      }
+    ],
+    "inline_images": [
+      {
+        "name": "my_image.jpeg",
+        "type": "image/jpeg",
+        "data": "VGhpcyBkb2Vzbid0IGxvb2sgbGlrZSBhIGpwZWcgdG8gbWUh"
+      }
+    ]
+  },
+  "campaign_id": "christmas_campaign",
+  "metadata": {},
+  "description": "Christmas Campaign Email",
+  "substitution_data": {
+    "sender": "Big Store Team",
+    "holiday_name": "Christmas"
+  }
+}
+Test it
+
+200
+Transmission created successfully
+
+Copy
+{
+  "results": {
+    "total_rejected_recipients": 0,
+    "total_accepted_recipients": 1,
+    "id": "11668787484950529"
+  },
+  "errors": [
+    {
+      "message": "transmission created, but with validation errors",
+      "code": "2000",
+      "description": "text",
+      "rcpt_to_errors": [
+        {
+          "message": "required field is missing",
+          "description": "address.email is required for each recipient",
+          "code": "1400"
+        }
+      ]
+    }
+  ]
+}
+Delete Scheduled Transmissions By Campaign ID
+DELETE
+https://email.eu-west-1.api.bird.com/api/workspaces/{workspaceId}/reach/transmissions
+Delete all scheduled transmissions in a campaign. The deletion process happens asynchronously in the background.
+Notes:
+Returns 204 immediately and processes deletion in background
+When a message is deleted, a bounce event is generated with reason "554 5.7.1 [internal] Campaign cancelled"
+Events can be tracked via Events API and Event Webhooks
+Statistics available via Metrics API
+For subaccount transmissions, request must be made as the subaccount
+
+Authorizations
+Path parameters
+workspaceId
+string · uuid
+The ID of the workspace
+Query parameters
+campaign_id
+string
+ID of the campaign to delete scheduled transmissions from
+Example: christmas_campaign
+Responses
+204
+Scheduled transmissions deletion initiated successfully
+429
+Rate limit exceeded
+application/json
+DELETE
+/workspaces/{workspaceId}/reach/transmissions
+
+HTTP
+
+Copy
+DELETE /api/workspaces/{workspaceId}/reach/transmissions HTTP/1.1
+Host: email.eu-west-1.api.bird.com
+Authorization: YOUR_API_KEY
+Accept: */*
+Test it
+
+204
+Scheduled transmissions deletion initiated successfully
+
+No content

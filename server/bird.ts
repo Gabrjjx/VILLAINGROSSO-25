@@ -271,7 +271,7 @@ Check-in: ${checkIn}
 Controlla il pannello admin.`;
 }
 
-// Funzione per inviare email tramite Bird API
+// Funzione per inviare email tramite Bird API Transmissions
 export async function sendEmail(to: string, subject: string, htmlContent: string): Promise<boolean> {
   if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID) {
     console.error('Bird API not configured properly');
@@ -279,22 +279,32 @@ export async function sendEmail(to: string, subject: string, htmlContent: string
   }
 
   try {
-    const payload: BirdEmailPayload = {
-      receiver: {
-        contact: {
-          identifierValue: to
-        }
+    // Usa l'API Transmissions secondo la documentazione Bird
+    const payload = {
+      options: {
+        open_tracking: true,
+        click_tracking: true,
+        transactional: true,
+        perform_substitutions: true
       },
-      body: {
-        email: {
-          subject: subject,
-          html: htmlContent
+      recipients: [
+        {
+          address: {
+            email: to,
+            name: to.split('@')[0] // Usa la parte prima dell'@ come nome
+          },
+          rcpt_type: "to"
         }
-      },
-      channelId: "c950566b-ade4-5812-9d83-9c4fe7a04e24" // Channel ID per email tramite Bird
+      ],
+      content: {
+        from: "noreply@villaingrosso.com",
+        subject: subject,
+        html: htmlContent,
+        text: htmlContent.replace(/<[^>]*>/g, '') // Converte HTML in testo
+      }
     };
 
-    const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/messages`, {
+    const response = await fetch(`https://email.eu-west-1.api.bird.com/api/workspaces/${BIRD_WORKSPACE_ID}/reach/transmissions`, {
       method: 'POST',
       headers: {
         'Authorization': `AccessKey ${BIRD_API_KEY}`,
@@ -304,7 +314,8 @@ export async function sendEmail(to: string, subject: string, htmlContent: string
     });
 
     if (response.ok) {
-      console.log('Email inviata con successo tramite Bird:', to);
+      const result = await response.json();
+      console.log('Email inviata con successo tramite Bird:', result);
       return true;
     } else {
       const error = await response.text();
@@ -317,60 +328,246 @@ export async function sendEmail(to: string, subject: string, htmlContent: string
   }
 }
 
-// Template per email di reset password
+// Template per email di reset password migliorato
 export function createPasswordResetEmail(userName: string, baseUrl: string): string {
   return `
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password - Villa Ingrosso</title>
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #0ea5e9, #06b6d4); color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-        .content { background: #f8fafc; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #0ea5e9; color: white; padding: 15px 30px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-size: 16px; font-weight: bold; }
-        .footer { text-align: center; color: #64748b; font-size: 14px; margin-top: 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #2c3e50;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            padding: 20px;
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #1976d2 0%, #0288d1 50%, #00acc1 100%); 
+            color: white; 
+            padding: 40px 30px; 
+            text-align: center;
+            position: relative;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%23ffffff"></path></svg>') no-repeat center bottom;
+            background-size: cover;
+        }
+        .logo { 
+            font-size: 28px; 
+            font-weight: bold; 
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle { 
+            font-size: 16px; 
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        .content { 
+            padding: 40px 30px; 
+            background: white;
+        }
+        .welcome { 
+            font-size: 18px; 
+            color: #1976d2; 
+            font-weight: 600; 
+            margin-bottom: 20px;
+        }
+        .message { 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+            color: #555;
+        }
+        .cta-section {
+            text-align: center;
+            margin: 35px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8fbff 0%, #f0f9ff 100%);
+            border-radius: 12px;
+            border: 2px dashed #0288d1;
+        }
+        .button { 
+            display: inline-block; 
+            background: linear-gradient(135deg, #1976d2 0%, #0288d1 100%); 
+            color: white; 
+            padding: 16px 32px; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-size: 16px; 
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+        }
+        .security-info {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .security-info h4 {
+            color: #f57c00;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .security-info ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .security-info li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .security-info li::before {
+            content: '🔒';
+            position: absolute;
+            left: 0;
+        }
+        .villa-info {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .villa-info h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .location-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .location-item {
+            text-align: center;
+            margin: 5px;
+        }
+        .location-icon {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        .footer { 
+            background: #37474f;
+            color: #b0bec5;
+            text-align: center; 
+            padding: 25px 30px;
+            font-size: 14px;
+        }
+        .footer-links {
+            margin-bottom: 15px;
+        }
+        .footer-links a {
+            color: #81c784;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        @media (max-width: 600px) {
+            .email-container { margin: 10px; }
+            .content { padding: 25px 20px; }
+            .header { padding: 30px 20px; }
+            .location-info { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="email-container">
         <div class="header">
-            <h1>🏖️ Villa Ingrosso</h1>
-            <h2>Reset Password</h2>
+            <div class="logo">🏖️ Villa Ingrosso</div>
+            <div class="subtitle">La tua casa vacanze in Puglia</div>
+            <h2 style="margin-top: 20px; font-size: 22px;">Reset Password</h2>
         </div>
+        
         <div class="content">
-            <p>Ciao ${userName},</p>
+            <div class="welcome">Ciao ${userName}!</div>
             
-            <p>Hai richiesto di reimpostare la password per il tuo account Villa Ingrosso.</p>
+            <div class="message">
+                Hai richiesto di reimpostare la password per il tuo account Villa Ingrosso. 
+                Siamo qui per aiutarti a riacquistare l'accesso al tuo account in modo sicuro.
+            </div>
             
-            <p>Clicca sul pulsante qui sotto per accedere alla pagina di reset password:</p>
-            
-            <p style="text-align: center;">
+            <div class="cta-section">
+                <div class="message" style="margin-bottom: 20px; font-weight: 600; color: #1976d2;">
+                    Clicca sul pulsante qui sotto per impostare una nuova password:
+                </div>
                 <a href="${baseUrl}/change-password" class="button">
                     🔑 Reimposta Password
                 </a>
-            </p>
+            </div>
             
-            <p>Una volta nella pagina, potrai inserire una nuova password per il tuo account.</p>
+            <div class="security-info">
+                <h4>🛡️ Informazioni di Sicurezza</h4>
+                <ul>
+                    <li>Se non hai richiesto questo reset, puoi ignorare questa email</li>
+                    <li>Assicurati di essere su villaingrosso.com</li>
+                    <li>Scegli una password sicura e unica</li>
+                    <li>Non condividere mai le tue credenziali</li>
+                </ul>
+            </div>
             
-            <p><strong>Importante:</strong></p>
-            <ul>
-                <li>Se non hai richiesto questo reset, ignora questa email</li>
-                <li>Per sicurezza, assicurati di essere su villaingrosso.com</li>
-                <li>Scegli una password sicura e unica</li>
-            </ul>
+            <div class="villa-info">
+                <h3>🌊 Villa Ingrosso</h3>
+                <div class="message" style="margin-bottom: 15px; color: #2e7d32;">
+                    La tua casa vacanze nel cuore della Puglia
+                </div>
+                <div class="location-info">
+                    <div class="location-item">
+                        <div class="location-icon">📍</div>
+                        <div>Leporano Marina</div>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-icon">🏖️</div>
+                        <div>300m dal mare</div>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-icon">🌅</div>
+                        <div>Costa Ionica</div>
+                    </div>
+                </div>
+            </div>
             
-            <p>Grazie per aver scelto Villa Ingrosso!</p>
-            
-            <p>Il Team di Villa Ingrosso<br>
-            📍 Leporano Marina, Puglia<br>
-            🌊 A 300m dal mare cristallino</p>
+            <div class="message" style="text-align: center; margin-top: 30px; color: #2e7d32; font-weight: 600;">
+                Grazie per aver scelto Villa Ingrosso!<br>
+                <span style="font-weight: normal; font-style: italic;">Il Team di Villa Ingrosso</span>
+            </div>
         </div>
+        
         <div class="footer">
-            <p>Questa email è stata inviata automaticamente. Non rispondere a questa email.</p>
+            <div class="footer-links">
+                <a href="${baseUrl}">Sito Web</a> |
+                <a href="${baseUrl}/contact">Contatti</a> |
+                <a href="${baseUrl}/booking">Prenota</a>
+            </div>
+            <div>
+                Questa email è stata inviata automaticamente.<br>
+                Villa Ingrosso - Leporano Marina, Puglia | villaingrosso.com
+            </div>
         </div>
     </div>
 </body>
