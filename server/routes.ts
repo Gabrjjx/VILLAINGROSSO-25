@@ -512,14 +512,25 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
       
       const emailContent = createPasswordResetEmail(user.fullName || user.username, token, baseUrl);
       
-      const emailSent = await sendEmailBird(
+      // Prova prima Bird, poi fallback a SendGrid
+      let emailSent = await sendEmailBird(
         email, 
         "Villa Ingrosso - Reset Password", 
         emailContent
       );
 
       if (!emailSent) {
-        log("Failed to send reset email via Bird", "error");
+        log("Bird email failed, trying SendGrid fallback", "warning");
+        emailSent = await sendEmail({
+          to: email,
+          from: "noreply@villaingrosso.com",
+          subject: "Villa Ingrosso - Reset Password",
+          html: emailContent
+        });
+      }
+
+      if (!emailSent) {
+        log("Failed to send reset email via both Bird and SendGrid", "error");
         return res.status(500).json({ error: "Failed to send reset email" });
       }
 
