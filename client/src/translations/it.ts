@@ -399,7 +399,8 @@ export default {
       updateSuccessMessage: "Le tue informazioni sono state aggiornate con successo.",
       updateError: "Errore di aggiornamento",
       validationError: "Errore di validazione",
-      fillAllFields: "Compila tutti i campi obbligatori."
+      fillAllFields: "Compila tutti i campi obbligatori.",
+      dateOfBirth: "Data di nascita"
     },
     bookings: {
       title: "Le tue prenotazioni",

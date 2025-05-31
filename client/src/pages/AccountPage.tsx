@@ -57,7 +57,8 @@ function AccountPage() {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [profileData, setProfileData] = useState({
     fullName: user?.fullName || "",
-    email: user?.email || ""
+    email: user?.email || "",
+    dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth).toISOString().split('T')[0] : ""
   });
 
   // Carica le prenotazioni dell'utente
@@ -84,8 +85,12 @@ function AccountPage() {
 
   // Mutation per aggiornare il profilo
   const updateProfileMutation = useMutation({
-    mutationFn: async (data: { fullName: string; email: string }) => {
-      const res = await apiRequest("PATCH", "/api/user/profile", data);
+    mutationFn: async (data: { fullName: string; email: string; dateOfBirth: string }) => {
+      const updateData = {
+        ...data,
+        dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null
+      };
+      const res = await apiRequest("PATCH", "/api/user/profile", updateData);
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.error || "Failed to update profile");
@@ -117,7 +122,8 @@ function AccountPage() {
   const handleEditProfile = () => {
     setProfileData({
       fullName: user?.fullName || "",
-      email: user?.email || ""
+      email: user?.email || "",
+      dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth).toISOString().split('T')[0] : ""
     });
     setIsEditingProfile(true);
   };
@@ -138,7 +144,8 @@ function AccountPage() {
   const handleCancelEdit = () => {
     setProfileData({
       fullName: user?.fullName || "",
-      email: user?.email || ""
+      email: user?.email || "",
+      dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth).toISOString().split('T')[0] : ""
     });
     setIsEditingProfile(false);
   };
@@ -508,6 +515,18 @@ function AccountPage() {
                     </div>
                     
                     <div className="space-y-2">
+                      <Label htmlFor="dateOfBirth">
+                        {t("account.profile.dateOfBirth") || "Data di nascita"}
+                      </Label>
+                      <Input
+                        id="dateOfBirth"
+                        type="date"
+                        value={profileData.dateOfBirth}
+                        onChange={(e) => setProfileData(prev => ({ ...prev, dateOfBirth: e.target.value }))}
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
                       <Label>{t("account.profile.accountType") || "Tipo di account"}</Label>
                       <div className="p-3 bg-muted rounded-md">
                         <Badge variant={user.isAdmin ? "default" : "secondary"}>
@@ -555,6 +574,15 @@ function AccountPage() {
                           <div>
                             <div className="text-sm text-muted-foreground">{t("account.profile.username")}</div>
                             <div className="font-medium">{user.username}</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <Calendar className="h-5 w-5 text-muted-foreground" />
+                          <div>
+                            <div className="text-sm text-muted-foreground">{t("account.profile.dateOfBirth") || "Data di nascita"}</div>
+                            <div className="font-medium">
+                              {user.dateOfBirth ? formatDate(user.dateOfBirth) : "Non specificata"}
+                            </div>
                           </div>
                         </div>
                       </div>
