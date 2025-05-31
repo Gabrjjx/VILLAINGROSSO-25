@@ -14,6 +14,7 @@ import AdminPage from "@/pages/AdminPage";
 import BookingPage from "@/pages/BookingPage";
 import BookingConfirmation from "@/pages/BookingConfirmation";
 import SimpleResetPasswordPage from "@/pages/SimpleResetPasswordPage";
+import ChangePasswordPage from "@/pages/ChangePasswordPage";
 import NewsletterModal from "@/components/NewsletterModal";
 import WhatsAppChat from "@/components/WhatsAppChat";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
@@ -44,6 +45,7 @@ function Router() {
       <Route path="/booking" component={BookingPage} />
       <Route path="/booking-confirmation" component={BookingConfirmation} />
       <Route path="/reset-password" component={SimpleResetPasswordPage} />
+      <Route path="/change-password" component={ChangePasswordPage} />
       <Route component={NotFound} />
     </Switch>
   );

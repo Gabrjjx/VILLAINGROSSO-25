@@ -349,7 +349,7 @@ export function createPasswordResetEmail(userName: string, baseUrl: string): str
             <p>Clicca sul pulsante qui sotto per accedere alla pagina di reset password:</p>
             
             <p style="text-align: center;">
-                <a href="${baseUrl}/reset-password" class="button">
+                <a href="${baseUrl}/change-password" class="button">
                     🔑 Reimposta Password
                 </a>
             </p>
