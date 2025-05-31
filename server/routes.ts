@@ -569,6 +569,39 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
   });
 
+  // API per reset password diretto (senza token)
+  app.post("/api/reset-password-direct", async (req: Request, res: Response) => {
+    try {
+      const { email, newPassword } = req.body;
+
+      if (!email || !newPassword) {
+        return res.status(400).json({ error: "Email and new password are required" });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({ error: "Password must be at least 6 characters long" });
+      }
+
+      // Trova utente per email
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(400).json({ error: "User not found" });
+      }
+
+      // Hash della nuova password
+      const { hashPassword } = await import("./auth");
+      const hashedPassword = await hashPassword(newPassword);
+
+      // Aggiorna password
+      await storage.updateUser(user.id, { password: hashedPassword });
+
+      res.json({ message: "Password reset successfully" });
+    } catch (error) {
+      log(`Error resetting password: ${error}`, "error");
+      res.status(500).json({ error: "Failed to reset password" });
+    }
+  });
+
   // API per aggiornare il profilo utente
   app.patch("/api/user/profile", async (req: Request, res: Response) => {
     if (!req.isAuthenticated()) {

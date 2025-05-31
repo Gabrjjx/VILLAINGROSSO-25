@@ -13,7 +13,7 @@ import AccountPage from "@/pages/AccountPage";
 import AdminPage from "@/pages/AdminPage";
 import BookingPage from "@/pages/BookingPage";
 import BookingConfirmation from "@/pages/BookingConfirmation";
-import ResetPasswordPage from "@/pages/ResetPasswordPage";
+import SimpleResetPasswordPage from "@/pages/SimpleResetPasswordPage";
 import NewsletterModal from "@/components/NewsletterModal";
 import WhatsAppChat from "@/components/WhatsAppChat";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
@@ -43,7 +43,7 @@ function Router() {
       <Route path="/admin" component={AdminPage} />
       <Route path="/booking" component={BookingPage} />
       <Route path="/booking-confirmation" component={BookingConfirmation} />
-      <Route path="/reset-password" component={ResetPasswordPage} />
+      <Route path="/reset-password" component={SimpleResetPasswordPage} />
       <Route component={NotFound} />
     </Switch>
   );

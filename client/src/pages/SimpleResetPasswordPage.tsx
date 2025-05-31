@@ -11,7 +11,7 @@ import { Loader2, Key, CheckCircle, Lock, Mail, ArrowLeft } from "lucide-react";
 import { useLocation } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default function ResetPasswordPage() {
+export default function SimpleResetPasswordPage() {
   const { t } = useLanguage();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
@@ -36,7 +36,7 @@ export default function ResetPasswordPage() {
       const res = await apiRequest("POST", "/api/request-password-reset", data);
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message || "Errore nella richiesta di reset");
+        throw new Error(errorData.error || "Failed to send reset email");
       }
       return res.json();
     },
@@ -44,19 +44,19 @@ export default function ResetPasswordPage() {
       setIsEmailSent(true);
       toast({
         title: "Email inviata",
-        description: "Controlla la tua email per il link di reset della password.",
+        description: "Ti abbiamo inviato un link per reimpostare la password",
       });
     },
     onError: (error: Error) => {
       toast({
-        title: "Errore",
+        title: "Errore invio email",
         description: error.message,
         variant: "destructive",
       });
     },
   });
 
-  // Mutation per reset password
+  // Mutation per reset password diretto
   const resetPasswordMutation = useMutation({
     mutationFn: async (data: { email: string; newPassword: string }) => {
       const res = await apiRequest("POST", "/api/reset-password-direct", data);
@@ -138,19 +138,29 @@ export default function ResetPasswordPage() {
   // Se il reset è completato con successo
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ocean-50 to-ocean-100 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-cyan-50 px-4">
         <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <CardTitle className="text-2xl">Password Reimpostata</CardTitle>
-            <CardDescription>
-              La tua password è stata aggiornata con successo. Sarai reindirizzato alla pagina di login.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => setLocation("/auth")} className="w-full">
-              Vai al Login
-            </Button>
+          <CardContent className="pt-6">
+            <div className="text-center space-y-4">
+              <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-green-600" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Password Reimpostata!
+                </h3>
+                <p className="text-sm text-gray-600">
+                  La tua password è stata reimpostata con successo. 
+                  Verrai reindirizzato al login tra pochi secondi.
+                </p>
+              </div>
+              <Button 
+                onClick={() => setLocation("/auth")}
+                className="w-full"
+              >
+                Vai al Login
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -158,17 +168,26 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ocean-50 to-ocean-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Pulsante per tornare indietro */}
-        <Button
-          variant="ghost"
-          className="mb-4"
-          onClick={() => setLocation("/auth")}
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Torna al Login
-        </Button>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-cyan-50 px-4">
+      <div className="w-full max-w-md space-y-6">
+        {/* Header */}
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Villa Ingrosso</h1>
+          <p className="text-gray-600">Reset della Password</p>
+        </div>
+
+        {/* Back to Login Button */}
+        <div className="flex justify-center">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => setLocation("/auth")}
+            className="text-sky-600 hover:text-sky-700"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Torna al Login
+          </Button>
+        </div>
 
         <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "request" | "reset")} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
@@ -182,104 +201,100 @@ export default function ResetPasswordPage() {
             </TabsTrigger>
           </TabsList>
 
-          {/* Tab per richiedere reset via email */}
+          {/* Tab 1: Request Reset */}
           <TabsContent value="request">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-primary" />
-                  Reset Password via Email
+                  <Mail className="w-5 h-5" />
+                  Richiedi Reset Password
                 </CardTitle>
                 <CardDescription>
-                  Inserisci il tuo indirizzo email per ricevere un link di reset della password.
+                  Inserisci la tua email per ricevere le istruzioni per il reset della password.
                 </CardDescription>
               </CardHeader>
               
-              {isEmailSent ? (
-                <CardContent className="text-center py-8">
-                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Email Inviata!</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Controlla la tua casella email per il link di reset della password.
-                  </p>
+              <form onSubmit={handleRequestSubmit}>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Indirizzo Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Il tuo indirizzo email"
+                      value={requestFormData.email}
+                      onChange={(e) => setRequestFormData({
+                        ...requestFormData,
+                        email: e.target.value
+                      })}
+                      required
+                    />
+                  </div>
+
+                  {isEmailSent && (
+                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex items-center gap-2 text-green-800">
+                        <CheckCircle className="w-5 h-5" />
+                        <span className="font-medium">Email inviata!</span>
+                      </div>
+                      <p className="text-sm text-green-700 mt-1">
+                        Controlla la tua casella email e clicca sul link per reimpostare la password.
+                      </p>
+                    </div>
+                  )}
+
                   <Button 
-                    variant="outline" 
-                    onClick={() => setIsEmailSent(false)}
-                    className="w-full"
+                    type="submit" 
+                    className="w-full" 
+                    disabled={requestResetMutation.isPending}
                   >
-                    Invia di nuovo
+                    {requestResetMutation.isPending ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Invio in corso...
+                      </>
+                    ) : (
+                      <>
+                        <Mail className="w-4 h-4 mr-2" />
+                        Invia Email di Reset
+                      </>
+                    )}
                   </Button>
                 </CardContent>
-              ) : (
-                <form onSubmit={handleRequestSubmit}>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="Il tuo indirizzo email"
-                        value={requestFormData.email}
-                        onChange={(e) => setRequestFormData({
-                          ...requestFormData,
-                          email: e.target.value
-                        })}
-                        required
-                      />
-                    </div>
-                    <Button
-                      type="submit"
-                      className="w-full"
-                      disabled={requestResetMutation.isPending}
-                    >
-                      {requestResetMutation.isPending ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Invio in corso...
-                        </>
-                      ) : (
-                        <>
-                          <Mail className="mr-2 h-4 w-4" />
-                          Invia Email di Reset
-                        </>
-                      )}
-                    </Button>
-                  </CardContent>
-                </form>
-              )}
+              </form>
             </Card>
           </TabsContent>
 
-          {/* Tab per reset con token */}
+          {/* Tab 2: Reset Password */}
           <TabsContent value="reset">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Key className="w-5 h-5 text-primary" />
+                  <Key className="w-5 h-5" />
                   Reimposta Password
                 </CardTitle>
                 <CardDescription>
-                  Hai ricevuto un token via email? Inseriscilo qui insieme alla nuova password.
+                  Hai ricevuto un'email di reset? Inserisci l'indirizzo email e la nuova password.
                 </CardDescription>
               </CardHeader>
               
               <form onSubmit={handleResetSubmit}>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="token">Token di Reset</Label>
+                    <Label htmlFor="resetEmail">Indirizzo Email</Label>
                     <Input
-                      id="token"
-                      type="text"
-                      placeholder="Inserisci il token ricevuto via email"
-                      value={resetFormData.token}
+                      id="resetEmail"
+                      type="email"
+                      placeholder="Inserisci il tuo indirizzo email"
+                      value={resetFormData.email}
                       onChange={(e) => setResetFormData({
                         ...resetFormData,
-                        token: e.target.value
+                        email: e.target.value
                       })}
                       required
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="newPassword">Nuova Password</Label>
                     <Input
@@ -294,7 +309,7 @@ export default function ResetPasswordPage() {
                       required
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="confirmPassword">Conferma Password</Label>
                     <Input
@@ -309,20 +324,20 @@ export default function ResetPasswordPage() {
                       required
                     />
                   </div>
-                  
-                  <Button
-                    type="submit"
-                    className="w-full"
+
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
                     disabled={resetPasswordMutation.isPending}
                   >
                     {resetPasswordMutation.isPending ? (
                       <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Reset in corso...
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Reimpostazione...
                       </>
                     ) : (
                       <>
-                        <Lock className="mr-2 h-4 w-4" />
+                        <Lock className="w-4 h-4 mr-2" />
                         Reimposta Password
                       </>
                     )}
