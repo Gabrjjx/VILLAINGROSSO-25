@@ -118,11 +118,19 @@ export function setupAuth(app: Express) {
         return res.status(400).json({ error: "Email already exists" });
       }
 
-      // Crea il nuovo utente
-      const user = await storage.createUser({
+      // Prepara i dati utente, convertendo la data se presente
+      const userData = {
         ...req.body,
         password: await hashPassword(req.body.password),
-      });
+      };
+      
+      // Converti dateOfBirth da stringa a Date se presente
+      if (userData.dateOfBirth && typeof userData.dateOfBirth === 'string') {
+        userData.dateOfBirth = new Date(userData.dateOfBirth);
+      }
+
+      // Crea il nuovo utente
+      const user = await storage.createUser(userData);
 
       // Elimina la password dalla risposta
       const { password, ...userWithoutPassword } = user;
