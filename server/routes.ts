@@ -5,6 +5,7 @@ import { setupAuth } from "./auth";
 import { type InsertBooking, type InsertContactMessage } from "@shared/schema";
 import { log } from "./vite";
 import { 
+  sendEmail as sendEmailSendGrid,
   createContactNotificationEmail, 
   createBookingConfirmationEmail,
   sendWelcomeEmail,
@@ -45,7 +46,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           contactData.email,
           contactData.message
         );
-        await sendEmail(emailData);
+        await sendEmailSendGrid(emailData);
         log(`Contact notification email sent for message ${newMessage.id}`, "info");
       } catch (emailError) {
         log(`Failed to send contact notification email: ${emailError}`, "error");
@@ -86,7 +87,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         guests
       );
       
-      const emailSent = await sendEmail(emailData);
+      const emailSent = await sendEmailSendGrid(emailData);
       
       if (emailSent) {
         log(`Booking confirmation email sent to ${guestEmail}`, "info");
@@ -125,7 +126,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const emailSent = await sendEmail({
+      const emailSent = await sendEmailSendGrid({
         to,
         from: 'g.ingrosso@villaingrosso.com',
         subject,
