@@ -506,13 +506,18 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
   
   // Endpoint per gli amministratori per ottenere i messaggi di chat di un utente specifico
   app.get("/api/admin/chat-messages/:userId", async (req: Request, res: Response) => {
+    log(`GET /api/admin/chat-messages/${req.params.userId} - isAuthenticated: ${req.isAuthenticated()} - isAdmin: ${req.user?.isAdmin}`, "info");
+    
     if (!req.isAuthenticated() || !req.user.isAdmin) {
+      log(`Admin access denied - authenticated: ${req.isAuthenticated()}, isAdmin: ${req.user?.isAdmin}`, "warn");
       return res.status(401).json({ error: "Admin privileges required" });
     }
     
     try {
       const userId = parseInt(req.params.userId);
+      log(`Admin fetching chat messages for user ID: ${userId}`, "info");
       const messages = await storage.getChatMessagesByUser(userId);
+      log(`Admin found ${messages.length} messages for user ${userId}`, "info");
       res.json(messages);
     } catch (error) {
       log(`Error fetching admin chat messages: ${error}`, "error");
