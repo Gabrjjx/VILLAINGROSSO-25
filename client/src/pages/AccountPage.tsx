@@ -4,14 +4,35 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { apiRequest } from "../lib/queryClient";
 import { Booking } from "@shared/schema";
-import { format } from "date-fns";
+import { format, addDays, differenceInDays, isPast, isFuture, isToday } from "date-fns";
 import { it, enUS } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { Loader2, LogOut, User as UserIcon, Calendar, Clock, MessageCircle } from "lucide-react";
+import { 
+  Loader2, 
+  LogOut, 
+  User as UserIcon, 
+  Calendar, 
+  Clock, 
+  MessageCircle,
+  Home,
+  MapPin,
+  Phone,
+  Mail,
+  CheckCircle,
+  AlertCircle,
+  CalendarCheck,
+  Star,
+  Sun,
+  Cloud,
+  CloudRain,
+  Thermometer
+} from "lucide-react";
 import ChatInterface from "@/components/ChatInterface";
 
 export default function AccountPageWrapper() {
@@ -26,7 +47,7 @@ function AccountPage() {
   const { t, language } = useLanguage();
   const { user, logoutMutation } = useAuth();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("profile");
+  const [activeTab, setActiveTab] = useState("overview");
 
   // Carica le prenotazioni dell'utente
   const { data: bookings, isLoading: bookingsLoading } = useQuery<Booking[]>({
@@ -61,6 +82,67 @@ function AccountPage() {
     return format(dateObj, "PPP", { locale: localeObj });
   };
 
+  // Calcola statistiche delle prenotazioni
+  const getBookingStats = () => {
+    if (!bookings) return { total: 0, upcoming: 0, completed: 0, current: 0 };
+    
+    const now = new Date();
+    const total = bookings.length;
+    const upcoming = bookings.filter(b => isFuture(new Date(b.startDate))).length;
+    const completed = bookings.filter(b => isPast(new Date(b.endDate))).length;
+    const current = bookings.filter(b => {
+      const startDate = new Date(b.startDate);
+      const endDate = new Date(b.endDate);
+      return startDate <= now && now <= endDate;
+    }).length;
+    
+    return { total, upcoming, completed, current };
+  };
+
+  // Ottieni la prossima prenotazione
+  const getNextBooking = () => {
+    if (!bookings) return null;
+    return bookings
+      .filter(b => isFuture(new Date(b.startDate)))
+      .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())[0];
+  };
+
+  // Ottieni la prenotazione corrente
+  const getCurrentBooking = () => {
+    if (!bookings) return null;
+    const now = new Date();
+    return bookings.find(b => {
+      const startDate = new Date(b.startDate);
+      const endDate = new Date(b.endDate);
+      return startDate <= now && now <= endDate;
+    });
+  };
+
+  // Calcola stato prenotazione
+  const getBookingStatus = (booking: Booking) => {
+    const now = new Date();
+    const startDate = new Date(booking.startDate);
+    const endDate = new Date(booking.endDate);
+    
+    if (startDate > now) return 'upcoming';
+    if (startDate <= now && now <= endDate) return 'current';
+    return 'completed';
+  };
+
+  // Badge per stato prenotazione
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'upcoming':
+        return <Badge variant="outline" className="text-blue-600 border-blue-600"><Clock className="h-3 w-3 mr-1" />{t("account.bookings.status.upcoming") || "Prossima"}</Badge>;
+      case 'current':
+        return <Badge variant="default" className="bg-green-600"><CheckCircle className="h-3 w-3 mr-1" />{t("account.bookings.status.current") || "In corso"}</Badge>;
+      case 'completed':
+        return <Badge variant="secondary"><CalendarCheck className="h-3 w-3 mr-1" />{t("account.bookings.status.completed") || "Completata"}</Badge>;
+      default:
+        return null;
+    }
+  };
+
   if (!user) return null;
 
   return (
@@ -85,7 +167,11 @@ function AccountPage() {
       {/* Contenuto principale */}
       <div className="container mx-auto py-8 px-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full md:w-[600px] grid-cols-3">
+          <TabsList className="grid w-full md:w-[800px] grid-cols-4">
+            <TabsTrigger value="overview">
+              <Home className="h-4 w-4 mr-2" />
+              {t("account.tabs.overview") || "Panoramica"}
+            </TabsTrigger>
             <TabsTrigger value="profile">
               <UserIcon className="h-4 w-4 mr-2" />
               {t("account.tabs.profile")}
@@ -99,6 +185,193 @@ function AccountPage() {
               {t("account.tabs.chat")}
             </TabsTrigger>
           </TabsList>
+
+          {/* Tab Overview */}
+          <TabsContent value="overview" className="mt-6">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-6">
+              {/* Statistiche prenotazioni */}
+              {(() => {
+                const stats = getBookingStats();
+                return (
+                  <>
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-medium text-muted-foreground">
+                              {t("account.overview.totalBookings") || "Prenotazioni Totali"}
+                            </p>
+                            <p className="text-2xl font-bold">{stats.total}</p>
+                          </div>
+                          <Calendar className="h-8 w-8 text-primary" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-medium text-muted-foreground">
+                              {t("account.overview.upcomingBookings") || "Prossime"}
+                            </p>
+                            <p className="text-2xl font-bold text-blue-600">{stats.upcoming}</p>
+                          </div>
+                          <Clock className="h-8 w-8 text-blue-600" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-medium text-muted-foreground">
+                              {t("account.overview.currentBookings") || "In Corso"}
+                            </p>
+                            <p className="text-2xl font-bold text-green-600">{stats.current}</p>
+                          </div>
+                          <CheckCircle className="h-8 w-8 text-green-600" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-medium text-muted-foreground">
+                              {t("account.overview.completedBookings") || "Completate"}
+                            </p>
+                            <p className="text-2xl font-bold text-gray-600">{stats.completed}</p>
+                          </div>
+                          <CalendarCheck className="h-8 w-8 text-gray-600" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </>
+                );
+              })()}
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* Prenotazione corrente o prossima */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Star className="h-5 w-5 mr-2 text-primary" />
+                    {getCurrentBooking() ? 
+                      (t("account.overview.currentStay") || "Soggiorno Attuale") : 
+                      (t("account.overview.nextStay") || "Prossimo Soggiorno")
+                    }
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {(() => {
+                    const currentBooking = getCurrentBooking();
+                    const nextBooking = getNextBooking();
+                    const booking = currentBooking || nextBooking;
+                    
+                    if (!booking) {
+                      return (
+                        <div className="text-center py-8">
+                          <Calendar className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                          <p className="text-muted-foreground">
+                            {t("account.overview.noUpcomingBookings") || "Nessuna prenotazione in programma"}
+                          </p>
+                        </div>
+                      );
+                    }
+                    
+                    const status = getBookingStatus(booking);
+                    const daysUntilCheckIn = currentBooking ? 0 : differenceInDays(new Date(booking.startDate), new Date());
+                    
+                    return (
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <p className="font-semibold">{booking.guestName}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {booking.guestCount} {booking.guestCount === 1 ? 'ospite' : 'ospiti'}
+                            </p>
+                          </div>
+                          {getStatusBadge(status)}
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <div className="flex items-center text-sm">
+                            <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                            <span>{formatDate(booking.startDate)} - {formatDate(booking.endDate)}</span>
+                          </div>
+                          
+                          <div className="flex items-center text-sm">
+                            <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
+                            <span>Villa Ingrosso, Leporano</span>
+                          </div>
+                          
+                          <div className="flex items-center text-sm">
+                            <Phone className="h-4 w-4 mr-2 text-muted-foreground" />
+                            <span>Contatto disponibile tramite chat</span>
+                          </div>
+                        </div>
+                        
+                        {!currentBooking && daysUntilCheckIn > 0 && (
+                          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                            <p className="text-sm text-blue-800">
+                              <Clock className="h-4 w-4 inline mr-1" />
+                              {daysUntilCheckIn === 1 ? 
+                                "Check-in domani!" : 
+                                `Check-in tra ${daysUntilCheckIn} giorni`
+                              }
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+                </CardContent>
+              </Card>
+
+              {/* Informazioni Villa */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Home className="h-5 w-5 mr-2 text-primary" />
+                    {t("account.overview.villaInfo") || "Villa Ingrosso"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center text-sm">
+                      <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
+                      <span>Leporano, Taranto - 300m dal mare</span>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div className="flex items-center">
+                        <Home className="h-4 w-4 mr-2 text-muted-foreground" />
+                        <span>4 camere da letto</span>
+                      </div>
+                      <div className="flex items-center">
+                        <UserIcon className="h-4 w-4 mr-2 text-muted-foreground" />
+                        <span>Fino a 8 ospiti</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 p-3 bg-primary/10 rounded-lg">
+                      <p className="text-sm text-primary font-medium">
+                        <Phone className="h-4 w-4 inline mr-1" />
+                        Assistenza 24/7 disponibile
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Usa la chat per contattarci in qualsiasi momento
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
 
           {/* Tab profilo */}
           <TabsContent value="profile" className="mt-6">
@@ -138,8 +411,13 @@ function AccountPage() {
           <TabsContent value="bookings" className="mt-6">
             <Card>
               <CardHeader>
-                <CardTitle>{t("account.bookings.title")}</CardTitle>
-                <CardDescription>{t("account.bookings.description")}</CardDescription>
+                <CardTitle className="flex items-center">
+                  <Calendar className="h-5 w-5 mr-2 text-primary" />
+                  {t("account.bookings.title") || "Le Mie Prenotazioni"}
+                </CardTitle>
+                <CardDescription>
+                  {t("account.bookings.description") || "Gestisci e visualizza tutte le tue prenotazioni"}
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 {bookingsLoading ? (
@@ -147,53 +425,119 @@ function AccountPage() {
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                   </div>
                 ) : bookings && bookings.length > 0 ? (
-                  <div className="space-y-4">
-                    {bookings.map((booking) => (
-                      <Card key={booking.id} className="overflow-hidden">
-                        <div className="bg-primary/10 p-4">
-                          <div className="flex justify-between items-center">
-                            <div>
-                              <h3 className="font-semibold text-lg">
-                                {formatDate(booking.startDate)} - {formatDate(booking.endDate)}
-                              </h3>
-                              <p className="text-sm text-muted-foreground">
-                                <Clock className="h-4 w-4 inline mr-1" />
-                                {t("account.bookings.nights").replace("{{count}}", Math.ceil((new Date(booking.endDate).getTime() - new Date(booking.startDate).getTime()) / (1000 * 60 * 60 * 24)).toString())}
-                              </p>
-                            </div>
-                            <div className="text-right">
-                              <div className="text-sm font-semibold">
-                                {t("account.bookings.guests")}: {booking.guestCount}
+                  <div className="space-y-6">
+                    {bookings
+                      .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+                      .map((booking) => {
+                        const status = getBookingStatus(booking);
+                        const nights = Math.ceil((new Date(booking.endDate).getTime() - new Date(booking.startDate).getTime()) / (1000 * 60 * 60 * 24));
+                        const daysUntil = differenceInDays(new Date(booking.startDate), new Date());
+                        
+                        return (
+                          <Card key={booking.id} className="overflow-hidden border-l-4 border-l-primary">
+                            <CardContent className="p-6">
+                              <div className="flex justify-between items-start mb-4">
+                                <div>
+                                  <h3 className="font-semibold text-lg mb-1">
+                                    Villa Ingrosso
+                                  </h3>
+                                  <p className="text-sm text-muted-foreground">
+                                    {booking.guestName}
+                                  </p>
+                                </div>
+                                {getStatusBadge(status)}
                               </div>
-                              <div className="text-sm text-muted-foreground">
-                                {booking.status === "confirmed" ? (
-                                  <span className="text-green-600 font-medium">
-                                    {t("account.bookings.status.confirmed")}
-                                  </span>
-                                ) : booking.status === "pending" ? (
-                                  <span className="text-amber-600 font-medium">
-                                    {t("account.bookings.status.pending")}
-                                  </span>
-                                ) : (
-                                  <span className="text-red-600 font-medium">
-                                    {t("account.bookings.status.cancelled")}
-                                  </span>
+                              
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                                <div className="flex items-center space-x-2">
+                                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                                  <div>
+                                    <p className="text-xs text-muted-foreground">Check-in</p>
+                                    <p className="text-sm font-medium">{format(new Date(booking.startDate), "dd MMM", { locale: language === "it" ? it : enUS })}</p>
+                                  </div>
+                                </div>
+                                
+                                <div className="flex items-center space-x-2">
+                                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                                  <div>
+                                    <p className="text-xs text-muted-foreground">Check-out</p>
+                                    <p className="text-sm font-medium">{format(new Date(booking.endDate), "dd MMM", { locale: language === "it" ? it : enUS })}</p>
+                                  </div>
+                                </div>
+                                
+                                <div className="flex items-center space-x-2">
+                                  <UserIcon className="h-4 w-4 text-muted-foreground" />
+                                  <div>
+                                    <p className="text-xs text-muted-foreground">Ospiti</p>
+                                    <p className="text-sm font-medium">{booking.guestCount}</p>
+                                  </div>
+                                </div>
+                                
+                                <div className="flex items-center space-x-2">
+                                  <Clock className="h-4 w-4 text-muted-foreground" />
+                                  <div>
+                                    <p className="text-xs text-muted-foreground">Notti</p>
+                                    <p className="text-sm font-medium">{nights}</p>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              {status === 'upcoming' && daysUntil > 0 && (
+                                <div className="mb-4 p-3 bg-blue-50 rounded-lg border-l-4 border-l-blue-400">
+                                  <p className="text-sm text-blue-800 font-medium">
+                                    <AlertCircle className="h-4 w-4 inline mr-2" />
+                                    {daysUntil === 1 ? 
+                                      "Il tuo soggiorno inizia domani!" : 
+                                      `Il tuo soggiorno inizia tra ${daysUntil} giorni`
+                                    }
+                                  </p>
+                                </div>
+                              )}
+                              
+                              {status === 'current' && (
+                                <div className="mb-4 p-3 bg-green-50 rounded-lg border-l-4 border-l-green-400">
+                                  <p className="text-sm text-green-800 font-medium">
+                                    <CheckCircle className="h-4 w-4 inline mr-2" />
+                                    Benvenuto a Villa Ingrosso! Stai attualmente soggiornando qui.
+                                  </p>
+                                </div>
+                              )}
+                              
+                              {booking.notes && (
+                                <div className="mt-4 p-3 bg-muted/50 rounded-lg">
+                                  <p className="text-sm font-medium mb-1">Note:</p>
+                                  <p className="text-sm text-muted-foreground">{booking.notes}</p>
+                                </div>
+                              )}
+                              
+                              <div className="mt-4 pt-4 border-t flex justify-between items-center">
+                                <div className="flex items-center text-sm text-muted-foreground">
+                                  <MapPin className="h-4 w-4 mr-1" />
+                                  Leporano, Taranto - 300m dal mare
+                                </div>
+                                
+                                {(status === 'upcoming' || status === 'current') && (
+                                  <Button variant="outline" size="sm" onClick={() => setActiveTab('chat')}>
+                                    <MessageCircle className="h-4 w-4 mr-2" />
+                                    Contatta Staff
+                                  </Button>
                                 )}
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="p-4">
-                          <p className="text-sm">{booking.notes || t("account.bookings.noNotes")}</p>
-                        </div>
-                      </Card>
-                    ))}
+                            </CardContent>
+                          </Card>
+                        );
+                      })}
                   </div>
                 ) : (
-                  <div className="py-8 text-center">
-                    <p className="text-muted-foreground">{t("account.bookings.noBookings")}</p>
-                    <Button className="mt-4" onClick={() => window.location.href = "/booking"}>
-                      {t("account.bookings.bookNow")}
+                  <div className="py-12 text-center">
+                    <Calendar className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                    <h3 className="text-lg font-semibold mb-2">Nessuna prenotazione</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Non hai ancora effettuato nessuna prenotazione presso Villa Ingrosso.
+                    </p>
+                    <Button onClick={() => window.location.href = "/booking"}>
+                      <Calendar className="h-4 w-4 mr-2" />
+                      Prenota Ora
                     </Button>
                   </div>
                 )}
