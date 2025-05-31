@@ -17,6 +17,11 @@ export interface IStorage {
   updateUser(id: number, userData: Partial<InsertUser>): Promise<User | undefined>;
   deleteUser(id: number): Promise<boolean>;
   
+  // Operazioni per il reset password
+  setResetToken(email: string, token: string, expiry: Date): Promise<boolean>;
+  getUserByResetToken(token: string): Promise<User | undefined>;
+  clearResetToken(userId: number): Promise<boolean>;
+  
   // Operazioni sulle prenotazioni
   getBooking(id: number): Promise<Booking | undefined>;
   getBookingsByUser(userId: number): Promise<Booking[]>;
@@ -94,6 +99,48 @@ export class DatabaseStorage implements IStorage {
   async deleteUser(id: number): Promise<boolean> {
     const result = await db.delete(users).where(eq(users.id, id));
     return true; // In PostgreSQL, delete non restituisce il conteggio delle righe eliminate
+  }
+
+  async setResetToken(email: string, token: string, expiry: Date): Promise<boolean> {
+    try {
+      await db.update(users)
+        .set({ 
+          resetToken: token, 
+          resetTokenExpiry: expiry 
+        })
+        .where(eq(users.email, email));
+      return true;
+    } catch (error) {
+      console.error("Error setting reset token:", error);
+      return false;
+    }
+  }
+
+  async getUserByResetToken(token: string): Promise<User | undefined> {
+    try {
+      const [user] = await db.select()
+        .from(users)
+        .where(eq(users.resetToken, token));
+      return user || undefined;
+    } catch (error) {
+      console.error("Error getting user by reset token:", error);
+      return undefined;
+    }
+  }
+
+  async clearResetToken(userId: number): Promise<boolean> {
+    try {
+      await db.update(users)
+        .set({ 
+          resetToken: null, 
+          resetTokenExpiry: null 
+        })
+        .where(eq(users.id, userId));
+      return true;
+    } catch (error) {
+      console.error("Error clearing reset token:", error);
+      return false;
+    }
   }
   
   // Implementazioni delle operazioni sulle prenotazioni

@@ -13,6 +13,8 @@ export const users = pgTable("users", {
   dateOfBirth: timestamp("date_of_birth"),
   privacyAccepted: boolean("privacy_accepted").notNull().default(false),
   isAdmin: boolean("is_admin").notNull().default(false),
+  resetToken: text("reset_token"),
+  resetTokenExpiry: timestamp("reset_token_expiry"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
