@@ -3,8 +3,8 @@
 ## Service Information
 - **Name**: Villa Ingrosso API
 - **Service Name**: villa-ingrosso-api
-- **Development URL**: https://35683667-e27b-4a35-9b6b-cd2b453f9995-00-1q7kecmao3gy.worf.replit.dev
-- **Production URL**: https://villaingrosso.com (to be configured)
+- **Development URL**: https://35683667-e27b-4a35-9b6b-cd2b453f9995-00-1q7kecmao3gy.worf.replit.dev/api
+- **Production URL**: https://api.villaingrosso.com
 - **Query Array Format**: JSON - Example: `p=["a","b","c"]`
 - **Configuration Mode**: Manual
 
