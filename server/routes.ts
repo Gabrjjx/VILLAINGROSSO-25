@@ -388,6 +388,131 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
   });
 
+  // API per cambiare la password (utente autenticato)
+  app.patch("/api/user/change-password", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.sendStatus(401);
+    }
+
+    try {
+      const { currentPassword, newPassword } = req.body;
+      const userId = req.user!.id;
+
+      // Validazione
+      if (!currentPassword || !newPassword) {
+        return res.status(400).json({ error: "Current password and new password are required" });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({ error: "New password must be at least 6 characters long" });
+      }
+
+      // Verifica che la password attuale sia corretta
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      const { comparePasswords } = await import("./auth");
+      const isCurrentPasswordValid = await comparePasswords(currentPassword, user.password);
+      if (!isCurrentPasswordValid) {
+        return res.status(400).json({ error: "Current password is incorrect" });
+      }
+
+      // Hash della nuova password
+      const { hashPassword } = await import("./auth");
+      const hashedNewPassword = await hashPassword(newPassword);
+
+      // Aggiorna la password
+      await storage.updateUser(userId, { password: hashedNewPassword });
+
+      res.json({ message: "Password updated successfully" });
+    } catch (error) {
+      log(`Error changing password: ${error}`, "error");
+      res.status(500).json({ error: "Failed to change password" });
+    }
+  });
+
+  // API per generare token di reset password (solo admin)
+  app.post("/api/admin/generate-reset-token", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated() || !req.user!.isAdmin) {
+      return res.sendStatus(403);
+    }
+
+    try {
+      const { email } = req.body;
+
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+
+      // Verifica che l'utente esista
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      // Genera token casuale
+      const { randomBytes } = await import("crypto");
+      const token = randomBytes(32).toString("hex");
+      
+      // Imposta scadenza a 24 ore
+      const expiry = new Date();
+      expiry.setHours(expiry.getHours() + 24);
+
+      // Salva il token
+      await storage.setResetToken(email, token, expiry);
+
+      res.json({ 
+        token, 
+        expiresAt: expiry,
+        message: "Reset token generated. Provide this token to the user to reset their password." 
+      });
+    } catch (error) {
+      log(`Error generating reset token: ${error}`, "error");
+      res.status(500).json({ error: "Failed to generate reset token" });
+    }
+  });
+
+  // API per reset password con token
+  app.post("/api/reset-password", async (req: Request, res: Response) => {
+    try {
+      const { token, newPassword } = req.body;
+
+      if (!token || !newPassword) {
+        return res.status(400).json({ error: "Token and new password are required" });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({ error: "Password must be at least 6 characters long" });
+      }
+
+      // Trova utente per token
+      const user = await storage.getUserByResetToken(token);
+      if (!user) {
+        return res.status(400).json({ error: "Invalid or expired reset token" });
+      }
+
+      // Verifica scadenza token
+      if (!user.resetTokenExpiry || new Date() > user.resetTokenExpiry) {
+        return res.status(400).json({ error: "Reset token has expired" });
+      }
+
+      // Hash della nuova password
+      const { hashPassword } = await import("./auth");
+      const hashedPassword = await hashPassword(newPassword);
+
+      // Aggiorna password e rimuovi token
+      await storage.updateUser(user.id, { password: hashedPassword });
+      await storage.clearResetToken(user.id);
+
+      res.json({ message: "Password reset successfully" });
+    } catch (error) {
+      log(`Error resetting password: ${error}`, "error");
+      res.status(500).json({ error: "Failed to reset password" });
+    }
+  });
+
   // API per aggiornare il profilo utente
   app.patch("/api/user/profile", async (req: Request, res: Response) => {
     if (!req.isAuthenticated()) {

@@ -36,7 +36,9 @@ import {
   Thermometer,
   Edit,
   Save,
-  X
+  X,
+  Lock,
+  Key
 } from "lucide-react";
 import ChatInterface from "@/components/ChatInterface";
 
@@ -60,6 +62,14 @@ function AccountPage() {
     email: user?.email || "",
     dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth).toISOString().split('T')[0] : ""
   });
+
+  // Stato per il cambio password
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: ""
+  });
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
 
   // Carica le prenotazioni dell'utente
   const { data: bookings, isLoading: bookingsLoading } = useQuery<Booking[]>({
@@ -109,6 +119,37 @@ function AccountPage() {
     onError: (error: Error) => {
       toast({
         title: t("account.profile.updateError") || "Errore di aggiornamento",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Mutation per cambiare la password
+  const changePasswordMutation = useMutation({
+    mutationFn: async (data: { currentPassword: string; newPassword: string }) => {
+      const res = await apiRequest("PATCH", "/api/user/change-password", data);
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to change password");
+      }
+      return await res.json();
+    },
+    onSuccess: () => {
+      setPasswordData({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: ""
+      });
+      setIsChangingPassword(false);
+      toast({
+        title: "Password aggiornata",
+        description: "La tua password è stata cambiata con successo.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Errore cambio password",
         description: error.message,
         variant: "destructive",
       });
