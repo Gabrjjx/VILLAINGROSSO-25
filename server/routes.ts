@@ -510,13 +510,14 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
         ? 'https://villaingrosso.com' 
         : `${req.protocol}://${req.get('host')}`;
       
-      const emailContent = createPasswordResetEmail(user.fullName || user.username, token, baseUrl);
+      const emailContent = createPasswordResetEmailHtml(user.fullName || user.username, token, baseUrl);
       
-      const emailSent = await sendEmailBird(
-        email, 
-        "Villa Ingrosso - Reset Password", 
-        emailContent
-      );
+      const emailSent = await sendEmail({
+        to: email,
+        from: "noreply@villaingrosso.com",
+        subject: "Villa Ingrosso - Reset Password",
+        html: emailContent
+      });
 
       if (!emailSent) {
         log("Failed to send reset email via Bird", "error");
