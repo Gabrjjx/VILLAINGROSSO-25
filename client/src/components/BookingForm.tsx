@@ -101,7 +101,7 @@ export default function BookingForm() {
       endDate: addDays(today, 8),
       guestName: "",
       guestCount: 2,
-      totalAmount: 0,
+      totalPrice: 0,
       notes: "",
       status: "pending", // Tutte le nuove prenotazioni vengono create con stato "pending"
     },
@@ -155,7 +155,7 @@ export default function BookingForm() {
       data.startDate = dateRange.from;
       data.endDate = dateRange.to;
       // Importo da definire dopo la conferma
-      data.totalAmount = 0;
+      data.totalPrice = 0;
     }
     
     bookingMutation.mutate(data);

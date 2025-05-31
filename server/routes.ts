@@ -379,7 +379,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 📧 Email: ${user.email}
 📅 Check-in: ${startDate}
 📅 Check-out: ${endDate}
-👥 Ospiti: ${bookingData.guestCount}
+👥 Ospiti: ${bookingData.numberOfGuests}
 
 ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
 
