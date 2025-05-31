@@ -514,11 +514,11 @@ function AccountPage() {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center">
                         <Home className="h-4 w-4 mr-2 text-muted-foreground" />
-                        <span>4 camere da letto</span>
+                        <span>2 camere da letto</span>
                       </div>
                       <div className="flex items-center">
                         <UserIcon className="h-4 w-4 mr-2 text-muted-foreground" />
-                        <span>Fino a 8 ospiti</span>
+                        <span>Fino a 5 ospiti</span>
                       </div>
                     </div>
                     
