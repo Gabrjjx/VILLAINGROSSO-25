@@ -143,7 +143,7 @@ export function setupAuth(app: Express) {
           user.email, 
           'https://villaingrosso.com'
         );
-        await sendEmail(user.email, 'Benvenuto in Villa Ingrosso!', welcomeEmailContent);
+        await sendEmail(user.email, '🏖️ Benvenuto in Villa Ingrosso - La tua casa vacanze in Puglia', welcomeEmailContent);
         console.log(`Welcome email sent to ${user.email}`);
       } catch (emailError) {
         console.error('Failed to send welcome email:', emailError);

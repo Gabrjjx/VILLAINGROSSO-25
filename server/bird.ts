@@ -297,7 +297,7 @@ export async function sendEmail(to: string, subject: string, htmlContent: string
         }
       ],
       content: {
-        from: "noreply@villaingrosso.com",
+        from: "info@villaingrosso.com",
         subject: subject,
         html: htmlContent,
         text: htmlContent.replace(/<[^>]*>/g, '') // Converte HTML in testo
