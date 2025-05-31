@@ -138,9 +138,19 @@ function AdminPage() {
       if (!selectedUser) return [];
       
       try {
-        // Qui dovremmo implementare l'endpoint per i messaggi di chat di un utente specifico
-        // Per ora fingiamo che ci sia un endpoint che restituisce i messaggi di chat di un utente
-        const response = await fetch(`/api/admin/chat-messages/${selectedUser}`);
+        // Usa il token JWT nell'header Authorization
+        const authToken = localStorage.getItem('auth_token');
+        const headers: HeadersInit = {
+          'Content-Type': 'application/json',
+        };
+        
+        if (authToken) {
+          headers['Authorization'] = `Bearer ${authToken}`;
+        }
+        
+        const response = await fetch(`/api/admin/chat-messages/${selectedUser}`, {
+          headers
+        });
         
         if (!response.ok) {
           if (response.status === 404) {
@@ -156,6 +166,7 @@ function AdminPage() {
       }
     },
     enabled: !!selectedUser, // Esegui la query solo quando è selezionato un utente
+    refetchInterval: 3000, // Aggiorna automaticamente ogni 3 secondi
   });
   
   // Scroll al fondo della chat quando arrivano nuovi messaggi
