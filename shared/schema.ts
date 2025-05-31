@@ -10,6 +10,8 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
   fullName: varchar("full_name", { length: 100 }).notNull().default(""),
   email: varchar("email", { length: 100 }).notNull(),
+  dateOfBirth: timestamp("date_of_birth"),
+  privacyAccepted: boolean("privacy_accepted").notNull().default(false),
   isAdmin: boolean("is_admin").notNull().default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -68,7 +70,11 @@ export const chatMessagesRelations = relations(chatMessages, ({ one }) => ({
 }));
 
 // Schemi di inserimento usando Zod
-export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
+export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true }).extend({
+  privacyAccepted: z.boolean().refine(val => val === true, {
+    message: "Devi accettare il trattamento dei dati personali per procedere"
+  })
+});
 export const insertBookingSchema = createInsertSchema(bookings).omit({ id: true, createdAt: true });
 export const insertContactMessageSchema = createInsertSchema(contactMessages).omit({ id: true, createdAt: true, read: true });
 export const insertChatMessageSchema = createInsertSchema(chatMessages).omit({ id: true, createdAt: true });

@@ -30,6 +30,10 @@ const registerSchema = z.object({
   email: z.string().email("Email non valida"),
   password: z.string().min(6, "Password troppo corta"),
   fullName: z.string().min(2, "Nome completo troppo corto"),
+  dateOfBirth: z.string().min(1, "Data di nascita obbligatoria"),
+  privacyAccepted: z.boolean().refine(val => val === true, {
+    message: "Devi accettare il trattamento dei dati personali per procedere"
+  })
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -57,6 +61,8 @@ export default function AuthPage() {
       email: "",
       password: "",
       fullName: "",
+      dateOfBirth: "",
+      privacyAccepted: false,
     },
   });
 
@@ -68,6 +74,7 @@ export default function AuthPage() {
   const handleRegisterSubmit = (data: RegisterFormData) => {
     registerMutation.mutate({
       ...data,
+      dateOfBirth: new Date(data.dateOfBirth),
       isAdmin: false,
     });
   };
