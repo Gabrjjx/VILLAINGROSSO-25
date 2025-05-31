@@ -191,6 +191,50 @@ function AccountPage() {
     setIsEditingProfile(false);
   };
 
+  const handleChangePassword = () => {
+    // Validazione
+    if (!passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
+      toast({
+        title: "Errore di validazione",
+        description: "Compila tutti i campi password.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast({
+        title: "Errore di validazione",
+        description: "Le nuove password non corrispondono.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      toast({
+        title: "Errore di validazione",
+        description: "La nuova password deve essere di almeno 6 caratteri.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    changePasswordMutation.mutate({
+      currentPassword: passwordData.currentPassword,
+      newPassword: passwordData.newPassword
+    });
+  };
+
+  const handleCancelPasswordChange = () => {
+    setPasswordData({
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: ""
+    });
+    setIsChangingPassword(false);
+  };
+
   // Helper per formattare le date in base alla lingua
   const formatDate = (date: string | Date) => {
     const localeObj = language === "it" ? it : enUS;
@@ -283,7 +327,7 @@ function AccountPage() {
       {/* Contenuto principale */}
       <div className="container mx-auto py-8 px-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full md:w-[800px] grid-cols-4">
+          <TabsList className="grid w-full md:w-[900px] grid-cols-5">
             <TabsTrigger value="overview">
               <Home className="h-4 w-4 mr-2" />
               {t("account.tabs.overview") || "Panoramica"}
@@ -291,6 +335,10 @@ function AccountPage() {
             <TabsTrigger value="profile">
               <UserIcon className="h-4 w-4 mr-2" />
               {t("account.tabs.profile")}
+            </TabsTrigger>
+            <TabsTrigger value="security">
+              <Lock className="h-4 w-4 mr-2" />
+              Sicurezza
             </TabsTrigger>
             <TabsTrigger value="bookings">
               <Calendar className="h-4 w-4 mr-2" />
@@ -801,6 +849,116 @@ function AccountPage() {
             </Card>
           </TabsContent>
           
+          {/* Tab sicurezza */}
+          <TabsContent value="security" className="mt-6">
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle className="flex items-center">
+                      <Lock className="h-5 w-5 mr-2 text-primary" />
+                      Sicurezza Account
+                    </CardTitle>
+                    <CardDescription>
+                      Gestisci la sicurezza del tuo account
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {/* Sezione cambio password */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-medium">Password</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Cambia la password del tuo account per mantenerlo sicuro
+                        </p>
+                      </div>
+                      {!isChangingPassword && (
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => setIsChangingPassword(true)}
+                        >
+                          <Key className="h-4 w-4 mr-2" />
+                          Cambia Password
+                        </Button>
+                      )}
+                    </div>
+
+                    {isChangingPassword && (
+                      <div className="space-y-4 p-4 border rounded-lg bg-muted/50">
+                        <div className="space-y-2">
+                          <Label htmlFor="currentPassword">
+                            Password attuale *
+                          </Label>
+                          <Input
+                            id="currentPassword"
+                            type="password"
+                            value={passwordData.currentPassword}
+                            onChange={(e) => setPasswordData(prev => ({ ...prev, currentPassword: e.target.value }))}
+                            placeholder="Inserisci la password attuale"
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="newPassword">
+                            Nuova password *
+                          </Label>
+                          <Input
+                            id="newPassword"
+                            type="password"
+                            value={passwordData.newPassword}
+                            onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                            placeholder="Inserisci la nuova password (min. 6 caratteri)"
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="confirmPassword">
+                            Conferma nuova password *
+                          </Label>
+                          <Input
+                            id="confirmPassword"
+                            type="password"
+                            value={passwordData.confirmPassword}
+                            onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                            placeholder="Conferma la nuova password"
+                          />
+                        </div>
+                        
+                        <div className="flex gap-3 pt-4">
+                          <Button 
+                            onClick={handleChangePassword} 
+                            disabled={changePasswordMutation.isPending}
+                            className="flex-1"
+                          >
+                            {changePasswordMutation.isPending ? (
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            ) : (
+                              <Save className="h-4 w-4 mr-2" />
+                            )}
+                            Aggiorna Password
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            onClick={handleCancelPasswordChange}
+                            disabled={changePasswordMutation.isPending}
+                          >
+                            <X className="h-4 w-4 mr-2" />
+                            Annulla
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           {/* Tab chat */}
           <TabsContent value="chat" className="mt-6">
             <ChatInterface />

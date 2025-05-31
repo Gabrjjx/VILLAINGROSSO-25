@@ -13,6 +13,7 @@ import AccountPage from "@/pages/AccountPage";
 import AdminPage from "@/pages/AdminPage";
 import BookingPage from "@/pages/BookingPage";
 import BookingConfirmation from "@/pages/BookingConfirmation";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import NewsletterModal from "@/components/NewsletterModal";
 import WhatsAppChat from "@/components/WhatsAppChat";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
