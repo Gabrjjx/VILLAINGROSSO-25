@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useAuth } from "@/hooks/use-auth";
@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useLanguage } from "@/context/LanguageContext";
 
 // Definisci gli schemi di validazione
@@ -72,9 +73,10 @@ export default function AuthPage() {
   };
 
   const handleRegisterSubmit = (data: RegisterFormData) => {
+    const { dateOfBirth, ...restData } = data;
     registerMutation.mutate({
-      ...data,
-      dateOfBirth: new Date(data.dateOfBirth),
+      ...restData,
+      dateOfBirth: new Date(dateOfBirth),
       isAdmin: false,
     });
   };
@@ -239,6 +241,46 @@ export default function AuthPage() {
                       {registerForm.formState.errors.password && (
                         <p className="text-sm text-destructive">
                           {registerForm.formState.errors.password.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="reg-dateOfBirth">{t("authPage.register.dateOfBirth") || "Data di nascita"}</Label>
+                      <Input
+                        id="reg-dateOfBirth"
+                        type="date"
+                        {...registerForm.register("dateOfBirth")}
+                      />
+                      {registerForm.formState.errors.dateOfBirth && (
+                        <p className="text-sm text-destructive">
+                          {registerForm.formState.errors.dateOfBirth.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Controller
+                          name="privacyAccepted"
+                          control={registerForm.control}
+                          render={({ field }) => (
+                            <Checkbox 
+                              id="reg-privacyAccepted"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          )}
+                        />
+                        <Label htmlFor="reg-privacyAccepted" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          {t("authPage.register.privacyAccepted") || "Accetto il"}{" "}
+                          <a href="/privacy" className="text-primary hover:underline" target="_blank">
+                            {t("authPage.register.privacyPolicy") || "trattamento dei dati personali"}
+                          </a>{" "}
+                          {t("authPage.register.required") || "*"}
+                        </Label>
+                      </div>
+                      {registerForm.formState.errors.privacyAccepted && (
+                        <p className="text-sm text-destructive">
+                          {registerForm.formState.errors.privacyAccepted.message}
                         </p>
                       )}
                     </div>
