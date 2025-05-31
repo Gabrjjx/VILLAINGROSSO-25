@@ -7,20 +7,53 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Key, CheckCircle, Lock } from "lucide-react";
+import { Loader2, Key, CheckCircle, Lock, Mail, ArrowLeft } from "lucide-react";
 import { useLocation } from "wouter";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function ResetPasswordPage() {
   const { t } = useLanguage();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   
-  const [formData, setFormData] = useState({
+  const [requestFormData, setRequestFormData] = useState({
+    email: ""
+  });
+  
+  const [resetFormData, setResetFormData] = useState({
     token: "",
     newPassword: "",
     confirmPassword: ""
   });
+  
+  const [isEmailSent, setIsEmailSent] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // Mutation per richiedere reset via email
+  const requestResetMutation = useMutation({
+    mutationFn: async (data: { email: string }) => {
+      const res = await apiRequest("POST", "/api/request-password-reset", data);
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Errore nella richiesta di reset");
+      }
+      return res.json();
+    },
+    onSuccess: () => {
+      setIsEmailSent(true);
+      toast({
+        title: "Email inviata",
+        description: "Controlla la tua email per il link di reset della password.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Errore",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   // Mutation per reset password
   const resetPasswordMutation = useMutation({
@@ -52,150 +85,244 @@ export default function ResetPasswordPage() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleRequestSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Validazione
-    if (!formData.token || !formData.newPassword || !formData.confirmPassword) {
+    if (!requestFormData.email) {
       toast({
-        title: "Errore di validazione",
-        description: "Compila tutti i campi richiesti.",
+        title: "Errore",
+        description: "Inserisci un indirizzo email valido",
+        variant: "destructive",
+      });
+      return;
+    }
+    requestResetMutation.mutate({ email: requestFormData.email });
+  };
+
+  const handleResetSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (resetFormData.newPassword !== resetFormData.confirmPassword) {
+      toast({
+        title: "Errore",
+        description: "Le password non corrispondono",
         variant: "destructive",
       });
       return;
     }
 
-    if (formData.newPassword !== formData.confirmPassword) {
+    if (resetFormData.newPassword.length < 6) {
       toast({
-        title: "Errore di validazione",
-        description: "Le password non corrispondono.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (formData.newPassword.length < 6) {
-      toast({
-        title: "Errore di validazione",
-        description: "La password deve essere di almeno 6 caratteri.",
+        title: "Errore", 
+        description: "La password deve essere di almeno 6 caratteri",
         variant: "destructive",
       });
       return;
     }
 
     resetPasswordMutation.mutate({
-      token: formData.token,
-      newPassword: formData.newPassword
+      token: resetFormData.token,
+      newPassword: resetFormData.newPassword
     });
   };
 
+  // Se il reset è completato con successo
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-ocean-50 to-ocean-100 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
-            <div className="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <CheckCircle className="h-6 w-6 text-green-600" />
-            </div>
-            <CardTitle className="text-green-700">Password Reimpostata</CardTitle>
+            <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+            <CardTitle className="text-2xl">Password Reimpostata</CardTitle>
             <CardDescription>
-              La tua password è stata reimpostata con successo. Verrai reindirizzato alla pagina di login...
+              La tua password è stata aggiornata con successo. Sarai reindirizzato alla pagina di login.
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            <Button onClick={() => setLocation("/auth")} className="w-full">
+              Vai al Login
+            </Button>
+          </CardContent>
         </Card>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-            <Key className="h-6 w-6 text-blue-600" />
-          </div>
-          <CardTitle>Reimposta Password</CardTitle>
-          <CardDescription>
-            Inserisci il token di reset fornito dall'amministratore e la tua nuova password
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="token">
-                Token di Reset *
-              </Label>
-              <Input
-                id="token"
-                type="text"
-                value={formData.token}
-                onChange={(e) => setFormData(prev => ({ ...prev, token: e.target.value }))}
-                placeholder="Inserisci il token fornito dall'amministratore"
-                required
-              />
-              <p className="text-xs text-muted-foreground">
-                Il token ti è stato fornito dall'amministratore del sistema
-              </p>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="newPassword">
-                Nuova Password *
-              </Label>
-              <Input
-                id="newPassword"
-                type="password"
-                value={formData.newPassword}
-                onChange={(e) => setFormData(prev => ({ ...prev, newPassword: e.target.value }))}
-                placeholder="Inserisci la nuova password (min. 6 caratteri)"
-                required
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">
-                Conferma Password *
-              </Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                value={formData.confirmPassword}
-                onChange={(e) => setFormData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                placeholder="Conferma la nuova password"
-                required
-              />
-            </div>
-            
-            <Button 
-              type="submit" 
-              className="w-full" 
-              disabled={resetPasswordMutation.isPending}
-            >
-              {resetPasswordMutation.isPending ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Reimpostando...
-                </>
+    <div className="min-h-screen bg-gradient-to-br from-ocean-50 to-ocean-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        {/* Pulsante per tornare indietro */}
+        <Button
+          variant="ghost"
+          className="mb-4"
+          onClick={() => setLocation("/auth")}
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Torna al Login
+        </Button>
+
+        <Tabs defaultValue="request" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="request" className="flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              Richiedi Reset
+            </TabsTrigger>
+            <TabsTrigger value="reset" className="flex items-center gap-2">
+              <Key className="w-4 h-4" />
+              Reimposta Password
+            </TabsTrigger>
+          </TabsList>
+
+          {/* Tab per richiedere reset via email */}
+          <TabsContent value="request">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Mail className="w-5 h-5 text-primary" />
+                  Reset Password via Email
+                </CardTitle>
+                <CardDescription>
+                  Inserisci il tuo indirizzo email per ricevere un link di reset della password.
+                </CardDescription>
+              </CardHeader>
+              
+              {isEmailSent ? (
+                <CardContent className="text-center py-8">
+                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">Email Inviata!</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Controlla la tua casella email per il link di reset della password.
+                  </p>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setIsEmailSent(false)}
+                    className="w-full"
+                  >
+                    Invia di nuovo
+                  </Button>
+                </CardContent>
               ) : (
-                <>
-                  <Lock className="h-4 w-4 mr-2" />
-                  Reimposta Password
-                </>
+                <form onSubmit={handleRequestSubmit}>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="Il tuo indirizzo email"
+                        value={requestFormData.email}
+                        onChange={(e) => setRequestFormData({
+                          ...requestFormData,
+                          email: e.target.value
+                        })}
+                        required
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={requestResetMutation.isPending}
+                    >
+                      {requestResetMutation.isPending ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Invio in corso...
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="mr-2 h-4 w-4" />
+                          Invia Email di Reset
+                        </>
+                      )}
+                    </Button>
+                  </CardContent>
+                </form>
               )}
-            </Button>
-            
-            <div className="text-center">
-              <Button 
-                variant="link" 
-                onClick={() => setLocation("/auth")}
-                disabled={resetPasswordMutation.isPending}
-              >
-                Torna al Login
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+            </Card>
+          </TabsContent>
+
+          {/* Tab per reset con token */}
+          <TabsContent value="reset">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Key className="w-5 h-5 text-primary" />
+                  Reimposta Password
+                </CardTitle>
+                <CardDescription>
+                  Hai ricevuto un token via email? Inseriscilo qui insieme alla nuova password.
+                </CardDescription>
+              </CardHeader>
+              
+              <form onSubmit={handleResetSubmit}>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="token">Token di Reset</Label>
+                    <Input
+                      id="token"
+                      type="text"
+                      placeholder="Inserisci il token ricevuto via email"
+                      value={resetFormData.token}
+                      onChange={(e) => setResetFormData({
+                        ...resetFormData,
+                        token: e.target.value
+                      })}
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="newPassword">Nuova Password</Label>
+                    <Input
+                      id="newPassword"
+                      type="password"
+                      placeholder="Inserisci la nuova password"
+                      value={resetFormData.newPassword}
+                      onChange={(e) => setResetFormData({
+                        ...resetFormData,
+                        newPassword: e.target.value
+                      })}
+                      required
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Conferma Password</Label>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      placeholder="Conferma la nuova password"
+                      value={resetFormData.confirmPassword}
+                      onChange={(e) => setResetFormData({
+                        ...resetFormData,
+                        confirmPassword: e.target.value
+                      })}
+                      required
+                    />
+                  </div>
+                  
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={resetPasswordMutation.isPending}
+                  >
+                    {resetPasswordMutation.isPending ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Reset in corso...
+                      </>
+                    ) : (
+                      <>
+                        <Lock className="mr-2 h-4 w-4" />
+                        Reimposta Password
+                      </>
+                    )}
+                  </Button>
+                </CardContent>
+              </form>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }

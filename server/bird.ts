@@ -1,4 +1,4 @@
-// Bird API integration for WhatsApp and SMS communications
+// Bird API integration for WhatsApp, SMS and Email communications
 import { Request, Response } from 'express';
 
 interface BirdMessagePayload {
@@ -10,6 +10,21 @@ interface BirdMessagePayload {
   body: {
     text: {
       text: string;
+    };
+  };
+  channelId: string;
+}
+
+interface BirdEmailPayload {
+  receiver: {
+    contact: {
+      identifierValue: string;
+    };
+  };
+  body: {
+    email: {
+      subject: string;
+      html: string;
     };
   };
   channelId: string;
