@@ -1,0 +1,597 @@
+{
+	"info": {
+		"_postman_id": "villa-ingrosso-api-collection",
+		"name": "Villa Ingrosso API",
+		"description": "Complete API collection for Villa Ingrosso booking system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"fullName\": \"Test User\",\n  \"phone\": \"+39123456789\",\n  \"dateOfBirth\": \"1990-01-01\",\n  \"privacyAccepted\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.environment.set('jwt_token', response.token || response.user?.token);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"bruno\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "login"]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "logout"]
+						}
+					}
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"Updated Name\",\n  \"phone\": \"+39987654321\",\n  \"dateOfBirth\": \"1985-05-15\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "profile"]
+						}
+					}
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"currentPassword\": \"oldpassword\",\n  \"newPassword\": \"newpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/change-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "change-password"]
+						}
+					}
+				},
+				{
+					"name": "Request Password Reset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/request-password-reset",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "request-password-reset"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Get User Bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings"]
+						}
+					}
+				},
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"guestName\": \"Mario Rossi\",\n  \"guestEmail\": \"mario@example.com\",\n  \"guestPhone\": \"+39123456789\",\n  \"startDate\": \"2024-06-01\",\n  \"endDate\": \"2024-06-07\",\n  \"numberOfGuests\": 2,\n  \"totalPrice\": 500.00,\n  \"notes\": \"Test booking from Postman\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "bookings"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "users"]
+						}
+					}
+				},
+				{
+					"name": "Get All Bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/bookings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "bookings"]
+						}
+					}
+				},
+				{
+					"name": "Create Manual Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"guestName\": \"Giuseppe Verdi\",\n  \"guestEmail\": \"giuseppe@example.com\",\n  \"guestPhone\": \"+39333444555\",\n  \"startDate\": \"2024-07-01\",\n  \"endDate\": \"2024-07-10\",\n  \"numberOfGuests\": 4,\n  \"totalPrice\": 800.00,\n  \"status\": \"confirmed\",\n  \"source\": \"phone\",\n  \"notes\": \"Prenotazione telefonica\",\n  \"userId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/manual-booking",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "manual-booking"]
+						}
+					}
+				},
+				{
+					"name": "Create Manual User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"newguest\",\n  \"email\": \"newguest@example.com\",\n  \"fullName\": \"Nuovo Ospite\",\n  \"phone\": \"+39111222333\",\n  \"dateOfBirth\": \"1985-03-15\",\n  \"password\": \"TempPassword123\",\n  \"notes\": \"Creato dall'admin\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/manual-user",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "manual-user"]
+						}
+					}
+				},
+				{
+					"name": "Update Booking Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"confirmed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/bookings/1/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "bookings", "1", "status"]
+						}
+					}
+				},
+				{
+					"name": "Delete Booking",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/bookings/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "bookings", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Contact & Chat",
+			"item": [
+				{
+					"name": "Submit Contact Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Luca Bianchi\",\n  \"email\": \"luca@example.com\",\n  \"message\": \"Vorrei informazioni sulla disponibilità per agosto.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/contact",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "contact"]
+						}
+					}
+				},
+				{
+					"name": "Get Chat Messages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/chat-messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "chat-messages"]
+						}
+					}
+				},
+				{
+					"name": "Send Chat Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Ciao, ho una domanda sulla mia prenotazione.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/chat-messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "chat-messages"]
+						}
+					}
+				},
+				{
+					"name": "Get Contact Messages (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/messages",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "admin", "messages"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Email Services",
+			"item": [
+				{
+					"name": "Send Booking Confirmation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"guestEmail\": \"guest@example.com\",\n  \"guestName\": \"Mario Rossi\",\n  \"checkIn\": \"2024-06-01\",\n  \"checkOut\": \"2024-06-07\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/send-booking-confirmation",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "send-booking-confirmation"]
+						}
+					}
+				},
+				{
+					"name": "Test Bird Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"to\": \"test@example.com\",\n  \"subject\": \"Test Email\",\n  \"htmlContent\": \"<h1>Test Email from Villa Ingrosso</h1><p>This is a test email sent via Bird API.</p>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/test-bird-email",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "test-bird-email"]
+						}
+					}
+				},
+				{
+					"name": "Newsletter Subscribe",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"subscriber@example.com\",\n  \"firstName\": \"Marco\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/newsletter/subscribe",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "newsletter", "subscribe"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SMS/WhatsApp",
+			"item": [
+				{
+					"name": "Send SMS",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phoneNumber\": \"+39123456789\",\n  \"message\": \"Benvenuto alla Villa Ingrosso! Il check-in è previsto per domani alle 15:00.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/send-sms",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "send-sms"]
+						}
+					}
+				},
+				{
+					"name": "Send Booking WhatsApp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phoneNumber\": \"+39123456789\",\n  \"guestName\": \"Mario Rossi\",\n  \"checkIn\": \"2024-06-01\",\n  \"checkOut\": \"2024-06-07\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/send-booking-whatsapp",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "send-booking-whatsapp"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://35683667-e27b-4a35-9b6b-cd2b453f9995-00-1q7kecmao3gy.worf.replit.dev",
+			"type": "string"
+		}
+	]
+}
