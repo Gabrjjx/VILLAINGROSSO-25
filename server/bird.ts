@@ -291,7 +291,7 @@ export async function sendEmail(to: string, subject: string, htmlContent: string
           html: htmlContent
         }
       },
-      channelId: "email" // Channel ID per email tramite Bird
+      channelId: "c950566b-ade4-5812-9d83-9c4fe7a04e24" // Channel ID per email tramite Bird
     };
 
     const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/messages`, {
