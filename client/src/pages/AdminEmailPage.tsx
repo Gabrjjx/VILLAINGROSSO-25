@@ -578,7 +578,7 @@ export default function AdminEmailPage() {
                     <Button 
                       size="sm" 
                       variant="outline" 
-                      onClick={() => setSelectedUsers(users.map(u => u.id.toString()))}
+                      onClick={() => setSelectedUsers(users.map((u: User) => u.id.toString()))}
                     >
                       Seleziona Tutti
                     </Button>
