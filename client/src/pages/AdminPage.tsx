@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/context/LanguageContext";
+import { useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "../lib/queryClient";
 import { Booking, ContactMessage, User, ChatMessage } from "@shared/schema";
@@ -17,7 +18,7 @@ import {
   MoreHorizontal, Home, Users, MessageCircle, Send, 
   CircleUser, Settings, Bell, ChevronRight,
   CalendarDays, Smartphone, Map, ArrowUp, ArrowDown,
-  ArrowUpRight, Eye, CheckCircle, XCircle, Clock
+  ArrowUpRight, Eye, CheckCircle, XCircle, Clock, Plus
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -610,13 +611,21 @@ function AdminPage() {
                     </p>
                   </div>
                   <div className="flex gap-2 mt-4 md:mt-0">
-                    <Button variant="outline" size="sm">
-                      <CalendarDays className="h-4 w-4 mr-2" />
-                      {language === 'it' ? 'Ultimo mese' : 'Last month'}
+                    <Button 
+                      variant="default" 
+                      size="sm"
+                      onClick={() => window.location.href = '/admin/booking'}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      {language === 'it' ? 'Nuova Prenotazione' : 'New Booking'}
                     </Button>
-                    <Button variant="outline" size="sm">
-                      <Settings className="h-4 w-4 mr-2" />
-                      {language === 'it' ? 'Impostazioni' : 'Settings'}
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => window.location.href = '/admin/email'}
+                    >
+                      <Mail className="h-4 w-4 mr-2" />
+                      {language === 'it' ? 'Invia Email' : 'Send Email'}
                     </Button>
                   </div>
                 </div>
