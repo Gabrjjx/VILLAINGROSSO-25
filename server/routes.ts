@@ -556,6 +556,38 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
   });
 
+  // Test endpoint per verificare invio email Bird
+  app.post("/api/test-bird-email", async (req: Request, res: Response) => {
+    try {
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+
+      const testContent = `
+        <h1>Test Email da Villa Ingrosso</h1>
+        <p>Questo è un test di invio email tramite Bird API.</p>
+        <p>Se ricevi questa email, il sistema funziona correttamente.</p>
+      `;
+
+      const emailSent = await sendEmailBird(
+        email,
+        "Test Email - Villa Ingrosso",
+        testContent
+      );
+
+      if (emailSent) {
+        res.json({ message: "Test email sent successfully via Bird" });
+      } else {
+        res.status(500).json({ error: "Failed to send test email via Bird" });
+      }
+    } catch (error) {
+      log(`Error sending test email: ${error}`, "error");
+      res.status(500).json({ error: "Failed to send test email" });
+    }
+  });
+
   // API per reset password diretto (senza token)
   app.post("/api/reset-password-direct", async (req: Request, res: Response) => {
     try {
