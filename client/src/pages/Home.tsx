@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/context/LanguageContext";
 import { Bed, Waves, Wifi } from "lucide-react";
 import { Link } from "wouter";
+import { RegistrationIncentiveCard } from "@/components/RegistrationIncentive";
 
 export default function Home() {
   const { language, t } = useLanguage();
@@ -139,13 +140,18 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="text-center mt-12">
-            <Link
-              to="/about"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 transition-colors duration-300"
-            >
-              {t("homePage.cta")}
-            </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mt-12">
+            <div className="lg:col-span-3 text-center">
+              <Link
+                to="/about"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 transition-colors duration-300"
+              >
+                {t("homePage.cta")}
+              </Link>
+            </div>
+            <div className="lg:col-span-1">
+              <RegistrationIncentiveCard />
+            </div>
           </div>
         </div>
       </section>

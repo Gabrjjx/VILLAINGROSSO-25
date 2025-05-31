@@ -29,6 +29,7 @@ import SoundToggle from "@/components/SoundToggle";
 // Importazione componenti di Google Analytics
 import GoogleAnalyticsDebug from "./components/GoogleAnalyticsDebug";
 import GoogleAnalyticsSetup from "./components/GoogleAnalyticsSetup";
+import { RegistrationIncentiveBanner, RegistrationIncentivePopup } from "@/components/RegistrationIncentive";
 
 function Router() {
   return (
@@ -62,7 +63,9 @@ function App() {
         <LoadingProvider>
           <WaveLoaderWithContext />
           <SoundToggle />
+          <RegistrationIncentiveBanner />
           <Router />
+          <RegistrationIncentivePopup />
           <NewsletterModal />
           <WhatsAppChat />
           <Toaster />
