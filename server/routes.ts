@@ -412,11 +412,17 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
       }
 
       // Aggiorna l'utente
-      const updatedUser = await storage.updateUser(userId, {
+      const updateData: any = {
         fullName,
-        email,
-        dateOfBirth
-      });
+        email
+      };
+
+      // Aggiungi la data di nascita solo se è fornita e valida
+      if (dateOfBirth && dateOfBirth.trim() !== "") {
+        updateData.dateOfBirth = new Date(dateOfBirth);
+      }
+
+      const updatedUser = await storage.updateUser(userId, updateData);
 
       if (!updatedUser) {
         return res.status(404).json({ error: "User not found" });
