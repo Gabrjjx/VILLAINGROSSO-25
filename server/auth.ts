@@ -150,6 +150,19 @@ export function setupAuth(app: Express) {
         // Non blocchiamo la registrazione se l'email fallisce
       }
 
+      // Invia notifica di nuova registrazione all'admin
+      try {
+        const { sendNewUserNotificationEmail } = await import('./bird');
+        await sendNewUserNotificationEmail(
+          user.fullName || user.username,
+          user.email
+        );
+        console.log(`Admin notification email sent for new user: ${user.email}`);
+      } catch (adminEmailError) {
+        console.error('Failed to send admin notification email:', adminEmailError);
+        // Non blocchiamo la registrazione se l'email di notifica fallisce
+      }
+
       // Autenticazione automatica dopo la registrazione
       req.login(user, (err) => {
         if (err) return next(err);

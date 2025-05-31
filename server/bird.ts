@@ -775,6 +775,122 @@ export function createWelcomeEmailWithPassword(userName: string, userEmail: stri
 }
 
 // Funzione per inviare email di benvenuto con password
+// Funzione per creare email di notifica nuova registrazione per admin
+export function createNewUserNotificationEmail(userName: string, userEmail: string, registrationDate: string): string {
+  return `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuova Registrazione - Villa Ingrosso</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #2c3e50;
+            background: #f8fafc;
+            padding: 20px;
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .content { 
+            padding: 30px;
+        }
+        .user-info {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .footer { 
+            background: #f1f3f4;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        .highlight {
+            color: #667eea;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>🎉 Nuova Registrazione</h1>
+            <p>Un nuovo utente si è registrato su Villa Ingrosso</p>
+        </div>
+        
+        <div class="content">
+            <p>Ciao Giuseppe,</p>
+            
+            <p>Ti informiamo che un nuovo utente si è appena registrato sulla piattaforma di Villa Ingrosso.</p>
+            
+            <div class="user-info">
+                <h3>📋 Dettagli Utente:</h3>
+                <p><strong>Nome:</strong> <span class="highlight">${userName}</span></p>
+                <p><strong>Email:</strong> <span class="highlight">${userEmail}</span></p>
+                <p><strong>Data registrazione:</strong> <span class="highlight">${registrationDate}</span></p>
+            </div>
+            
+            <p>Il nuovo utente può ora:</p>
+            <ul>
+                <li>✅ Effettuare prenotazioni online</li>
+                <li>✅ Accedere al pannello utente</li>
+                <li>✅ Ricevere comunicazioni personalizzate</li>
+                <li>✅ Utilizzare la chat di assistenza</li>
+            </ul>
+            
+            <p>Puoi gestire tutti gli utenti dal <a href="https://villaingrosso.com/admin" style="color: #667eea;">pannello amministrativo</a>.</p>
+            
+            <p>Cordiali saluti,<br>
+            <strong>Sistema Villa Ingrosso</strong></p>
+        </div>
+        
+        <div class="footer">
+            <p>Villa Ingrosso - Leporano Marina, Puglia</p>
+            <p>🌐 <a href="https://villaingrosso.com">villaingrosso.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
+  `;
+}
+
+// Funzione per inviare notifica di nuova registrazione all'admin
+export async function sendNewUserNotificationEmail(userName: string, userEmail: string): Promise<boolean> {
+  const registrationDate = new Date().toLocaleDateString('it-IT', {
+    year: 'numeric',
+    month: 'long', 
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  
+  const htmlContent = createNewUserNotificationEmail(userName, userEmail, registrationDate);
+  
+  return await sendEmail(
+    'g.ingrosso@gabhub.it', 
+    '🎉 Nuova Registrazione su Villa Ingrosso', 
+    htmlContent
+  );
+}
+
 export async function sendWelcomeEmail(userEmail: string, userName: string, password: string): Promise<boolean> {
   const baseUrl = process.env.REPL_SLUG ? `https://${process.env.REPL_SLUG}.replit.app` : 'http://localhost:5000';
   const htmlContent = createWelcomeEmailWithPassword(userName, userEmail, password, baseUrl);
