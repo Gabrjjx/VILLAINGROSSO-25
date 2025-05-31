@@ -364,9 +364,20 @@ export default {
     welcome: "Benvenuto nell'area personale",
     logout: "Esci",
     tabs: {
+      overview: "Panoramica",
       profile: "Profilo",
       bookings: "Prenotazioni",
       chat: "Chat"
+    },
+    overview: {
+      totalBookings: "Prenotazioni Totali",
+      upcomingBookings: "Prossime",
+      currentBookings: "In Corso",
+      completedBookings: "Completate",
+      currentStay: "Soggiorno Attuale",
+      nextStay: "Prossimo Soggiorno",
+      noUpcomingBookings: "Nessuna prenotazione in programma",
+      villaInfo: "Villa Ingrosso"
     },
     profile: {
       title: "Il tuo profilo",
@@ -377,6 +388,14 @@ export default {
       accountType: "Tipo di account",
       admin: "Amministratore",
       user: "Utente",
+      edit: "Modifica",
+      save: "Salva modifiche",
+      cancel: "Annulla",
+      updateSuccess: "Profilo aggiornato",
+      updateSuccessMessage: "Le tue informazioni sono state aggiornate con successo.",
+      updateError: "Errore di aggiornamento",
+      validationError: "Errore di validazione",
+      fillAllFields: "Compila tutti i campi obbligatori."
     },
     bookings: {
       title: "Le tue prenotazioni",

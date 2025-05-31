@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/context/LanguageContext";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "../lib/queryClient";
 import { Booking } from "@shared/schema";
 import { format, addDays, differenceInDays, isPast, isFuture, isToday } from "date-fns";
@@ -11,6 +11,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { 
@@ -31,7 +33,10 @@ import {
   Sun,
   Cloud,
   CloudRain,
-  Thermometer
+  Thermometer,
+  Edit,
+  Save,
+  X
 } from "lucide-react";
 import ChatInterface from "@/components/ChatInterface";
 
@@ -47,7 +52,13 @@ function AccountPage() {
   const { t, language } = useLanguage();
   const { user, logoutMutation } = useAuth();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState("overview");
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [profileData, setProfileData] = useState({
+    fullName: user?.fullName || "",
+    email: user?.email || ""
+  });
 
   // Carica le prenotazioni dell'utente
   const { data: bookings, isLoading: bookingsLoading } = useQuery<Booking[]>({
@@ -71,8 +82,65 @@ function AccountPage() {
     },
   });
 
+  // Mutation per aggiornare il profilo
+  const updateProfileMutation = useMutation({
+    mutationFn: async (data: { fullName: string; email: string }) => {
+      const res = await apiRequest("PATCH", "/api/user/profile", data);
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to update profile");
+      }
+      return await res.json();
+    },
+    onSuccess: (updatedUser) => {
+      // Aggiorna i dati dell'utente nella cache
+      queryClient.setQueryData(["/api/user"], updatedUser);
+      setIsEditingProfile(false);
+      toast({
+        title: t("account.profile.updateSuccess") || "Profilo aggiornato",
+        description: t("account.profile.updateSuccessMessage") || "Le tue informazioni sono state aggiornate con successo.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: t("account.profile.updateError") || "Errore di aggiornamento",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleLogout = () => {
     logoutMutation.mutate();
+  };
+
+  const handleEditProfile = () => {
+    setProfileData({
+      fullName: user?.fullName || "",
+      email: user?.email || ""
+    });
+    setIsEditingProfile(true);
+  };
+
+  const handleSaveProfile = () => {
+    if (!profileData.fullName.trim() || !profileData.email.trim()) {
+      toast({
+        title: t("account.profile.validationError") || "Errore di validazione",
+        description: t("account.profile.fillAllFields") || "Compila tutti i campi obbligatori.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    updateProfileMutation.mutate(profileData);
+  };
+
+  const handleCancelEdit = () => {
+    setProfileData({
+      fullName: user?.fullName || "",
+      email: user?.email || ""
+    });
+    setIsEditingProfile(false);
   };
 
   // Helper per formattare le date in base alla lingua
@@ -377,32 +445,151 @@ function AccountPage() {
           <TabsContent value="profile" className="mt-6">
             <Card>
               <CardHeader>
-                <CardTitle>{t("account.profile.title")}</CardTitle>
-                <CardDescription>{t("account.profile.description")}</CardDescription>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle className="flex items-center">
+                      <UserIcon className="h-5 w-5 mr-2 text-primary" />
+                      {t("account.profile.title") || "Il tuo profilo"}
+                    </CardTitle>
+                    <CardDescription>
+                      {t("account.profile.description") || "Visualizza e modifica le informazioni del tuo account"}
+                    </CardDescription>
+                  </div>
+                  {!isEditingProfile && (
+                    <Button variant="outline" size="sm" onClick={handleEditProfile}>
+                      <Edit className="h-4 w-4 mr-2" />
+                      {t("account.profile.edit") || "Modifica"}
+                    </Button>
+                  )}
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <div className="text-sm text-muted-foreground">{t("account.profile.fullName")}</div>
-                      <div className="font-medium">{user.fullName}</div>
+                {isEditingProfile ? (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="fullName">
+                          {t("account.profile.fullName") || "Nome completo"} *
+                        </Label>
+                        <Input
+                          id="fullName"
+                          value={profileData.fullName}
+                          onChange={(e) => setProfileData(prev => ({ ...prev, fullName: e.target.value }))}
+                          placeholder="Inserisci il tuo nome completo"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="username">
+                          {t("account.profile.username") || "Nome utente"}
+                        </Label>
+                        <Input
+                          id="username"
+                          value={user.username}
+                          disabled
+                          className="bg-muted"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Il nome utente non può essere modificato
+                        </p>
+                      </div>
                     </div>
-                    <div className="space-y-1">
-                      <div className="text-sm text-muted-foreground">{t("account.profile.username")}</div>
-                      <div className="font-medium">{user.username}</div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="email">
+                        {t("account.profile.email") || "Email"} *
+                      </Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={profileData.email}
+                        onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
+                        placeholder="Inserisci la tua email"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label>{t("account.profile.accountType") || "Tipo di account"}</Label>
+                      <div className="p-3 bg-muted rounded-md">
+                        <Badge variant={user.isAdmin ? "default" : "secondary"}>
+                          {user.isAdmin ? (t("account.profile.admin") || "Amministratore") : (t("account.profile.user") || "Utente")}
+                        </Badge>
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3 pt-4">
+                      <Button 
+                        onClick={handleSaveProfile} 
+                        disabled={updateProfileMutation.isPending}
+                        className="flex-1"
+                      >
+                        {updateProfileMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          <Save className="h-4 w-4 mr-2" />
+                        )}
+                        {t("account.profile.save") || "Salva modifiche"}
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        onClick={handleCancelEdit}
+                        disabled={updateProfileMutation.isPending}
+                      >
+                        <X className="h-4 w-4 mr-2" />
+                        {t("account.profile.cancel") || "Annulla"}
+                      </Button>
                     </div>
                   </div>
-                  <div className="space-y-1">
-                    <div className="text-sm text-muted-foreground">{t("account.profile.email")}</div>
-                    <div className="font-medium">{user.email}</div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-sm text-muted-foreground">{t("account.profile.accountType")}</div>
-                    <div className="font-medium">
-                      {user.isAdmin ? t("account.profile.admin") : t("account.profile.user")}
+                ) : (
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-3">
+                          <UserIcon className="h-5 w-5 text-muted-foreground" />
+                          <div>
+                            <div className="text-sm text-muted-foreground">{t("account.profile.fullName")}</div>
+                            <div className="font-medium">{user.fullName}</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <UserIcon className="h-5 w-5 text-muted-foreground" />
+                          <div>
+                            <div className="text-sm text-muted-foreground">{t("account.profile.username")}</div>
+                            <div className="font-medium">{user.username}</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-3">
+                          <Mail className="h-5 w-5 text-muted-foreground" />
+                          <div>
+                            <div className="text-sm text-muted-foreground">{t("account.profile.email")}</div>
+                            <div className="font-medium">{user.email}</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <CheckCircle className="h-5 w-5 text-muted-foreground" />
+                          <div>
+                            <div className="text-sm text-muted-foreground">{t("account.profile.accountType")}</div>
+                            <Badge variant={user.isAdmin ? "default" : "secondary"}>
+                              {user.isAdmin ? t("account.profile.admin") : t("account.profile.user")}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-primary/10 rounded-lg">
+                      <h4 className="font-semibold mb-2 flex items-center">
+                        <CheckCircle className="h-5 w-5 mr-2 text-primary" />
+                        Account verificato
+                      </h4>
+                      <p className="text-sm text-muted-foreground">
+                        Il tuo account è attivo e verificato. Puoi effettuare prenotazioni e utilizzare tutti i servizi di Villa Ingrosso.
+                      </p>
                     </div>
                   </div>
-                </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>

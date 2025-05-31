@@ -388,6 +388,48 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
   });
 
+  // API per aggiornare il profilo utente
+  app.patch("/api/user/profile", async (req: Request, res: Response) => {
+    if (!req.isAuthenticated()) {
+      return res.sendStatus(401);
+    }
+
+    try {
+      const { fullName, email } = req.body;
+      const userId = req.user!.id;
+
+      // Validazione dei dati
+      if (!fullName || !email) {
+        return res.status(400).json({ error: "Full name and email are required" });
+      }
+
+      // Verifica che l'email non sia già in uso da un altro utente
+      if (email !== req.user!.email) {
+        const existingUser = await storage.getUserByEmail(email);
+        if (existingUser && existingUser.id !== userId) {
+          return res.status(400).json({ error: "Email already in use" });
+        }
+      }
+
+      // Aggiorna l'utente
+      const updatedUser = await storage.updateUser(userId, {
+        fullName,
+        email
+      });
+
+      if (!updatedUser) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      // Rimuovi la password dalla risposta
+      const { password, ...userWithoutPassword } = updatedUser;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      log(`Error updating user profile: ${error}`, "error");
+      res.status(500).json({ error: "Failed to update profile" });
+    }
+  });
+
   // API per gli amministratori
   app.get("/api/admin/users", async (req: Request, res: Response) => {
     // La verifica dei permessi avviene nel middleware /api/admin in auth.ts
