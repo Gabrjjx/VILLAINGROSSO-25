@@ -45,6 +45,7 @@ function Router() {
       <Route path="/account" component={AccountPage} />
       <Route path="/admin" component={AdminPage} />
       <Route path="/admin/email" component={AdminEmailPage} />
+      <Route path="/admin/booking" component={AdminBookingForm} />
       <Route path="/booking" component={BookingPage} />
       <Route path="/booking-confirmation" component={BookingConfirmation} />
       <Route path="/reset-password" component={SimpleResetPasswordPage} />

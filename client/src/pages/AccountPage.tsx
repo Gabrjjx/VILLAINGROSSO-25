@@ -773,7 +773,7 @@ function AccountPage() {
                                   <UserIcon className="h-4 w-4 text-muted-foreground" />
                                   <div>
                                     <p className="text-xs text-muted-foreground">Ospiti</p>
-                                    <p className="text-sm font-medium">{booking.guestCount}</p>
+                                    <p className="text-sm font-medium">{booking.numberOfGuests}</p>
                                   </div>
                                 </div>
                                 

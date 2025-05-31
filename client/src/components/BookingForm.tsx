@@ -260,7 +260,7 @@ export default function BookingForm() {
             {/* Numero di ospiti */}
             <FormField
               control={form.control}
-              name="guestCount"
+              name="numberOfGuests"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("booking.guestCount")}</FormLabel>
