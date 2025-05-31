@@ -512,6 +512,14 @@ function AdminPage() {
                   <Send className="h-5 w-5 mr-3" />
                   Email e SMS
                 </button>
+                
+                <a
+                  href="/admin/email"
+                  className="w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+                >
+                  <Mail className="h-5 w-5 mr-3" />
+                  Email Personalizzate
+                </a>
               </nav>
             </div>
             

@@ -11,6 +11,7 @@ import Privacy from "@/pages/Privacy";
 import AuthPage from "@/pages/AuthPage";
 import AccountPage from "@/pages/AccountPage";
 import AdminPage from "@/pages/AdminPage";
+import AdminEmailPage from "@/pages/AdminEmailPage";
 import BookingPage from "@/pages/BookingPage";
 import BookingConfirmation from "@/pages/BookingConfirmation";
 import SimpleResetPasswordPage from "@/pages/SimpleResetPasswordPage";
@@ -42,6 +43,7 @@ function Router() {
       <Route path="/auth" component={AuthPage} />
       <Route path="/account" component={AccountPage} />
       <Route path="/admin" component={AdminPage} />
+      <Route path="/admin/email" component={AdminEmailPage} />
       <Route path="/booking" component={BookingPage} />
       <Route path="/booking-confirmation" component={BookingConfirmation} />
       <Route path="/reset-password" component={SimpleResetPasswordPage} />

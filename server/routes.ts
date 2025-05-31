@@ -400,6 +400,108 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
   });
 
+  // Invio email personalizzate da admin (usando Bird API)
+  app.post("/api/admin/send-custom-email", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { email, name, subject, content } = req.body;
+      
+      if (!email || !subject || !content) {
+        return res.status(400).json({ error: "Email, subject and content are required" });
+      }
+
+      // Usa Bird API per inviare email personalizzata
+      const { sendEmail } = await import('./bird');
+      
+      // Converti il contenuto in HTML semplice mantenendo i line breaks
+      const htmlContent = `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${subject}</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #2c3e50;
+            background: #f8fafc;
+            padding: 20px;
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #1976d2 0%, #0288d1 100%); 
+            color: white; 
+            padding: 30px; 
+            text-align: center;
+        }
+        .logo { 
+            font-size: 24px; 
+            font-weight: bold; 
+            margin-bottom: 5px;
+        }
+        .content { 
+            padding: 30px; 
+            background: white;
+        }
+        .message { 
+            font-size: 16px; 
+            line-height: 1.8;
+            color: #555;
+            white-space: pre-wrap;
+        }
+        .footer { 
+            background: #37474f;
+            color: #b0bec5;
+            text-align: center; 
+            padding: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="logo">🏖️ Villa Ingrosso</div>
+            <div>La tua casa vacanze in Puglia</div>
+        </div>
+        
+        <div class="content">
+            <div class="message">${content}</div>
+        </div>
+        
+        <div class="footer">
+            Villa Ingrosso - Leporano Marina, Puglia<br>
+            📧 info@villaingrosso.com | 🌐 villaingrosso.com
+        </div>
+    </div>
+</body>
+</html>`;
+      
+      const success = await sendEmail(email, subject, htmlContent);
+      
+      if (success) {
+        res.json({ success: true, message: "Custom email sent successfully via Bird API" });
+      } else {
+        res.status(500).json({ success: false, message: "Failed to send custom email via Bird API" });
+      }
+    } catch (error) {
+      console.error("Error sending custom email:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
   // API per cambiare la password (utente autenticato)
   app.patch("/api/user/change-password", async (req: Request, res: Response) => {
     if (!req.isAuthenticated()) {
