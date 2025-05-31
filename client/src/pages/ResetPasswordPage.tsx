@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../lib/queryClient";
@@ -28,6 +28,21 @@ export default function ResetPasswordPage() {
   
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [activeTab, setActiveTab] = useState<"request" | "reset">("request");
+
+  // Rileva token dall'URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get('token');
+    
+    if (tokenFromUrl) {
+      setResetFormData(prev => ({
+        ...prev,
+        token: tokenFromUrl
+      }));
+      setActiveTab("reset");
+    }
+  }, []);
 
   // Mutation per richiedere reset via email
   const requestResetMutation = useMutation({
@@ -160,7 +175,7 @@ export default function ResetPasswordPage() {
           Torna al Login
         </Button>
 
-        <Tabs defaultValue="request" className="w-full">
+        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "request" | "reset")} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="request" className="flex items-center gap-2">
               <Mail className="w-4 h-4" />

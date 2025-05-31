@@ -13,6 +13,10 @@ import {
   sendNewsletter,
   sendSMS
 } from "./sendgrid";
+import { 
+  sendEmail as sendEmailBird, 
+  createPasswordResetEmail 
+} from "./bird";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Middleware già configurati nel file index.ts
@@ -471,6 +475,58 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     } catch (error) {
       log(`Error generating reset token: ${error}`, "error");
       res.status(500).json({ error: "Failed to generate reset token" });
+    }
+  });
+
+  // API per richiedere reset password via email
+  app.post("/api/request-password-reset", async (req: Request, res: Response) => {
+    try {
+      const { email } = req.body;
+
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+
+      // Trova utente per email
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        // Non rivelare se l'email esiste o no per sicurezza
+        return res.json({ message: "If the email exists, a reset link has been sent" });
+      }
+
+      // Genera token casuale
+      const { randomBytes } = await import("crypto");
+      const token = randomBytes(32).toString("hex");
+      
+      // Imposta scadenza a 1 ora
+      const expiry = new Date();
+      expiry.setHours(expiry.getHours() + 1);
+
+      // Salva il token
+      await storage.setResetToken(email, token, expiry);
+
+      // Invia email con token
+      const baseUrl = process.env.NODE_ENV === 'production' 
+        ? 'https://villaingrosso.com' 
+        : `${req.protocol}://${req.get('host')}`;
+      
+      const emailContent = createPasswordResetEmail(user.fullName || user.username, token, baseUrl);
+      
+      const emailSent = await sendEmailBird(
+        email, 
+        "Villa Ingrosso - Reset Password", 
+        emailContent
+      );
+
+      if (!emailSent) {
+        log("Failed to send reset email via Bird", "error");
+        return res.status(500).json({ error: "Failed to send reset email" });
+      }
+
+      res.json({ message: "Reset email sent successfully" });
+    } catch (error) {
+      log(`Error requesting password reset: ${error}`, "error");
+      res.status(500).json({ error: "Failed to process reset request" });
     }
   });
 

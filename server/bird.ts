@@ -270,3 +270,115 @@ Check-in: ${checkIn}
 
 Controlla il pannello admin.`;
 }
+
+// Funzione per inviare email tramite Bird API
+export async function sendEmail(to: string, subject: string, htmlContent: string): Promise<boolean> {
+  if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID) {
+    console.error('Bird API not configured properly');
+    return false;
+  }
+
+  try {
+    const payload: BirdEmailPayload = {
+      receiver: {
+        contact: {
+          identifierValue: to
+        }
+      },
+      body: {
+        email: {
+          subject: subject,
+          html: htmlContent
+        }
+      },
+      channelId: "email" // Channel ID per email tramite Bird
+    };
+
+    const response = await fetch(`${BIRD_API_URL}/workspaces/${BIRD_WORKSPACE_ID}/messages`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `AccessKey ${BIRD_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      console.log('Email inviata con successo tramite Bird:', to);
+      return true;
+    } else {
+      const error = await response.text();
+      console.error('Errore invio email Bird:', error);
+      return false;
+    }
+  } catch (error) {
+    console.error('Errore invio email Bird:', error);
+    return false;
+  }
+}
+
+// Template per email di reset password
+export function createPasswordResetEmail(userName: string, resetToken: string, baseUrl: string): string {
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password - Villa Ingrosso</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #0ea5e9, #06b6d4); color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+        .content { background: #f8fafc; padding: 30px; border-radius: 0 0 8px 8px; }
+        .button { display: inline-block; background: #0ea5e9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 20px 0; }
+        .token-box { background: #e2e8f0; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 18px; text-align: center; margin: 20px 0; }
+        .footer { text-align: center; color: #64748b; font-size: 14px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏖️ Villa Ingrosso</h1>
+            <h2>Reset Password</h2>
+        </div>
+        <div class="content">
+            <p>Ciao ${userName},</p>
+            
+            <p>Hai richiesto di reimpostare la password per il tuo account Villa Ingrosso.</p>
+            
+            <p>Usa il seguente token per reimpostare la tua password:</p>
+            
+            <div class="token-box">
+                <strong>${resetToken}</strong>
+            </div>
+            
+            <p>Oppure clicca sul pulsante qui sotto per andare direttamente alla pagina di reset:</p>
+            
+            <p style="text-align: center;">
+                <a href="${baseUrl}/reset-password?token=${resetToken}" class="button">
+                    Reimposta Password
+                </a>
+            </p>
+            
+            <p><strong>Importante:</strong></p>
+            <ul>
+                <li>Questo token è valido per 1 ora</li>
+                <li>Se non hai richiesto questo reset, ignora questa email</li>
+                <li>Per sicurezza, non condividere questo token con nessuno</li>
+            </ul>
+            
+            <p>Grazie per aver scelto Villa Ingrosso!</p>
+            
+            <p>Il Team di Villa Ingrosso<br>
+            📍 Leporano Marina, Puglia<br>
+            🌊 A 300m dal mare cristallino</p>
+        </div>
+        <div class="footer">
+            <p>Questa email è stata inviata automaticamente. Non rispondere a questa email.</p>
+        </div>
+    </div>
+</body>
+</html>
+  `;
+}
