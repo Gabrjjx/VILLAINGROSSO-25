@@ -318,7 +318,7 @@ export async function sendEmail(to: string, subject: string, htmlContent: string
 }
 
 // Template per email di reset password
-export function createPasswordResetEmail(userName: string, resetToken: string, baseUrl: string): string {
+export function createPasswordResetEmail(userName: string, baseUrl: string): string {
   return `
 <!DOCTYPE html>
 <html>
@@ -331,8 +331,7 @@ export function createPasswordResetEmail(userName: string, resetToken: string, b
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         .header { background: linear-gradient(135deg, #0ea5e9, #06b6d4); color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
         .content { background: #f8fafc; padding: 30px; border-radius: 0 0 8px 8px; }
-        .button { display: inline-block; background: #0ea5e9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 20px 0; }
-        .token-box { background: #e2e8f0; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 18px; text-align: center; margin: 20px 0; }
+        .button { display: inline-block; background: #0ea5e9; color: white; padding: 15px 30px; text-decoration: none; border-radius: 6px; margin: 20px 0; font-size: 16px; font-weight: bold; }
         .footer { text-align: center; color: #64748b; font-size: 14px; margin-top: 20px; }
     </style>
 </head>
@@ -347,25 +346,21 @@ export function createPasswordResetEmail(userName: string, resetToken: string, b
             
             <p>Hai richiesto di reimpostare la password per il tuo account Villa Ingrosso.</p>
             
-            <p>Usa il seguente token per reimpostare la tua password:</p>
-            
-            <div class="token-box">
-                <strong>${resetToken}</strong>
-            </div>
-            
-            <p>Oppure clicca sul pulsante qui sotto per andare direttamente alla pagina di reset:</p>
+            <p>Clicca sul pulsante qui sotto per accedere alla pagina di reset password:</p>
             
             <p style="text-align: center;">
-                <a href="${baseUrl}/reset-password?token=${resetToken}" class="button">
-                    Reimposta Password
+                <a href="${baseUrl}/reset-password" class="button">
+                    🔑 Reimposta Password
                 </a>
             </p>
             
+            <p>Una volta nella pagina, potrai inserire una nuova password per il tuo account.</p>
+            
             <p><strong>Importante:</strong></p>
             <ul>
-                <li>Questo token è valido per 1 ora</li>
                 <li>Se non hai richiesto questo reset, ignora questa email</li>
-                <li>Per sicurezza, non condividere questo token con nessuno</li>
+                <li>Per sicurezza, assicurati di essere su villaingrosso.com</li>
+                <li>Scegli una password sicura e unica</li>
             </ul>
             
             <p>Grazie per aver scelto Villa Ingrosso!</p>

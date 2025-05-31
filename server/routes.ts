@@ -494,23 +494,12 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
         return res.json({ message: "If the email exists, a reset link has been sent" });
       }
 
-      // Genera token casuale
-      const { randomBytes } = await import("crypto");
-      const token = randomBytes(32).toString("hex");
-      
-      // Imposta scadenza a 1 ora
-      const expiry = new Date();
-      expiry.setHours(expiry.getHours() + 1);
-
-      // Salva il token
-      await storage.setResetToken(email, token, expiry);
-
-      // Invia email con token
+      // Invia email con link diretto alla pagina reset (senza token)
       const baseUrl = process.env.NODE_ENV === 'production' 
         ? 'https://villaingrosso.com' 
         : `${req.protocol}://${req.get('host')}`;
       
-      const emailContent = createPasswordResetEmail(user.fullName || user.username, token, baseUrl);
+      const emailContent = createPasswordResetEmail(user.fullName || user.username, baseUrl);
       
       // Prova prima Bird, poi fallback a SendGrid
       let emailSent = await sendEmailBird(

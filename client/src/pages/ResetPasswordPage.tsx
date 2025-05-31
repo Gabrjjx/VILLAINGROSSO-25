@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "../lib/queryClient";
@@ -21,7 +21,7 @@ export default function ResetPasswordPage() {
   });
   
   const [resetFormData, setResetFormData] = useState({
-    token: "",
+    email: "",
     newPassword: "",
     confirmPassword: ""
   });
@@ -29,20 +29,6 @@ export default function ResetPasswordPage() {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [activeTab, setActiveTab] = useState<"request" | "reset">("request");
-
-  // Rileva token dall'URL
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const tokenFromUrl = urlParams.get('token');
-    
-    if (tokenFromUrl) {
-      setResetFormData(prev => ({
-        ...prev,
-        token: tokenFromUrl
-      }));
-      setActiveTab("reset");
-    }
-  }, []);
 
   // Mutation per richiedere reset via email
   const requestResetMutation = useMutation({
