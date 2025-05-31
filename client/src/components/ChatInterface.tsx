@@ -151,26 +151,32 @@ export default function ChatInterface() {
                 {t("chat.noMessages") || "Nessun messaggio ancora. Inizia la conversazione!"}
               </div>
             ) : (
-              messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`flex ${msg.isFromAdmin ? "justify-end" : "justify-start"}`}
-                >
+              messages.map((msg) => {
+                // Per l'utente normale: i suoi messaggi a destra, quelli dell'admin a sinistra
+                // Per l'admin: i suoi messaggi a destra, quelli dell'utente a sinistra
+                const isOwnMessage = user?.isAdmin ? msg.isFromAdmin : !msg.isFromAdmin;
+                
+                return (
                   <div
-                    className={`max-w-[70%] p-3 rounded-lg ${
-                      msg.isFromAdmin
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted"
-                    }`}
+                    key={msg.id}
+                    className={`flex ${isOwnMessage ? "justify-end" : "justify-start"}`}
                   >
-                    <div className="mb-1 text-xs opacity-70">
-                      {msg.isFromAdmin ? t("chat.admin") || "Admin" : user?.username || "Ospite"}{" "}
-                      • {formatMessageDate(msg.createdAt)}
+                    <div
+                      className={`max-w-[70%] p-3 rounded-lg ${
+                        isOwnMessage
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted"
+                      }`}
+                    >
+                      <div className="mb-1 text-xs opacity-70">
+                        {msg.isFromAdmin ? t("chat.admin") || "Admin" : user?.username || "Ospite"}{" "}
+                        • {formatMessageDate(msg.createdAt)}
+                      </div>
+                      <p className="whitespace-pre-wrap break-words">{msg.message}</p>
                     </div>
-                    <p className="whitespace-pre-wrap break-words">{msg.message}</p>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
             <div ref={messagesEndRef} />
           </div>
