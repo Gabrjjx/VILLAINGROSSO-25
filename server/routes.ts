@@ -495,9 +495,7 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
       }
 
       // Invia email con link diretto alla pagina reset (senza token)
-      const baseUrl = process.env.NODE_ENV === 'production' 
-        ? 'https://villaingrosso.com' 
-        : `${req.protocol}://${req.get('host')}`;
+      const baseUrl = 'https://villaingrosso.com';
       
       const emailContent = createPasswordResetEmail(user.fullName || user.username, baseUrl);
       
