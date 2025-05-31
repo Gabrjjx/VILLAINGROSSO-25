@@ -154,7 +154,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Email di benvenuto per nuovi ospiti
+  // Email di benvenuto per nuovi ospiti (usando Bird API)
   app.post("/api/send-welcome-email", async (req: Request, res: Response) => {
     try {
       const { email, name } = req.body;
@@ -163,12 +163,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Email and name are required" });
       }
 
-      const success = await sendWelcomeEmail(email, name);
+      // Usa Bird API per inviare email di benvenuto
+      const { sendEmail, createWelcomeEmail } = await import('./bird');
+      const welcomeEmailContent = createWelcomeEmail(
+        name, 
+        email, 
+        'https://villaingrosso.com'
+      );
+      const success = await sendEmail(email, '🏖️ Benvenuto in Villa Ingrosso - La tua casa vacanze in Puglia', welcomeEmailContent);
       
       if (success) {
-        res.json({ success: true, message: "Welcome email sent successfully" });
+        res.json({ success: true, message: "Welcome email sent successfully via Bird API" });
       } else {
-        res.status(500).json({ success: false, message: "Failed to send welcome email" });
+        res.status(500).json({ success: false, message: "Failed to send welcome email via Bird API" });
       }
     } catch (error) {
       console.error("Error sending welcome email:", error);
@@ -224,7 +231,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Invio WhatsApp (solo admin)
+  // Invio SMS/WhatsApp tramite Bird API (solo admin)
   app.post("/api/send-sms", async (req: Request, res: Response) => {
     try {
       if (!req.isAuthenticated() || !req.user?.isAdmin) {
@@ -237,21 +244,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Phone number and message are required" });
       }
 
-      // Ora invia via WhatsApp invece di SMS
+      // Usa Bird API per inviare SMS
+      const { sendSMS } = await import('./bird');
       const success = await sendSMS(phoneNumber, message);
       
       if (success) {
-        res.json({ success: true, message: "WhatsApp message sent successfully" });
+        res.json({ success: true, message: "SMS sent successfully via Bird API" });
       } else {
-        res.status(500).json({ success: false, message: "Failed to send WhatsApp message. Check Twilio configuration." });
+        res.status(500).json({ success: false, message: "Failed to send SMS via Bird API. Check Bird configuration." });
       }
     } catch (error) {
-      console.error("Error sending WhatsApp:", error);
+      console.error("Error sending SMS via Bird:", error);
       res.status(500).json({ success: false, message: "Internal server error" });
     }
   });
 
-  // Invio WhatsApp di conferma prenotazione
+  // Invio WhatsApp di conferma prenotazione tramite Bird API
   app.post("/api/send-booking-whatsapp", async (req: Request, res: Response) => {
     try {
       const { phoneNumber, guestName, checkIn, checkOut } = req.body;
@@ -263,19 +271,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const { createBookingConfirmationWhatsApp } = await import('./sendgrid');
+      const { createBookingConfirmationWhatsApp, sendSMS } = await import('./bird');
       const whatsappMessage = createBookingConfirmationWhatsApp(guestName, checkIn, checkOut);
       const success = await sendSMS(phoneNumber, whatsappMessage);
       
       if (success) {
         res.json({ 
           success: true, 
-          message: "WhatsApp di conferma prenotazione inviato" 
+          message: "WhatsApp di conferma prenotazione inviato via Bird API" 
         });
       } else {
         res.status(500).json({ 
           success: false, 
-          message: "Errore nell'invio WhatsApp di conferma" 
+          message: "Errore nell'invio WhatsApp di conferma via Bird API" 
         });
       }
     } catch (error) {
@@ -287,7 +295,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Invio WhatsApp di benvenuto
+  // Invio WhatsApp di benvenuto tramite Bird API
   app.post("/api/send-welcome-whatsapp", async (req: Request, res: Response) => {
     try {
       const { phoneNumber, guestName } = req.body;
@@ -299,19 +307,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const { createWelcomeWhatsApp } = await import('./sendgrid');
+      const { createWelcomeWhatsApp, sendSMS } = await import('./bird');
       const whatsappMessage = createWelcomeWhatsApp(guestName);
       const success = await sendSMS(phoneNumber, whatsappMessage);
       
       if (success) {
         res.json({ 
           success: true, 
-          message: "WhatsApp di benvenuto inviato" 
+          message: "WhatsApp di benvenuto inviato via Bird API" 
         });
       } else {
         res.status(500).json({ 
           success: false, 
-          message: "Errore nell'invio WhatsApp di benvenuto" 
+          message: "Errore nell'invio WhatsApp di benvenuto via Bird API" 
         });
       }
     } catch (error) {
