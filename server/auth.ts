@@ -127,6 +127,21 @@ export function setupAuth(app: Express) {
       // Elimina la password dalla risposta
       const { password, ...userWithoutPassword } = user;
 
+      // Invia email di benvenuto
+      try {
+        const { sendEmail, createWelcomeEmail } = await import('./bird');
+        const welcomeEmailContent = createWelcomeEmail(
+          user.fullName || user.username, 
+          user.email, 
+          'https://villaingrosso.com'
+        );
+        await sendEmail(user.email, 'Benvenuto in Villa Ingrosso!', welcomeEmailContent);
+        console.log(`Welcome email sent to ${user.email}`);
+      } catch (emailError) {
+        console.error('Failed to send welcome email:', emailError);
+        // Non blocchiamo la registrazione se l'email fallisce
+      }
+
       // Autenticazione automatica dopo la registrazione
       req.login(user, (err) => {
         if (err) return next(err);

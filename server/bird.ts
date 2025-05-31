@@ -574,3 +574,352 @@ export function createPasswordResetEmail(userName: string, baseUrl: string): str
 </html>
   `;
 }
+
+// Template per email di benvenuto per nuovi utenti
+export function createWelcomeEmail(userName: string, userEmail: string, baseUrl: string): string {
+  return `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto in Villa Ingrosso</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #2c3e50;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            padding: 20px;
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 50%, #4caf50 100%); 
+            color: white; 
+            padding: 40px 30px; 
+            text-align: center;
+            position: relative;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%23ffffff"></path></svg>') no-repeat center bottom;
+            background-size: cover;
+        }
+        .logo { 
+            font-size: 32px; 
+            font-weight: bold; 
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle { 
+            font-size: 18px; 
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+        .welcome-title {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        .content { 
+            padding: 40px 30px; 
+            background: white;
+        }
+        .welcome-message { 
+            font-size: 18px; 
+            color: #2e7d32; 
+            font-weight: 600; 
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .message { 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+            color: #555;
+        }
+        .features-section {
+            background: linear-gradient(135deg, #f8fbff 0%, #f0f9ff 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e3f2fd;
+        }
+        .features-title {
+            color: #1976d2;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .feature-title {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 8px;
+        }
+        .villa-showcase {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .villa-showcase h3 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .villa-highlights {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+        .highlight-item {
+            text-align: center;
+            margin: 10px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .highlight-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .highlight-text {
+            font-size: 14px;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        .cta-section {
+            text-align: center;
+            margin: 35px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-radius: 12px;
+            border: 2px dashed #ff9800;
+        }
+        .cta-title {
+            color: #f57c00;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .button { 
+            display: inline-block; 
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%); 
+            color: white; 
+            padding: 16px 32px; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-size: 16px; 
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+            margin: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+        .button-secondary {
+            background: linear-gradient(135deg, #1976d2 0%, #0288d1 100%);
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+        }
+        .contact-info {
+            background: #f5f5f5;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .contact-info h4 {
+            color: #37474f;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .contact-details {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .contact-item {
+            margin: 5px 10px;
+            color: #555;
+        }
+        .footer { 
+            background: #37474f;
+            color: #b0bec5;
+            text-align: center; 
+            padding: 25px 30px;
+            font-size: 14px;
+        }
+        .footer-links {
+            margin-bottom: 15px;
+        }
+        .footer-links a {
+            color: #81c784;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .social-links {
+            margin: 15px 0;
+        }
+        .social-links span {
+            margin: 0 5px;
+            font-size: 18px;
+        }
+        @media (max-width: 600px) {
+            .email-container { margin: 10px; }
+            .content { padding: 25px 20px; }
+            .header { padding: 30px 20px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .villa-highlights { flex-direction: column; }
+            .contact-details { flex-direction: column; }
+            .button { margin: 5px 0; display: block; }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="logo">🏖️ Villa Ingrosso</div>
+            <div class="subtitle">La tua casa vacanze in Puglia</div>
+            <div class="welcome-title">🎉 Benvenuto nella famiglia!</div>
+        </div>
+        
+        <div class="content">
+            <div class="welcome-message">Ciao ${userName}, benvenuto in Villa Ingrosso!</div>
+            
+            <div class="message">
+                Siamo entusiasti di averti con noi! La tua registrazione è stata completata con successo 
+                e ora puoi accedere a tutti i servizi esclusivi di Villa Ingrosso.
+            </div>
+            
+            <div class="features-section">
+                <div class="features-title">🌟 Cosa puoi fare ora</div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">📅</div>
+                        <div class="feature-title">Prenota il tuo soggiorno</div>
+                        <div>Verifica le disponibilità e prenota direttamente online</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💬</div>
+                        <div class="feature-title">Assistenza dedicata</div>
+                        <div>Chat diretta con il nostro team per qualsiasi esigenza</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📧</div>
+                        <div class="feature-title">Offerte esclusive</div>
+                        <div>Ricevi sconti e promozioni riservate ai nostri ospiti</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="villa-showcase">
+                <h3>🌊 Scopri Villa Ingrosso</h3>
+                <div class="message" style="margin-bottom: 20px; color: #2e7d32;">
+                    Una villa moderna a soli 300 metri dal mare cristallino della Costa Ionica
+                </div>
+                <div class="villa-highlights">
+                    <div class="highlight-item">
+                        <div class="highlight-icon">🏠</div>
+                        <div class="highlight-text">Casa moderna<br>completamente attrezzata</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon">🏖️</div>
+                        <div class="highlight-text">300m dal mare<br>spiagge sabbiose</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon">🍕</div>
+                        <div class="highlight-text">Cucina tradizionale<br>pugliese vicina</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon">🌅</div>
+                        <div class="highlight-text">Tramonti mozzafiato<br>sulla Costa Ionica</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <div class="cta-title">🚀 Inizia la tua avventura pugliese</div>
+                <div class="message" style="margin-bottom: 20px; color: #f57c00;">
+                    Esplora le nostre offerte e prenota il tuo soggiorno da sogno
+                </div>
+                <a href="${baseUrl}/booking" class="button">📅 Prenota ora</a>
+                <a href="${baseUrl}/gallery" class="button button-secondary">📸 Guarda la gallery</a>
+            </div>
+            
+            <div class="contact-info">
+                <h4>📞 Hai bisogno di aiuto?</h4>
+                <div class="message" style="margin-bottom: 15px; color: #555;">
+                    Il nostro team è sempre disponibile per assisterti
+                </div>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <strong>📧 Email:</strong> info@villaingrosso.com
+                    </div>
+                    <div class="contact-item">
+                        <strong>💬 Chat:</strong> Accedi al sito per chattare
+                    </div>
+                    <div class="contact-item">
+                        <strong>📍 Posizione:</strong> Leporano Marina, Puglia
+                    </div>
+                </div>
+            </div>
+            
+            <div class="message" style="text-align: center; margin-top: 30px; color: #2e7d32; font-weight: 600;">
+                Grazie per aver scelto Villa Ingrosso!<br>
+                <span style="font-weight: normal; font-style: italic;">Non vediamo l'ora di ospitarti</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-links">
+                <a href="${baseUrl}">🏠 Sito Web</a> |
+                <a href="${baseUrl}/contact">📧 Contatti</a> |
+                <a href="${baseUrl}/booking">📅 Prenota</a> |
+                <a href="${baseUrl}/gallery">📸 Gallery</a>
+            </div>
+            <div class="social-links">
+                <span>📱 Seguici:</span>
+                <span>📘 Facebook</span>
+                <span>📷 Instagram</span>
+                <span>🐦 Twitter</span>
+            </div>
+            <div>
+                Villa Ingrosso - Leporano Marina, Puglia<br>
+                📧 info@villaingrosso.com | 🌐 villaingrosso.com
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+  `;
+}
