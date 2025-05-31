@@ -48,7 +48,7 @@ export function RegistrationIncentiveBanner() {
               <div className="flex items-center gap-2">
                 <span className="font-medium">Registrati ora e ottieni il 10% di sconto sulla prima prenotazione!</span>
                 <Badge variant="secondary" className="bg-white text-blue-600">
-                  Offerta limitata
+                  Fino al 10 giugno
                 </Badge>
               </div>
             </div>
@@ -191,7 +191,7 @@ export function RegistrationIncentiveCard() {
             <p className="text-sm text-muted-foreground">Prima prenotazione</p>
           </div>
           <Badge className="bg-blue-600">
-            Solo oggi
+            Fino al 10 giugno
           </Badge>
         </div>
         
