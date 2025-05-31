@@ -574,6 +574,18 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
         isAdmin: false
       });
 
+      // Invia email di benvenuto con la password
+      try {
+        const { sendWelcomeEmail } = await import('./bird');
+        const welcomeEmailSent = await sendWelcomeEmail(email, fullName, password);
+        
+        if (!welcomeEmailSent) {
+          console.warn("Failed to send welcome email to new user");
+        }
+      } catch (emailError) {
+        console.error("Error sending welcome email:", emailError);
+      }
+
       // Rimuovi la password dalla risposta
       const { password: _, ...userWithoutPassword } = user;
       

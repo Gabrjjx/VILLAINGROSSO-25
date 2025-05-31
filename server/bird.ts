@@ -575,6 +575,217 @@ export function createPasswordResetEmail(userName: string, baseUrl: string): str
   `;
 }
 
+// Template per email di benvenuto con password per nuovi utenti
+export function createWelcomeEmailWithPassword(userName: string, userEmail: string, password: string, baseUrl: string): string {
+  return `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto in Villa Ingrosso - Credenziali di Accesso</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #2c3e50;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            padding: 20px;
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #0277bd 0%, #81c784 100%);
+            color: white; 
+            text-align: center; 
+            padding: 40px 30px;
+        }
+        .logo { 
+            font-size: 28px; 
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .subtitle { 
+            font-size: 16px; 
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        .content { 
+            padding: 40px 30px; 
+            background: white;
+        }
+        .welcome { 
+            font-size: 18px; 
+            color: #1976d2; 
+            font-weight: 600; 
+            margin-bottom: 20px;
+        }
+        .message { 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+            color: #555;
+        }
+        .credentials-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #f3e5f5 100%);
+            border: 2px solid #ff9800;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .credentials-box h3 {
+            color: #e65100;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .credential-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #ff9800;
+        }
+        .credential-label {
+            font-weight: bold;
+            color: #424242;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .credential-value {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #1976d2;
+            font-weight: bold;
+        }
+        .security-warning {
+            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+            border: 2px solid #f44336;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .security-warning h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .security-warning p {
+            color: #d32f2f;
+            font-size: 14px;
+        }
+        .cta-section {
+            text-align: center;
+            margin: 35px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8fbff 0%, #f0f9ff 100%);
+            border-radius: 12px;
+            border: 2px dashed #0288d1;
+        }
+        .button { 
+            display: inline-block; 
+            background: linear-gradient(135deg, #1976d2 0%, #0288d1 100%); 
+            color: white; 
+            padding: 16px 32px; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-size: 16px; 
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+            transition: all 0.3s ease;
+        }
+        .footer { 
+            background: #37474f;
+            color: #b0bec5;
+            text-align: center; 
+            padding: 25px 30px;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            .email-container { margin: 10px; }
+            .content { padding: 25px 20px; }
+            .header { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="logo">🏖️ Villa Ingrosso</div>
+            <div class="subtitle">La tua vacanza da sogno in Puglia</div>
+        </div>
+        
+        <div class="content">
+            <div class="welcome">Benvenuto/a ${userName}! 🎉</div>
+            
+            <div class="message">
+                Il tuo account è stato creato dall'amministratore del sito. Ora puoi accedere e gestire le tue prenotazioni utilizzando le credenziali qui sotto:
+            </div>
+            
+            <div class="credentials-box">
+                <h3>🔑 Le tue credenziali di accesso</h3>
+                <div class="credential-item">
+                    <span class="credential-label">Email:</span>
+                    <div class="credential-value">${userEmail}</div>
+                </div>
+                <div class="credential-item">
+                    <span class="credential-label">Password temporanea:</span>
+                    <div class="credential-value">${password}</div>
+                </div>
+            </div>
+            
+            <div class="security-warning">
+                <h4>⚠️ Importante per la tua sicurezza</h4>
+                <p>Ti consigliamo di cambiare la password al primo accesso. Vai su Profilo > Cambia Password dopo aver effettuato l'accesso.</p>
+            </div>
+            
+            <div class="cta-section">
+                <div class="message" style="margin-bottom: 20px; color: #1976d2; font-weight: 600;">
+                    Accedi ora al tuo account
+                </div>
+                <a href="${baseUrl}/auth" class="button">Accedi al Sito</a>
+            </div>
+            
+            <div class="message" style="text-align: center; margin-top: 30px; color: #2e7d32; font-weight: 600;">
+                Grazie per essere con noi!<br>
+                <span style="font-weight: normal; font-style: italic;">Il Team di Villa Ingrosso</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div>
+                Questa email è stata inviata automaticamente.<br>
+                Villa Ingrosso - Leporano Marina, Puglia | villaingrosso.com
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+  `;
+}
+
+// Funzione per inviare email di benvenuto con password
+export async function sendWelcomeEmail(userEmail: string, userName: string, password: string): Promise<boolean> {
+  const baseUrl = process.env.REPL_SLUG ? `https://${process.env.REPL_SLUG}.replit.app` : 'http://localhost:5000';
+  const htmlContent = createWelcomeEmailWithPassword(userName, userEmail, password, baseUrl);
+  
+  return await sendEmail(
+    userEmail,
+    "Benvenuto su Villa Ingrosso - Le tue credenziali di accesso",
+    htmlContent
+  );
+}
+
 // Template per email di benvenuto per nuovi utenti
 export function createWelcomeEmail(userName: string, userEmail: string, baseUrl: string): string {
   return `
