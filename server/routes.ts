@@ -502,6 +502,88 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
   });
 
+  // API per creare prenotazione manuale da admin
+  app.post("/api/admin/manual-booking", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { guestName, guestEmail, guestPhone, checkIn, checkOut, numberOfGuests, totalPrice, notes, status, source } = req.body;
+
+      if (!guestName || !guestEmail || !checkIn || !checkOut) {
+        return res.status(400).json({ error: "Guest name, email, check-in and check-out are required" });
+      }
+
+      const booking = await storage.createBooking({
+        guestName,
+        guestEmail,
+        guestPhone: guestPhone || null,
+        startDate: new Date(checkIn),
+        endDate: new Date(checkOut),
+        numberOfGuests: numberOfGuests || 2,
+        totalPrice: totalPrice || 0,
+        notes: notes || null,
+        status: status || "confirmed",
+        source: source || "phone"
+      });
+
+      res.status(201).json(booking);
+    } catch (error) {
+      console.error("Error creating manual booking:", error);
+      res.status(500).json({ error: "Failed to create booking" });
+    }
+  });
+
+  // API per creare utente manuale da admin
+  app.post("/api/admin/manual-user", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { username, email, fullName, phone, dateOfBirth, notes, password } = req.body;
+
+      if (!username || !email || !fullName || !password) {
+        return res.status(400).json({ error: "Username, email, full name and password are required" });
+      }
+
+      // Verifica se username o email esistono già
+      const existingUserByUsername = await storage.getUserByUsername(username);
+      if (existingUserByUsername) {
+        return res.status(400).json({ error: "Username already exists" });
+      }
+
+      const existingUserByEmail = await storage.getUserByEmail(email);
+      if (existingUserByEmail) {
+        return res.status(400).json({ error: "Email already exists" });
+      }
+
+      // Hash della password
+      const { hashPassword } = await import('./auth');
+      const hashedPassword = await hashPassword(password);
+
+      const user = await storage.createUser({
+        username,
+        email,
+        fullName,
+        phone: phone || null,
+        dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null,
+        password: hashedPassword,
+        privacyAccepted: true,
+        isAdmin: false
+      });
+
+      // Rimuovi la password dalla risposta
+      const { password: _, ...userWithoutPassword } = user;
+      
+      res.status(201).json(userWithoutPassword);
+    } catch (error) {
+      console.error("Error creating manual user:", error);
+      res.status(500).json({ error: "Failed to create user" });
+    }
+  });
+
   // API per cambiare la password (utente autenticato)
   app.patch("/api/user/change-password", async (req: Request, res: Response) => {
     if (!req.isAuthenticated()) {

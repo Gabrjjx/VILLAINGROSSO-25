@@ -12,6 +12,7 @@ import AuthPage from "@/pages/AuthPage";
 import AccountPage from "@/pages/AccountPage";
 import AdminPage from "@/pages/AdminPage";
 import AdminEmailPage from "@/pages/AdminEmailPage";
+import AdminBookingForm from "@/pages/AdminBookingForm";
 import BookingPage from "@/pages/BookingPage";
 import BookingConfirmation from "@/pages/BookingConfirmation";
 import SimpleResetPasswordPage from "@/pages/SimpleResetPasswordPage";
