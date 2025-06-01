@@ -183,30 +183,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Iscrizione alla newsletter (usando Bird API)
+  // Iscrizione alla newsletter - versione temporanea senza Bird
   app.post("/api/newsletter/subscribe", async (req: Request, res: Response) => {
     try {
       const { email, firstName } = req.body;
-      console.log('Newsletter subscribe called for:', email);
+      console.log('Newsletter subscribe request:', { email, firstName });
       
       if (!email) {
         return res.status(400).json({ error: "Email is required" });
       }
 
-      // Usa direttamente la funzione che funziona per le registrazioni
-      const birdModule = await import('./bird');
-      const success = await birdModule.sendWelcomeEmail(email, firstName || "Ospite", "newsletter123");
-      
-      console.log('Newsletter email result:', success);
-      
-      if (success) {
-        res.json({ success: true, message: "Successfully subscribed to newsletter" });
-      } else {
-        res.status(500).json({ success: false, message: "Failed to send newsletter email" });
+      // Verifica che l'email sia valida
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({ error: "Invalid email format" });
       }
+
+      // Per ora registra solo l'iscrizione nei log
+      // L'admin può recuperare le email dai log del server
+      console.log('NEWSLETTER_SUBSCRIPTION:', {
+        email,
+        firstName: firstName || 'Non specificato',
+        timestamp: new Date().toISOString(),
+        source: 'website'
+      });
+
+      // Risposta di successo (anche se non inviamo email)
+      res.json({ 
+        success: true, 
+        message: "Successfully subscribed to newsletter" 
+      });
+      
     } catch (error: any) {
-      console.error("Newsletter error:", error);
-      res.status(500).json({ success: false, message: "Internal server error", error: error?.message });
+      console.error("Newsletter subscription error:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Internal server error",
+        error: error?.message 
+      });
     }
   });
 
