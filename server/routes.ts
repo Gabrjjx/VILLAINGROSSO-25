@@ -183,7 +183,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Iscrizione alla newsletter - versione temporanea senza Bird
+  // Iscrizione alla newsletter usando l'API Bird standard
   app.post("/api/newsletter/subscribe", async (req: Request, res: Response) => {
     try {
       const { email, firstName } = req.body;
@@ -199,20 +199,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Invalid email format" });
       }
 
-      // Per ora registra solo l'iscrizione nei log
-      // L'admin può recuperare le email dai log del server
-      console.log('NEWSLETTER_SUBSCRIPTION:', {
-        email,
-        firstName: firstName || 'Non specificato',
-        timestamp: new Date().toISOString(),
-        source: 'website'
+      // Usa l'API Bird diretta invece dell'API Transmissions
+      const BIRD_API_KEY = process.env.BIRD_API_KEY;
+      const BIRD_WORKSPACE_ID = process.env.BIRD_WORKSPACE_ID;
+      const BIRD_EMAIL_CHANNEL_ID = 'c950566b-ade4-5812-9d83-9c4fe7a04e24'; // Il tuo channel ID email
+
+      if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID) {
+        console.error('Bird API credentials missing');
+        return res.status(500).json({ error: "Email service not configured" });
+      }
+
+      const payload = {
+        receiver: {
+          contact: {
+            identifierValue: email
+          }
+        },
+        body: {
+          email: {
+            subject: "🏖️ Benvenuto nella Newsletter di Villa Ingrosso",
+            html: `
+              <h1>Benvenuto nella Newsletter di Villa Ingrosso</h1>
+              <p>Ciao ${firstName || 'Caro ospite'},</p>
+              <p>Grazie per esserti iscritto alla nostra newsletter!</p>
+              <p>Riceverai aggiornamenti su:</p>
+              <ul>
+                <li>🌊 Offerte speciali e promozioni</li>
+                <li>🏖️ Eventi e attività locali</li>
+                <li>📍 Consigli sui luoghi da visitare in Puglia</li>
+              </ul>
+              <p>A presto,<br>Team Villa Ingrosso</p>
+            `
+          }
+        },
+        channelId: BIRD_EMAIL_CHANNEL_ID
+      };
+
+      const response = await fetch(`https://api.bird.com/workspaces/${BIRD_WORKSPACE_ID}/channels/${BIRD_EMAIL_CHANNEL_ID}/messages`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `AccessKey ${BIRD_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
       });
 
-      // Risposta di successo (anche se non inviamo email)
-      res.json({ 
-        success: true, 
-        message: "Successfully subscribed to newsletter" 
-      });
+      if (response.ok) {
+        console.log('Newsletter email sent successfully');
+        res.json({ 
+          success: true, 
+          message: "Successfully subscribed to newsletter" 
+        });
+      } else {
+        const errorText = await response.text();
+        console.error('Bird API error:', errorText);
+        res.status(500).json({ 
+          success: false, 
+          message: "Failed to send newsletter email" 
+        });
+      }
       
     } catch (error: any) {
       console.error("Newsletter subscription error:", error);
