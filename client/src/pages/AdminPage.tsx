@@ -66,6 +66,10 @@ function AdminPage() {
   const [selectedUser, setSelectedUser] = useState<number | null>(null);
   const [newAdminMessage, setNewAdminMessage] = useState("");
   const adminMessagesEndRef = useRef<HTMLDivElement>(null);
+  const [showBlogForm, setShowBlogForm] = useState(false);
+  const [showFaqForm, setShowFaqForm] = useState(false);
+  const [editingBlog, setEditingBlog] = useState<any>(null);
+  const [editingFaq, setEditingFaq] = useState<any>(null);
 
   // Carica gli utenti
   const { data: users = [], isLoading: usersLoading } = useQuery<Omit<User, "password">[]>({
@@ -128,6 +132,40 @@ function AdminPage() {
           description: t("admin.messages.errorFetching"),
           variant: "destructive",
         });
+        return [];
+      }
+    },
+  });
+
+  // Carica i post del blog
+  const { data: blogPosts = [], isLoading: blogLoading } = useQuery({
+    queryKey: ["/api/blog"],
+    queryFn: async () => {
+      try {
+        const res = await apiRequest("GET", "/api/blog");
+        if (!res.ok) {
+          throw new Error("Failed to fetch blog posts");
+        }
+        return await res.json();
+      } catch (error) {
+        console.error("Error fetching blog posts:", error);
+        return [];
+      }
+    },
+  });
+
+  // Carica le FAQ
+  const { data: faqs = [], isLoading: faqsLoading } = useQuery({
+    queryKey: ["/api/faqs"],
+    queryFn: async () => {
+      try {
+        const res = await apiRequest("GET", "/api/faqs");
+        if (!res.ok) {
+          throw new Error("Failed to fetch FAQs");
+        }
+        return await res.json();
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
         return [];
       }
     },
@@ -1417,7 +1455,7 @@ function AdminPage() {
                     <p className="text-muted-foreground">Crea e gestisci articoli per il blog della villa</p>
                   </div>
                   <div className="flex gap-2 mt-4 md:mt-0">
-                    <Button variant="default" size="sm">
+                    <Button variant="default" size="sm" onClick={() => setShowBlogForm(true)}>
                       <Plus className="h-4 w-4 mr-2" />
                       Nuovo Articolo
                     </Button>
@@ -1432,17 +1470,50 @@ function AdminPage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-center py-8">
-                      <FileText className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
-                      <p className="text-muted-foreground">Nessun articolo trovato</p>
-                      <p className="text-sm text-muted-foreground mt-2">
-                        Inizia creando il tuo primo articolo per il blog
-                      </p>
-                      <Button className="mt-4" variant="outline">
-                        <Plus className="h-4 w-4 mr-2" />
-                        Crea il primo articolo
-                      </Button>
-                    </div>
+                    {blogLoading ? (
+                      <div className="text-center py-8">
+                        <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" />
+                        <p className="text-muted-foreground mt-2">Caricamento articoli...</p>
+                      </div>
+                    ) : blogPosts && blogPosts.length > 0 ? (
+                      <div className="space-y-4">
+                        {blogPosts.map((post: any) => (
+                          <div key={post.id} className="flex items-center justify-between p-4 border rounded-lg">
+                            <div className="flex-1">
+                              <h3 className="font-medium">{post.title}</h3>
+                              <p className="text-sm text-muted-foreground mt-1">
+                                {post.excerpt || "Nessun estratto disponibile"}
+                              </p>
+                              <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                                <span>Categoria: {post.category || "Non categorizzato"}</span>
+                                <span>Visualizzazioni: {post.views || 0}</span>
+                                <span>Data: {post.createdAt ? formatDate(post.createdAt) : "-"}</span>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Button variant="outline" size="sm" onClick={() => setEditingBlog(post)}>
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button variant="outline" size="sm">
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <FileText className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
+                        <p className="text-muted-foreground">Nessun articolo trovato</p>
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Inizia creando il tuo primo articolo per il blog
+                        </p>
+                        <Button className="mt-4" variant="outline" onClick={() => setShowBlogForm(true)}>
+                          <Plus className="h-4 w-4 mr-2" />
+                          Crea il primo articolo
+                        </Button>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </div>
@@ -1457,7 +1528,7 @@ function AdminPage() {
                     <p className="text-muted-foreground">Crea e gestisci le domande frequenti</p>
                   </div>
                   <div className="flex gap-2 mt-4 md:mt-0">
-                    <Button variant="default" size="sm">
+                    <Button variant="default" size="sm" onClick={() => setShowFaqForm(true)}>
                       <Plus className="h-4 w-4 mr-2" />
                       Nuova FAQ
                     </Button>
@@ -1472,17 +1543,50 @@ function AdminPage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-center py-8">
-                      <HelpCircle className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
-                      <p className="text-muted-foreground">Nessuna FAQ trovata</p>
-                      <p className="text-sm text-muted-foreground mt-2">
-                        Inizia creando la tua prima domanda frequente
-                      </p>
-                      <Button className="mt-4" variant="outline">
-                        <Plus className="h-4 w-4 mr-2" />
-                        Crea la prima FAQ
-                      </Button>
-                    </div>
+                    {faqsLoading ? (
+                      <div className="text-center py-8">
+                        <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" />
+                        <p className="text-muted-foreground mt-2">Caricamento FAQ...</p>
+                      </div>
+                    ) : faqs && faqs.length > 0 ? (
+                      <div className="space-y-4">
+                        {faqs.map((faq: any) => (
+                          <div key={faq.id} className="flex items-start justify-between p-4 border rounded-lg">
+                            <div className="flex-1">
+                              <h3 className="font-medium">{faq.question}</h3>
+                              <p className="text-sm text-muted-foreground mt-1">
+                                {faq.answer?.substring(0, 150)}{faq.answer?.length > 150 ? "..." : ""}
+                              </p>
+                              <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                                <span>Categoria: {faq.category || "Generale"}</span>
+                                <span>Visualizzazioni: {faq.views || 0}</span>
+                                <span>Voti positivi: {faq.upvotes || 0}</span>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Button variant="outline" size="sm" onClick={() => setEditingFaq(faq)}>
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <Button variant="outline" size="sm">
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <HelpCircle className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
+                        <p className="text-muted-foreground">Nessuna FAQ trovata</p>
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Inizia creando la tua prima domanda frequente
+                        </p>
+                        <Button className="mt-4" variant="outline" onClick={() => setShowFaqForm(true)}>
+                          <Plus className="h-4 w-4 mr-2" />
+                          Crea la prima FAQ
+                        </Button>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </div>
