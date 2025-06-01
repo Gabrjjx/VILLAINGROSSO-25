@@ -71,7 +71,7 @@ function App() {
         <LoadingProvider>
           <WaveLoaderWithContext />
           <SoundToggle />
-          <RegistrationIncentiveBanner />
+
           <Router />
           <RegistrationIncentivePopup />
           <NewsletterModal />
