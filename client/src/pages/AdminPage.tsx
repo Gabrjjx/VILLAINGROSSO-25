@@ -1465,21 +1465,16 @@ function AdminPage() {
                     </button>
                   </div>
                   <div className="flex gap-2 mt-4 md:mt-0">
-                    <Button 
-                      variant="default" 
-                      size="sm" 
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log("Blog button clicked - state before:", showBlogForm);
+                    <button 
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-8 px-3 py-1"
+                      onClick={() => {
+                        console.log("Blog button clicked - opening form");
                         setShowBlogForm(true);
-                        console.log("Blog button clicked - state after:", true);
                       }}
                     >
                       <Plus className="h-4 w-4 mr-2" />
                       Nuovo Articolo
-                    </Button>
+                    </button>
                   </div>
                 </div>
 
@@ -1550,21 +1545,16 @@ function AdminPage() {
                     <p className="text-xs text-blue-600">FAQ Form State: {showFaqForm ? "OPEN" : "CLOSED"}</p>
                   </div>
                   <div className="flex gap-2 mt-4 md:mt-0">
-                    <Button 
-                      variant="default" 
-                      size="sm" 
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log("FAQ button clicked - state before:", showFaqForm);
+                    <button 
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-8 px-3 py-1"
+                      onClick={() => {
+                        console.log("FAQ button clicked - opening form");
                         setShowFaqForm(true);
-                        console.log("FAQ button clicked - state after:", true);
                       }}
                     >
                       <Plus className="h-4 w-4 mr-2" />
                       Nuova FAQ
-                    </Button>
+                    </button>
                   </div>
                 </div>
 
