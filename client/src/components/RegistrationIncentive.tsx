@@ -174,37 +174,40 @@ export function RegistrationIncentiveCard() {
   if (user) return null;
 
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200">
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-blue-900">
-          <Gift className="h-5 w-5" />
-          Offerta Speciale
+    <Card className="bg-gradient-to-br from-slate-50 to-cyan-50 border-slate-200 shadow-sm">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-lg text-slate-800">
+          Crea il tuo account
         </CardTitle>
-        <CardDescription>
-          Registrati oggi e risparmia sulla tua prossima vacanza
+        <CardDescription className="text-slate-600">
+          Accedi a tutti i servizi e gestisci le tue prenotazioni
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
-          <div>
-            <p className="font-semibold text-blue-900">10% di sconto</p>
-            <p className="text-sm text-muted-foreground">Prima prenotazione</p>
+      <CardContent className="space-y-4">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-sm text-slate-600">
+            <Calendar className="h-4 w-4 text-cyan-600" />
+            <span>Prenotazioni semplificate</span>
           </div>
-          <Badge className="bg-blue-600">
-            Fino al 10 giugno
-          </Badge>
+          <div className="flex items-center gap-2 text-sm text-slate-600">
+            <MessageCircle className="h-4 w-4 text-cyan-600" />
+            <span>Assistenza prioritaria</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-slate-600">
+            <Gift className="h-4 w-4 text-cyan-600" />
+            <span>Offerte esclusive</span>
+          </div>
         </div>
         
         <Button 
           onClick={() => setLocation('/auth')} 
-          className="w-full bg-blue-600 hover:bg-blue-700"
+          className="w-full bg-cyan-600 hover:bg-cyan-700 text-white"
         >
-          Registrati e risparmia
-          <ArrowRight className="h-4 w-4 ml-2" />
+          Registrati ora
         </Button>
         
-        <p className="text-xs text-center text-muted-foreground">
-          Registrazione gratuita • Nessun costo nascosto
+        <p className="text-xs text-center text-slate-500">
+          È gratuito e richiede meno di un minuto
         </p>
       </CardContent>
     </Card>
