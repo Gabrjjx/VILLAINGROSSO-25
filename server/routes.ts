@@ -186,58 +186,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Iscrizione alla newsletter (usando Bird API)
   app.post("/api/newsletter/subscribe", async (req: Request, res: Response) => {
     try {
-      console.log('Newsletter subscribe request:', req.body);
       const { email, firstName } = req.body;
+      console.log('Newsletter subscribe called for:', email);
       
       if (!email) {
         return res.status(400).json({ error: "Email is required" });
       }
 
-      // Verifica configurazione Bird
-      const BIRD_API_KEY = process.env.BIRD_API_KEY;
-      const BIRD_WORKSPACE_ID = process.env.BIRD_WORKSPACE_ID;
-      
-      if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID) {
-        console.error('Bird API not configured:', { 
-          hasApiKey: !!BIRD_API_KEY, 
-          hasWorkspaceId: !!BIRD_WORKSPACE_ID 
-        });
-        return res.status(500).json({ 
-          success: false, 
-          error: "Email service not configured. Please contact administrator." 
-        });
-      }
-
-      console.log('Importing Bird API...');
-      // Usa la stessa funzione che funziona per le altre email
+      // Usa direttamente la funzione che funziona per le registrazioni
       const birdModule = await import('./bird');
-      console.log('Bird API imported successfully');
+      const success = await birdModule.sendWelcomeEmail(email, firstName || "Ospite", "newsletter123");
       
-      // Prova prima la funzione createWelcomeEmail che sappiamo funzionare
-      let success = false;
-      try {
-        const htmlContent = birdModule.createWelcomeEmail(firstName || 'Caro ospite', email, 'https://villaingrosso.com');
-        console.log('Sending newsletter welcome email to:', email);
-        success = await birdModule.sendEmail(email, 'Benvenuto nella Newsletter di Villa Ingrosso', htmlContent);
-        console.log('Email send result:', success);
-      } catch (emailError) {
-        console.error('Error with welcome email template, trying simple version:', emailError);
-        
-        // Fallback con template molto semplice
-        const simpleHtml = `<h1>Benvenuto nella Newsletter di Villa Ingrosso</h1><p>Grazie per esserti iscritto!</p>`;
-        success = await birdModule.sendEmail(email, 'Newsletter Villa Ingrosso', simpleHtml);
-        console.log('Simple email send result:', success);
-      }
+      console.log('Newsletter email result:', success);
       
       if (success) {
         res.json({ success: true, message: "Successfully subscribed to newsletter" });
       } else {
-        res.status(500).json({ success: false, message: "Failed to subscribe to newsletter" });
+        res.status(500).json({ success: false, message: "Failed to send newsletter email" });
       }
     } catch (error: any) {
-      console.error("Error subscribing to newsletter:", error);
-      console.error("Error stack:", error?.stack);
-      res.status(500).json({ success: false, message: "Internal server error", error: error?.message || 'Unknown error' });
+      console.error("Newsletter error:", error);
+      res.status(500).json({ success: false, message: "Internal server error", error: error?.message });
+    }
+  });
+
+  // Test endpoint semplificato per debug newsletter
+  app.post("/api/newsletter-debug", async (req: Request, res: Response) => {
+    try {
+      const { email } = req.body;
+      console.log('Debug newsletter endpoint called with:', email);
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email required" });
+      }
+
+      // Test molto semplice - usa la stessa funzione delle altre email che funzionano
+      const birdModule = await import('./bird');
+      
+      // Usa direttamente sendWelcomeEmail che sappiamo funzionare
+      const result = await birdModule.sendWelcomeEmail(email, "Test User", "temppass123");
+      console.log('sendWelcomeEmail result:', result);
+      
+      res.json({ 
+        success: result, 
+        message: result ? "Test email sent" : "Test email failed",
+        endpoint: "newsletter-debug"
+      });
+      
+    } catch (error: any) {
+      console.error("Newsletter debug error:", error);
+      res.status(500).json({ 
+        error: "Debug test failed", 
+        details: error?.message || 'Unknown error' 
+      });
     }
   });
 
