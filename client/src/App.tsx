@@ -53,6 +53,10 @@ function Router() {
       <Route path="/admin/booking" component={AdminBookingForm} />
       <Route path="/booking" component={BookingPage} />
       <Route path="/booking-confirmation" component={BookingConfirmation} />
+      <Route path="/blog" component={BlogPage} />
+      <Route path="/blog/:slug" component={BlogPostPage} />
+      <Route path="/inventory" component={InventoryPage} />
+      <Route path="/faq" component={FaqPage} />
       <Route path="/reset-password" component={SimpleResetPasswordPage} />
       <Route path="/change-password" component={ChangePasswordPage} />
       <Route component={NotFound} />
