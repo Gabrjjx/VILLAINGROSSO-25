@@ -18,7 +18,8 @@ import {
   MoreHorizontal, Home, Users, MessageCircle, Send, 
   CircleUser, Settings, Bell, ChevronRight,
   CalendarDays, Smartphone, Map, ArrowUp, ArrowDown,
-  ArrowUpRight, Eye, CheckCircle, XCircle, Clock, Plus
+  ArrowUpRight, Eye, CheckCircle, XCircle, Clock, Plus,
+  FileText, HelpCircle, Edit, Trash2
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -500,6 +501,30 @@ function AdminPage() {
                 >
                   <MessageCircle className="h-5 w-5 mr-3" />
                   {t("admin.tabs.chatWithUsers")}
+                </button>
+                
+                <button
+                  onClick={() => setActiveTab("blog")}
+                  className={`w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-md ${
+                    activeTab === "blog"
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                >
+                  <FileText className="h-5 w-5 mr-3" />
+                  Blog & News
+                </button>
+                
+                <button
+                  onClick={() => setActiveTab("faq")}
+                  className={`w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-md ${
+                    activeTab === "faq"
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                >
+                  <HelpCircle className="h-5 w-5 mr-3" />
+                  FAQ
                 </button>
                 
                 <button
@@ -1380,6 +1405,99 @@ function AdminPage() {
                     )}
                   </Card>
                 </div>
+              </div>
+            )}
+
+            {/* Tab Blog */}
+            {activeTab === "blog" && (
+              <div>
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
+                  <div>
+                    <h1 className="text-2xl font-bold">Gestione Blog</h1>
+                    <p className="text-muted-foreground">Crea e gestisci articoli per il blog della villa</p>
+                  </div>
+                  <div className="flex gap-2 mt-4 md:mt-0">
+                    <Button variant="default" size="sm">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Nuovo Articolo
+                    </Button>
+                  </div>
+                </div>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Articoli del Blog</CardTitle>
+                    <CardDescription>
+                      Gestisci tutti gli articoli pubblicati sul blog
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-center py-8">
+                      <FileText className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
+                      <p className="text-muted-foreground">Nessun articolo trovato</p>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Inizia creando il tuo primo articolo per il blog
+                      </p>
+                      <Button className="mt-4" variant="outline">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Crea il primo articolo
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {/* Tab FAQ */}
+            {activeTab === "faq" && (
+              <div>
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
+                  <div>
+                    <h1 className="text-2xl font-bold">Gestione FAQ</h1>
+                    <p className="text-muted-foreground">Crea e gestisci le domande frequenti</p>
+                  </div>
+                  <div className="flex gap-2 mt-4 md:mt-0">
+                    <Button variant="default" size="sm">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Nuova FAQ
+                    </Button>
+                  </div>
+                </div>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Domande Frequenti</CardTitle>
+                    <CardDescription>
+                      Gestisci tutte le FAQ per aiutare gli ospiti
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-center py-8">
+                      <HelpCircle className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
+                      <p className="text-muted-foreground">Nessuna FAQ trovata</p>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Inizia creando la tua prima domanda frequente
+                      </p>
+                      <Button className="mt-4" variant="outline">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Crea la prima FAQ
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {/* Tab SendGrid (Email e SMS) */}
+            {activeTab === "sendgrid" && (
+              <div>
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8">
+                  <div>
+                    <h1 className="text-2xl font-bold">Email e SMS</h1>
+                    <p className="text-muted-foreground">Gestisci comunicazioni via email e SMS</p>
+                  </div>
+                </div>
+                <SendGridManager />
               </div>
             )}
           </div>
