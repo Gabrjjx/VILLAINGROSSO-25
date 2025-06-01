@@ -508,7 +508,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
         bookingData.endDate = new Date(bookingData.endDate);
       }
       
+      // Verifica se c'è una promozione attiva e applicala
+      let appliedPromotion = null;
+      let originalPrice = bookingData.totalPrice || 0;
+      
+      try {
+        const activePromotion = await storage.getActivePromotion();
+        if (activePromotion && originalPrice > 0) {
+          const discountAmount = (originalPrice * activePromotion.discountPercentage) / 100;
+          bookingData.totalPrice = originalPrice - discountAmount;
+          appliedPromotion = {
+            promotion: activePromotion,
+            discountAmount,
+            originalPrice
+          };
+        }
+      } catch (promotionError) {
+        console.log('Errore nella verifica promozioni:', promotionError);
+        // Continua con la prenotazione anche se la promozione fallisce
+      }
+      
       const newBooking = await storage.createBooking(bookingData);
+      
+      // Se è stata applicata una promozione, registra l'utilizzo
+      if (appliedPromotion) {
+        try {
+          await storage.applyPromotion(
+            appliedPromotion.promotion.id,
+            newBooking.id,
+            bookingData.userId!,
+            appliedPromotion.discountAmount
+          );
+          await storage.incrementPromotionUsage(appliedPromotion.promotion.id);
+        } catch (promotionError) {
+          console.error('Errore nel registrare utilizzo promozione:', promotionError);
+        }
+      }
       
       // Invia notifica WhatsApp automatica al proprietario
       try {
@@ -537,10 +572,45 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
         // Non bloccare la prenotazione se l'invio della notifica fallisce
       }
       
-      res.status(201).json(newBooking);
+      // Includi informazioni sulla promozione nella risposta
+      const response = {
+        ...newBooking,
+        promotionApplied: appliedPromotion ? {
+          discountPercentage: appliedPromotion.promotion.discountPercentage,
+          discountAmount: appliedPromotion.discountAmount,
+          originalPrice: appliedPromotion.originalPrice,
+          promotionDescription: appliedPromotion.promotion.description
+        } : null
+      };
+      
+      res.status(201).json(response);
     } catch (error) {
       log(`Error creating booking: ${error}`, "error");
       res.status(500).json({ error: "Failed to create booking" });
+    }
+  });
+
+  // API per verificare promozioni attive
+  app.get("/api/promotions/active", async (req: Request, res: Response) => {
+    try {
+      const activePromotion = await storage.getActivePromotion();
+      if (activePromotion) {
+        res.json({
+          available: true,
+          promotion: {
+            id: activePromotion.id,
+            code: activePromotion.code,
+            description: activePromotion.description,
+            discountPercentage: activePromotion.discountPercentage,
+            remainingUsages: activePromotion.maxUsages - activePromotion.currentUsages
+          }
+        });
+      } else {
+        res.json({ available: false });
+      }
+    } catch (error) {
+      console.error("Error checking active promotions:", error);
+      res.status(500).json({ error: "Failed to check promotions" });
     }
   });
 

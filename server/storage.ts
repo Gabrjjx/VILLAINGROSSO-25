@@ -390,6 +390,34 @@ export class DatabaseStorage implements IStorage {
       .where(and(eq(faqVotes.faqId, faqId), eq(faqVotes.userId, userId)));
     return vote;
   }
+
+  // Promotion methods
+  async getActivePromotion(): Promise<Promotion | undefined> {
+    const [promotion] = await db.select().from(promotions)
+      .where(and(
+        eq(promotions.isActive, true),
+        sql`${promotions.currentUsages} < ${promotions.maxUsages}`
+      ))
+      .orderBy(asc(promotions.createdAt))
+      .limit(1);
+    return promotion;
+  }
+
+  async applyPromotion(promotionId: number, bookingId: number, userId: number, discountAmount: number): Promise<PromotionUsage> {
+    const [usage] = await db.insert(promotionUsages).values({
+      promotionId,
+      bookingId,
+      userId,
+      discountAmount
+    }).returning();
+    return usage;
+  }
+
+  async incrementPromotionUsage(promotionId: number): Promise<void> {
+    await db.update(promotions)
+      .set({ currentUsages: sql`${promotions.currentUsages} + 1` })
+      .where(eq(promotions.id, promotionId));
+  }
 }
 
 export const storage = new DatabaseStorage();
