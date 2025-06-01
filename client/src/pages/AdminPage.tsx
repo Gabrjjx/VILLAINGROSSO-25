@@ -1698,8 +1698,17 @@ function AdminPage() {
                       return;
                     }
                     
+                    // Genera uno slug dal titolo
+                    const slug = blogTitle
+                      .toLowerCase()
+                      .replace(/[^a-z0-9\s-]/g, '') // Rimuove caratteri speciali
+                      .replace(/\s+/g, '-') // Sostituisce spazi con trattini
+                      .replace(/-+/g, '-') // Rimuove trattini multipli
+                      .trim();
+
                     const articleData = {
                       title: blogTitle,
+                      slug: slug,
                       content: blogContent,
                       excerpt: blogExcerpt,
                       category: blogCategory,
