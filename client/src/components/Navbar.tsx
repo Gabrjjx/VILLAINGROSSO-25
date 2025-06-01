@@ -22,6 +22,8 @@ export default function Navbar() {
     { name: t("nav.gallery"), href: "/gallery", tooltipKey: "gallery" },
     { name: t("nav.location"), href: "/location", tooltipKey: "location" },
     { name: t("nav.recommendations"), href: "/recommendations", tooltipKey: "recommendations" },
+    { name: "Blog", href: "/blog", tooltipKey: "blog" },
+    { name: "FAQ", href: "/faq", tooltipKey: "faq" },
     { name: t("nav.prices"), href: "/prices", tooltipKey: "prices" },
     { name: t("nav.contact"), href: "/contact", tooltipKey: "contact" },
   ];
