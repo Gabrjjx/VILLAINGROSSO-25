@@ -186,14 +186,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Iscrizione alla newsletter (usando Bird API)
   app.post("/api/newsletter/subscribe", async (req: Request, res: Response) => {
     try {
+      console.log('Newsletter subscribe request:', req.body);
       const { email, firstName } = req.body;
       
       if (!email) {
         return res.status(400).json({ error: "Email is required" });
       }
 
+      // Verifica configurazione Bird
+      const BIRD_API_KEY = process.env.BIRD_API_KEY;
+      const BIRD_WORKSPACE_ID = process.env.BIRD_WORKSPACE_ID;
+      
+      if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID) {
+        console.error('Bird API not configured:', { 
+          hasApiKey: !!BIRD_API_KEY, 
+          hasWorkspaceId: !!BIRD_WORKSPACE_ID 
+        });
+        return res.status(500).json({ 
+          success: false, 
+          error: "Email service not configured. Please contact administrator." 
+        });
+      }
+
+      console.log('Importing Bird API...');
       // Usa Bird API per inviare email di conferma iscrizione
       const { sendEmail } = await import('./bird');
+      console.log('Bird API imported successfully');
       const welcomeMessage = `
 <!DOCTYPE html>
 <html lang="it">
@@ -270,7 +288,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 </html>
       `;
       
+      console.log('Sending welcome email...');
       const success = await sendEmail(email, '🏖️ Benvenuto nella Newsletter di Villa Ingrosso', welcomeMessage);
+      console.log('Email send result:', success);
       
       if (success) {
         res.json({ success: true, message: "Successfully subscribed to newsletter" });
@@ -279,7 +299,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     } catch (error) {
       console.error("Error subscribing to newsletter:", error);
-      res.status(500).json({ success: false, message: "Internal server error" });
+      console.error("Error stack:", error.stack);
+      res.status(500).json({ success: false, message: "Internal server error", error: error.message });
     }
   });
 
