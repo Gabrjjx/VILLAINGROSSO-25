@@ -183,7 +183,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Iscrizione alla newsletter
+  // Iscrizione alla newsletter (usando Bird API)
   app.post("/api/newsletter/subscribe", async (req: Request, res: Response) => {
     try {
       const { email, firstName } = req.body;
@@ -192,7 +192,85 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Email is required" });
       }
 
-      const success = await addToNewsletter(email, firstName || '');
+      // Usa Bird API per inviare email di conferma iscrizione
+      const { sendEmail } = await import('./bird');
+      const welcomeMessage = `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto nella Newsletter di Villa Ingrosso</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #2c3e50;
+            background: #f8fafc;
+            padding: 20px;
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #1976d2 0%, #0288d1 50%, #00acc1 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .content { 
+            padding: 30px;
+        }
+        .footer { 
+            background: #f1f3f4;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>🏖️ Benvenuto nella Newsletter!</h1>
+            <p>Villa Ingrosso - La tua casa vacanze in Puglia</p>
+        </div>
+        
+        <div class="content">
+            <p>Ciao ${firstName || 'Caro ospite'},</p>
+            
+            <p>Grazie per esserti iscritto alla newsletter di Villa Ingrosso!</p>
+            
+            <p>Riceverai aggiornamenti su:</p>
+            <ul>
+                <li>🌊 Offerte speciali e promozioni</li>
+                <li>🏖️ Eventi e attività locali</li>
+                <li>📍 Consigli sui luoghi da visitare in Puglia</li>
+                <li>🍝 Ristoranti e tradizioni gastronomiche</li>
+            </ul>
+            
+            <p>Non vediamo l'ora di condividere con te le meraviglie della costa ionica pugliese!</p>
+            
+            <p>A presto,<br>
+            <strong>Team Villa Ingrosso</strong></p>
+        </div>
+        
+        <div class="footer">
+            <p>Villa Ingrosso - Leporano Marina, Puglia</p>
+            <p>🌐 <a href="https://villaingrosso.com">villaingrosso.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
+      `;
+      
+      const success = await sendEmail(email, '🏖️ Benvenuto nella Newsletter di Villa Ingrosso', welcomeMessage);
       
       if (success) {
         res.json({ success: true, message: "Successfully subscribed to newsletter" });
@@ -205,26 +283,110 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Invio newsletter (solo admin)
+  // Invio newsletter (solo admin) - usando Bird API
   app.post("/api/newsletter/send", async (req: Request, res: Response) => {
     try {
       if (!req.isAuthenticated() || !req.user?.isAdmin) {
         return res.status(403).json({ error: "Admin access required" });
       }
 
-      const { subject, content, listId } = req.body;
+      const { subject, content, recipients } = req.body;
       
-      if (!subject || !content) {
-        return res.status(400).json({ error: "Subject and content are required" });
+      if (!subject || !content || !recipients || !Array.isArray(recipients)) {
+        return res.status(400).json({ error: "Subject, content and recipients array are required" });
       }
 
-      const success = await sendNewsletter(subject, content, listId);
+      // Usa Bird API per inviare newsletter a lista di email
+      const { sendEmail } = await import('./bird');
       
-      if (success) {
-        res.json({ success: true, message: "Newsletter sent successfully" });
-      } else {
-        res.status(500).json({ success: false, message: "Failed to send newsletter" });
+      // Invia email a tutti i destinatari
+      let successCount = 0;
+      let failureCount = 0;
+      
+      for (const email of recipients) {
+        try {
+          const newsletterHtml = `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${subject}</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #2c3e50;
+            background: #f8fafc;
+            padding: 20px;
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #1976d2 0%, #0288d1 50%, #00acc1 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .content { 
+            padding: 30px;
+        }
+        .footer { 
+            background: #f1f3f4;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>🏖️ Villa Ingrosso</h1>
+            <p>Newsletter</p>
+        </div>
+        
+        <div class="content">
+            ${content.replace(/\n/g, '<br>')}
+        </div>
+        
+        <div class="footer">
+            <p>Villa Ingrosso - Leporano Marina, Puglia</p>
+            <p>🌐 <a href="https://villaingrosso.com">villaingrosso.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
+          `;
+          
+          const success = await sendEmail(email, subject, newsletterHtml);
+          if (success) {
+            successCount++;
+          } else {
+            failureCount++;
+          }
+          
+          // Piccola pausa tra gli invii per evitare rate limiting
+          await new Promise(resolve => setTimeout(resolve, 100));
+        } catch (emailError) {
+          console.error(`Failed to send newsletter to ${email}:`, emailError);
+          failureCount++;
+        }
       }
+      
+      res.json({ 
+        success: true, 
+        message: `Newsletter sent successfully to ${successCount} recipients. ${failureCount} failures.`,
+        successCount,
+        failureCount
+      });
     } catch (error) {
       console.error("Error sending newsletter:", error);
       res.status(500).json({ success: false, message: "Internal server error" });
