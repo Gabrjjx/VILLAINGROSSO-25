@@ -1706,11 +1706,14 @@ function AdminPage() {
                       authorId: 1 // Admin user ID
                     };
                     
+                    const token = localStorage.getItem("token");
+                    console.log("Token from localStorage:", token);
+                    
                     const response = await fetch("/api/blog", {
                       method: "POST",
                       headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                        "Authorization": `Bearer ${token || ''}`
                       },
                       body: JSON.stringify(articleData)
                     });
