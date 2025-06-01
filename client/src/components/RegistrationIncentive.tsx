@@ -41,8 +41,9 @@ export function RegistrationIncentiveBanner() {
       
       {/* Banner fisso */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
+        <div className="container mx-auto px-3 py-2 md:py-3">
+          {/* Layout desktop */}
+          <div className="hidden md:flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Gift className="h-5 w-5" />
               <div className="flex items-center gap-2">
@@ -69,6 +70,38 @@ export function RegistrationIncentiveBanner() {
                 className="text-white hover:bg-white/20"
               >
                 <X className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          {/* Layout mobile */}
+          <div className="md:hidden">
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-2">
+                <Gift className="h-4 w-4" />
+                <span className="text-sm font-medium">10% di sconto!</span>
+                <Badge variant="secondary" className="bg-white text-blue-600 text-xs px-1 py-0">
+                  Fino al 10/6
+                </Badge>
+              </div>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={handleClose}
+                className="text-white hover:bg-white/20 p-1"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-white/90">Prima prenotazione scontata</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleRegister}
+                className="bg-white text-blue-600 hover:bg-gray-100 text-xs px-2 py-1 h-auto"
+              >
+                Registrati
               </Button>
             </div>
           </div>
