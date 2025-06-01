@@ -212,3 +212,36 @@ export type Faq = typeof faqs.$inferSelect;
 export type InsertFaq = z.infer<typeof insertFaqSchema>;
 export type FaqVote = typeof faqVotes.$inferSelect;
 export type InsertFaqVote = z.infer<typeof insertFaqVoteSchema>;
+
+// Schema per le promozioni sconto 10%
+export const promotions = pgTable("promotions", {
+  id: serial("id").primaryKey(),
+  code: varchar("code", { length: 50 }).notNull().unique(),
+  discountPercentage: integer("discount_percentage").notNull().default(10),
+  maxUsages: integer("max_usages").notNull().default(20),
+  currentUsages: integer("current_usages").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  description: text("description"),
+  createdAt: timestamp("created_at").defaultNow(),
+  expiresAt: timestamp("expires_at"),
+});
+
+// Schema per tenere traccia degli utilizzi delle promozioni
+export const promotionUsages = pgTable("promotion_usages", {
+  id: serial("id").primaryKey(),
+  promotionId: serial("promotion_id").references(() => promotions.id),
+  bookingId: serial("booking_id").references(() => bookings.id),
+  userId: serial("user_id").references(() => users.id),
+  discountAmount: real("discount_amount").notNull(),
+  usedAt: timestamp("used_at").defaultNow(),
+});
+
+// Schema Zod per le promozioni
+export const insertPromotionSchema = createInsertSchema(promotions);
+export const insertPromotionUsageSchema = createInsertSchema(promotionUsages);
+
+// Tipi TypeScript per le promozioni
+export type Promotion = typeof promotions.$inferSelect;
+export type InsertPromotion = z.infer<typeof insertPromotionSchema>;
+export type PromotionUsage = typeof promotionUsages.$inferSelect;
+export type InsertPromotionUsage = z.infer<typeof insertPromotionUsageSchema>;

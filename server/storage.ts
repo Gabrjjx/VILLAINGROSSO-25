@@ -1,4 +1,4 @@
-import { users, chatMessages, bookings, contactMessages, blogPosts, inventoryItems, inventoryMovements, faqs, faqVotes, type User, type InsertUser, type ChatMessage, type InsertChatMessage, type Booking, type InsertBooking, type ContactMessage, type InsertContactMessage, type BlogPost, type InsertBlogPost, type InventoryItem, type InsertInventoryItem, type InventoryMovement, type InsertInventoryMovement, type Faq, type InsertFaq, type FaqVote, type InsertFaqVote } from "@shared/schema";
+import { users, chatMessages, bookings, contactMessages, blogPosts, inventoryItems, inventoryMovements, faqs, faqVotes, promotions, promotionUsages, type User, type InsertUser, type ChatMessage, type InsertChatMessage, type Booking, type InsertBooking, type ContactMessage, type InsertContactMessage, type BlogPost, type InsertBlogPost, type InventoryItem, type InsertInventoryItem, type InventoryMovement, type InsertInventoryMovement, type Faq, type InsertFaq, type FaqVote, type InsertFaqVote, type Promotion, type InsertPromotion, type PromotionUsage, type InsertPromotionUsage } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, asc, and, or, sql, like, ilike } from "drizzle-orm";
 import session from "express-session";
@@ -62,6 +62,11 @@ export interface IStorage {
   incrementFaqView(id: number): Promise<void>;
   voteFaq(faqId: number, userId: number, helpful: boolean): Promise<boolean>;
   getFaqVote(faqId: number, userId: number): Promise<FaqVote | undefined>;
+  
+  // Promotion methods
+  getActivePromotion(): Promise<Promotion | undefined>;
+  applyPromotion(promotionId: number, bookingId: number, userId: number, discountAmount: number): Promise<PromotionUsage>;
+  incrementPromotionUsage(promotionId: number): Promise<void>;
   
   sessionStore: session.SessionStore;
 }
