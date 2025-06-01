@@ -235,6 +235,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         channelId: BIRD_EMAIL_CHANNEL_ID
       };
 
+      console.log('Bird API URL:', `https://api.bird.com/workspaces/${BIRD_WORKSPACE_ID}/channels/${BIRD_EMAIL_CHANNEL_ID}/messages`);
+      console.log('Bird API Payload:', JSON.stringify(payload, null, 2));
+      
       const response = await fetch(`https://api.bird.com/workspaces/${BIRD_WORKSPACE_ID}/channels/${BIRD_EMAIL_CHANNEL_ID}/messages`, {
         method: 'POST',
         headers: {
@@ -243,6 +246,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
         body: JSON.stringify(payload),
       });
+      
+      console.log('Bird API Response Status:', response.status);
+      console.log('Bird API Response Headers:', response.headers);
 
       if (response.ok) {
         console.log('Newsletter email sent successfully');
