@@ -219,7 +219,9 @@ export default function Footer() {
                   <Instagram className="h-6 w-6 text-white" />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://www.instagram.com/villa.ingrosso/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300"
                   aria-label="Facebook"
                 >
