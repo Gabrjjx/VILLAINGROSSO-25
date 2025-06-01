@@ -2,7 +2,20 @@ import { type Express, type Request, type Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
-import { type InsertBooking, type InsertContactMessage } from "@shared/schema";
+import { 
+  type InsertBooking, 
+  type InsertContactMessage, 
+  type InsertBlogPost,
+  type InsertInventoryItem,
+  type InsertInventoryMovement,
+  type InsertFaq,
+  type InsertFaqVote,
+  insertBlogPostSchema,
+  insertInventoryItemSchema,
+  insertInventoryMovementSchema,
+  insertFaqSchema,
+  insertFaqVoteSchema
+} from "@shared/schema";
 import { log } from "./vite";
 import { 
   sendEmail as sendEmailSendGrid,

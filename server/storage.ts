@@ -253,17 +253,28 @@ export class DatabaseStorage implements IStorage {
   // === BLOG METHODS ===
   async getBlogPosts(limit?: number, category?: string): Promise<BlogPost[]> {
     try {
-      let query = db.select().from(blogPosts).where(eq(blogPosts.status, 'published')).orderBy(desc(blogPosts.createdAt));
-      
       if (category) {
-        query = query.where(and(eq(blogPosts.status, 'published'), eq(blogPosts.category, category)));
+        if (limit) {
+          return await db.select().from(blogPosts)
+            .where(and(eq(blogPosts.status, 'published'), eq(blogPosts.category, category)))
+            .orderBy(desc(blogPosts.createdAt))
+            .limit(limit);
+        }
+        return await db.select().from(blogPosts)
+          .where(and(eq(blogPosts.status, 'published'), eq(blogPosts.category, category)))
+          .orderBy(desc(blogPosts.createdAt));
       }
       
       if (limit) {
-        query = query.limit(limit);
+        return await db.select().from(blogPosts)
+          .where(eq(blogPosts.status, 'published'))
+          .orderBy(desc(blogPosts.createdAt))
+          .limit(limit);
       }
       
-      return await query;
+      return await db.select().from(blogPosts)
+        .where(eq(blogPosts.status, 'published'))
+        .orderBy(desc(blogPosts.createdAt));
     } catch (error) {
       console.error('Error fetching blog posts:', error);
       return [];
