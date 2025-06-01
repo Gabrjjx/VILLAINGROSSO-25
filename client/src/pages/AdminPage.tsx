@@ -1660,15 +1660,26 @@ function AdminPage() {
               />
             </div>
             <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => {
-                setShowBlogForm(false);
-                setEditingBlog(null);
-              }}>
+              <button 
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+                onClick={() => {
+                  setShowBlogForm(false);
+                  setEditingBlog(null);
+                }}
+              >
                 Annulla
-              </Button>
-              <Button>
+              </button>
+              <button 
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
+                onClick={() => {
+                  console.log("Creating blog article...");
+                  // Per ora solo un test
+                  alert("Funzione creazione articolo da implementare");
+                  setShowBlogForm(false);
+                }}
+              >
                 {editingBlog ? "Salva Modifiche" : "Crea Articolo"}
-              </Button>
+              </button>
             </div>
           </div>
         </DialogContent>
