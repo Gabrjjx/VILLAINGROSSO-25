@@ -209,22 +209,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       console.log('Importing Bird API...');
-      // Usa Bird API per inviare email di conferma iscrizione
-      const { sendEmail } = await import('./bird');
+      // Usa la stessa funzione che funziona per le altre email
+      const birdModule = await import('./bird');
       console.log('Bird API imported successfully');
       
-      // Template semplificato per evitare problemi di parsing
-      const welcomeMessage = `
-        <h1>Benvenuto nella Newsletter di Villa Ingrosso</h1>
-        <p>Ciao ${firstName || 'Caro ospite'},</p>
-        <p>Grazie per esserti iscritto alla newsletter di Villa Ingrosso!</p>
-        <p>Riceverai aggiornamenti su offerte speciali, eventi locali e consigli di viaggio in Puglia.</p>
-        <p>A presto,<br>Team Villa Ingrosso</p>
-      `;
-      
-      console.log('Sending welcome email to:', email);
-      const success = await sendEmail(email, 'Benvenuto nella Newsletter di Villa Ingrosso', welcomeMessage);
-      console.log('Email send result:', success);
+      // Prova prima la funzione createWelcomeEmail che sappiamo funzionare
+      let success = false;
+      try {
+        const htmlContent = birdModule.createWelcomeEmail(firstName || 'Caro ospite', email, 'https://villaingrosso.com');
+        console.log('Sending newsletter welcome email to:', email);
+        success = await birdModule.sendEmail(email, 'Benvenuto nella Newsletter di Villa Ingrosso', htmlContent);
+        console.log('Email send result:', success);
+      } catch (emailError) {
+        console.error('Error with welcome email template, trying simple version:', emailError);
+        
+        // Fallback con template molto semplice
+        const simpleHtml = `<h1>Benvenuto nella Newsletter di Villa Ingrosso</h1><p>Grazie per esserti iscritto!</p>`;
+        success = await birdModule.sendEmail(email, 'Newsletter Villa Ingrosso', simpleHtml);
+        console.log('Simple email send result:', success);
+      }
       
       if (success) {
         res.json({ success: true, message: "Successfully subscribed to newsletter" });
