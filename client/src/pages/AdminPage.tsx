@@ -1454,6 +1454,15 @@ function AdminPage() {
                     <h1 className="text-2xl font-bold">Gestione Blog</h1>
                     <p className="text-muted-foreground">Crea e gestisci articoli per il blog della villa</p>
                     <p className="text-xs text-blue-600">Blog Form State: {showBlogForm ? "OPEN" : "CLOSED"}</p>
+                    <button 
+                      style={{background: 'red', color: 'white', padding: '10px', margin: '10px'}}
+                      onClick={() => {
+                        alert('Test button works!');
+                        setShowBlogForm(true);
+                      }}
+                    >
+                      TEST BUTTON
+                    </button>
                   </div>
                   <div className="flex gap-2 mt-4 md:mt-0">
                     <Button 
