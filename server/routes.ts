@@ -212,84 +212,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Usa Bird API per inviare email di conferma iscrizione
       const { sendEmail } = await import('./bird');
       console.log('Bird API imported successfully');
+      
+      // Template semplificato per evitare problemi di parsing
       const welcomeMessage = `
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benvenuto nella Newsletter di Villa Ingrosso</title>
-    <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            line-height: 1.6; 
-            color: #2c3e50;
-            background: #f8fafc;
-            padding: 20px;
-        }
-        .email-container { 
-            max-width: 600px; 
-            margin: 0 auto; 
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .header { 
-            background: linear-gradient(135deg, #1976d2 0%, #0288d1 50%, #00acc1 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        .content { 
-            padding: 30px;
-        }
-        .footer { 
-            background: #f1f3f4;
-            padding: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #6c757d;
-        }
-    </style>
-</head>
-<body>
-    <div class="email-container">
-        <div class="header">
-            <h1>🏖️ Benvenuto nella Newsletter!</h1>
-            <p>Villa Ingrosso - La tua casa vacanze in Puglia</p>
-        </div>
-        
-        <div class="content">
-            <p>Ciao ${firstName || 'Caro ospite'},</p>
-            
-            <p>Grazie per esserti iscritto alla newsletter di Villa Ingrosso!</p>
-            
-            <p>Riceverai aggiornamenti su:</p>
-            <ul>
-                <li>🌊 Offerte speciali e promozioni</li>
-                <li>🏖️ Eventi e attività locali</li>
-                <li>📍 Consigli sui luoghi da visitare in Puglia</li>
-                <li>🍝 Ristoranti e tradizioni gastronomiche</li>
-            </ul>
-            
-            <p>Non vediamo l'ora di condividere con te le meraviglie della costa ionica pugliese!</p>
-            
-            <p>A presto,<br>
-            <strong>Team Villa Ingrosso</strong></p>
-        </div>
-        
-        <div class="footer">
-            <p>Villa Ingrosso - Leporano Marina, Puglia</p>
-            <p>🌐 <a href="https://villaingrosso.com">villaingrosso.com</a></p>
-        </div>
-    </div>
-</body>
-</html>
+        <h1>Benvenuto nella Newsletter di Villa Ingrosso</h1>
+        <p>Ciao ${firstName || 'Caro ospite'},</p>
+        <p>Grazie per esserti iscritto alla newsletter di Villa Ingrosso!</p>
+        <p>Riceverai aggiornamenti su offerte speciali, eventi locali e consigli di viaggio in Puglia.</p>
+        <p>A presto,<br>Team Villa Ingrosso</p>
       `;
       
-      console.log('Sending welcome email...');
-      const success = await sendEmail(email, '🏖️ Benvenuto nella Newsletter di Villa Ingrosso', welcomeMessage);
+      console.log('Sending welcome email to:', email);
+      const success = await sendEmail(email, 'Benvenuto nella Newsletter di Villa Ingrosso', welcomeMessage);
       console.log('Email send result:', success);
       
       if (success) {
@@ -297,10 +231,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         res.status(500).json({ success: false, message: "Failed to subscribe to newsletter" });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error subscribing to newsletter:", error);
-      console.error("Error stack:", error.stack);
-      res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+      console.error("Error stack:", error?.stack);
+      res.status(500).json({ success: false, message: "Internal server error", error: error?.message || 'Unknown error' });
     }
   });
 
