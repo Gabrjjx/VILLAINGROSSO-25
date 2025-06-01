@@ -15,9 +15,13 @@ import {
   ThumbsDown, 
   Eye,
   HelpCircle,
-  MessageCircle
+  MessageCircle,
+  Plus
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import { Link } from "wouter";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface Faq {
   id: number;
@@ -146,7 +150,9 @@ export default function FaqPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50">
       {/* Header */}
       <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
@@ -197,6 +203,16 @@ export default function FaqPage() {
                 {category}
               </Button>
             ))}
+            
+            {/* Pulsante Admin per aggiungere FAQ */}
+            {user?.isAdmin && (
+              <Link href="/admin">
+                <Button className="bg-green-600 hover:bg-green-700 ml-4">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Aggiungi FAQ
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
 
@@ -332,6 +348,8 @@ export default function FaqPage() {
           </Card>
         </div>
       </div>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }

@@ -4,8 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Calendar, Eye, Tag, Search, ArrowRight } from "lucide-react";
+import { Calendar, Eye, Tag, Search, ArrowRight, Plus } from "lucide-react";
 import { Link } from "wouter";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { useAuth } from "@/hooks/use-auth";
 
 interface BlogPost {
   id: number;
@@ -23,6 +26,7 @@ interface BlogPost {
 }
 
 export default function BlogPage() {
+  const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
@@ -64,8 +68,10 @@ export default function BlogPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50">
-      {/* Header */}
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50">
+        {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -79,7 +85,7 @@ export default function BlogPage() {
 
       <div className="container mx-auto px-4 py-8">
         {/* Filtri e Ricerca */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
+        <div className="flex flex-col lg:flex-row gap-4 mb-8">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
@@ -110,6 +116,16 @@ export default function BlogPage() {
               </Button>
             ))}
           </div>
+
+          {/* Pulsante Admin per aggiungere contenuti */}
+          {user?.isAdmin && (
+            <Link href="/admin">
+              <Button className="bg-green-600 hover:bg-green-700">
+                <Plus className="h-4 w-4 mr-2" />
+                Aggiungi Post
+              </Button>
+            </Link>
+          )}
         </div>
 
         {/* Grid degli articoli */}
@@ -180,7 +196,9 @@ export default function BlogPage() {
             ))}
           </div>
         )}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
