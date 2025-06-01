@@ -395,8 +395,9 @@ export class DatabaseStorage implements IStorage {
   async addInventoryMovement(movement: InsertInventoryMovement): Promise<InventoryMovement> {
     const [newMovement] = await db.insert(inventoryMovements).values(movement).returning();
     
-    const item = await this.getInventoryItem(movement.itemId);
-    if (item) {
+    if (movement.itemId) {
+      const item = await this.getInventoryItem(movement.itemId);
+      if (item) {
       let newQuantity = item.currentQuantity;
       if (movement.type === 'in') {
         newQuantity += movement.quantity;
@@ -414,13 +415,14 @@ export class DatabaseStorage implements IStorage {
 
   async getInventoryMovements(itemId?: number): Promise<InventoryMovement[]> {
     try {
-      let query = db.select().from(inventoryMovements).orderBy(desc(inventoryMovements.createdAt));
-      
       if (itemId) {
-        query = query.where(eq(inventoryMovements.itemId, itemId));
+        return await db.select().from(inventoryMovements)
+          .where(eq(inventoryMovements.itemId, itemId))
+          .orderBy(desc(inventoryMovements.createdAt));
+      } else {
+        return await db.select().from(inventoryMovements)
+          .orderBy(desc(inventoryMovements.createdAt));
       }
-      
-      return await query;
     } catch (error) {
       console.error('Error fetching inventory movements:', error);
       return [];
