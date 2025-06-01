@@ -4,9 +4,21 @@
 - **Name**: Villa Ingrosso API
 - **Service Name**: villa-ingrosso-api
 - **Development URL**: https://35683667-e27b-4a35-9b6b-cd2b453f9995-00-1q7kecmao3gy.worf.replit.dev/api
-- **Production URL**: https://api.villaingrosso.com
+- **Production URL**: https://villaingrosso.com/api
 - **Query Array Format**: JSON - Example: `p=["a","b","c"]`
 - **Configuration Mode**: Manual
+
+## Required Headers
+All API requests should include these headers:
+```
+Content-Type: application/json
+Accept: application/json
+```
+
+For authenticated endpoints, also include:
+```
+Authorization: Bearer <jwt_token>
+```
 
 ## Authentication
 
@@ -488,7 +500,90 @@ Authorization: Bearer <jwt_token>
 }
 ```
 
+## Newsletter Management
+
+### Subscribe to Newsletter
+**POST** `/api/newsletter/subscribe`
+
+Subscribe a user to the Villa Ingrosso newsletter.
+
+**Headers:**
+```
+Content-Type: application/json
+Accept: application/json
+```
+
+**Request Body:**
+```json
+{
+  "email": "user@example.com",
+  "firstName": "Mario" // optional
+}
+```
+
+**Response (Success):**
+```json
+{
+  "success": true,
+  "message": "Successfully subscribed to newsletter"
+}
+```
+
+**Response (Error):**
+```json
+{
+  "success": false,
+  "message": "Error message description",
+  "error": "Detailed error information"
+}
+```
+
+**Behavior:**
+- Validates email format
+- Sends welcome email via Bird API
+- Uses configured BIRD_EMAIL_CHANNEL_ID
+- Returns immediate response
+
+**Example cURL:**
+```bash
+curl -X POST https://villaingrosso.com/api/newsletter/subscribe \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{"email": "mario@example.com", "firstName": "Mario"}'
+```
+
+### Send Newsletter (Admin Only)
+**POST** `/api/newsletter/send`
+
+Send newsletter to multiple recipients. Requires admin authentication.
+
+**Headers:**
+```
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer <admin_jwt_token>
+```
+
+**Request Body:**
+```json
+{
+  "subject": "Newsletter Subject",
+  "content": "<html>Newsletter content</html>",
+  "recipients": ["email1@example.com", "email2@example.com"]
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Newsletter sent successfully",
+  "sent": 2,
+  "failed": 0
+}
+```
+
 ---
 
-*Last updated: May 31, 2025*
-*API Version: 1.0*
+*Last updated: June 1, 2025*
+*API Version: 1.1*
