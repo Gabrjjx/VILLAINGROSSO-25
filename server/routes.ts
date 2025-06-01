@@ -183,103 +183,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Iscrizione alla newsletter usando l'API Bird standard
+  // Newsletter temporaneamente disabilitata
   app.post("/api/newsletter/subscribe", async (req: Request, res: Response) => {
     try {
       const { email, firstName } = req.body;
-      console.log('Newsletter subscribe request:', { email, firstName });
       
       if (!email) {
         return res.status(400).json({ error: "Email is required" });
       }
 
-      // Verifica che l'email sia valida
+      // Valida formato email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         return res.status(400).json({ error: "Invalid email format" });
       }
 
-      // Usa l'API Bird diretta invece dell'API Transmissions
-      const BIRD_API_KEY = process.env.BIRD_API_KEY;
-      const BIRD_WORKSPACE_ID = process.env.BIRD_WORKSPACE_ID;
-      const BIRD_EMAIL_CHANNEL_ID = process.env.BIRD_EMAIL_CHANNEL_ID;
-
-      if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID || !BIRD_EMAIL_CHANNEL_ID) {
-        console.error('Bird API credentials missing');
-        return res.status(500).json({ error: "Email service not configured" });
-      }
-
-      const payload = {
-        options: {
-          open_tracking: true,
-          click_tracking: true,
-          transactional: true,
-          perform_substitutions: true
-        },
-        recipients: [
-          {
-            address: {
-              email: email,
-              name: firstName || email.split('@')[0]
-            },
-            rcpt_type: "to"
-          }
-        ],
-        content: {
-          from: "info@villaingrosso.com",
-          subject: "🏖️ Benvenuto nella Newsletter di Villa Ingrosso",
-          html: `
-            <h1>Benvenuto nella Newsletter di Villa Ingrosso</h1>
-            <p>Ciao ${firstName || 'Caro ospite'},</p>
-            <p>Grazie per esserti iscritto alla nostra newsletter!</p>
-            <p>Riceverai aggiornamenti su:</p>
-            <ul>
-              <li>🌊 Offerte speciali e promozioni</li>
-              <li>🏖️ Eventi e attività locali</li>
-              <li>📍 Consigli sui luoghi da visitare in Puglia</li>
-            </ul>
-            <p>A presto,<br>Team Villa Ingrosso</p>
-          `,
-          text: `Benvenuto nella Newsletter di Villa Ingrosso! Ciao ${firstName || 'Caro ospite'}, grazie per esserti iscritto alla nostra newsletter. Riceverai aggiornamenti su offerte speciali, eventi locali e consigli di viaggio in Puglia. A presto, Team Villa Ingrosso`
-        }
-      };
-
-      console.log('Bird API URL:', `https://email.eu-west-1.api.bird.com/api/workspaces/${BIRD_WORKSPACE_ID}/reach/transmissions`);
-      console.log('Bird API Payload:', JSON.stringify(payload, null, 2));
-      
-      const response = await fetch(`https://email.eu-west-1.api.bird.com/api/workspaces/${BIRD_WORKSPACE_ID}/reach/transmissions`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `AccessKey ${BIRD_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+      // Log per tracking temporaneo
+      console.log('NEWSLETTER_SUBSCRIPTION:', {
+        email,
+        firstName: firstName || 'Non specificato',
+        timestamp: new Date().toISOString()
       });
-      
-      console.log('Bird API Response Status:', response.status);
-      console.log('Bird API Response Headers:', response.headers);
 
-      if (response.ok) {
-        console.log('Newsletter email sent successfully');
-        res.json({ 
-          success: true, 
-          message: "Successfully subscribed to newsletter" 
-        });
-      } else {
-        const errorText = await response.text();
-        console.error('Bird API error:', errorText);
-        res.status(500).json({ 
-          success: false, 
-          message: "Failed to send newsletter email" 
-        });
-      }
+      // Risposta temporanea di successo
+      res.json({ 
+        success: true, 
+        message: "Newsletter subscription received. You will be contacted soon." 
+      });
       
     } catch (error: any) {
       console.error("Newsletter subscription error:", error);
       res.status(500).json({ 
         success: false, 
-        message: "Internal server error",
-        error: error?.message 
+        message: "Internal server error"
       });
     }
   });
