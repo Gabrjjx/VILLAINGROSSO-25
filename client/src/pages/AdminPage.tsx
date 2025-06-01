@@ -70,6 +70,12 @@ function AdminPage() {
   const [showFaqForm, setShowFaqForm] = useState(false);
   const [editingBlog, setEditingBlog] = useState<any>(null);
   const [editingFaq, setEditingFaq] = useState<any>(null);
+  
+  // Form states for blog
+  const [blogTitle, setBlogTitle] = useState("");
+  const [blogCategory, setBlogCategory] = useState("");
+  const [blogExcerpt, setBlogExcerpt] = useState("");
+  const [blogContent, setBlogContent] = useState("");
 
   // Carica gli utenti
   const { data: users = [], isLoading: usersLoading } = useQuery<Omit<User, "password">[]>({
@@ -1642,21 +1648,35 @@ function AdminPage() {
           <div className="space-y-4">
             <div>
               <label className="text-sm font-medium">Titolo</label>
-              <Input placeholder="Inserisci il titolo dell'articolo..." />
+              <Input 
+                placeholder="Inserisci il titolo dell'articolo..." 
+                value={blogTitle}
+                onChange={(e) => setBlogTitle(e.target.value)}
+              />
             </div>
             <div>
               <label className="text-sm font-medium">Categoria</label>
-              <Input placeholder="es. Guide, Consigli, Novità..." />
+              <Input 
+                placeholder="es. Guide, Consigli, Novità..." 
+                value={blogCategory}
+                onChange={(e) => setBlogCategory(e.target.value)}
+              />
             </div>
             <div>
               <label className="text-sm font-medium">Estratto</label>
-              <Input placeholder="Breve descrizione dell'articolo..." />
+              <Input 
+                placeholder="Breve descrizione dell'articolo..." 
+                value={blogExcerpt}
+                onChange={(e) => setBlogExcerpt(e.target.value)}
+              />
             </div>
             <div>
               <label className="text-sm font-medium">Contenuto</label>
               <textarea 
                 className="w-full h-40 px-3 py-2 border rounded-md resize-none"
                 placeholder="Scrivi qui il contenuto completo dell'articolo..."
+                value={blogContent}
+                onChange={(e) => setBlogContent(e.target.value)}
               />
             </div>
             <div className="flex justify-end gap-2">
@@ -1671,11 +1691,50 @@ function AdminPage() {
               </button>
               <button 
                 className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
-                onClick={() => {
-                  console.log("Creating blog article...");
-                  // Per ora solo un test
-                  alert("Funzione creazione articolo da implementare");
-                  setShowBlogForm(false);
+                onClick={async () => {
+                  try {
+                    if (!blogTitle.trim()) {
+                      alert("Il titolo è obbligatorio");
+                      return;
+                    }
+                    
+                    const articleData = {
+                      title: blogTitle,
+                      content: blogContent,
+                      excerpt: blogExcerpt,
+                      category: blogCategory,
+                      authorId: 1 // Admin user ID
+                    };
+                    
+                    const response = await fetch("/api/blog", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                      },
+                      body: JSON.stringify(articleData)
+                    });
+                    
+                    if (response.ok) {
+                      // Reset form
+                      setBlogTitle("");
+                      setBlogCategory("");
+                      setBlogExcerpt("");
+                      setBlogContent("");
+                      setShowBlogForm(false);
+                      
+                      // Refresh blog list
+                      queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
+                      
+                      alert("Articolo creato con successo!");
+                    } else {
+                      const error = await response.text();
+                      alert(`Errore nella creazione: ${error}`);
+                    }
+                  } catch (error) {
+                    console.error("Error creating article:", error);
+                    alert("Errore durante la creazione dell'articolo");
+                  }
                 }}
               >
                 {editingBlog ? "Salva Modifiche" : "Crea Articolo"}
