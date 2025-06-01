@@ -1,12 +1,6 @@
-import { users, bookings, contactMessages, chatMessages, blogPosts, inventoryItems, inventoryMovements, faqs, faqVotes } from "@shared/schema";
-import { eq, and, gte, lte, desc, lt, ilike, or, sql } from "drizzle-orm";
+import { users, chatMessages, bookings, contactMessages, blogPosts, inventoryItems, inventoryMovements, faqs, faqVotes, type User, type InsertUser, type ChatMessage, type InsertChatMessage, type Booking, type InsertBooking, type ContactMessage, type InsertContactMessage, type BlogPost, type InsertBlogPost, type InventoryItem, type InsertInventoryItem, type InventoryMovement, type InsertInventoryMovement, type Faq, type InsertFaq, type FaqVote, type InsertFaqVote } from "@shared/schema";
 import { db } from "./db";
-import type { 
-  User, InsertUser, Booking, InsertBooking, ContactMessage, InsertContactMessage, 
-  ChatMessage, InsertChatMessage, BlogPost, InsertBlogPost, InventoryItem, 
-  InsertInventoryItem, InventoryMovement, InsertInventoryMovement, Faq, InsertFaq,
-  FaqVote, InsertFaqVote
-} from "@shared/schema";
+import { eq, desc, asc, and, or, sql, like, ilike } from "drizzle-orm";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import { pool } from "./db";
@@ -14,310 +8,197 @@ import { pool } from "./db";
 const PostgresSessionStore = connectPg(session);
 
 export interface IStorage {
-  // Operazioni sugli utenti
+  // User methods
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
-  getUserByEmail(email: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  createUser(insertUser: InsertUser): Promise<User>;
   updateUser(id: number, userData: Partial<InsertUser>): Promise<User | undefined>;
   deleteUser(id: number): Promise<boolean>;
   
-  // Operazioni per il reset password
-  setResetToken(email: string, token: string, expiry: Date): Promise<boolean>;
-  getUserByResetToken(token: string): Promise<User | undefined>;
-  clearResetToken(userId: number): Promise<boolean>;
-  
-  // Operazioni sulle prenotazioni
+  // Booking methods
+  getBookings(): Promise<Booking[]>;
   getBooking(id: number): Promise<Booking | undefined>;
-  getBookingsByUser(userId: number): Promise<Booking[]>;
-  getBookingsByDateRange(startDate: Date, endDate: Date): Promise<Booking[]>;
-  createBooking(booking: InsertBooking): Promise<Booking>;
+  createBooking(insertBooking: InsertBooking): Promise<Booking>;
   updateBooking(id: number, bookingData: Partial<InsertBooking>): Promise<Booking | undefined>;
   deleteBooking(id: number): Promise<boolean>;
   
-  // Operazioni sui messaggi di contatto
-  getContactMessage(id: number): Promise<ContactMessage | undefined>;
-  getAllContactMessages(): Promise<ContactMessage[]>;
-  getUnreadContactMessages(): Promise<ContactMessage[]>;
-  createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
-  markContactMessageAsRead(id: number): Promise<boolean>;
-  deleteContactMessage(id: number): Promise<boolean>;
+  // Contact methods
+  getContacts(): Promise<Contact[]>;
+  createContact(insertContact: InsertContact): Promise<Contact>;
+  markContactAsRead(id: number): Promise<boolean>;
   
-  // Operazioni sui messaggi di chat
-  getChatMessagesByUser(userId: number): Promise<ChatMessage[]>;
-  createChatMessage(message: InsertChatMessage): Promise<ChatMessage>;
+  // Newsletter methods
+  getNewsletterSubscribers(): Promise<NewsletterSubscriber[]>;
+  createNewsletterSubscriber(insertSubscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
   
-  // Operazioni sui post del blog
-  getBlogPosts(limit?: number, category?: string): Promise<BlogPost[]>;
+  // Chat methods
+  getChatMessages(userId: number): Promise<ChatMessage[]>;
+  createChatMessage(insertMessage: InsertChatMessage): Promise<ChatMessage>;
+  
+  // Blog methods
+  getBlogPosts(): Promise<BlogPost[]>;
   getBlogPost(id: number): Promise<BlogPost | undefined>;
   getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
-  createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
-  updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
+  createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(id: number, postData: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: number): Promise<boolean>;
-  incrementBlogPostViews(id: number): Promise<boolean>;
   
-  // Operazioni inventario
+  // Inventory methods
   getInventoryItems(): Promise<InventoryItem[]>;
   getInventoryItem(id: number): Promise<InventoryItem | undefined>;
-  createInventoryItem(item: InsertInventoryItem): Promise<InventoryItem>;
-  updateInventoryItem(id: number, item: Partial<InsertInventoryItem>): Promise<InventoryItem | undefined>;
+  createInventoryItem(insertItem: InsertInventoryItem): Promise<InventoryItem>;
+  updateInventoryItem(id: number, itemData: Partial<InsertInventoryItem>): Promise<InventoryItem | undefined>;
   deleteInventoryItem(id: number): Promise<boolean>;
   addInventoryMovement(movement: InsertInventoryMovement): Promise<InventoryMovement>;
   getInventoryMovements(itemId?: number): Promise<InventoryMovement[]>;
   getLowStockItems(): Promise<InventoryItem[]>;
   
-  // Operazioni FAQ
+  // FAQ methods
   getFaqs(category?: string): Promise<Faq[]>;
   getFaq(id: number): Promise<Faq | undefined>;
   createFaq(faq: InsertFaq): Promise<Faq>;
-  updateFaq(id: number, faq: Partial<InsertFaq>): Promise<Faq | undefined>;
+  updateFaq(id: number, faqData: Partial<InsertFaq>): Promise<Faq | undefined>;
   deleteFaq(id: number): Promise<boolean>;
-  incrementFaqViews(id: number): Promise<boolean>;
-  voteFaq(faqId: number, userId: number, isHelpful: boolean): Promise<boolean>;
-  searchFaqs(query: string): Promise<Faq[]>;
+  incrementFaqView(id: number): Promise<void>;
+  voteFaq(faqId: number, userId: number, helpful: boolean): Promise<boolean>;
+  getFaqVote(faqId: number, userId: number): Promise<FaqVote | undefined>;
   
-  // Sessioni per l'autenticazione
-  sessionStore: session.Store;
+  sessionStore: session.SessionStore;
 }
 
 export class DatabaseStorage implements IStorage {
-  sessionStore: session.Store;
-  
+  sessionStore: session.SessionStore;
+
   constructor() {
-    this.sessionStore = new PostgresSessionStore({
-      pool,
-      createTableIfMissing: true
+    this.sessionStore = new PostgresSessionStore({ 
+      pool, 
+      createTableIfMissing: true 
     });
   }
-  
-  // Implementazioni dei metodi per la chat
-  async getChatMessagesByUser(userId: number): Promise<ChatMessage[]> {
-    return db.select().from(chatMessages).where(eq(chatMessages.userId, userId)).orderBy(chatMessages.createdAt);
-  }
 
-  async createChatMessage(message: InsertChatMessage): Promise<ChatMessage> {
-    const [newMessage] = await db.insert(chatMessages).values(message).returning();
-    return newMessage;
-  }
-  
-  // Implementazioni delle operazioni sugli utenti
+  // User methods
   async getUser(id: number): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user;
+    return user || undefined;
   }
-  
+
   async getUserByUsername(username: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db.insert(users).values(insertUser).returning();
     return user;
   }
-  
-  async getUserByEmail(email: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.email, email));
-    return user;
-  }
-  
-  async createUser(user: InsertUser): Promise<User> {
-    const [newUser] = await db.insert(users).values(user).returning();
-    return newUser;
-  }
-  
+
   async updateUser(id: number, userData: Partial<InsertUser>): Promise<User | undefined> {
-    const [updatedUser] = await db
-      .update(users)
-      .set(userData)
-      .where(eq(users.id, id))
-      .returning();
-    return updatedUser;
+    const [user] = await db.update(users).set(userData).where(eq(users.id, id)).returning();
+    return user || undefined;
   }
-  
+
   async deleteUser(id: number): Promise<boolean> {
-    const result = await db.delete(users).where(eq(users.id, id));
-    return true; // In PostgreSQL, delete non restituisce il conteggio delle righe eliminate
-  }
-
-  async setResetToken(email: string, token: string, expiry: Date): Promise<boolean> {
     try {
-      await db.update(users)
-        .set({ 
-          resetToken: token, 
-          resetTokenExpiry: expiry 
-        })
-        .where(eq(users.email, email));
+      await db.delete(users).where(eq(users.id, id));
       return true;
     } catch (error) {
-      console.error("Error setting reset token:", error);
       return false;
     }
   }
 
-  async getUserByResetToken(token: string): Promise<User | undefined> {
-    try {
-      const [user] = await db.select()
-        .from(users)
-        .where(eq(users.resetToken, token));
-      return user || undefined;
-    } catch (error) {
-      console.error("Error getting user by reset token:", error);
-      return undefined;
-    }
+  // Booking methods
+  async getBookings(): Promise<Booking[]> {
+    return await db.select().from(bookings).orderBy(desc(bookings.createdAt));
   }
 
-  async clearResetToken(userId: number): Promise<boolean> {
-    try {
-      await db.update(users)
-        .set({ 
-          resetToken: null, 
-          resetTokenExpiry: null 
-        })
-        .where(eq(users.id, userId));
-      return true;
-    } catch (error) {
-      console.error("Error clearing reset token:", error);
-      return false;
-    }
-  }
-  
-  // Implementazioni delle operazioni sulle prenotazioni
   async getBooking(id: number): Promise<Booking | undefined> {
     const [booking] = await db.select().from(bookings).where(eq(bookings.id, id));
-    return booking;
-  }
-  
-  async getBookingsByUser(userId: number): Promise<Booking[]> {
-    return await db.select().from(bookings).where(eq(bookings.userId, userId));
-  }
-  
-  async getBookingsByDateRange(startDate: Date, endDate: Date): Promise<Booking[]> {
-    return await db
-      .select()
-      .from(bookings)
-      .where(
-        and(
-          gte(bookings.startDate, startDate),
-          lte(bookings.endDate, endDate)
-        )
-      );
-  }
-  
-  async createBooking(booking: InsertBooking): Promise<Booking> {
-    const [newBooking] = await db.insert(bookings).values(booking).returning();
-    return newBooking;
-  }
-  
-  async updateBooking(id: number, bookingData: Partial<InsertBooking>): Promise<Booking | undefined> {
-    const [updatedBooking] = await db
-      .update(bookings)
-      .set(bookingData)
-      .where(eq(bookings.id, id))
-      .returning();
-    return updatedBooking;
-  }
-  
-  async deleteBooking(id: number): Promise<boolean> {
-    await db.delete(bookings).where(eq(bookings.id, id));
-    return true;
-  }
-  
-  // Implementazioni delle operazioni sui messaggi di contatto
-  async getContactMessage(id: number): Promise<ContactMessage | undefined> {
-    const [message] = await db.select().from(contactMessages).where(eq(contactMessages.id, id));
-    return message;
-  }
-  
-  async getAllContactMessages(): Promise<ContactMessage[]> {
-    return await db.select().from(contactMessages);
-  }
-  
-  async getUnreadContactMessages(): Promise<ContactMessage[]> {
-    return await db.select().from(contactMessages).where(eq(contactMessages.read, false));
-  }
-  
-  async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
-    const [newMessage] = await db.insert(contactMessages).values(message).returning();
-    return newMessage;
-  }
-  
-  async markContactMessageAsRead(id: number): Promise<boolean> {
-    await db
-      .update(contactMessages)
-      .set({ read: true })
-      .where(eq(contactMessages.id, id));
-    return true;
-  }
-  
-  async deleteContactMessage(id: number): Promise<boolean> {
-    await db.delete(contactMessages).where(eq(contactMessages.id, id));
-    return true;
+    return booking || undefined;
   }
 
-  // === BLOG METHODS ===
-  async getBlogPosts(limit?: number, category?: string): Promise<BlogPost[]> {
+  async createBooking(insertBooking: InsertBooking): Promise<Booking> {
+    const [booking] = await db.insert(bookings).values(insertBooking).returning();
+    return booking;
+  }
+
+  async updateBooking(id: number, bookingData: Partial<InsertBooking>): Promise<Booking | undefined> {
+    const [booking] = await db.update(bookings).set(bookingData).where(eq(bookings.id, id)).returning();
+    return booking || undefined;
+  }
+
+  async deleteBooking(id: number): Promise<boolean> {
     try {
-      if (category) {
-        if (limit) {
-          return await db.select().from(blogPosts)
-            .where(and(eq(blogPosts.status, 'published'), eq(blogPosts.category, category)))
-            .orderBy(desc(blogPosts.createdAt))
-            .limit(limit);
-        }
-        return await db.select().from(blogPosts)
-          .where(and(eq(blogPosts.status, 'published'), eq(blogPosts.category, category)))
-          .orderBy(desc(blogPosts.createdAt));
-      }
-      
-      if (limit) {
-        return await db.select().from(blogPosts)
-          .where(eq(blogPosts.status, 'published'))
-          .orderBy(desc(blogPosts.createdAt))
-          .limit(limit);
-      }
-      
-      return await db.select().from(blogPosts)
-        .where(eq(blogPosts.status, 'published'))
-        .orderBy(desc(blogPosts.createdAt));
+      await db.delete(bookings).where(eq(bookings.id, id));
+      return true;
     } catch (error) {
-      console.error('Error fetching blog posts:', error);
-      return [];
+      return false;
     }
+  }
+
+  // Contact methods
+  async getContacts(): Promise<Contact[]> {
+    return await db.select().from(contacts).orderBy(desc(contacts.createdAt));
+  }
+
+  async createContact(insertContact: InsertContact): Promise<Contact> {
+    const [contact] = await db.insert(contacts).values(insertContact).returning();
+    return contact;
+  }
+
+  async markContactAsRead(id: number): Promise<boolean> {
+    try {
+      await db.update(contacts).set({ isRead: true }).where(eq(contacts.id, id));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  // Newsletter methods
+  async getNewsletterSubscribers(): Promise<NewsletterSubscriber[]> {
+    return await db.select().from(newsletterSubscribers).orderBy(desc(newsletterSubscribers.createdAt));
+  }
+
+  async createNewsletterSubscriber(insertSubscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber> {
+    const [subscriber] = await db.insert(newsletterSubscribers).values(insertSubscriber).returning();
+    return subscriber;
+  }
+
+  // Chat methods
+  async getChatMessages(userId: number): Promise<ChatMessage[]> {
+    return await db.select().from(chatMessages)
+      .where(eq(chatMessages.userId, userId))
+      .orderBy(asc(chatMessages.createdAt));
+  }
+
+  async createChatMessage(insertMessage: InsertChatMessage): Promise<ChatMessage> {
+    const [message] = await db.insert(chatMessages).values(insertMessage).returning();
+    return message;
+  }
+
+  // Blog methods
+  async getBlogPosts(): Promise<BlogPost[]> {
+    return await db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
   }
 
   async getBlogPost(id: number): Promise<BlogPost | undefined> {
-    try {
-      const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
-      return post || undefined;
-    } catch (error) {
-      console.error('Error fetching blog post:', error);
-      return undefined;
-    }
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    return post || undefined;
   }
 
   async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
-    try {
-      const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
-      return post || undefined;
-    } catch (error) {
-      console.error('Error fetching blog post by slug:', error);
-      return undefined;
-    }
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    return post || undefined;
   }
 
-  async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
-    const [newPost] = await db.insert(blogPosts).values(post).returning();
-    return newPost;
+  async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
+    const [post] = await db.insert(blogPosts).values(insertPost).returning();
+    return post;
   }
 
   async updateBlogPost(id: number, postData: Partial<InsertBlogPost>): Promise<BlogPost | undefined> {
-    try {
-      const [updatedPost] = await db
-        .update(blogPosts)
-        .set({ ...postData, updatedAt: new Date() })
-        .where(eq(blogPosts.id, id))
-        .returning();
-      return updatedPost || undefined;
-    } catch (error) {
-      console.error('Error updating blog post:', error);
-      return undefined;
-    }
+    const [post] = await db.update(blogPosts).set(postData).where(eq(blogPosts.id, id)).returning();
+    return post || undefined;
   }
 
   async deleteBlogPost(id: number): Promise<boolean> {
@@ -325,61 +206,28 @@ export class DatabaseStorage implements IStorage {
       await db.delete(blogPosts).where(eq(blogPosts.id, id));
       return true;
     } catch (error) {
-      console.error('Error deleting blog post:', error);
       return false;
     }
   }
 
-  async incrementBlogPostViews(id: number): Promise<boolean> {
-    try {
-      await db
-        .update(blogPosts)
-        .set({ viewCount: sql`${blogPosts.viewCount} + 1` })
-        .where(eq(blogPosts.id, id));
-      return true;
-    } catch (error) {
-      console.error('Error incrementing blog post views:', error);
-      return false;
-    }
-  }
-
-  // === INVENTORY METHODS ===
+  // Inventory methods
   async getInventoryItems(): Promise<InventoryItem[]> {
-    try {
-      return await db.select().from(inventoryItems).orderBy(inventoryItems.name);
-    } catch (error) {
-      console.error('Error fetching inventory items:', error);
-      return [];
-    }
+    return await db.select().from(inventoryItems).orderBy(asc(inventoryItems.name));
   }
 
   async getInventoryItem(id: number): Promise<InventoryItem | undefined> {
-    try {
-      const [item] = await db.select().from(inventoryItems).where(eq(inventoryItems.id, id));
-      return item || undefined;
-    } catch (error) {
-      console.error('Error fetching inventory item:', error);
-      return undefined;
-    }
+    const [item] = await db.select().from(inventoryItems).where(eq(inventoryItems.id, id));
+    return item || undefined;
   }
 
-  async createInventoryItem(item: InsertInventoryItem): Promise<InventoryItem> {
-    const [newItem] = await db.insert(inventoryItems).values(item).returning();
-    return newItem;
+  async createInventoryItem(insertItem: InsertInventoryItem): Promise<InventoryItem> {
+    const [item] = await db.insert(inventoryItems).values(insertItem).returning();
+    return item;
   }
 
   async updateInventoryItem(id: number, itemData: Partial<InsertInventoryItem>): Promise<InventoryItem | undefined> {
-    try {
-      const [updatedItem] = await db
-        .update(inventoryItems)
-        .set({ ...itemData, lastChecked: new Date() })
-        .where(eq(inventoryItems.id, id))
-        .returning();
-      return updatedItem || undefined;
-    } catch (error) {
-      console.error('Error updating inventory item:', error);
-      return undefined;
-    }
+    const [item] = await db.update(inventoryItems).set(itemData).where(eq(inventoryItems.id, id)).returning();
+    return item || undefined;
   }
 
   async deleteInventoryItem(id: number): Promise<boolean> {
@@ -387,7 +235,6 @@ export class DatabaseStorage implements IStorage {
       await db.delete(inventoryItems).where(eq(inventoryItems.id, id));
       return true;
     } catch (error) {
-      console.error('Error deleting inventory item:', error);
       return false;
     }
   }
@@ -398,14 +245,12 @@ export class DatabaseStorage implements IStorage {
     if (movement.itemId) {
       const item = await this.getInventoryItem(movement.itemId);
       if (item) {
-      let newQuantity = item.currentQuantity;
-      if (movement.type === 'in') {
-        newQuantity += movement.quantity;
-      } else if (movement.type === 'out' || movement.type === 'damaged') {
-        newQuantity -= movement.quantity;
-      }
-      
-      if (movement.itemId) {
+        let newQuantity = item.currentQuantity;
+        if (movement.type === 'in') {
+          newQuantity += movement.quantity;
+        } else if (movement.type === 'out' || movement.type === 'damaged') {
+          newQuantity -= movement.quantity;
+        }
         await this.updateInventoryItem(movement.itemId, { currentQuantity: newQuantity });
       }
     }
@@ -431,26 +276,26 @@ export class DatabaseStorage implements IStorage {
 
   async getLowStockItems(): Promise<InventoryItem[]> {
     try {
-      return await db
-        .select()
-        .from(inventoryItems)
-        .where(sql`${inventoryItems.currentQuantity} <= ${inventoryItems.minimumQuantity}`);
+      return await db.select().from(inventoryItems)
+        .where(sql`current_quantity <= minimum_quantity`);
     } catch (error) {
       console.error('Error fetching low stock items:', error);
       return [];
     }
   }
 
-  // === FAQ METHODS ===
+  // FAQ methods
   async getFaqs(category?: string): Promise<Faq[]> {
     try {
-      let query = db.select().from(faqs).where(eq(faqs.isActive, true)).orderBy(faqs.sortOrder, faqs.id);
-      
       if (category) {
-        query = query.where(and(eq(faqs.isActive, true), eq(faqs.category, category)));
+        return await db.select().from(faqs)
+          .where(and(eq(faqs.isActive, true), eq(faqs.category, category)))
+          .orderBy(asc(faqs.sortOrder));
+      } else {
+        return await db.select().from(faqs)
+          .where(eq(faqs.isActive, true))
+          .orderBy(asc(faqs.sortOrder));
       }
-      
-      return await query;
     } catch (error) {
       console.error('Error fetching FAQs:', error);
       return [];
@@ -460,7 +305,7 @@ export class DatabaseStorage implements IStorage {
   async getFaq(id: number): Promise<Faq | undefined> {
     try {
       const [faq] = await db.select().from(faqs).where(eq(faqs.id, id));
-      return faq || undefined;
+      return faq;
     } catch (error) {
       console.error('Error fetching FAQ:', error);
       return undefined;
@@ -474,12 +319,11 @@ export class DatabaseStorage implements IStorage {
 
   async updateFaq(id: number, faqData: Partial<InsertFaq>): Promise<Faq | undefined> {
     try {
-      const [updatedFaq] = await db
-        .update(faqs)
-        .set({ ...faqData, updatedAt: new Date() })
+      const [updatedFaq] = await db.update(faqs)
+        .set(faqData)
         .where(eq(faqs.id, id))
         .returning();
-      return updatedFaq || undefined;
+      return updatedFaq;
     } catch (error) {
       console.error('Error updating FAQ:', error);
       return undefined;
@@ -496,53 +340,39 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  async incrementFaqViews(id: number): Promise<boolean> {
-    try {
-      await db
-        .update(faqs)
-        .set({ viewCount: sql`${faqs.viewCount} + 1` })
-        .where(eq(faqs.id, id));
-      return true;
-    } catch (error) {
-      console.error('Error incrementing FAQ views:', error);
-      return false;
-    }
+  async incrementFaqView(id: number): Promise<void> {
+    await db.update(faqs)
+      .set({ viewCount: sql`${faqs.viewCount} + 1` })
+      .where(eq(faqs.id, id));
   }
 
-  async voteFaq(faqId: number, userId: number, isHelpful: boolean): Promise<boolean> {
+  async voteFaq(faqId: number, userId: number, helpful: boolean): Promise<boolean> {
     try {
-      const [existingVote] = await db
-        .select()
-        .from(faqVotes)
-        .where(and(eq(faqVotes.faqId, faqId), eq(faqVotes.userId, userId)));
-
+      const existingVote = await this.getFaqVote(faqId, userId);
+      
       if (existingVote) {
-        await db
-          .update(faqVotes)
-          .set({ isHelpful })
-          .where(eq(faqVotes.id, existingVote.id));
+        await db.update(faqVotes)
+          .set({ isHelpful: helpful })
+          .where(and(eq(faqVotes.faqId, faqId), eq(faqVotes.userId, userId)));
       } else {
-        await db.insert(faqVotes).values({ faqId, userId, isHelpful });
+        await db.insert(faqVotes).values({
+          faqId,
+          userId,
+          isHelpful: helpful
+        });
       }
-
-      const helpfulCount = await db
-        .select({ count: sql<number>`count(*)` })
-        .from(faqVotes)
-        .where(and(eq(faqVotes.faqId, faqId), eq(faqVotes.isHelpful, true)));
-
-      const notHelpfulCount = await db
-        .select({ count: sql<number>`count(*)` })
-        .from(faqVotes)
-        .where(and(eq(faqVotes.faqId, faqId), eq(faqVotes.isHelpful, false)));
-
-      await db
-        .update(faqs)
-        .set({
-          helpfulVotes: helpfulCount[0]?.count || 0,
-          notHelpfulVotes: notHelpfulCount[0]?.count || 0
+      
+      const votes = await db.select().from(faqVotes).where(eq(faqVotes.faqId, faqId));
+      const helpfulCount = votes.filter(v => v.isHelpful).length;
+      const notHelpfulCount = votes.filter(v => !v.isHelpful).length;
+      
+      await db.update(faqs)
+        .set({ 
+          helpfulVotes: helpfulCount,
+          notHelpfulVotes: notHelpfulCount
         })
         .where(eq(faqs.id, faqId));
-
+      
       return true;
     } catch (error) {
       console.error('Error voting on FAQ:', error);
@@ -550,25 +380,10 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  async searchFaqs(query: string): Promise<Faq[]> {
-    try {
-      return await db
-        .select()
-        .from(faqs)
-        .where(
-          and(
-            eq(faqs.isActive, true),
-            or(
-              ilike(faqs.question, `%${query}%`),
-              ilike(faqs.answer, `%${query}%`)
-            )
-          )
-        )
-        .orderBy(faqs.sortOrder, faqs.id);
-    } catch (error) {
-      console.error('Error searching FAQs:', error);
-      return [];
-    }
+  async getFaqVote(faqId: number, userId: number): Promise<FaqVote | undefined> {
+    const [vote] = await db.select().from(faqVotes)
+      .where(and(eq(faqVotes.faqId, faqId), eq(faqVotes.userId, userId)));
+    return vote;
   }
 }
 
