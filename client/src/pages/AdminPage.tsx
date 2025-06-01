@@ -1608,6 +1608,106 @@ function AdminPage() {
         </div>
       </div>
 
+      {/* Modale per creare/modificare blog post */}
+      <Dialog open={showBlogForm || editingBlog} onOpenChange={(open) => {
+        if (!open) {
+          setShowBlogForm(false);
+          setEditingBlog(null);
+        }
+      }}>
+        <DialogContent className="max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>
+              {editingBlog ? "Modifica Articolo" : "Nuovo Articolo Blog"}
+            </DialogTitle>
+            <DialogDescription>
+              {editingBlog ? "Modifica l'articolo esistente" : "Crea un nuovo articolo per il blog della villa"}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium">Titolo</label>
+              <Input placeholder="Inserisci il titolo dell'articolo..." />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Categoria</label>
+              <Input placeholder="es. Guide, Consigli, Novità..." />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Estratto</label>
+              <Input placeholder="Breve descrizione dell'articolo..." />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Contenuto</label>
+              <textarea 
+                className="w-full h-40 px-3 py-2 border rounded-md resize-none"
+                placeholder="Scrivi qui il contenuto completo dell'articolo..."
+              />
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => {
+                setShowBlogForm(false);
+                setEditingBlog(null);
+              }}>
+                Annulla
+              </Button>
+              <Button>
+                {editingBlog ? "Salva Modifiche" : "Crea Articolo"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modale per creare/modificare FAQ */}
+      <Dialog open={showFaqForm || editingFaq} onOpenChange={(open) => {
+        if (!open) {
+          setShowFaqForm(false);
+          setEditingFaq(null);
+        }
+      }}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+              {editingFaq ? "Modifica FAQ" : "Nuova FAQ"}
+            </DialogTitle>
+            <DialogDescription>
+              {editingFaq ? "Modifica la domanda frequente esistente" : "Crea una nuova domanda frequente per aiutare gli ospiti"}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium">Domanda</label>
+              <Input placeholder="Inserisci la domanda frequente..." />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Categoria</label>
+              <Input placeholder="es. Check-in, Servizi, Pagamenti..." />
+            </div>
+            <div>
+              <label className="text-sm font-medium">Risposta</label>
+              <textarea 
+                className="w-full h-32 px-3 py-2 border rounded-md resize-none"
+                placeholder="Scrivi qui la risposta completa..."
+              />
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => {
+                setShowFaqForm(false);
+                setEditingFaq(null);
+              }}>
+                Annulla
+              </Button>
+              <Button>
+                {editingFaq ? "Salva Modifiche" : "Crea FAQ"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Modale per i dettagli della prenotazione */}
       <Dialog open={showBookingDetails} onOpenChange={setShowBookingDetails}>
         <DialogContent className="max-w-2xl">
