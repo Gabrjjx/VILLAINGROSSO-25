@@ -1457,6 +1457,7 @@ function AdminPage() {
                   <div className="flex gap-2 mt-4 md:mt-0">
                     <Button variant="default" size="sm" onClick={() => {
                       console.log("Clicked Nuovo Articolo button");
+                      alert("Blog button clicked!");
                       setShowBlogForm(true);
                     }}>
                       <Plus className="h-4 w-4 mr-2" />
@@ -1533,6 +1534,7 @@ function AdminPage() {
                   <div className="flex gap-2 mt-4 md:mt-0">
                     <Button variant="default" size="sm" onClick={() => {
                       console.log("Clicked Nuova FAQ button");
+                      alert("FAQ button clicked!");
                       setShowFaqForm(true);
                     }}>
                       <Plus className="h-4 w-4 mr-2" />
