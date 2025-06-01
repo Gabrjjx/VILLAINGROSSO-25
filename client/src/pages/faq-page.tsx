@@ -154,7 +154,7 @@ export default function FaqPage() {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50">
         {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-16">
+      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-16 pt-24">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-4 mb-4">
             <HelpCircle className="h-12 w-12" />
