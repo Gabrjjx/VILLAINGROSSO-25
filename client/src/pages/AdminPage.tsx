@@ -1455,7 +1455,10 @@ function AdminPage() {
                     <p className="text-muted-foreground">Crea e gestisci articoli per il blog della villa</p>
                   </div>
                   <div className="flex gap-2 mt-4 md:mt-0">
-                    <Button variant="default" size="sm" onClick={() => setShowBlogForm(true)}>
+                    <Button variant="default" size="sm" onClick={() => {
+                      console.log("Clicked Nuovo Articolo button");
+                      setShowBlogForm(true);
+                    }}>
                       <Plus className="h-4 w-4 mr-2" />
                       Nuovo Articolo
                     </Button>
@@ -1528,7 +1531,10 @@ function AdminPage() {
                     <p className="text-muted-foreground">Crea e gestisci le domande frequenti</p>
                   </div>
                   <div className="flex gap-2 mt-4 md:mt-0">
-                    <Button variant="default" size="sm" onClick={() => setShowFaqForm(true)}>
+                    <Button variant="default" size="sm" onClick={() => {
+                      console.log("Clicked Nuova FAQ button");
+                      setShowFaqForm(true);
+                    }}>
                       <Plus className="h-4 w-4 mr-2" />
                       Nuova FAQ
                     </Button>
