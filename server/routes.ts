@@ -202,9 +202,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Usa l'API Bird diretta invece dell'API Transmissions
       const BIRD_API_KEY = process.env.BIRD_API_KEY;
       const BIRD_WORKSPACE_ID = process.env.BIRD_WORKSPACE_ID;
-      const BIRD_EMAIL_CHANNEL_ID = 'c950566b-ade4-5812-9d83-9c4fe7a04e24'; // Il tuo channel ID email
+      const BIRD_EMAIL_CHANNEL_ID = process.env.BIRD_EMAIL_CHANNEL_ID;
 
-      if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID) {
+      if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID || !BIRD_EMAIL_CHANNEL_ID) {
         console.error('Bird API credentials missing');
         return res.status(500).json({ error: "Email service not configured" });
       }

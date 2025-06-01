@@ -1,12 +1,11 @@
-import { MailService } from '@sendgrid/mail';
+// import { MailService } from '@sendgrid/mail';
 import { sendWhatsApp as birdSendWhatsApp, sendSMS as birdSendSMS } from './bird';
 
-if (!process.env.SENDGRID_API_KEY) {
-  throw new Error("SENDGRID_API_KEY environment variable must be set");
-}
-
-const mailService = new MailService();
-mailService.setApiKey(process.env.SENDGRID_API_KEY);
+// SendGrid temporaneamente disabilitato - usiamo Bird API
+// const mailService = new MailService();
+// if (process.env.SENDGRID_API_KEY) {
+//   mailService.setApiKey(process.env.SENDGRID_API_KEY);
+// }
 
 // Verifica configurazione Bird
 if (process.env.BIRD_API_KEY && process.env.BIRD_WORKSPACE_ID) {
@@ -33,13 +32,17 @@ interface EmailParams {
 }
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
+  // SendGrid disabilitato - usiamo Bird API
+  console.log('SendGrid disabled, use Bird API instead');
+  return false;
+  /*
   try {
     await mailService.send({
       to: params.to,
       from: params.from,
       subject: params.subject || 'Villa Ingrosso',
-      text: params.text,
-      html: params.html,
+      text: params.text || '',
+      html: params.html || '',
       trackingSettings: {
         clickTracking: {
           enable: true,
@@ -55,6 +58,7 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
     console.error('SendGrid email error:', error);
     return false;
   }
+  */
 }
 
 // Email di benvenuto per nuovi ospiti
