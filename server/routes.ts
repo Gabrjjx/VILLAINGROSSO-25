@@ -1237,6 +1237,372 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
   });
 
+  // === BLOG API ROUTES ===
+  
+  // Ottieni tutti i post del blog (pubblico)
+  app.get("/api/blog", async (req: Request, res: Response) => {
+    try {
+      const { limit, category } = req.query;
+      const posts = await storage.getBlogPosts(
+        limit ? parseInt(limit as string) : undefined,
+        category as string
+      );
+      res.json(posts);
+    } catch (error) {
+      console.error("Error fetching blog posts:", error);
+      res.status(500).json({ error: "Failed to fetch blog posts" });
+    }
+  });
+
+  // Ottieni singolo post del blog per slug (pubblico)
+  app.get("/api/blog/:slug", async (req: Request, res: Response) => {
+    try {
+      const { slug } = req.params;
+      const post = await storage.getBlogPostBySlug(slug);
+      
+      if (!post) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+
+      // Incrementa contatore visite
+      await storage.incrementBlogPostViews(post.id);
+      
+      res.json(post);
+    } catch (error) {
+      console.error("Error fetching blog post:", error);
+      res.status(500).json({ error: "Failed to fetch blog post" });
+    }
+  });
+
+  // Crea nuovo post del blog (solo admin)
+  app.post("/api/blog", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const postData = insertBlogPostSchema.parse({
+        ...req.body,
+        authorId: req.user.id
+      });
+
+      const newPost = await storage.createBlogPost(postData);
+      res.status(201).json(newPost);
+    } catch (error: any) {
+      console.error("Error creating blog post:", error);
+      res.status(400).json({ error: error.message || "Failed to create blog post" });
+    }
+  });
+
+  // Aggiorna post del blog (solo admin)
+  app.put("/api/blog/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { id } = req.params;
+      const postData = req.body;
+      
+      const updatedPost = await storage.updateBlogPost(parseInt(id), postData);
+      
+      if (!updatedPost) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+
+      res.json(updatedPost);
+    } catch (error) {
+      console.error("Error updating blog post:", error);
+      res.status(500).json({ error: "Failed to update blog post" });
+    }
+  });
+
+  // Elimina post del blog (solo admin)
+  app.delete("/api/blog/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { id } = req.params;
+      const success = await storage.deleteBlogPost(parseInt(id));
+      
+      if (!success) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+
+      res.json({ message: "Blog post deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting blog post:", error);
+      res.status(500).json({ error: "Failed to delete blog post" });
+    }
+  });
+
+  // === INVENTORY API ROUTES ===
+  
+  // Ottieni tutti gli elementi dell'inventario (solo admin)
+  app.get("/api/inventory", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const items = await storage.getInventoryItems();
+      res.json(items);
+    } catch (error) {
+      console.error("Error fetching inventory items:", error);
+      res.status(500).json({ error: "Failed to fetch inventory items" });
+    }
+  });
+
+  // Ottieni elementi con scorte basse (solo admin)
+  app.get("/api/inventory/low-stock", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const lowStockItems = await storage.getLowStockItems();
+      res.json(lowStockItems);
+    } catch (error) {
+      console.error("Error fetching low stock items:", error);
+      res.status(500).json({ error: "Failed to fetch low stock items" });
+    }
+  });
+
+  // Crea nuovo elemento dell'inventario (solo admin)
+  app.post("/api/inventory", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const itemData = insertInventoryItemSchema.parse(req.body);
+      const newItem = await storage.createInventoryItem(itemData);
+      res.status(201).json(newItem);
+    } catch (error: any) {
+      console.error("Error creating inventory item:", error);
+      res.status(400).json({ error: error.message || "Failed to create inventory item" });
+    }
+  });
+
+  // Aggiorna elemento dell'inventario (solo admin)
+  app.put("/api/inventory/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { id } = req.params;
+      const itemData = req.body;
+      
+      const updatedItem = await storage.updateInventoryItem(parseInt(id), itemData);
+      
+      if (!updatedItem) {
+        return res.status(404).json({ error: "Inventory item not found" });
+      }
+
+      res.json(updatedItem);
+    } catch (error) {
+      console.error("Error updating inventory item:", error);
+      res.status(500).json({ error: "Failed to update inventory item" });
+    }
+  });
+
+  // Elimina elemento dell'inventario (solo admin)
+  app.delete("/api/inventory/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { id } = req.params;
+      const success = await storage.deleteInventoryItem(parseInt(id));
+      
+      if (!success) {
+        return res.status(404).json({ error: "Inventory item not found" });
+      }
+
+      res.json({ message: "Inventory item deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting inventory item:", error);
+      res.status(500).json({ error: "Failed to delete inventory item" });
+    }
+  });
+
+  // Aggiungi movimento inventario (solo admin)
+  app.post("/api/inventory/movements", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const movementData = insertInventoryMovementSchema.parse({
+        ...req.body,
+        userId: req.user.id
+      });
+
+      const newMovement = await storage.addInventoryMovement(movementData);
+      res.status(201).json(newMovement);
+    } catch (error: any) {
+      console.error("Error adding inventory movement:", error);
+      res.status(400).json({ error: error.message || "Failed to add inventory movement" });
+    }
+  });
+
+  // Ottieni movimenti inventario (solo admin)
+  app.get("/api/inventory/movements", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { itemId } = req.query;
+      const movements = await storage.getInventoryMovements(
+        itemId ? parseInt(itemId as string) : undefined
+      );
+      res.json(movements);
+    } catch (error) {
+      console.error("Error fetching inventory movements:", error);
+      res.status(500).json({ error: "Failed to fetch inventory movements" });
+    }
+  });
+
+  // === FAQ API ROUTES ===
+  
+  // Ottieni tutte le FAQ (pubblico)
+  app.get("/api/faqs", async (req: Request, res: Response) => {
+    try {
+      const { category } = req.query;
+      const faqs = await storage.getFaqs(category as string);
+      res.json(faqs);
+    } catch (error) {
+      console.error("Error fetching FAQs:", error);
+      res.status(500).json({ error: "Failed to fetch FAQs" });
+    }
+  });
+
+  // Cerca nelle FAQ (pubblico)
+  app.get("/api/faqs/search", async (req: Request, res: Response) => {
+    try {
+      const { q } = req.query;
+      
+      if (!q || typeof q !== 'string') {
+        return res.status(400).json({ error: "Search query is required" });
+      }
+
+      const faqs = await storage.searchFaqs(q);
+      res.json(faqs);
+    } catch (error) {
+      console.error("Error searching FAQs:", error);
+      res.status(500).json({ error: "Failed to search FAQs" });
+    }
+  });
+
+  // Incrementa visualizzazioni FAQ (pubblico)
+  app.post("/api/faqs/:id/view", async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.incrementFaqViews(parseInt(id));
+      
+      if (!success) {
+        return res.status(404).json({ error: "FAQ not found" });
+      }
+
+      res.json({ message: "FAQ view count updated" });
+    } catch (error) {
+      console.error("Error updating FAQ views:", error);
+      res.status(500).json({ error: "Failed to update FAQ views" });
+    }
+  });
+
+  // Vota FAQ (richiede autenticazione)
+  app.post("/api/faqs/:id/vote", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ error: "Authentication required" });
+      }
+
+      const { id } = req.params;
+      const { isHelpful } = req.body;
+
+      if (typeof isHelpful !== 'boolean') {
+        return res.status(400).json({ error: "isHelpful must be a boolean" });
+      }
+
+      const success = await storage.voteFaq(parseInt(id), req.user.id, isHelpful);
+      
+      if (!success) {
+        return res.status(404).json({ error: "FAQ not found" });
+      }
+
+      res.json({ message: "Vote recorded successfully" });
+    } catch (error) {
+      console.error("Error voting on FAQ:", error);
+      res.status(500).json({ error: "Failed to vote on FAQ" });
+    }
+  });
+
+  // Crea nuova FAQ (solo admin)
+  app.post("/api/faqs", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const faqData = insertFaqSchema.parse(req.body);
+      const newFaq = await storage.createFaq(faqData);
+      res.status(201).json(newFaq);
+    } catch (error: any) {
+      console.error("Error creating FAQ:", error);
+      res.status(400).json({ error: error.message || "Failed to create FAQ" });
+    }
+  });
+
+  // Aggiorna FAQ (solo admin)
+  app.put("/api/faqs/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { id } = req.params;
+      const faqData = req.body;
+      
+      const updatedFaq = await storage.updateFaq(parseInt(id), faqData);
+      
+      if (!updatedFaq) {
+        return res.status(404).json({ error: "FAQ not found" });
+      }
+
+      res.json(updatedFaq);
+    } catch (error) {
+      console.error("Error updating FAQ:", error);
+      res.status(500).json({ error: "Failed to update FAQ" });
+    }
+  });
+
+  // Elimina FAQ (solo admin)
+  app.delete("/api/faqs/:id", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const { id } = req.params;
+      const success = await storage.deleteFaq(parseInt(id));
+      
+      if (!success) {
+        return res.status(404).json({ error: "FAQ not found" });
+      }
+
+      res.json({ message: "FAQ deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting FAQ:", error);
+      res.status(500).json({ error: "Failed to delete FAQ" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

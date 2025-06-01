@@ -404,7 +404,9 @@ export class DatabaseStorage implements IStorage {
         newQuantity -= movement.quantity;
       }
       
-      await this.updateInventoryItem(movement.itemId, { currentQuantity: newQuantity });
+      if (movement.itemId) {
+        await this.updateInventoryItem(movement.itemId, { currentQuantity: newQuantity });
+      }
     }
     
     return newMovement;
