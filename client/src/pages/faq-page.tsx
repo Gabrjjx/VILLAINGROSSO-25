@@ -158,7 +158,7 @@ export default function FaqPage() {
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-4 mb-4">
             <HelpCircle className="h-12 w-12" />
-            <h1 className="text-4xl md:text-5xl font-bold">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
               Domande Frequenti
             </h1>
           </div>

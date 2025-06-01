@@ -210,7 +210,9 @@ export default function Footer() {
               
               <div className="flex space-x-3">
                 <a 
-                  href="#" 
+                  href="https://www.instagram.com/villa.ingrosso/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-12 h-12 bg-gradient-to-br from-pink-500 to-red-500 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300"
                   aria-label="Instagram"
                 >

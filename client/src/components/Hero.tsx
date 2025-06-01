@@ -6,7 +6,7 @@ import { Link } from "wouter";
 export default function Hero() {
   const { t } = useLanguage();
   return (
-    <section id="home" className="relative h-screen overflow-hidden">
+    <section id="home" className="relative min-h-screen overflow-hidden">
       {/* Split layout design */}
       <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2">
         {/* Left side - Text */}
@@ -26,7 +26,7 @@ export default function Hero() {
             <img 
               src="/images/villa-logo.png" 
               alt="Villa Ingrosso Logo" 
-              className="h-28 w-auto"
+              className="h-20 sm:h-24 md:h-28 w-auto"
             />
           </motion.div>
           
@@ -68,7 +68,7 @@ export default function Hero() {
         </motion.div>
         
         {/* Right side - Image with overlay gradient */}
-        <div className="relative h-1/2 md:h-full order-first md:order-last">
+        <div className="relative h-64 md:h-full order-first md:order-last">
           <motion.div
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
