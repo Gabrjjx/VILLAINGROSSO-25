@@ -210,35 +210,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const payload = {
-        receiver: {
-          contact: {
-            identifierValue: email
-          }
+        options: {
+          open_tracking: true,
+          click_tracking: true,
+          transactional: true,
+          perform_substitutions: true
         },
-        body: {
-          email: {
-            subject: "🏖️ Benvenuto nella Newsletter di Villa Ingrosso",
-            html: `
-              <h1>Benvenuto nella Newsletter di Villa Ingrosso</h1>
-              <p>Ciao ${firstName || 'Caro ospite'},</p>
-              <p>Grazie per esserti iscritto alla nostra newsletter!</p>
-              <p>Riceverai aggiornamenti su:</p>
-              <ul>
-                <li>🌊 Offerte speciali e promozioni</li>
-                <li>🏖️ Eventi e attività locali</li>
-                <li>📍 Consigli sui luoghi da visitare in Puglia</li>
-              </ul>
-              <p>A presto,<br>Team Villa Ingrosso</p>
-            `
+        recipients: [
+          {
+            address: {
+              email: email,
+              name: firstName || email.split('@')[0]
+            },
+            rcpt_type: "to"
           }
-        },
-        channelId: BIRD_EMAIL_CHANNEL_ID
+        ],
+        content: {
+          from: "info@villaingrosso.com",
+          subject: "🏖️ Benvenuto nella Newsletter di Villa Ingrosso",
+          html: `
+            <h1>Benvenuto nella Newsletter di Villa Ingrosso</h1>
+            <p>Ciao ${firstName || 'Caro ospite'},</p>
+            <p>Grazie per esserti iscritto alla nostra newsletter!</p>
+            <p>Riceverai aggiornamenti su:</p>
+            <ul>
+              <li>🌊 Offerte speciali e promozioni</li>
+              <li>🏖️ Eventi e attività locali</li>
+              <li>📍 Consigli sui luoghi da visitare in Puglia</li>
+            </ul>
+            <p>A presto,<br>Team Villa Ingrosso</p>
+          `,
+          text: `Benvenuto nella Newsletter di Villa Ingrosso! Ciao ${firstName || 'Caro ospite'}, grazie per esserti iscritto alla nostra newsletter. Riceverai aggiornamenti su offerte speciali, eventi locali e consigli di viaggio in Puglia. A presto, Team Villa Ingrosso`
+        }
       };
 
-      console.log('Bird API URL:', `https://api.bird.com/workspaces/${BIRD_WORKSPACE_ID}/channels/${BIRD_EMAIL_CHANNEL_ID}/messages`);
+      console.log('Bird API URL:', `https://email.eu-west-1.api.bird.com/api/workspaces/${BIRD_WORKSPACE_ID}/reach/transmissions`);
       console.log('Bird API Payload:', JSON.stringify(payload, null, 2));
       
-      const response = await fetch(`https://api.bird.com/workspaces/${BIRD_WORKSPACE_ID}/channels/${BIRD_EMAIL_CHANNEL_ID}/messages`, {
+      const response = await fetch(`https://email.eu-west-1.api.bird.com/api/workspaces/${BIRD_WORKSPACE_ID}/reach/transmissions`, {
         method: 'POST',
         headers: {
           'Authorization': `AccessKey ${BIRD_API_KEY}`,
