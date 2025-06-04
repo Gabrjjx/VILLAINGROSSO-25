@@ -5,8 +5,24 @@
 - **Service Name**: villa-ingrosso-api
 - **Development URL**: https://35683667-e27b-4a35-9b6b-cd2b453f9995-00-1q7kecmao3gy.worf.replit.dev/api
 - **Production URL**: https://villaingrosso.com/api
-- **Query Array Format**: JSON - Example: `p=["a","b","c"]`
+- **Database**: PostgreSQL with Drizzle ORM
+- **Authentication**: Passport.js with local strategy and session management
+- **Email Service**: Bird API (primary) with SendGrid fallback
+- **SMS Service**: Twilio API
+- **File Storage**: Static file serving from public directory
 - **Configuration Mode**: Manual
+
+## Technology Stack
+- **Backend**: Node.js with Express.js
+- **Frontend**: React with TypeScript and Vite
+- **Database**: PostgreSQL (Neon)
+- **ORM**: Drizzle ORM
+- **Authentication**: Passport.js with session store
+- **Email**: Bird API + SendGrid
+- **SMS**: Twilio
+- **UI Framework**: Tailwind CSS + shadcn/ui
+- **State Management**: TanStack Query
+- **Routing**: Wouter
 
 ## Required Headers
 All API requests should include these headers:
@@ -15,10 +31,7 @@ Content-Type: application/json
 Accept: application/json
 ```
 
-For authenticated endpoints, also include:
-```
-Authorization: Bearer <jwt_token>
-```
+For authenticated endpoints, session-based authentication is used with cookies.
 
 ## Authentication
 
@@ -235,6 +248,572 @@ Authorization: Bearer <jwt_token>
   "status": "confirmed" | "cancelled" | "pending" | "completed"
 }
 ```
+
+## Promotions API
+
+### Get Active Promotion
+**GET** `/api/promotions/active`
+- Public endpoint
+- Returns currently active promotion information
+
+**Response:**
+```json
+{
+  "available": true,
+  "promotion": {
+    "id": 1,
+    "code": "PRIMI20",
+    "description": "Sconto del 10% per i primi 20 ospiti",
+    "discountPercentage": 10,
+    "remainingUsages": 15
+  }
+}
+```
+
+Or if no promotion is active:
+```json
+{
+  "available": false
+}
+```
+
+## Communication APIs
+
+### Send Contact Message
+**POST** `/api/contact`
+```json
+{
+  "name": "string",
+  "email": "string",
+  "phone": "string",
+  "message": "string"
+}
+```
+- Sends email notification to property owner
+- Returns success confirmation
+
+### Send Booking Confirmation Email
+**POST** `/api/send-booking-confirmation`
+- Requires authentication
+```json
+{
+  "email": "string",
+  "guestName": "string",
+  "checkIn": "2024-01-01",
+  "checkOut": "2024-01-07",
+  "numberOfGuests": 2
+}
+```
+
+### Send Welcome Email
+**POST** `/api/send-welcome-email`
+- Requires authentication
+```json
+{
+  "email": "string",
+  "username": "string",
+  "password": "string"
+}
+```
+
+### Newsletter Subscription
+**POST** `/api/newsletter/subscribe`
+```json
+{
+  "email": "string",
+  "firstName": "string"
+}
+```
+
+### Send Newsletter (Admin)
+**POST** `/api/newsletter/send`
+- Requires admin authentication
+```json
+{
+  "subject": "string",
+  "content": "string"
+}
+```
+
+### Send SMS
+**POST** `/api/send-sms`
+- Requires authentication
+```json
+{
+  "to": "+393471234567",
+  "message": "string"
+}
+```
+
+### Send WhatsApp Booking Notification
+**POST** `/api/send-booking-whatsapp`
+- Requires authentication
+```json
+{
+  "guestName": "string",
+  "guestEmail": "string",
+  "checkIn": "2024-01-01",
+  "checkOut": "2024-01-07",
+  "numberOfGuests": 2
+}
+```
+
+### Send Welcome WhatsApp
+**POST** `/api/send-welcome-whatsapp`
+- Requires authentication
+```json
+{
+  "phone": "+393471234567",
+  "username": "string",
+  "password": "string"
+}
+```
+
+## Password Management
+
+### Request Password Reset
+**POST** `/api/request-password-reset`
+```json
+{
+  "email": "string"
+}
+```
+- Sends password reset email with token
+
+### Reset Password
+**POST** `/api/reset-password`
+```json
+{
+  "token": "string",
+  "newPassword": "string"
+}
+```
+
+### Change Password (User)
+**PATCH** `/api/user/change-password`
+- Requires authentication
+```json
+{
+  "currentPassword": "string",
+  "newPassword": "string"
+}
+```
+
+### Generate Reset Token (Admin)
+**POST** `/api/admin/generate-reset-token`
+- Requires admin authentication
+```json
+{
+  "email": "string"
+}
+```
+
+### Update User Profile
+**PATCH** `/api/user/profile`
+- Requires authentication
+```json
+{
+  "fullName": "string",
+  "email": "string",
+  "phone": "string",
+  "dateOfBirth": "1990-01-01"
+}
+```
+
+## Blog Management
+
+### Get All Blog Posts
+**GET** `/api/blog`
+- Public endpoint
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "title": "string",
+    "slug": "string",
+    "excerpt": "string",
+    "content": "string",
+    "status": "published",
+    "viewCount": 0,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z",
+    "author": {
+      "id": 1,
+      "fullName": "string"
+    }
+  }
+]
+```
+
+### Get Blog Post by Slug
+**GET** `/api/blog/:slug`
+- Public endpoint
+- Increments view count
+
+### Create Blog Post (Admin)
+**POST** `/api/blog`
+- Requires admin authentication
+```json
+{
+  "title": "string",
+  "content": "string",
+  "excerpt": "string",
+  "status": "published" | "draft"
+}
+```
+- Automatically generates slug from title
+
+### Update Blog Post (Admin)
+**PUT** `/api/blog/:id`
+- Requires admin authentication
+```json
+{
+  "title": "string",
+  "content": "string",
+  "excerpt": "string",
+  "status": "published" | "draft"
+}
+```
+
+### Delete Blog Post (Admin)
+**DELETE** `/api/blog/:id`
+- Requires admin authentication
+
+## FAQ Management
+
+### Get All FAQs
+**GET** `/api/faqs`
+- Public endpoint
+- Optional query parameter: `?category=string`
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "question": "string",
+    "answer": "string",
+    "category": "string",
+    "priority": 1,
+    "isPublished": true,
+    "viewCount": 0,
+    "helpfulVotes": 0,
+    "notHelpfulVotes": 0,
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  }
+]
+```
+
+### Search FAQs
+**GET** `/api/faqs/search?q=search_term`
+- Public endpoint
+
+### View FAQ (Track View Count)
+**POST** `/api/faqs/:id/view`
+- Public endpoint
+- Increments view count
+
+### Vote on FAQ Helpfulness
+**POST** `/api/faqs/:id/vote`
+- Requires authentication
+```json
+{
+  "helpful": true
+}
+```
+
+### Create FAQ (Admin)
+**POST** `/api/faqs`
+- Requires admin authentication
+```json
+{
+  "question": "string",
+  "answer": "string",
+  "category": "string",
+  "priority": 1,
+  "isPublished": true
+}
+```
+
+### Update FAQ (Admin)
+**PUT** `/api/faqs/:id`
+- Requires admin authentication
+```json
+{
+  "question": "string",
+  "answer": "string",
+  "category": "string",
+  "priority": 1,
+  "isPublished": true
+}
+```
+
+### Delete FAQ (Admin)
+**DELETE** `/api/faqs/:id`
+- Requires admin authentication
+
+## Inventory Management
+
+### Get All Inventory Items
+**GET** `/api/inventory`
+- Requires authentication
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "name": "string",
+    "description": "string",
+    "category": "string",
+    "quantity": 10,
+    "minQuantity": 2,
+    "unit": "pieces",
+    "location": "storage room",
+    "notes": "string",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "lastChecked": "2024-01-01T00:00:00.000Z"
+  }
+]
+```
+
+### Get Low Stock Items
+**GET** `/api/inventory/low-stock`
+- Requires authentication
+- Returns items where quantity <= minQuantity
+
+### Create Inventory Item
+**POST** `/api/inventory`
+- Requires authentication
+```json
+{
+  "name": "string",
+  "description": "string",
+  "category": "string",
+  "quantity": 10,
+  "minQuantity": 2,
+  "unit": "pieces",
+  "location": "string",
+  "notes": "string"
+}
+```
+
+### Update Inventory Item
+**PUT** `/api/inventory/:id`
+- Requires authentication
+```json
+{
+  "name": "string",
+  "description": "string",
+  "category": "string",
+  "quantity": 10,
+  "minQuantity": 2,
+  "unit": "pieces",
+  "location": "string",
+  "notes": "string"
+}
+```
+
+### Delete Inventory Item
+**DELETE** `/api/inventory/:id`
+- Requires authentication
+
+### Record Inventory Movement
+**POST** `/api/inventory/movements`
+- Requires authentication
+```json
+{
+  "itemId": 1,
+  "type": "in" | "out" | "adjustment",
+  "quantity": 5,
+  "reason": "string",
+  "notes": "string"
+}
+```
+
+### Get Inventory Movements
+**GET** `/api/inventory/movements`
+- Requires authentication
+- Optional query parameter: `?itemId=1`
+
+## Chat System
+
+### Get User Chat Messages
+**GET** `/api/chat-messages`
+- Requires authentication
+- Returns messages for authenticated user
+
+### Get Admin Chat Messages for User
+**GET** `/api/admin/chat-messages/:userId`
+- Requires admin authentication
+
+### Send Chat Message
+**POST** `/api/chat-messages`
+- Requires authentication
+```json
+{
+  "message": "string"
+}
+```
+
+### Send Admin Chat Message
+**POST** `/api/admin/chat-messages/:userId`
+- Requires admin authentication
+```json
+{
+  "message": "string"
+}
+```
+
+## Admin Contact Management
+
+### Get All Contact Messages (Admin)
+**GET** `/api/admin/messages`
+- Requires admin authentication
+
+### Mark Contact Message as Read (Admin)
+**PATCH** `/api/admin/messages/:id/read`
+- Requires admin authentication
+
+## Utility APIs
+
+### Calculate Distances
+**POST** `/api/calculate-distances`
+```json
+{
+  "origin": "Villa Ingrosso address",
+  "destinations": ["destination1", "destination2"]
+}
+```
+- Uses Google Maps API to calculate distances
+- Returns travel times and distances
+
+### Test Email (Debug)
+**POST** `/api/test-email`
+- Requires authentication
+```json
+{
+  "email": "string",
+  "subject": "string",
+  "content": "string"
+}
+```
+
+### Test Bird Email (Debug)
+**POST** `/api/test-bird-email`
+- Requires authentication
+```json
+{
+  "email": "string"
+}
+```
+
+## Database Schema
+
+### Users Table
+- id, username, email, password, fullName, phone, dateOfBirth, isAdmin, resetToken, resetTokenExpiry, createdAt, notes
+
+### Bookings Table
+- id, userId, guestName, guestEmail, guestPhone, startDate, endDate, numberOfGuests, totalPrice, status, source, notes, createdAt
+
+### Contact Messages Table
+- id, name, email, phone, message, read, createdAt
+
+### Blog Posts Table
+- id, title, slug, content, excerpt, status, authorId, viewCount, createdAt, updatedAt
+
+### FAQs Table
+- id, question, answer, category, priority, isPublished, viewCount, helpfulVotes, notHelpfulVotes, createdAt, updatedAt
+
+### Inventory Items Table
+- id, name, description, category, quantity, minQuantity, unit, location, notes, createdAt, lastChecked
+
+### Inventory Movements Table
+- id, itemId, type, quantity, reason, notes, createdAt
+
+### Chat Messages Table
+- id, userId, message, isFromAdmin, createdAt
+
+### Promotions Table
+- id, code, discountPercentage, maxUsages, currentUsages, isActive, description, createdAt, expiresAt
+
+### Promotion Usages Table
+- id, promotionId, bookingId, userId, discountAmount, usedAt
+
+## Environment Variables Required
+
+### Database
+- DATABASE_URL
+- PGHOST, PGPORT, PGUSER, PGPASSWORD, PGDATABASE
+
+### Authentication
+- SESSION_SECRET
+
+### Email Services
+- BIRD_API_KEY
+- BIRD_EMAIL_CHANNEL_ID
+- BIRD_WORKSPACE_ID
+- SENDGRID_API_KEY
+
+### SMS Service
+- TWILIO_ACCOUNT_SID
+- TWILIO_AUTH_TOKEN
+- TWILIO_PHONE_NUMBER
+
+### Maps API
+- VITE_GOOGLE_MAPS_API_KEY
+
+## Features Implemented
+
+### Core Booking System
+- User registration and authentication
+- Booking creation with automatic promotion application
+- Admin booking management
+- Email and SMS notifications
+
+### Promotion System
+- Automatic 10% discount for first 20 customers
+- Promotion tracking and usage limits
+- API to check active promotions
+
+### Communication System
+- Contact form with email notifications
+- Newsletter subscription and management
+- Welcome emails for new users
+- Booking confirmation emails
+- SMS and WhatsApp notifications via Twilio
+
+### Content Management
+- Blog system with CRUD operations
+- FAQ system with voting and search
+- Content creation and management for admins
+
+### Inventory Management
+- Track villa supplies and amenities
+- Low stock alerts
+- Movement tracking (in/out/adjustments)
+
+### Customer Support
+- Real-time chat system between users and admins
+- Contact message management
+- Password reset functionality
+
+### Admin Dashboard
+- User management
+- Booking management
+- Content management
+- Inventory tracking
+- Communication tools
+
+### Advanced Features
+- Google Maps integration for distance calculations
+- Responsive design for mobile and desktop
+- SEO optimization with Open Graph meta tags
+- Social media integration
+- Multiple authentication methods
+- Comprehensive error handling and logging
 
 ## Contact Messages
 
