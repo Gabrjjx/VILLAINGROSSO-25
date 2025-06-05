@@ -475,6 +475,35 @@ export class DatabaseStorage implements IStorage {
       .set({ currentUsages: sql`${promotions.currentUsages} + 1` })
       .where(eq(promotions.id, promotionId));
   }
+
+  // Metodi aggiuntivi richiesti dall'interfaccia
+  async searchFaqs(query: string): Promise<Faq[]> {
+    return await db.select().from(faqs)
+      .where(and(
+        eq(faqs.isPublished, true),
+        or(
+          ilike(faqs.question, `%${query}%`),
+          ilike(faqs.answer, `%${query}%`)
+        )
+      ))
+      .orderBy(desc(faqs.priority), desc(faqs.createdAt));
+  }
+
+  async incrementFaqViews(faqId: number): Promise<void> {
+    await db.update(faqs)
+      .set({ viewCount: sql`${faqs.viewCount} + 1` })
+      .where(eq(faqs.id, faqId));
+  }
+
+  async incrementFaqView(faqId: number): Promise<void> {
+    await this.incrementFaqViews(faqId);
+  }
+
+  async incrementBlogPostViews(postId: number): Promise<void> {
+    await db.update(blogPosts)
+      .set({ viewCount: sql`${blogPosts.viewCount} + 1` })
+      .where(eq(blogPosts.id, postId));
+  }
 }
 
 export const storage = new DatabaseStorage();
