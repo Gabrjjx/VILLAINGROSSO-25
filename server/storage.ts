@@ -23,13 +23,19 @@ export interface IStorage {
   deleteBooking(id: number): Promise<boolean>;
   
   // Contact methods
-  getContacts(): Promise<Contact[]>;
-  createContact(insertContact: InsertContact): Promise<Contact>;
+  getContactMessages(): Promise<ContactMessage[]>;
+  createContactMessage(insertContact: InsertContactMessage): Promise<ContactMessage>;
   markContactAsRead(id: number): Promise<boolean>;
   
-  // Newsletter methods
-  getNewsletterSubscribers(): Promise<NewsletterSubscriber[]>;
-  createNewsletterSubscriber(insertSubscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber>;
+  // Additional user methods
+  getUserByEmail(email: string): Promise<User | undefined>;
+  setResetToken(userId: number, token: string, expiry: Date): Promise<boolean>;
+  getUserByResetToken(token: string): Promise<User | undefined>;
+  clearResetToken(userId: number): Promise<boolean>;
+  getBookingsByUser(userId: number): Promise<Booking[]>;
+  getAllContactMessages(): Promise<ContactMessage[]>;
+  markContactMessageAsRead(id: number): Promise<boolean>;
+  getChatMessagesByUser(userId: number): Promise<ChatMessage[]>;
   
   // Chat methods
   getChatMessages(userId: number): Promise<ChatMessage[]>;
@@ -68,11 +74,11 @@ export interface IStorage {
   applyPromotion(promotionId: number, bookingId: number, userId: number, discountAmount: number): Promise<PromotionUsage>;
   incrementPromotionUsage(promotionId: number): Promise<void>;
   
-  sessionStore: session.SessionStore;
+  sessionStore: any;
 }
 
 export class DatabaseStorage implements IStorage {
-  sessionStore: session.SessionStore;
+  sessionStore: any;
 
   constructor() {
     this.sessionStore = new PostgresSessionStore({ 
@@ -111,6 +117,48 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user || undefined;
+  }
+
+  async setResetToken(userId: number, token: string, expiry: Date): Promise<boolean> {
+    try {
+      await db.update(users)
+        .set({ resetToken: token, resetTokenExpiry: expiry })
+        .where(eq(users.id, userId));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async getUserByResetToken(token: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users)
+      .where(and(
+        eq(users.resetToken, token),
+        sql`${users.resetTokenExpiry} > NOW()`
+      ));
+    return user || undefined;
+  }
+
+  async clearResetToken(userId: number): Promise<boolean> {
+    try {
+      await db.update(users)
+        .set({ resetToken: null, resetTokenExpiry: null })
+        .where(eq(users.id, userId));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async getBookingsByUser(userId: number): Promise<Booking[]> {
+    return await db.select().from(bookings)
+      .where(eq(bookings.userId, userId))
+      .orderBy(desc(bookings.createdAt));
+  }
+
   // Booking methods
   async getBookings(): Promise<Booking[]> {
     return await db.select().from(bookings).orderBy(desc(bookings.createdAt));
@@ -141,32 +189,41 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Contact methods
-  async getContacts(): Promise<Contact[]> {
-    return await db.select().from(contacts).orderBy(desc(contacts.createdAt));
+  async getContactMessages(): Promise<ContactMessage[]> {
+    return await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
   }
 
-  async createContact(insertContact: InsertContact): Promise<Contact> {
-    const [contact] = await db.insert(contacts).values(insertContact).returning();
+  async createContactMessage(insertContact: InsertContactMessage): Promise<ContactMessage> {
+    const [contact] = await db.insert(contactMessages).values(insertContact).returning();
     return contact;
   }
 
   async markContactAsRead(id: number): Promise<boolean> {
     try {
-      await db.update(contacts).set({ isRead: true }).where(eq(contacts.id, id));
+      await db.update(contactMessages).set({ read: true }).where(eq(contactMessages.id, id));
       return true;
     } catch (error) {
       return false;
     }
   }
 
-  // Newsletter methods
-  async getNewsletterSubscribers(): Promise<NewsletterSubscriber[]> {
-    return await db.select().from(newsletterSubscribers).orderBy(desc(newsletterSubscribers.createdAt));
+  async getAllContactMessages(): Promise<ContactMessage[]> {
+    return await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
   }
 
-  async createNewsletterSubscriber(insertSubscriber: InsertNewsletterSubscriber): Promise<NewsletterSubscriber> {
-    const [subscriber] = await db.insert(newsletterSubscribers).values(insertSubscriber).returning();
-    return subscriber;
+  async markContactMessageAsRead(id: number): Promise<boolean> {
+    try {
+      await db.update(contactMessages).set({ read: true }).where(eq(contactMessages.id, id));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async getChatMessagesByUser(userId: number): Promise<ChatMessage[]> {
+    return await db.select().from(chatMessages)
+      .where(eq(chatMessages.userId, userId))
+      .orderBy(asc(chatMessages.createdAt));
   }
 
   // Chat methods
