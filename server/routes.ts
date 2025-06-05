@@ -37,9 +37,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const host = req.get('host');
     const protocol = req.header('x-forwarded-proto') || req.protocol || 'http';
     
-    // Redirect da www a non-www per villaingrosso.com
-    if (host && host.startsWith('www.villaingrosso.com')) {
-      return res.redirect(301, `${protocol}://villaingrosso.com${req.url}`);
+    // Redirect da non-www a www per villaingrosso.com
+    if (host && host === 'villaingrosso.com') {
+      return res.redirect(301, `${protocol}://www.villaingrosso.com${req.url}`);
     }
     
     // Force HTTPS redirect per domini di produzione
