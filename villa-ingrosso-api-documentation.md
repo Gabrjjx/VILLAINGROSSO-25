@@ -25,13 +25,280 @@
 - **Routing**: Wouter
 
 ## Required Headers
-All API requests should include these headers:
+
+### For All API Requests
 ```
 Content-Type: application/json
 Accept: application/json
 ```
 
-For authenticated endpoints, session-based authentication is used with cookies.
+### Authentication Methods
+
+**Session-Based Authentication (Primary)**
+- Authentication is handled via session cookies
+- After login, the session cookie is automatically included in requests
+- No additional headers needed for authenticated endpoints
+
+**Manual Testing with Postman**
+
+For testing endpoints that require authentication, you must first login and obtain a session cookie:
+
+1. **Login first** using `/api/login` endpoint
+2. **Copy the session cookie** from the response
+3. **Add cookie header** to subsequent requests
+
+**Postman Headers for Authenticated Requests:**
+```
+Content-Type: application/json
+Accept: application/json
+Cookie: connect.sid=<session_cookie_value>
+```
+
+### Headers by Endpoint Type
+
+**Public Endpoints (No Authentication Required):**
+- `/api/contact`
+- `/api/promotions/active` 
+- `/api/blog`
+- `/api/blog/:slug`
+- `/api/faqs`
+- `/api/faqs/search`
+- `/api/faqs/:id/view`
+- `/api/calculate-distances`
+
+**Headers:**
+```
+Content-Type: application/json
+Accept: application/json
+```
+
+**Authentication Endpoints:**
+- `/api/register`
+- `/api/login` 
+- `/api/logout`
+
+**Headers:**
+```
+Content-Type: application/json
+Accept: application/json
+```
+
+**User Authenticated Endpoints:**
+- `/api/user`
+- `/api/bookings`
+- `/api/user/change-password`
+- `/api/user/profile`
+- `/api/chat-messages`
+- `/api/inventory/*`
+- `/api/faqs/:id/vote`
+
+**Headers:**
+```
+Content-Type: application/json
+Accept: application/json
+Cookie: connect.sid=<session_cookie_from_login>
+```
+
+**Admin Only Endpoints:**
+- `/api/admin/*`
+- `/api/newsletter/send`
+- `/api/blog` (POST/PUT/DELETE)
+- `/api/faqs` (POST/PUT/DELETE)
+
+**Headers:**
+```
+Content-Type: application/json
+Accept: application/json
+Cookie: connect.sid=<admin_session_cookie_from_login>
+```
+
+**Communication Endpoints (User Required):**
+- `/api/send-booking-confirmation`
+- `/api/send-welcome-email`
+- `/api/send-sms`
+- `/api/send-booking-whatsapp`
+- `/api/send-welcome-whatsapp`
+- `/api/test-email`
+- `/api/test-bird-email`
+
+**Headers:**
+```
+Content-Type: application/json
+Accept: application/json
+Cookie: connect.sid=<session_cookie_from_login>
+```
+
+## Postman Testing Guide
+
+### Step 1: Test Public Endpoints (No Authentication)
+
+**Example: Get Active Promotion**
+```
+Method: GET
+URL: {{base_url}}/api/promotions/active
+Headers:
+  Content-Type: application/json
+  Accept: application/json
+```
+
+**Example: Contact Form**
+```
+Method: POST
+URL: {{base_url}}/api/contact
+Headers:
+  Content-Type: application/json
+  Accept: application/json
+Body (raw JSON):
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "phone": "+393471234567",
+  "message": "Test message from Postman"
+}
+```
+
+### Step 2: Login and Get Session Cookie
+
+**Login Request:**
+```
+Method: POST
+URL: {{base_url}}/api/login
+Headers:
+  Content-Type: application/json
+  Accept: application/json
+Body (raw JSON):
+{
+  "username": "your_username",
+  "password": "your_password"
+}
+```
+
+**Copy Session Cookie from Response:**
+1. After successful login, go to Response Headers
+2. Find `Set-Cookie` header
+3. Copy the `connect.sid` value (example: `connect.sid=s%3AHGbE0K4q...`)
+4. Use this in subsequent authenticated requests
+
+### Step 3: Test Authenticated Endpoints
+
+**Example: Get User Profile**
+```
+Method: GET
+URL: {{base_url}}/api/user
+Headers:
+  Content-Type: application/json
+  Accept: application/json
+  Cookie: connect.sid=s%3AHGbE0K4qMSjsVPcQX2-UbR0ojeLSu86A.TiApmMdOyXgAFokp0DaNCEGeucqoYGGb7Jk8IodTEVs
+```
+
+**Example: Create Booking**
+```
+Method: POST
+URL: {{base_url}}/api/bookings
+Headers:
+  Content-Type: application/json
+  Accept: application/json
+  Cookie: connect.sid=s%3AHGbE0K4qMSjsVPcQX2-UbR0ojeLSu86A.TiApmMdOyXgAFokp0DaNCEGeucqoYGGb7Jk8IodTEVs
+Body (raw JSON):
+{
+  "guestName": "Mario Rossi",
+  "guestEmail": "mario@example.com",
+  "guestPhone": "+393471234567",
+  "startDate": "2024-07-01",
+  "endDate": "2024-07-07",
+  "numberOfGuests": 2,
+  "totalPrice": 500.00,
+  "notes": "Test booking from Postman"
+}
+```
+
+### Step 4: Test Admin Endpoints (Requires Admin User)
+
+First login with admin credentials, then:
+
+**Example: Get All Users (Admin)**
+```
+Method: GET
+URL: {{base_url}}/api/admin/users
+Headers:
+  Content-Type: application/json
+  Accept: application/json
+  Cookie: connect.sid=<admin_session_cookie>
+```
+
+**Example: Create Blog Post (Admin)**
+```
+Method: POST
+URL: {{base_url}}/api/blog
+Headers:
+  Content-Type: application/json
+  Accept: application/json
+  Cookie: connect.sid=<admin_session_cookie>
+Body (raw JSON):
+{
+  "title": "Test Blog Post",
+  "content": "This is a test blog post created via Postman API",
+  "excerpt": "Test excerpt",
+  "status": "published"
+}
+```
+
+### Environment Variables for Postman
+
+Create these variables in Postman Environment:
+
+```
+base_url: http://localhost:5000 (for development)
+base_url: https://villaingrosso.com (for production)
+
+session_cookie: <paste your session cookie here after login>
+admin_session_cookie: <paste admin session cookie here>
+```
+
+Then use `{{base_url}}` and `{{session_cookie}}` in your requests.
+
+### Common Response Codes
+
+- **200**: Success
+- **201**: Created successfully
+- **400**: Bad request (validation error)
+- **401**: Unauthorized (login required)
+- **403**: Forbidden (admin access required)
+- **404**: Not found
+- **500**: Server error
+
+### Testing Communication APIs
+
+**Example: Send SMS (Requires Authentication)**
+```
+Method: POST
+URL: {{base_url}}/api/send-sms
+Headers:
+  Content-Type: application/json
+  Accept: application/json
+  Cookie: connect.sid=<session_cookie>
+Body (raw JSON):
+{
+  "to": "+393471234567",
+  "message": "Test SMS from Villa Ingrosso API"
+}
+```
+
+**Example: Send Test Email**
+```
+Method: POST
+URL: {{base_url}}/api/test-email
+Headers:
+  Content-Type: application/json
+  Accept: application/json
+  Cookie: connect.sid=<session_cookie>
+Body (raw JSON):
+{
+  "email": "test@example.com",
+  "subject": "Test Email",
+  "content": "This is a test email from Postman"
+}
+```
 
 ## Authentication
 
