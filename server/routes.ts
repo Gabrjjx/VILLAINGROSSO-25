@@ -32,6 +32,49 @@ import {
 } from "./bird";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Middleware SEO per redirect WWW e canonical URLs
+  app.use((req, res, next) => {
+    const host = req.get('host');
+    const protocol = req.header('x-forwarded-proto') || req.protocol || 'http';
+    
+    // Redirect da www a non-www per villaingrosso.com
+    if (host && host.startsWith('www.villaingrosso.com')) {
+      return res.redirect(301, `${protocol}://villaingrosso.com${req.url}`);
+    }
+    
+    // Force HTTPS redirect per domini di produzione
+    if (protocol === 'http' && host && host.includes('villaingrosso.com')) {
+      return res.redirect(301, `https://${host}${req.url}`);
+    }
+    
+    next();
+  });
+
+  // Security headers middleware
+  app.use((req, res, next) => {
+    // HSTS Header
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+    
+    // Security headers
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // Content Security Policy
+    res.setHeader('Content-Security-Policy', 
+      "default-src 'self'; " +
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://maps.googleapis.com; " +
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+      "font-src 'self' https://fonts.gstatic.com; " +
+      "img-src 'self' data: https: http:; " +
+      "connect-src 'self' https://maps.googleapis.com; " +
+      "frame-src https://www.google.com;"
+    );
+    
+    next();
+  });
+
   // Middleware già configurati nel file index.ts
   
   // Configurazione dell'autenticazione
