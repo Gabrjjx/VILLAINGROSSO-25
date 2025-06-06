@@ -38,35 +38,38 @@ import GoogleAnalyticsSetup from "./components/GoogleAnalyticsSetup";
 import { RegistrationIncentiveBanner, RegistrationIncentivePopup } from "@/components/RegistrationIncentive";
 import { initVillaAnalytics } from "@/lib/gtm-analytics";
 import { useEffect } from "react";
+import GTMPageWrapper from "@/components/GTMPageWrapper";
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/about" component={AboutPage} />
-      <Route path="/gallery" component={GalleryPage} />
-      <Route path="/location" component={LocationPage} />
-      <Route path="/recommendations" component={RecommendationsPage} />
-      <Route path="/prices" component={PricesPage} />
-      <Route path="/contact" component={ContactPage} />
-      <Route path="/privacy" component={Privacy} />
-      <Route path="/auth" component={AuthPage} />
-      <Route path="/account" component={AccountPage} />
-      <Route path="/admin" component={AdminPage} />
-      <Route path="/admin/email" component={AdminEmailPage} />
-      <Route path="/admin/booking" component={AdminBookingForm} />
-      <Route path="/booking" component={BookingPage} />
-      <Route path="/booking-confirmation" component={BookingConfirmation} />
-      <Route path="/blog" component={BlogPage} />
-      <Route path="/blog/:slug" component={BlogPostPage} />
-      <Route path="/inventory" component={InventoryPage} />
-      <Route path="/faq" component={FaqPage} />
-      <Route path="/loading-demo" component={LoadingDemoPage} />
-      <Route path="/analytics-dashboard" component={AnalyticsDashboard} />
-      <Route path="/reset-password" component={SimpleResetPasswordPage} />
-      <Route path="/change-password" component={ChangePasswordPage} />
-      <Route component={NotFound} />
-    </Switch>
+    <GTMPageWrapper>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/about" component={AboutPage} />
+        <Route path="/gallery" component={GalleryPage} />
+        <Route path="/location" component={LocationPage} />
+        <Route path="/recommendations" component={RecommendationsPage} />
+        <Route path="/prices" component={PricesPage} />
+        <Route path="/contact" component={ContactPage} />
+        <Route path="/privacy" component={Privacy} />
+        <Route path="/auth" component={AuthPage} />
+        <Route path="/account" component={AccountPage} />
+        <Route path="/admin" component={AdminPage} />
+        <Route path="/admin/email" component={AdminEmailPage} />
+        <Route path="/admin/booking" component={AdminBookingForm} />
+        <Route path="/booking" component={BookingPage} />
+        <Route path="/booking-confirmation" component={BookingConfirmation} />
+        <Route path="/blog" component={BlogPage} />
+        <Route path="/blog/:slug" component={BlogPostPage} />
+        <Route path="/inventory" component={InventoryPage} />
+        <Route path="/faq" component={FaqPage} />
+        <Route path="/loading-demo" component={LoadingDemoPage} />
+        <Route path="/analytics-dashboard" component={AnalyticsDashboard} />
+        <Route path="/reset-password" component={SimpleResetPasswordPage} />
+        <Route path="/change-password" component={ChangePasswordPage} />
+        <Route component={NotFound} />
+      </Switch>
+    </GTMPageWrapper>
   );
 }
 
