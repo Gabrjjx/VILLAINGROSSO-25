@@ -999,7 +999,7 @@ export function createNewUserNotificationEmail(userName: string, userEmail: stri
         </div>
         
         <div class="content">
-            <p>Ciao Giuseppe,</p>
+            <p>Ciao Gabriele,</p>
             
             <p>Ti informiamo che un nuovo utente si è appena registrato sulla piattaforma di Villa Ingrosso.</p>
             

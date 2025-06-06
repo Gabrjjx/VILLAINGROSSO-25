@@ -148,6 +148,34 @@ function AccountPage() {
     },
   });
 
+  // Mutation per gestire newsletter
+  const toggleNewsletterMutation = useMutation({
+    mutationFn: async (subscribe: boolean) => {
+      const res = await apiRequest("POST", "/api/newsletter/toggle", { subscribe });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to update newsletter subscription");
+      }
+      return await res.json();
+    },
+    onSuccess: (data, subscribe) => {
+      setIsSubscribedToNewsletter(subscribe);
+      toast({
+        title: subscribe ? "Iscritto alla Newsletter" : "Disiscritto dalla Newsletter",
+        description: subscribe 
+          ? "Riceverai le nostre novità e offerte speciali" 
+          : "Non riceverai più la nostra newsletter",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Errore Newsletter",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
   // Mutation per cambiare la password
   const changePasswordMutation = useMutation({
     mutationFn: async (data: { currentPassword: string; newPassword: string }) => {
