@@ -42,7 +42,7 @@ export interface IStorage {
   createChatMessage(insertMessage: InsertChatMessage): Promise<ChatMessage>;
   
   // Blog methods
-  getBlogPosts(): Promise<BlogPost[]>;
+  getBlogPosts(limit?: number, category?: string): Promise<BlogPost[]>;
   getBlogPost(id: number): Promise<BlogPost | undefined>;
   getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost>;
@@ -239,8 +239,20 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Blog methods
-  async getBlogPosts(): Promise<BlogPost[]> {
-    return await db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+  async getBlogPosts(limit?: number, category?: string): Promise<BlogPost[]> {
+    let query = db.select().from(blogPosts);
+    
+    if (category) {
+      query = query.where(eq(blogPosts.category, category));
+    }
+    
+    query = query.orderBy(desc(blogPosts.createdAt));
+    
+    if (limit) {
+      query = query.limit(limit);
+    }
+    
+    return await query;
   }
 
   async getBlogPost(id: number): Promise<BlogPost | undefined> {

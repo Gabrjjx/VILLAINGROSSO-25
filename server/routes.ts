@@ -101,14 +101,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const contactData = req.body as InsertContactMessage;
       const newMessage = await storage.createContactMessage(contactData);
       
-      // Invia notifica email al proprietario
+      // Invia notifica email al proprietario usando Bird API
       try {
-        const emailData = createContactNotificationEmail(
+        await sendContactNotificationEmail(
           contactData.name,
           contactData.email,
           contactData.message
         );
-        await sendEmailSendGrid(emailData);
         log(`Contact notification email sent for message ${newMessage.id}`, "info");
       } catch (emailError) {
         log(`Failed to send contact notification email: ${emailError}`, "error");
@@ -141,15 +140,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const emailData = createBookingConfirmationEmail(
+      const emailSent = await sendBookingConfirmationEmailBird(
         guestEmail,
         guestName,
         checkIn,
         checkOut,
         guests
       );
-      
-      const emailSent = await sendEmailSendGrid(emailData);
       
       if (emailSent) {
         log(`Booking confirmation email sent to ${guestEmail}`, "info");
@@ -225,14 +222,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Email and name are required" });
       }
 
-      // Usa Bird API per inviare email di benvenuto
-      const { sendEmail, createWelcomeEmail } = await import('./bird');
+      // Usa Bird API per inviare email di benvenuto con configurazione welcome
+      const { createWelcomeEmail } = await import('./bird');
       const welcomeEmailContent = createWelcomeEmail(
         name, 
         email, 
         'https://villaingrosso.com'
       );
-      const success = await sendEmail(email, '🏖️ Benvenuto in Villa Ingrosso - La tua casa vacanze in Puglia', welcomeEmailContent);
+      const success = await sendEmailBird(email, '🏖️ Benvenuto in Villa Ingrosso - La tua casa vacanze in Puglia', welcomeEmailContent, 'welcome');
       
       if (success) {
         res.json({ success: true, message: "Welcome email sent successfully via Bird API" });
