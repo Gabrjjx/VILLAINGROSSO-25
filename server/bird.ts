@@ -890,7 +890,8 @@ export async function sendNewUserNotificationEmail(userName: string, userEmail: 
   return await sendEmail(
     'g.ingrosso@gabhub.it', 
     '🎉 Nuova Registrazione su Villa Ingrosso', 
-    htmlContent
+    htmlContent,
+    'admin'
   );
 }
 
@@ -901,8 +902,101 @@ export async function sendWelcomeEmail(userEmail: string, userName: string, pass
   return await sendEmail(
     userEmail,
     "Benvenuto su Villa Ingrosso - Le tue credenziali di accesso",
-    htmlContent
+    htmlContent,
+    'welcome'
   );
+}
+
+// Funzioni specializzate per ogni tipo di email con configurazioni specifiche
+export async function sendPasswordResetEmail(userEmail: string, userName: string, resetToken: string): Promise<boolean> {
+  const subject = "Reset Password Villa Ingrosso";
+  const content = createPasswordResetEmail(userName, `https://villaingrosso.com/reset-password?token=${resetToken}`);
+  return await sendEmail(userEmail, subject, content, 'reset');
+}
+
+export async function sendBookingConfirmationEmail(guestEmail: string, guestName: string, checkIn: string, checkOut: string, numberOfGuests: number): Promise<boolean> {
+  const subject = "Conferma Prenotazione Villa Ingrosso";
+  const content = `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conferma Prenotazione</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #1976d2; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background: #f9f9f9; }
+        .booking-details { background: white; padding: 15px; margin: 20px 0; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Villa Ingrosso</h1>
+            <p>Conferma Prenotazione</p>
+        </div>
+        <div class="content">
+            <h2>Gentile ${guestName},</h2>
+            <p>La sua prenotazione presso Villa Ingrosso è stata confermata!</p>
+            
+            <div class="booking-details">
+                <h3>Dettagli Prenotazione:</h3>
+                <p><strong>Check-in:</strong> ${checkIn}</p>
+                <p><strong>Check-out:</strong> ${checkOut}</p>
+                <p><strong>Numero ospiti:</strong> ${numberOfGuests}</p>
+            </div>
+            
+            <p>La contatteremo presto con ulteriori dettagli e istruzioni per l'arrivo.</p>
+            <p>Grazie per aver scelto Villa Ingrosso per la sua vacanza in Puglia!</p>
+        </div>
+    </div>
+</body>
+</html>`;
+  return await sendEmail(guestEmail, subject, content, 'booking');
+}
+
+export async function sendContactNotificationEmail(contactName: string, contactEmail: string, message: string): Promise<boolean> {
+  const subject = "Nuovo messaggio di contatto - Villa Ingrosso";
+  const content = `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuovo Contatto</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #d32f2f; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background: #f9f9f9; }
+        .contact-info { background: white; padding: 15px; margin: 20px 0; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Villa Ingrosso</h1>
+            <p>Nuovo Messaggio di Contatto</p>
+        </div>
+        <div class="content">
+            <div class="contact-info">
+                <p><strong>Nome:</strong> ${contactName}</p>
+                <p><strong>Email:</strong> ${contactEmail}</p>
+                <p><strong>Messaggio:</strong></p>
+                <p>${message}</p>
+            </div>
+            <p>Rispondi direttamente a questo messaggio per contattare il cliente.</p>
+        </div>
+    </div>
+</body>
+</html>`;
+  return await sendEmail("admin@villaingrosso.com", subject, content, 'contact');
+}
+
+export async function sendNewsletterEmail(recipientEmail: string, subject: string, content: string): Promise<boolean> {
+  return await sendEmail(recipientEmail, subject, content, 'newsletter');
 }
 
 // Template per email di benvenuto per nuovi utenti

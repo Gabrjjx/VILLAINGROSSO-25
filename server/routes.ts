@@ -21,14 +21,20 @@ import {
   sendEmail as sendEmailSendGrid,
   createContactNotificationEmail, 
   createBookingConfirmationEmail,
-  sendWelcomeEmail,
+  sendWelcomeEmail as sendWelcomeEmailOld,
   addToNewsletter,
   sendNewsletter,
   sendSMS
 } from "./sendgrid";
 import { 
   sendEmail as sendEmailBird, 
-  createPasswordResetEmail 
+  createPasswordResetEmail,
+  sendWelcomeEmail,
+  sendNewUserNotificationEmail,
+  sendBookingConfirmationEmail as sendBookingConfirmationEmailBird,
+  sendContactNotificationEmail,
+  sendNewsletterEmail,
+  sendPasswordResetEmail
 } from "./bird";
 
 export async function registerRoutes(app: Express): Promise<Server> {
