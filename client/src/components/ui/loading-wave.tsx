@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import VillaAnalytics from "@/lib/gtm-analytics";
+import { useEffect } from "react";
 
 interface LoadingWaveProps {
   size?: "sm" | "md" | "lg" | "xl";

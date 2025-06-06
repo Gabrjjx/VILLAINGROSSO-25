@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Loader2, Calendar } from "lucide-react";
 import { PugliaLoading } from "@/components/ui/puglia-loading";
 import { LoadingWave } from "@/components/ui/loading-wave";
+import VillaAnalytics from "@/lib/gtm-analytics";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";

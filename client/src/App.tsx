@@ -35,6 +35,8 @@ import SoundToggle from "@/components/SoundToggle";
 import GoogleAnalyticsDebug from "./components/GoogleAnalyticsDebug";
 import GoogleAnalyticsSetup from "./components/GoogleAnalyticsSetup";
 import { RegistrationIncentiveBanner, RegistrationIncentivePopup } from "@/components/RegistrationIncentive";
+import { initVillaAnalytics } from "@/lib/gtm-analytics";
+import { useEffect } from "react";
 
 function Router() {
   return (
@@ -67,6 +69,11 @@ function Router() {
 }
 
 function App() {
+  // Initialize Villa Ingrosso analytics with GTM integration
+  useEffect(() => {
+    initVillaAnalytics();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
