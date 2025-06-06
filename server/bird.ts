@@ -578,6 +578,165 @@ export function createPasswordResetEmail(userName: string, baseUrl: string): str
   `;
 }
 
+// Template per email di benvenuto newsletter
+export function createNewsletterWelcomeEmail(userName: string): string {
+  return `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto nella Newsletter di Villa Ingrosso</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #2c3e50;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            padding: 20px;
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #1976d2 0%, #0288d1 50%, #00acc1 100%); 
+            color: white; 
+            padding: 40px 30px; 
+            text-align: center;
+            position: relative;
+        }
+        .logo { 
+            font-size: 28px; 
+            font-weight: bold; 
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle { 
+            font-size: 16px; 
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        .content { 
+            padding: 40px 30px; 
+            background: white;
+        }
+        .welcome { 
+            font-size: 18px; 
+            color: #1976d2; 
+            font-weight: 600; 
+            margin-bottom: 20px;
+        }
+        .message { 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+            color: #555;
+        }
+        .benefits {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .benefit-icon {
+            color: #1976d2;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        .footer {
+            background: #37474f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer-links a {
+            color: #81c784;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="logo">🌊 Villa Ingrosso</div>
+            <div class="subtitle">La tua casa vacanze in Puglia</div>
+            <h2 style="margin-top: 20px; font-size: 22px;">Benvenuto nella Newsletter!</h2>
+        </div>
+        
+        <div class="content">
+            <div class="welcome">Ciao ${userName}!</div>
+            
+            <div class="message">
+                Grazie per esserti iscritto alla newsletter di Villa Ingrosso! 
+                Ora riceverai tutte le nostre novità, offerte esclusive e consigli per 
+                il tuo prossimo soggiorno in Puglia.
+            </div>
+            
+            <div class="benefits">
+                <h3 style="color: #1976d2; margin-bottom: 15px;">Cosa riceverai:</h3>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎯</div>
+                    <div>Offerte speciali e promozioni esclusive</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📰</div>
+                    <div>Novità e aggiornamenti dalla villa</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🗺️</div>
+                    <div>Consigli per esplorare la Puglia</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎭</div>
+                    <div>Eventi locali e attrazioni</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🏖️</div>
+                    <div>Guide alle spiagge più belle</div>
+                </div>
+            </div>
+            
+            <div class="message">
+                Villa Ingrosso si trova nel cuore della Costa Ionica pugliese, 
+                a soli 300 metri dal mare cristallino di Leporano Marina. 
+                Il luogo perfetto per le tue vacanze in Puglia!
+            </div>
+            
+            <div class="message" style="text-align: center; margin-top: 30px; color: #2e7d32; font-weight: 600;">
+                Ci vediamo presto in Puglia!<br>
+                <span style="font-weight: normal; font-style: italic;">Il Team di Villa Ingrosso</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-links">
+                <a href="https://villaingrosso.com">Sito Web</a> |
+                <a href="https://villaingrosso.com/contact">Contatti</a> |
+                <a href="https://villaingrosso.com/booking">Prenota Ora</a>
+            </div>
+            <div style="margin-top: 10px;">
+                Per disiscriverti dalla newsletter, rispondi a questa email con "UNSUBSCRIBE"<br>
+                Villa Ingrosso - Leporano Marina, Puglia | villaingrosso.com
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+  `;
+}
+
 // Template per email di benvenuto con password per nuovi utenti
 export function createWelcomeEmailWithPassword(userName: string, userEmail: string, password: string, baseUrl: string): string {
   return `

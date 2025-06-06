@@ -242,39 +242,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Newsletter temporaneamente disabilitata
+  // Newsletter subscription con database completo
   app.post("/api/newsletter/subscribe", async (req: Request, res: Response) => {
     try {
       const { email, firstName } = req.body;
       
       if (!email) {
-        return res.status(400).json({ error: "Email is required" });
+        return res.status(400).json({ 
+          success: false,
+          error: "Email is required" 
+        });
       }
 
       // Valida formato email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        return res.status(400).json({ error: "Invalid email format" });
+        return res.status(400).json({ 
+          success: false,
+          error: "Invalid email format" 
+        });
       }
 
-      // Log per tracking temporaneo
-      console.log('NEWSLETTER_SUBSCRIPTION:', {
-        email,
-        firstName: firstName || 'Non specificato',
-        timestamp: new Date().toISOString()
-      });
+      // Salva nel database usando il storage system
+      const subscriber = await storage.subscribeToNewsletter(email, firstName);
+      
+      // Invia email di benvenuto newsletter usando Bird API
+      try {
+        const { createNewsletterWelcomeEmail } = await import('./bird');
+        const welcomeEmailContent = createNewsletterWelcomeEmail(firstName || 'Ospite');
+        const emailSent = await sendEmailBird(
+          email, 
+          '🌊 Benvenuto nella Newsletter di Villa Ingrosso!', 
+          welcomeEmailContent, 
+          'newsletter'
+        );
+        
+        log(`Newsletter subscription: ${email} - Welcome email sent: ${emailSent}`, "info");
+      } catch (emailError) {
+        log(`Newsletter welcome email failed for ${email}: ${emailError}`, "error");
+      }
 
-      // Risposta temporanea di successo
       res.json({ 
         success: true, 
-        message: "Newsletter subscription received. You will be contacted soon." 
+        message: "Successfully subscribed to newsletter",
+        subscriber: {
+          email: subscriber.email,
+          name: subscriber.name,
+          subscribedAt: subscriber.subscribedAt
+        }
       });
       
     } catch (error: any) {
-      console.error("Newsletter subscription error:", error);
+      log(`Newsletter subscription error: ${error}`, "error");
       res.status(500).json({ 
         success: false, 
-        message: "Internal server error"
+        error: "Failed to subscribe to newsletter"
       });
     }
   });
