@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
@@ -6,11 +6,31 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Bed, Waves, Wifi } from "lucide-react";
 import { Link } from "wouter";
 import { RegistrationIncentiveCard } from "@/components/RegistrationIncentive";
+import { LoadingOverlay } from "@/components/ui/loading-overlay";
+import { LoadingWave } from "@/components/ui/loading-wave";
 
 export default function Home() {
   const { language, t } = useLanguage();
+  const [isLoading, setIsLoading] = useState(true);
+  const [sectionsLoaded, setSectionsLoaded] = useState({
+    hero: false,
+    features: false,
+    incentive: false
+  });
   
   useEffect(() => {
+    // Simulate loading time for demonstration
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    // Progressive section loading
+    const sectionTimers = [
+      setTimeout(() => setSectionsLoaded(prev => ({ ...prev, hero: true })), 800),
+      setTimeout(() => setSectionsLoaded(prev => ({ ...prev, features: true })), 1200),
+      setTimeout(() => setSectionsLoaded(prev => ({ ...prev, incentive: true })), 1400)
+    ];
+
     // Set page title and meta description for SEO based on language
     document.title = language === 'it' 
       ? "Villa Ingrosso - Elegante Casa Vacanza a Leporano" 
@@ -53,6 +73,8 @@ export default function Home() {
     });
 
     return () => {
+      clearTimeout(loadingTimer);
+      sectionTimers.forEach(timer => clearTimeout(timer));
       sections.forEach(section => {
         fadeInObserver.unobserve(section);
       });
@@ -61,8 +83,21 @@ export default function Home() {
 
   return (
     <div className="font-body text-neutral-900 bg-white">
+      <LoadingOverlay 
+        isVisible={isLoading} 
+        text={language === 'it' ? "Benvenuto in Villa Ingrosso..." : "Welcome to Villa Ingrosso..."}
+        variant="ocean"
+      />
+      
       <Navbar />
-      <Hero />
+      
+      {sectionsLoaded.hero ? (
+        <Hero />
+      ) : (
+        <div className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-cyan-50">
+          <LoadingWave size="xl" variant="ocean" text={language === 'it' ? "Caricando la villa..." : "Loading villa..."} />
+        </div>
+      )}
       
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
