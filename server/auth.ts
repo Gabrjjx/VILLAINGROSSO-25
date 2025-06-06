@@ -150,6 +150,15 @@ export function setupAuth(app: Express) {
         // Non blocchiamo la registrazione se l'email fallisce
       }
 
+      // Iscrivi automaticamente alla newsletter
+      try {
+        await storage.subscribeToNewsletter(user.email, user.fullName);
+        console.log(`User ${user.email} automatically subscribed to newsletter`);
+      } catch (newsletterError) {
+        console.error('Failed to subscribe user to newsletter:', newsletterError);
+        // Non blocchiamo la registrazione se l'iscrizione alla newsletter fallisce
+      }
+
       // Invia notifica di nuova registrazione all'admin
       try {
         const { sendNewUserNotificationEmail } = await import('./bird');

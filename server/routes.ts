@@ -301,6 +301,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get newsletter subscribers (admin only)
+  app.get("/api/newsletter/subscribers", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      const subscribers = await storage.getAllNewsletterSubscribers();
+      const activeSubscribers = await storage.getActiveNewsletterSubscribers();
+      
+      res.json({
+        success: true,
+        total: subscribers.length,
+        active: activeSubscribers.length,
+        subscribers: subscribers
+      });
+    } catch (error: any) {
+      log(`Error fetching newsletter subscribers: ${error}`, "error");
+      res.status(500).json({
+        success: false,
+        error: "Failed to fetch newsletter subscribers"
+      });
+    }
+  });
+
+  // Check newsletter subscription status
+  app.get("/api/newsletter/status", async (req: Request, res: Response) => {
+    try {
+      const { email } = req.query;
+      
+      if (!email || typeof email !== 'string') {
+        return res.status(400).json({
+          success: false,
+          error: "Email is required"
+        });
+      }
+
+      const subscriber = await storage.getNewsletterSubscriber(email);
+      
+      res.json({
+        success: true,
+        isSubscribed: subscriber ? subscriber.isActive : false,
+        subscriber: subscriber || null
+      });
+    } catch (error: any) {
+      log(`Error checking newsletter status: ${error}`, "error");
+      res.status(500).json({
+        success: false,
+        error: "Failed to check newsletter status"
+      });
+    }
+  });
+
+  // Toggle newsletter subscription
+  app.post("/api/newsletter/toggle", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ error: "Authentication required" });
+      }
+
+      const { subscribe } = req.body;
+      const userEmail = req.user!.email;
+      const userName = req.user!.fullName;
+      
+      if (subscribe) {
+        const subscriber = await storage.subscribeToNewsletter(userEmail, userName);
+        res.json({
+          success: true,
+          message: "Successfully subscribed to newsletter",
+          subscriber
+        });
+      } else {
+        const success = await storage.unsubscribeFromNewsletter(userEmail);
+        res.json({
+          success,
+          message: success ? "Successfully unsubscribed from newsletter" : "Failed to unsubscribe"
+        });
+      }
+    } catch (error: any) {
+      log(`Error toggling newsletter subscription: ${error}`, "error");
+      res.status(500).json({
+        success: false,
+        error: "Failed to update newsletter subscription"
+      });
+    }
+  });
+
   // Test endpoint semplificato per debug newsletter
   app.post("/api/newsletter-debug", async (req: Request, res: Response) => {
     try {

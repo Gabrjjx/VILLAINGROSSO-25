@@ -71,6 +71,9 @@ function AccountPage() {
   });
   const [isChangingPassword, setIsChangingPassword] = useState(false);
 
+  // Stato per la newsletter
+  const [isSubscribedToNewsletter, setIsSubscribedToNewsletter] = useState(false);
+
   // Carica le prenotazioni dell'utente
   const { data: bookings, isLoading: bookingsLoading } = useQuery<Booking[]>({
     queryKey: ["/api/bookings"],
@@ -91,6 +94,26 @@ function AccountPage() {
         return [];
       }
     },
+  });
+
+  // Verifica lo stato della newsletter
+  useQuery({
+    queryKey: ["/api/newsletter/status", user?.email],
+    queryFn: async () => {
+      if (!user?.email) return null;
+      try {
+        const res = await apiRequest("GET", `/api/newsletter/status?email=${encodeURIComponent(user.email)}`);
+        if (res.ok) {
+          const data = await res.json();
+          setIsSubscribedToNewsletter(data.isSubscribed);
+          return data;
+        }
+      } catch (error) {
+        console.log("Newsletter status check failed:", error);
+      }
+      return null;
+    },
+    enabled: !!user?.email,
   });
 
   // Mutation per aggiornare il profilo
