@@ -120,6 +120,10 @@ export default function BookingForm() {
       return await res.json();
     },
     onSuccess: (data) => {
+      // Track successful booking conversion
+      VillaAnalytics.trackConversion('booking', undefined, 'EUR');
+      VillaAnalytics.trackBookingInteraction('submission_success', 'form_complete', data.id);
+      
       // Salva i dati della prenotazione per la pagina di conferma
       const bookingData = {
         id: data.id,
