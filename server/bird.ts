@@ -1,5 +1,6 @@
 // Bird API integration for WhatsApp, SMS and Email communications
 import { Request, Response } from 'express';
+import { getEmailForType, EmailConfig } from './email-config';
 
 interface BirdMessagePayload {
   receiver: {
@@ -272,12 +273,14 @@ Controlla il pannello admin.`;
 }
 
 // Funzione per inviare email tramite Bird API Transmissions
-export async function sendEmail(to: string, subject: string, htmlContent: string): Promise<boolean> {
+export async function sendEmail(to: string, subject: string, htmlContent: string, emailType: 'reset' | 'welcome' | 'booking' | 'contact' | 'newsletter' | 'admin' = 'admin'): Promise<boolean> {
   if (!BIRD_API_KEY || !BIRD_WORKSPACE_ID) {
     console.error('Bird API not configured properly');
     return false;
   }
 
+  const emailConfig = getEmailForType(emailType);
+  
   try {
     // Usa l'API Transmissions secondo la documentazione Bird
     const payload = {
@@ -297,7 +300,7 @@ export async function sendEmail(to: string, subject: string, htmlContent: string
         }
       ],
       content: {
-        from: "info@villaingrosso.com",
+        from: emailConfig.from,
         subject: subject,
         html: htmlContent,
         text: htmlContent.replace(/<[^>]*>/g, '') // Converte HTML in testo
