@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/context/LanguageContext";
+import VillaAnalytics from "@/lib/gtm-analytics";
 
 export default function ContactPage() {
   const { language } = useLanguage();
@@ -12,6 +13,10 @@ export default function ContactPage() {
     document.title = language === 'it' 
       ? "Contatti - Villa Ingrosso" 
       : "Contact - Villa Ingrosso";
+    
+    // Track Contact page view with GTM
+    VillaAnalytics.trackPageView('/contact', document.title);
+    VillaAnalytics.trackPugliaEngagement('contact_page', 'page_load', 'lead_generation');
     
     // Add meta description in current language
     const metaDescription = document.querySelector('meta[name="description"]');

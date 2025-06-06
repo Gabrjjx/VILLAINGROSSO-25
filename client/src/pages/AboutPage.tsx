@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/context/LanguageContext";
+import VillaAnalytics from "@/lib/gtm-analytics";
 
 export default function AboutPage() {
   const { language } = useLanguage();
@@ -12,6 +13,10 @@ export default function AboutPage() {
     document.title = language === 'it' 
       ? "Chi Siamo - Villa Ingrosso" 
       : "About Us - Villa Ingrosso";
+    
+    // Track About page view with GTM
+    VillaAnalytics.trackPageView('/about', document.title);
+    VillaAnalytics.trackPugliaEngagement('about_page', 'page_load', 'information');
     
     // Add meta description in current language
     const metaDescription = document.querySelector('meta[name="description"]');

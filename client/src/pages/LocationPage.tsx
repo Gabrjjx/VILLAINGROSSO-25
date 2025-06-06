@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Umbrella, Utensils, Store, Landmark } from "lucide-react";
+import VillaAnalytics from "@/lib/gtm-analytics";
 
 interface LocationFeature {
   icon: React.ReactNode;
