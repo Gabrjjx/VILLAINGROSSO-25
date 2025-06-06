@@ -21,6 +21,7 @@ import BlogPage from "@/pages/blog-page";
 import BlogPostPage from "@/pages/blog-post-page";
 import InventoryPage from "@/pages/inventory-page";
 import FaqPage from "@/pages/faq-page";
+import LoadingDemoPage from "@/pages/loading-demo-page";
 import NewsletterModal from "@/components/NewsletterModal";
 import WhatsAppChat from "@/components/WhatsAppChat";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
@@ -57,6 +58,7 @@ function Router() {
       <Route path="/blog/:slug" component={BlogPostPage} />
       <Route path="/inventory" component={InventoryPage} />
       <Route path="/faq" component={FaqPage} />
+      <Route path="/loading-demo" component={LoadingDemoPage} />
       <Route path="/reset-password" component={SimpleResetPasswordPage} />
       <Route path="/change-password" component={ChangePasswordPage} />
       <Route component={NotFound} />

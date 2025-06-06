@@ -10,6 +10,8 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/use-auth";
 import { Loader2, Calendar } from "lucide-react";
+import { PugliaLoading } from "@/components/ui/puglia-loading";
+import { LoadingWave } from "@/components/ui/loading-wave";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -325,10 +327,10 @@ export default function BookingForm() {
                 }}
               >
                 {bookingMutation.isPending ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t("booking.submitting")}
-                  </>
+                  <div className="flex items-center">
+                    <PugliaLoading variant="booking" size="sm" />
+                    <span className="ml-3">{t("booking.submitting")}</span>
+                  </div>
                 ) : (
                   "Invia Richiesta"
                 )}
