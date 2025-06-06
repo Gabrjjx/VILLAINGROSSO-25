@@ -3,9 +3,18 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/context/LanguageContext";
+import { useEffect } from "react";
+import VillaAnalytics from "@/lib/gtm-analytics";
 
 export default function Privacy() {
   const { t } = useLanguage();
+  
+  useEffect(() => {
+    // Track Privacy page view with GTM
+    document.title = "Privacy Policy - Villa Ingrosso";
+    VillaAnalytics.trackPageView('/privacy', document.title);
+    VillaAnalytics.trackPugliaEngagement('privacy_page', 'page_load', 'legal');
+  }, []);
   
   return (
     <div className="font-body text-neutral-900 bg-white min-h-screen pt-24">

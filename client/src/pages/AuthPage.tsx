@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useAuth } from "@/hooks/use-auth";
 import { Redirect } from "wouter";
 import { Loader2, ArrowLeft } from "lucide-react";
+import VillaAnalytics from "@/lib/gtm-analytics";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -44,6 +45,13 @@ export default function AuthPage() {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
   const { user, isLoading, loginMutation, registerMutation } = useAuth();
+
+  useEffect(() => {
+    // Track Auth page view with GTM
+    document.title = "Accesso - Villa Ingrosso";
+    VillaAnalytics.trackPageView('/auth', document.title);
+    VillaAnalytics.trackPugliaEngagement('auth_page', 'page_load', 'user_authentication');
+  }, []);
 
   // Form per il login
   const loginForm = useForm<LoginFormData>({
