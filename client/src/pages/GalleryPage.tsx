@@ -3,11 +3,16 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GalleryTabs from "@/components/GalleryTabs";
 import { useLanguage } from "@/context/LanguageContext";
+import VillaAnalytics from "@/lib/gtm-analytics";
 
 export default function GalleryPage() {
   const { t, language } = useLanguage();
   
   useEffect(() => {
+    // Track gallery page view
+    VillaAnalytics.trackPageView('/gallery', document.title);
+    VillaAnalytics.trackPugliaEngagement('gallery_page', 'page_load', 'gallery_visit');
+
     // Set page title and meta description for SEO
     document.title = language === 'it' ? "Galleria - Villa Ingrosso" : "Gallery - Villa Ingrosso";
     

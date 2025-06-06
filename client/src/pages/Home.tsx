@@ -8,6 +8,7 @@ import { Link } from "wouter";
 import { RegistrationIncentiveCard } from "@/components/RegistrationIncentive";
 import { LoadingOverlay } from "@/components/ui/loading-overlay";
 import { LoadingWave } from "@/components/ui/loading-wave";
+import VillaAnalytics from "@/lib/gtm-analytics";
 
 export default function Home() {
   const { language, t } = useLanguage();
@@ -30,6 +31,10 @@ export default function Home() {
       setTimeout(() => setSectionsLoaded(prev => ({ ...prev, features: true })), 1200),
       setTimeout(() => setSectionsLoaded(prev => ({ ...prev, incentive: true })), 1400)
     ];
+
+    // Track page view for Home page
+    VillaAnalytics.trackPageView('/', document.title);
+    VillaAnalytics.trackPugliaEngagement('home_page', 'page_load', 'homepage_visit');
 
     // Set page title and meta description for SEO based on language
     document.title = language === 'it' 
