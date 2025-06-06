@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import LocalRecommendations from "@/components/LocalRecommendations";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/context/LanguageContext";
+import VillaAnalytics from "@/lib/gtm-analytics";
 
 export default function RecommendationsPage() {
   const { language } = useLanguage();
@@ -12,6 +13,10 @@ export default function RecommendationsPage() {
     document.title = language === 'it' 
       ? "Consigli Locali - Villa Ingrosso" 
       : "Local Recommendations - Villa Ingrosso";
+    
+    // Track Recommendations page view with GTM
+    VillaAnalytics.trackPageView('/recommendations', document.title);
+    VillaAnalytics.trackPugliaEngagement('recommendations_page', 'page_load', 'local_guide');
     
     // Add meta description in current language
     const metaDescription = document.querySelector('meta[name="description"]');

@@ -11,6 +11,13 @@ interface LocationFeature {
 }
 
 export default function LocationPage2() {
+  useEffect(() => {
+    // Track Location page view with GTM
+    document.title = "Posizione - Villa Ingrosso";
+    VillaAnalytics.trackPageView('/location', document.title);
+    VillaAnalytics.trackPugliaEngagement('location_page', 'page_load', 'location_info');
+  }, []);
+
   // Definizione statica delle caratteristiche locali
   const localFeatures: LocationFeature[] = [
     {

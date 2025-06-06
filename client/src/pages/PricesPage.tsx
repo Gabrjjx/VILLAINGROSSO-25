@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/context/LanguageContext";
 import { Calendar, EuroIcon, Sun, Waves } from "lucide-react";
 import { motion } from "framer-motion";
 import { trackContactConversion } from "@/lib/google-ads";
+import VillaAnalytics from "@/lib/gtm-analytics";
 
 export default function PricesPage() {
   const { t } = useLanguage();
+
+  useEffect(() => {
+    // Track Prices page view with GTM
+    document.title = "Prezzi - Villa Ingrosso";
+    VillaAnalytics.trackPageView('/prices', document.title);
+    VillaAnalytics.trackPugliaEngagement('prices_page', 'page_load', 'pricing_interest');
+  }, []);
 
   const seasonalPrices = [
     {
