@@ -213,6 +213,16 @@ export type InsertFaq = z.infer<typeof insertFaqSchema>;
 export type FaqVote = typeof faqVotes.$inferSelect;
 export type InsertFaqVote = z.infer<typeof insertFaqVoteSchema>;
 
+// Schema per la newsletter
+export const newsletters = pgTable("newsletters", {
+  id: serial("id").primaryKey(),
+  email: varchar("email", { length: 100 }).notNull().unique(),
+  name: varchar("name", { length: 100 }),
+  isActive: boolean("is_active").notNull().default(true),
+  subscribedAt: timestamp("subscribed_at").defaultNow(),
+  unsubscribedAt: timestamp("unsubscribed_at"),
+});
+
 // Schema per le promozioni sconto 10%
 export const promotions = pgTable("promotions", {
   id: serial("id").primaryKey(),
@@ -236,9 +246,16 @@ export const promotionUsages = pgTable("promotion_usages", {
   usedAt: timestamp("used_at").defaultNow(),
 });
 
+// Schema Zod per newsletter
+export const insertNewsletterSchema = createInsertSchema(newsletters).omit({ id: true, subscribedAt: true, unsubscribedAt: true });
+
 // Schema Zod per le promozioni
 export const insertPromotionSchema = createInsertSchema(promotions);
 export const insertPromotionUsageSchema = createInsertSchema(promotionUsages);
+
+// Tipi TypeScript per newsletter
+export type Newsletter = typeof newsletters.$inferSelect;
+export type InsertNewsletter = z.infer<typeof insertNewsletterSchema>;
 
 // Tipi TypeScript per le promozioni
 export type Promotion = typeof promotions.$inferSelect;

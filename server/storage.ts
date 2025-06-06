@@ -1,4 +1,4 @@
-import { users, chatMessages, bookings, contactMessages, blogPosts, inventoryItems, inventoryMovements, faqs, faqVotes, promotions, promotionUsages, type User, type InsertUser, type ChatMessage, type InsertChatMessage, type Booking, type InsertBooking, type ContactMessage, type InsertContactMessage, type BlogPost, type InsertBlogPost, type InventoryItem, type InsertInventoryItem, type InventoryMovement, type InsertInventoryMovement, type Faq, type InsertFaq, type FaqVote, type InsertFaqVote, type Promotion, type InsertPromotion, type PromotionUsage, type InsertPromotionUsage } from "@shared/schema";
+import { users, chatMessages, bookings, contactMessages, blogPosts, inventoryItems, inventoryMovements, faqs, faqVotes, promotions, promotionUsages, newsletters, type User, type InsertUser, type ChatMessage, type InsertChatMessage, type Booking, type InsertBooking, type ContactMessage, type InsertContactMessage, type BlogPost, type InsertBlogPost, type InventoryItem, type InsertInventoryItem, type InventoryMovement, type InsertInventoryMovement, type Faq, type InsertFaq, type FaqVote, type InsertFaqVote, type Promotion, type InsertPromotion, type PromotionUsage, type InsertPromotionUsage, type Newsletter, type InsertNewsletter } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, asc, and, or, sql, like, ilike } from "drizzle-orm";
 import session from "express-session";
@@ -73,6 +73,13 @@ export interface IStorage {
   getActivePromotion(): Promise<Promotion | undefined>;
   applyPromotion(promotionId: number, bookingId: number, userId: number, discountAmount: number): Promise<PromotionUsage>;
   incrementPromotionUsage(promotionId: number): Promise<void>;
+  
+  // Newsletter methods
+  subscribeToNewsletter(email: string, name?: string): Promise<Newsletter>;
+  unsubscribeFromNewsletter(email: string): Promise<boolean>;
+  getNewsletterSubscriber(email: string): Promise<Newsletter | undefined>;
+  getAllNewsletterSubscribers(): Promise<Newsletter[]>;
+  getActiveNewsletterSubscribers(): Promise<Newsletter[]>;
   
   sessionStore: any;
 }
@@ -515,6 +522,68 @@ export class DatabaseStorage implements IStorage {
     await db.update(blogPosts)
       .set({ viewCount: sql`${blogPosts.viewCount} + 1` })
       .where(eq(blogPosts.id, postId));
+  }
+
+  // Newsletter methods
+  async subscribeToNewsletter(email: string, name?: string): Promise<Newsletter> {
+    try {
+      const [subscriber] = await db
+        .insert(newsletters)
+        .values({ 
+          email, 
+          name: name || null,
+          isActive: true 
+        })
+        .returning();
+      return subscriber;
+    } catch (error) {
+      // Se l'email esiste già, riattiva la sottoscrizione
+      const [existing] = await db
+        .update(newsletters)
+        .set({ 
+          isActive: true, 
+          unsubscribedAt: null,
+          name: name || undefined
+        })
+        .where(eq(newsletters.email, email))
+        .returning();
+      return existing;
+    }
+  }
+
+  async unsubscribeFromNewsletter(email: string): Promise<boolean> {
+    const result = await db
+      .update(newsletters)
+      .set({ 
+        isActive: false, 
+        unsubscribedAt: new Date() 
+      })
+      .where(eq(newsletters.email, email))
+      .returning();
+    return result.length > 0;
+  }
+
+  async getNewsletterSubscriber(email: string): Promise<Newsletter | undefined> {
+    const [subscriber] = await db
+      .select()
+      .from(newsletters)
+      .where(eq(newsletters.email, email));
+    return subscriber || undefined;
+  }
+
+  async getAllNewsletterSubscribers(): Promise<Newsletter[]> {
+    return await db
+      .select()
+      .from(newsletters)
+      .orderBy(desc(newsletters.subscribedAt));
+  }
+
+  async getActiveNewsletterSubscribers(): Promise<Newsletter[]> {
+    return await db
+      .select()
+      .from(newsletters)
+      .where(eq(newsletters.isActive, true))
+      .orderBy(desc(newsletters.subscribedAt));
   }
 }
 
