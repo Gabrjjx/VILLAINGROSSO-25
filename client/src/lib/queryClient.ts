@@ -5,8 +5,14 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 1,
-      staleTime: 5 * 60 * 1000, // 5 minuti
+      staleTime: 10 * 60 * 1000, // 10 minuti per dati statici
+      gcTime: 15 * 60 * 1000, // 15 minuti in cache (gcTime in v5)
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    },
+    mutations: {
+      retry: 1,
     },
   },
 });
@@ -43,16 +49,19 @@ export const apiRequest = async (
     config.body = JSON.stringify(body);
   }
 
-  // Aggiungi un timestamp per evitare cache
-  const timestamp = new Date().getTime();
-  const urlWithTimestamp = url.includes("?") 
-    ? `${url}&_t=${timestamp}` 
-    : `${url}?_t=${timestamp}`;
+  // Solo per POST/PUT/PATCH/DELETE aggiungiamo timestamp per evitare cache
+  let finalUrl = url;
+  if (method !== "GET") {
+    const timestamp = new Date().getTime();
+    finalUrl = url.includes("?") 
+      ? `${url}&_t=${timestamp}` 
+      : `${url}?_t=${timestamp}`;
+  }
 
   // Log dell'API request
-  console.log(`API Request: ${method} ${urlWithTimestamp} ${authToken ? '(with JWT)' : '(without JWT)'}`);
+  console.log(`API Request: ${method} ${finalUrl} ${authToken ? '(with JWT)' : '(without JWT)'}`);
   
-  return fetch(urlWithTimestamp, config);
+  return fetch(finalUrl, config);
 };
 
 // Funzione getQueryFn per usare con useQuery

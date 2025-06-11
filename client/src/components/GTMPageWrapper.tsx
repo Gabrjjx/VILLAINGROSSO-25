@@ -1,4 +1,4 @@
-import { useEffect, ReactNode } from 'react';
+import { useEffect, ReactNode, useMemo } from 'react';
 import { useLocation } from 'wouter';
 import VillaAnalytics from '@/lib/gtm-analytics';
 
@@ -12,36 +12,35 @@ interface GTMPageWrapperProps {
 export function GTMPageWrapper({ children, pageName, pageCategory }: GTMPageWrapperProps) {
   const [location] = useLocation();
 
-  useEffect(() => {
-    // Ensure GTM tracking fires on every page load
+  // Memoize page data to avoid recalculations
+  const pageData = useMemo(() => {
     const title = document.title || `Villa Ingrosso - ${pageName || 'Page'}`;
-    const pageData = {
+    return {
       page_path: location,
       page_title: title,
       page_name: pageName || location.replace('/', '') || 'home',
-      page_category: pageCategory || 'general',
-      timestamp: new Date().toISOString()
+      page_category: pageCategory || 'general'
     };
-
-    // Track with Villa Analytics system
-    VillaAnalytics.trackPageView(location, title);
-    
-    // Send direct GTM event
-    if (typeof window !== 'undefined' && window.dataLayer) {
-      window.dataLayer.push({
-        event: 'villa_page_view',
-        ...pageData
-      });
-    }
-
-    // Track page engagement
-    VillaAnalytics.trackPugliaEngagement(
-      pageCategory || 'page',
-      'page_load',
-      pageName || 'navigation'
-    );
-
   }, [location, pageName, pageCategory]);
+
+  useEffect(() => {
+    // Debounce analytics calls to avoid flooding
+    const trackingTimer = setTimeout(() => {
+      // Track with Villa Analytics system
+      VillaAnalytics.trackPageView(pageData.page_path, pageData.page_title);
+      
+      // Send direct GTM event only if dataLayer exists
+      if (typeof window !== 'undefined' && window.dataLayer) {
+        window.dataLayer.push({
+          event: 'villa_page_view',
+          ...pageData,
+          timestamp: new Date().toISOString()
+        });
+      }
+    }, 100);
+
+    return () => clearTimeout(trackingTimer);
+  }, [pageData]);
 
   return <>{children}</>;
 }
