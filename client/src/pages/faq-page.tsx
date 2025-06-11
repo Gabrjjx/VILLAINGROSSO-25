@@ -22,6 +22,8 @@ import { apiRequest } from "@/lib/queryClient";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface Faq {
   id: number;
@@ -282,8 +284,46 @@ export default function FaqPage() {
                     <CollapsibleContent>
                       <CardContent className="pt-0">
                         <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                          <div className="prose prose-sm max-w-none">
-                            <div className="whitespace-pre-wrap">{faq.answer}</div>
+                          <div className="prose prose-sm max-w-none
+                            prose-headings:text-gray-900 
+                            prose-h1:text-xl prose-h1:font-bold prose-h1:mb-4
+                            prose-h2:text-lg prose-h2:font-semibold prose-h2:mb-3 prose-h2:mt-6
+                            prose-h3:text-base prose-h3:font-medium prose-h3:mb-2 prose-h3:mt-4
+                            prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-3
+                            prose-strong:text-gray-900 prose-strong:font-semibold
+                            prose-em:text-gray-800
+                            prose-ul:mb-3 prose-ol:mb-3
+                            prose-li:text-gray-700 prose-li:mb-1
+                            prose-blockquote:border-l-4 prose-blockquote:border-purple-500 
+                            prose-blockquote:bg-purple-50 prose-blockquote:p-3 prose-blockquote:my-4
+                            prose-blockquote:text-purple-900 prose-blockquote:italic
+                            prose-a:text-purple-600 prose-a:underline hover:prose-a:text-purple-800">
+                            <ReactMarkdown 
+                              remarkPlugins={[remarkGfm]}
+                              components={{
+                                h1: ({children}) => <h1 className="text-xl font-bold mb-4 text-gray-900">{children}</h1>,
+                                h2: ({children}) => <h2 className="text-lg font-semibold mb-3 mt-6 text-gray-900">{children}</h2>,
+                                h3: ({children}) => <h3 className="text-base font-medium mb-2 mt-4 text-gray-900">{children}</h3>,
+                                p: ({children}) => <p className="text-gray-700 leading-relaxed mb-3">{children}</p>,
+                                ul: ({children}) => <ul className="list-disc pl-6 mb-3 space-y-1">{children}</ul>,
+                                ol: ({children}) => <ol className="list-decimal pl-6 mb-3 space-y-1">{children}</ol>,
+                                li: ({children}) => <li className="text-gray-700">{children}</li>,
+                                strong: ({children}) => <strong className="font-semibold text-gray-900">{children}</strong>,
+                                em: ({children}) => <em className="italic text-gray-800">{children}</em>,
+                                blockquote: ({children}) => (
+                                  <blockquote className="border-l-4 border-purple-500 bg-purple-50 p-3 my-4 text-purple-900 italic">
+                                    {children}
+                                  </blockquote>
+                                ),
+                                a: ({href, children}) => (
+                                  <a href={href} className="text-purple-600 underline hover:text-purple-800" target="_blank" rel="noopener noreferrer">
+                                    {children}
+                                  </a>
+                                )
+                              }}
+                            >
+                              {faq.answer}
+                            </ReactMarkdown>
                           </div>
                         </div>
                         

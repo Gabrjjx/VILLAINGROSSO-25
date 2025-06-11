@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Eye, Tag, ArrowLeft, User } from "lucide-react";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface BlogPost {
   id: number;
@@ -161,24 +163,48 @@ export default function BlogPostPage() {
           {/* Contenuto del post */}
           <Card>
             <CardContent className="p-8">
-              <div 
-                className="prose prose-lg max-w-none
-                  prose-headings:text-gray-900 
-                  prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-6
-                  prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-4 prose-h2:mt-8
-                  prose-h3:text-xl prose-h3:font-medium prose-h3:mb-3 prose-h3:mt-6
-                  prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4
-                  prose-strong:text-gray-900 prose-strong:font-semibold
-                  prose-em:text-gray-800
-                  prose-ul:mb-4 prose-ol:mb-4
-                  prose-li:text-gray-700 prose-li:mb-1
-                  prose-blockquote:border-l-4 prose-blockquote:border-blue-500 
-                  prose-blockquote:bg-blue-50 prose-blockquote:p-4 prose-blockquote:my-6
-                  prose-blockquote:text-blue-900 prose-blockquote:italic
-                  prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800
-                  prose-img:rounded-lg prose-img:shadow-lg prose-img:my-8"
-                dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br>') }}
-              />
+              <div className="prose prose-lg max-w-none
+                prose-headings:text-gray-900 
+                prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-6
+                prose-h2:text-2xl prose-h2:font-semibold prose-h2:mb-4 prose-h2:mt-8
+                prose-h3:text-xl prose-h3:font-medium prose-h3:mb-3 prose-h3:mt-6
+                prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4
+                prose-strong:text-gray-900 prose-strong:font-semibold
+                prose-em:text-gray-800
+                prose-ul:mb-4 prose-ol:mb-4
+                prose-li:text-gray-700 prose-li:mb-1
+                prose-blockquote:border-l-4 prose-blockquote:border-blue-500 
+                prose-blockquote:bg-blue-50 prose-blockquote:p-4 prose-blockquote:my-6
+                prose-blockquote:text-blue-900 prose-blockquote:italic
+                prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800
+                prose-img:rounded-lg prose-img:shadow-lg prose-img:my-8">
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({children}) => <h1 className="text-3xl font-bold mb-6 mt-8 text-gray-900">{children}</h1>,
+                    h2: ({children}) => <h2 className="text-2xl font-semibold mb-4 mt-8 text-gray-900">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-xl font-medium mb-3 mt-6 text-gray-900">{children}</h3>,
+                    p: ({children}) => <p className="text-gray-700 leading-relaxed mb-4">{children}</p>,
+                    ul: ({children}) => <ul className="list-disc pl-6 mb-4 space-y-1">{children}</ul>,
+                    ol: ({children}) => <ol className="list-decimal pl-6 mb-4 space-y-1">{children}</ol>,
+                    li: ({children}) => <li className="text-gray-700">{children}</li>,
+                    strong: ({children}) => <strong className="font-semibold text-gray-900">{children}</strong>,
+                    em: ({children}) => <em className="italic text-gray-800">{children}</em>,
+                    blockquote: ({children}) => (
+                      <blockquote className="border-l-4 border-blue-500 bg-blue-50 p-4 my-6 text-blue-900 italic">
+                        {children}
+                      </blockquote>
+                    ),
+                    a: ({href, children}) => (
+                      <a href={href} className="text-blue-600 underline hover:text-blue-800" target="_blank" rel="noopener noreferrer">
+                        {children}
+                      </a>
+                    )
+                  }}
+                >
+                  {post.content}
+                </ReactMarkdown>
+              </div>
             </CardContent>
           </Card>
 
