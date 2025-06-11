@@ -1,24 +1,22 @@
 import { Route, Switch } from "wouter";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Home from "@/pages/Home"; // Keep Home as eager import for immediate loading
 
-// Preload critical pages for better UX - defined separately for better performance
+// Lazy load all other pages for better performance
+const NotFound = lazy(() => import("@/pages/not-found"));
 const AboutPage = lazy(() => import("@/pages/AboutPage"));
 const GalleryPage = lazy(() => import("@/pages/GalleryPage"));
-const PricesPage = lazy(() => import("@/pages/PricesPage"));
-const BookingPage = lazy(() => import("@/pages/BookingPage"));
-
-// Lazy load remaining pages
-const NotFound = lazy(() => import("@/pages/not-found"));
 const LocationPage = lazy(() => import("@/pages/LocationPage"));
 const RecommendationsPage = lazy(() => import("@/pages/RecommendationsPage"));
 const ContactPage = lazy(() => import("@/pages/ContactPage"));
+const PricesPage = lazy(() => import("@/pages/PricesPage"));
 const Privacy = lazy(() => import("@/pages/Privacy"));
 const AuthPage = lazy(() => import("@/pages/AuthPage"));
 const AccountPage = lazy(() => import("@/pages/AccountPage"));
 const AdminPage = lazy(() => import("@/pages/AdminPage"));
 const AdminEmailPage = lazy(() => import("@/pages/AdminEmailPage"));
 const AdminBookingForm = lazy(() => import("@/pages/AdminBookingForm"));
+const BookingPage = lazy(() => import("@/pages/BookingPage"));
 const BookingConfirmation = lazy(() => import("@/pages/BookingConfirmation"));
 const SimpleResetPasswordPage = lazy(() => import("@/pages/SimpleResetPasswordPage"));
 const ChangePasswordPage = lazy(() => import("@/pages/ChangePasswordPage"));
@@ -28,6 +26,7 @@ const InventoryPage = lazy(() => import("@/pages/inventory-page"));
 const FaqPage = lazy(() => import("@/pages/faq-page"));
 const LoadingDemoPage = lazy(() => import("@/pages/loading-demo-page"));
 const AnalyticsDashboard = lazy(() => import("@/pages/analytics-dashboard"));
+
 import NewsletterModal from "@/components/NewsletterModal";
 import WhatsAppChat from "@/components/WhatsAppChat";
 import { LoadingProvider, useLoading } from "@/context/LoadingContext";
@@ -37,12 +36,10 @@ import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import WaveLoader from "@/components/WaveLoader";
 import SoundToggle from "@/components/SoundToggle";
-// Importazione componenti di Google Analytics
 import GoogleAnalyticsDebug from "./components/GoogleAnalyticsDebug";
 import GoogleAnalyticsSetup from "./components/GoogleAnalyticsSetup";
 import { RegistrationIncentiveBanner, RegistrationIncentivePopup } from "@/components/RegistrationIncentive";
 import { initVillaAnalytics } from "@/lib/gtm-analytics";
-import { useEffect } from "react";
 import GTMPageWrapper from "@/components/GTMPageWrapper";
 
 // Lightweight loading component for page transitions
@@ -53,6 +50,17 @@ function PageLoader() {
     </div>
   );
 }
+
+// Preload critical pages after initial load
+const preloadCriticalPages = () => {
+  setTimeout(() => {
+    import("@/pages/AboutPage");
+    import("@/pages/GalleryPage");
+    import("@/pages/PricesPage");
+    import("@/pages/BookingPage");
+    import("@/pages/ContactPage");
+  }, 3000);
+};
 
 function Router() {
   return (
@@ -93,6 +101,7 @@ function App() {
   // Initialize Villa Ingrosso analytics with GTM integration
   useEffect(() => {
     initVillaAnalytics();
+    preloadCriticalPages();
   }, []);
 
   return (
@@ -114,7 +123,6 @@ function App() {
 }
 
 function WaveLoaderWithContext() {
-  // Import useLoading hook from context
   const { isLoading } = useLoading();
   
   return <WaveLoader isLoading={isLoading} />;
