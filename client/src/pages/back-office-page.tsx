@@ -369,12 +369,10 @@ function BackOfficePage() {
   }
 
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-slate-800 to-gray-800 text-white py-12 pt-24">
-          <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-slate-800 to-gray-800 text-white py-12">
+        <div className="container mx-auto px-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <Settings className="h-10 w-10" />
@@ -390,8 +388,9 @@ function BackOfficePage() {
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8">
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
             <TabsList className="grid w-full grid-cols-7">
               <TabsTrigger value="dashboard" className="flex items-center gap-2">
@@ -1234,8 +1233,7 @@ function BackOfficePage() {
           </DialogContent>
         </Dialog>
       </div>
-      <Footer />
-    </>
+    </div>
   );
 }
 
