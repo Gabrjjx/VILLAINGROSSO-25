@@ -27,6 +27,7 @@ const FaqPage = lazy(() => import("@/pages/faq-page"));
 const LoadingDemoPage = lazy(() => import("@/pages/loading-demo-page"));
 const AnalyticsDashboard = lazy(() => import("@/pages/analytics-dashboard"));
 const BackOfficePage = lazy(() => import("@/pages/back-office-page"));
+const BackOfficeAuthPage = lazy(() => import("@/pages/back-office-auth-page"));
 
 import NewsletterModal from "@/components/NewsletterModal";
 import WhatsAppChat from "@/components/WhatsAppChat";
@@ -87,6 +88,7 @@ function Router() {
           <Route path="/blog/:slug" component={BlogPostPage} />
           <Route path="/inventory" component={InventoryPage} />
           <Route path="/faq" component={FaqPage} />
+          <Route path="/back-office/auth" component={BackOfficeAuthPage} />
           <Route path="/back-office" component={BackOfficePage} />
           <Route path="/loading-demo" component={LoadingDemoPage} />
           <Route path="/analytics-dashboard" component={AnalyticsDashboard} />

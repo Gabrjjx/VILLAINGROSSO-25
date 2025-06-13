@@ -163,32 +163,62 @@ function BackOfficePage() {
 
   const { data: users = [] } = useQuery<any[]>({
     queryKey: ["/api/admin/users"],
-    enabled: selectedTab === "users"
+    enabled: selectedTab === "users",
+    queryFn: async () => {
+      const response = await fetch('/api/admin/users');
+      if (!response.ok) throw new Error('Failed to fetch users');
+      return response.json();
+    }
   });
 
   const { data: bookings = [] } = useQuery<any[]>({
     queryKey: ["/api/admin/bookings"],
-    enabled: selectedTab === "bookings"
+    enabled: selectedTab === "bookings",
+    queryFn: async () => {
+      const response = await fetch('/api/admin/bookings');
+      if (!response.ok) throw new Error('Failed to fetch bookings');
+      return response.json();
+    }
   });
 
   const { data: messages = [] } = useQuery<any[]>({
     queryKey: ["/api/admin/messages"],
-    enabled: selectedTab === "messages"
+    enabled: selectedTab === "messages",
+    queryFn: async () => {
+      const response = await fetch('/api/admin/messages');
+      if (!response.ok) throw new Error('Failed to fetch messages');
+      return response.json();
+    }
   });
 
   const { data: blogPosts = [] } = useQuery<any[]>({
     queryKey: ["/api/blog"],
-    enabled: selectedTab === "content"
+    enabled: selectedTab === "content",
+    queryFn: async () => {
+      const response = await fetch('/api/blog');
+      if (!response.ok) throw new Error('Failed to fetch blog posts');
+      return response.json();
+    }
   });
 
   const { data: faqs = [] } = useQuery<any[]>({
     queryKey: ["/api/faqs"],
-    enabled: selectedTab === "content"
+    enabled: selectedTab === "content",
+    queryFn: async () => {
+      const response = await fetch('/api/faqs');
+      if (!response.ok) throw new Error('Failed to fetch FAQs');
+      return response.json();
+    }
   });
 
   const { data: inventory = [] } = useQuery<any[]>({
     queryKey: ["/api/inventory"],
-    enabled: selectedTab === "inventory"
+    enabled: selectedTab === "inventory",
+    queryFn: async () => {
+      const response = await fetch('/api/inventory');
+      if (!response.ok) throw new Error('Failed to fetch inventory');
+      return response.json();
+    }
   });
 
   // Mutations
@@ -312,17 +342,27 @@ function BackOfficePage() {
   // Check if user is admin
   if (!user?.isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">🔒</div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">Accesso Negato</h1>
-          <p className="text-gray-600 mb-6">Solo gli amministratori possono accedere al back-office.</p>
-          <Link href="/">
-            <Button>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Torna alla Home
-            </Button>
-          </Link>
+          <h1 className="text-2xl font-bold text-white mb-2">Accesso Richiesto</h1>
+          <p className="text-blue-200 mb-6">Devi effettuare l'accesso come amministratore per utilizzare il back-office.</p>
+          <div className="space-y-3">
+            <Link href="/back-office/auth">
+              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                <Settings className="h-4 w-4 mr-2" />
+                Accedi al Back-Office
+              </Button>
+            </Link>
+            <div>
+              <Link href="/">
+                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Torna alla Home
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -1199,10 +1239,4 @@ function BackOfficePage() {
   );
 }
 
-export default function BackOfficePageWrapper() {
-  return (
-    <ProtectedRoute adminOnly>
-      <BackOfficePage />
-    </ProtectedRoute>
-  );
-}
+export default BackOfficePage;
