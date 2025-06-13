@@ -275,49 +275,48 @@ function BackOfficePage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Professional Header with Status Bar */}
-      <div className="bg-white border-b border-slate-200 shadow-sm">
-        <div className="px-6 py-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+      {/* Modern Glass-Effect Header */}
+      <div className="bg-white/10 backdrop-blur-md border-b border-white/20 shadow-xl">
+        <div className="px-8 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-600 rounded-lg">
-                  <Building className="h-6 w-6 text-white" />
+            <div className="flex items-center gap-8">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl shadow-lg">
+                  <Building className="h-7 w-7 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-semibold text-gray-900">Villa Ingrosso PMS</h1>
-                  <p className="text-sm text-gray-500">Property Management System v2.1.0</p>
+                  <h1 className="text-2xl font-bold text-white">Villa Ingrosso</h1>
+                  <p className="text-blue-200 text-sm">Executive Management Suite</p>
                 </div>
               </div>
-              <div className="hidden md:flex items-center gap-4 pl-6 border-l border-gray-200">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-gray-600">Sistema Operativo</span>
+              <div className="hidden md:flex items-center gap-6 pl-8 border-l border-white/20">
+                <div className="flex items-center gap-3">
+                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+                  <span className="text-sm text-blue-200 font-medium">Sistema Attivo</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Clock className="h-3 w-3 text-gray-400" />
-                  <span className="text-xs text-gray-500">
+                  <Clock className="h-4 w-4 text-blue-300" />
+                  <span className="text-sm text-blue-200">
                     {new Date().toLocaleDateString('it-IT', { 
-                      weekday: 'long', 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric'
                     })}
                   </span>
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               <div className="text-right">
-                <div className="text-sm font-medium text-gray-900">{user.fullName || user.username}</div>
-                <div className="flex items-center gap-1 text-xs text-gray-500">
-                  <Shield className="h-3 w-3" />
-                  Amministratore Sistema
+                <div className="text-lg font-semibold text-white">{user.fullName || user.username}</div>
+                <div className="flex items-center gap-2 text-sm text-blue-200">
+                  <Shield className="h-4 w-4" />
+                  Executive Administrator
                 </div>
               </div>
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                <span className="text-white text-lg font-bold">
                   {(user.fullName || user.username).charAt(0).toUpperCase()}
                 </span>
               </div>
@@ -326,389 +325,445 @@ function BackOfficePage() {
         </div>
       </div>
 
-      <div className="flex h-[calc(100vh-73px)]">
-        {/* Professional Sidebar Navigation */}
-        <div className="w-64 bg-white border-r border-slate-200 flex flex-col">
-          <div className="p-4 border-b border-slate-200">
-            <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Moduli Sistema</h2>
+      <div className="flex h-[calc(100vh-98px)]">
+        {/* Modern Glass Sidebar */}
+        <div className="w-72 bg-white/5 backdrop-blur-md border-r border-white/10 flex flex-col">
+          <div className="p-6 border-b border-white/10">
+            <h2 className="text-lg font-bold text-white mb-2">Control Center</h2>
+            <p className="text-blue-200 text-sm">Gestione avanzata villa</p>
           </div>
-          <nav className="flex-1 p-4 space-y-1">
+          <nav className="flex-1 p-6 space-y-2">
             <button
               onClick={() => setSelectedTab("dashboard")}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                 selectedTab === "dashboard" 
-                  ? "bg-blue-50 text-blue-700 border border-blue-200 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-gradient-to-r from-amber-400/20 to-orange-500/20 text-white border border-amber-400/30 shadow-lg" 
+                  : "text-blue-200 hover:bg-white/10 hover:text-white"
               }`}
             >
-              <BarChart3 className="h-4 w-4" />
-              Dashboard Operativo
+              <BarChart3 className="h-5 w-5" />
+              Analytics Dashboard
             </button>
             <button
               onClick={() => setSelectedTab("bookings")}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                 selectedTab === "bookings" 
-                  ? "bg-blue-50 text-blue-700 border border-blue-200 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-gradient-to-r from-amber-400/20 to-orange-500/20 text-white border border-amber-400/30 shadow-lg" 
+                  : "text-blue-200 hover:bg-white/10 hover:text-white"
               }`}
             >
-              <Calendar className="h-4 w-4" />
-              Gestione Prenotazioni
+              <Calendar className="h-5 w-5" />
+              Reservation Manager
             </button>
             <button
               onClick={() => setSelectedTab("users")}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                 selectedTab === "users" 
-                  ? "bg-blue-50 text-blue-700 border border-blue-200 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-gradient-to-r from-amber-400/20 to-orange-500/20 text-white border border-amber-400/30 shadow-lg" 
+                  : "text-blue-200 hover:bg-white/10 hover:text-white"
               }`}
             >
-              <Users className="h-4 w-4" />
-              Anagrafica Ospiti
+              <Users className="h-5 w-5" />
+              Guest Relations
             </button>
             <button
               onClick={() => setSelectedTab("messages")}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                 selectedTab === "messages" 
-                  ? "bg-blue-50 text-blue-700 border border-blue-200 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-gradient-to-r from-amber-400/20 to-orange-500/20 text-white border border-amber-400/30 shadow-lg" 
+                  : "text-blue-200 hover:bg-white/10 hover:text-white"
               }`}
             >
-              <MessageSquare className="h-4 w-4" />
-              Centro Messaggi
+              <MessageSquare className="h-5 w-5" />
+              Communications Hub
               {messages.filter((m: any) => !m.read).length > 0 && (
-                <span className="ml-auto bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full font-semibold">
+                <span className="ml-auto bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow-lg">
                   {messages.filter((m: any) => !m.read).length}
                 </span>
               )}
             </button>
             <button
               onClick={() => setSelectedTab("content")}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                 selectedTab === "content" 
-                  ? "bg-blue-50 text-blue-700 border border-blue-200 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-gradient-to-r from-amber-400/20 to-orange-500/20 text-white border border-amber-400/30 shadow-lg" 
+                  : "text-blue-200 hover:bg-white/10 hover:text-white"
               }`}
             >
-              <BookOpen className="h-4 w-4" />
-              CMS Contenuti
+              <BookOpen className="h-5 w-5" />
+              Content Studio
             </button>
             <button
               onClick={() => setSelectedTab("inventory")}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                 selectedTab === "inventory" 
-                  ? "bg-blue-50 text-blue-700 border border-blue-200 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-gradient-to-r from-amber-400/20 to-orange-500/20 text-white border border-amber-400/30 shadow-lg" 
+                  : "text-blue-200 hover:bg-white/10 hover:text-white"
               }`}
             >
-              <Package className="h-4 w-4" />
-              Gestione Inventario
+              <Package className="h-5 w-5" />
+              Inventory Control
               {inventory.filter((item: any) => item.quantity <= item.minStock).length > 0 && (
-                <span className="ml-auto bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full font-semibold">
+                <span className="ml-auto bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow-lg">
                   {inventory.filter((item: any) => item.quantity <= item.minStock).length}
                 </span>
               )}
             </button>
             <button
               onClick={() => setSelectedTab("email")}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
                 selectedTab === "email" 
-                  ? "bg-blue-50 text-blue-700 border border-blue-200 shadow-sm" 
-                  : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-gradient-to-r from-amber-400/20 to-orange-500/20 text-white border border-amber-400/30 shadow-lg" 
+                  : "text-blue-200 hover:bg-white/10 hover:text-white"
               }`}
             >
-              <Mail className="h-4 w-4" />
-              Sistema Email
+              <Mail className="h-5 w-5" />
+              Email Command Center
             </button>
           </nav>
-          <div className="p-4 border-t border-slate-200">
-            <div className="text-xs text-gray-500 space-y-1">
-              <div className="flex items-center gap-2">
-                <Activity className="h-3 w-3" />
-                Versione Sistema: v2.1.0
+          <div className="p-6 border-t border-white/10">
+            <div className="bg-white/5 rounded-xl p-4 space-y-3">
+              <div className="flex items-center gap-3 text-blue-200">
+                <Activity className="h-4 w-4" />
+                <span className="text-sm font-medium">System Status</span>
               </div>
-              <div>Ultimo aggiornamento: {new Date().toLocaleDateString('it-IT')}</div>
-              <div className="flex items-center gap-2 pt-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>Database: Connesso</span>
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between text-blue-300">
+                  <span>Version</span>
+                  <span className="font-semibold">v3.0 Executive</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-green-300">Database Online</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                  <span className="text-blue-300">APIs Active</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 overflow-auto bg-gray-50">
+        <div className="flex-1 overflow-auto bg-gradient-to-br from-gray-900/20 via-blue-900/10 to-purple-900/20 backdrop-blur-sm">
           <Tabs value={selectedTab} onValueChange={setSelectedTab}>
             {/* Dashboard Tab */}
-            <TabsContent value="dashboard" className="p-6 space-y-6">
-              {/* Professional Dashboard Header */}
-              <div className="mb-6">
+            <TabsContent value="dashboard" className="p-8 space-y-8">
+              {/* Executive Dashboard Header */}
+              <div className="mb-8">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">Dashboard Operativo</h2>
-                    <p className="text-gray-600">Panoramica generale sistema alberghiero Villa Ingrosso</p>
+                    <h2 className="text-3xl font-bold text-white mb-2">Executive Analytics</h2>
+                    <p className="text-blue-200 text-lg">Real-time villa performance insights</p>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <RefreshCw className="h-4 w-4" />
-                    Aggiornato: {new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}
+                  <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-xl px-4 py-2 border border-white/20">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-blue-200 text-sm font-medium">Live Data Stream</span>
+                    <RefreshCw className="h-4 w-4 text-blue-300" />
                   </div>
                 </div>
               </div>
 
-              {/* Key Performance Indicators */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <Card className="border-l-4 border-l-blue-500 shadow-sm hover:shadow-md transition-shadow">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-gray-600">Prenotazioni Attive</CardTitle>
-                    <Calendar className="h-5 w-5 text-blue-500" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-gray-900">{stats?.totalBookings || 0}</div>
-                    <p className="text-xs text-gray-500 flex items-center gap-1">
-                      {stats?.bookingGrowth > 0 ? (
-                        <TrendingUp className="h-3 w-3 text-green-500" />
-                      ) : (
-                        <TrendingDown className="h-3 w-3 text-red-500" />
-                      )}
-                      {stats?.bookingGrowth > 0 ? '+' : ''}{stats?.bookingGrowth || 0}% vs mese precedente
-                    </p>
-                  </CardContent>
-                </Card>
+              {/* Premium KPI Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div className="bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-xl p-6 hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl shadow-lg">
+                      <Calendar className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm text-blue-200 font-medium">Prenotazioni</div>
+                      <div className="text-2xl font-bold text-white">{stats?.totalBookings || 0}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    {stats?.bookingGrowth > 0 ? (
+                      <TrendingUp className="h-4 w-4 text-green-400" />
+                    ) : (
+                      <TrendingDown className="h-4 w-4 text-red-400" />
+                    )}
+                    <span className={`font-semibold ${stats?.bookingGrowth > 0 ? 'text-green-300' : 'text-red-300'}`}>
+                      {stats?.bookingGrowth > 0 ? '+' : ''}{stats?.bookingGrowth || 0}%
+                    </span>
+                    <span className="text-blue-200">vs ultimo mese</span>
+                  </div>
+                </div>
 
-                <Card className="border-l-4 border-l-green-500 shadow-sm hover:shadow-md transition-shadow">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-gray-600">Ricavi Totali</CardTitle>
-                    <DollarSign className="h-5 w-5 text-green-500" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-gray-900">€{stats?.totalRevenue || 0}</div>
-                    <p className="text-xs text-gray-500 flex items-center gap-1">
-                      {stats?.revenueGrowth > 0 ? (
-                        <TrendingUp className="h-3 w-3 text-green-500" />
-                      ) : (
-                        <TrendingDown className="h-3 w-3 text-red-500" />
-                      )}
-                      {stats?.revenueGrowth > 0 ? '+' : ''}{stats?.revenueGrowth || 0}% vs mese precedente
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-xl p-6 hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-gradient-to-br from-emerald-400 to-green-500 rounded-xl shadow-lg">
+                      <DollarSign className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm text-blue-200 font-medium">Ricavi</div>
+                      <div className="text-2xl font-bold text-white">€{stats?.totalRevenue || 0}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    {stats?.revenueGrowth > 0 ? (
+                      <TrendingUp className="h-4 w-4 text-green-400" />
+                    ) : (
+                      <TrendingDown className="h-4 w-4 text-red-400" />
+                    )}
+                    <span className={`font-semibold ${stats?.revenueGrowth > 0 ? 'text-green-300' : 'text-red-300'}`}>
+                      {stats?.revenueGrowth > 0 ? '+' : ''}{stats?.revenueGrowth || 0}%
+                    </span>
+                    <span className="text-blue-200">crescita</span>
+                  </div>
+                </div>
 
-                <Card className="border-l-4 border-l-orange-500 shadow-sm hover:shadow-md transition-shadow">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-gray-600">Messaggi Nuovi</CardTitle>
-                    <MessageSquare className="h-5 w-5 text-orange-500" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-gray-900">{stats?.newMessages || 0}</div>
-                    <p className="text-xs text-gray-500">
-                      Richieste da processare
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-xl p-6 hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl shadow-lg">
+                      <MessageSquare className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm text-blue-200 font-medium">Messaggi</div>
+                      <div className="text-2xl font-bold text-white">{stats?.newMessages || 0}</div>
+                    </div>
+                  </div>
+                  <div className="text-sm text-orange-200">
+                    Da processare oggi
+                  </div>
+                </div>
 
-                <Card className="border-l-4 border-l-purple-500 shadow-sm hover:shadow-md transition-shadow">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-gray-600">Tasso Occupazione</CardTitle>
-                    <TrendingUp className="h-5 w-5 text-purple-500" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-gray-900">{stats?.occupancyRate || 0}%</div>
-                    <p className="text-xs text-gray-500">
-                      Media ultimi 12 mesi
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-xl p-6 hover:scale-105 transition-all duration-300">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-xl shadow-lg">
+                      <TrendingUp className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm text-blue-200 font-medium">Occupazione</div>
+                      <div className="text-2xl font-bold text-white">{stats?.occupancyRate || 0}%</div>
+                    </div>
+                  </div>
+                  <div className="text-sm text-purple-200">
+                    Tasso annuale
+                  </div>
+                </div>
               </div>
 
-              {/* Professional Action Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card className="shadow-sm">
-                  <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b">
-                    <CardTitle className="text-lg text-gray-900">Azioni Rapide</CardTitle>
-                    <CardDescription>Operazioni comuni sistema alberghiero</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6 space-y-4">
-                    <Button 
+              {/* Executive Action Center */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-8">
+                  <div className="mb-6">
+                    <h3 className="text-xl font-bold text-white mb-2">Quick Actions</h3>
+                    <p className="text-blue-200">Executive command center</p>
+                  </div>
+                  <div className="space-y-4">
+                    <button 
                       onClick={() => handleCreateAction('booking')} 
-                      className="w-full justify-start h-12 bg-blue-600 hover:bg-blue-700"
+                      className="w-full flex items-center gap-4 p-4 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 rounded-xl border border-amber-400/30 text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
                     >
-                      <Plus className="h-4 w-4 mr-3" />
-                      Nuova Prenotazione
-                    </Button>
-                    <Button 
+                      <div className="p-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg">
+                        <Plus className="h-5 w-5 text-white" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">Nuova Prenotazione</div>
+                        <div className="text-sm text-blue-200">Crea booking diretto</div>
+                      </div>
+                    </button>
+                    <button 
                       onClick={() => handleCreateAction('user')} 
-                      variant="outline" 
-                      className="w-full justify-start h-12 border-gray-300"
+                      className="w-full flex items-center gap-4 p-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 rounded-xl border border-blue-400/30 text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
                     >
-                      <Users className="h-4 w-4 mr-3" />
-                      Registra Nuovo Ospite
-                    </Button>
-                    <Button 
+                      <div className="p-2 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg">
+                        <Users className="h-5 w-5 text-white" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">Registra Ospite</div>
+                        <div className="text-sm text-blue-200">Nuovo cliente VIP</div>
+                      </div>
+                    </button>
+                    <button 
                       onClick={() => handleCreateAction('email')} 
-                      variant="outline" 
-                      className="w-full justify-start h-12 border-gray-300"
+                      className="w-full flex items-center gap-4 p-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 hover:from-green-500/30 hover:to-emerald-500/30 rounded-xl border border-green-400/30 text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
                     >
-                      <Send className="h-4 w-4 mr-3" />
-                      Invia Comunicazione
-                    </Button>
-                  </CardContent>
-                </Card>
+                      <div className="p-2 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg">
+                        <Send className="h-5 w-5 text-white" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-semibold">Email Broadcast</div>
+                        <div className="text-sm text-blue-200">Comunicazione diretta</div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
 
-                <Card className="shadow-sm">
-                  <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 border-b">
-                    <CardTitle className="text-lg text-gray-900">Prenotazioni Recenti</CardTitle>
-                    <CardDescription>Ultime prenotazioni registrate nel sistema</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="divide-y divide-gray-100">
-                      {bookings?.slice(0, 5).map((booking: any) => (
-                        <div key={booking.id} className="p-4 hover:bg-gray-50 transition-colors">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="font-medium text-gray-900">{booking.guestName}</div>
-                              <div className="text-sm text-gray-500 flex items-center gap-2">
-                                <Calendar className="h-3 w-3" />
-                                {new Date(booking.checkIn).toLocaleDateString('it-IT')} - {new Date(booking.checkOut).toLocaleDateString('it-IT')}
-                              </div>
+                <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-8">
+                  <div className="mb-6">
+                    <h3 className="text-xl font-bold text-white mb-2">Recent Bookings</h3>
+                    <p className="text-blue-200">Live reservation stream</p>
+                  </div>
+                  <div className="space-y-4 max-h-64 overflow-y-auto">
+                    {bookings?.slice(0, 5).map((booking: any) => (
+                      <div key={booking.id} className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="font-semibold text-white">{booking.guestName}</div>
+                            <div className="text-sm text-blue-200 flex items-center gap-2">
+                              <Calendar className="h-3 w-3" />
+                              {new Date(booking.checkIn).toLocaleDateString('it-IT')} - {new Date(booking.checkOut).toLocaleDateString('it-IT')}
                             </div>
-                            <Badge 
-                              variant={
-                                booking.status === 'confirmed' ? 'default' : 
-                                booking.status === 'pending' ? 'secondary' : 
-                                'destructive'
-                              }
-                              className="text-xs"
-                            >
-                              {booking.status === 'confirmed' ? 'Confermata' :
-                               booking.status === 'pending' ? 'In Attesa' :
-                               'Cancellata'}
-                            </Badge>
+                          </div>
+                          <div className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                            booking.status === 'confirmed' ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 
+                            booking.status === 'pending' ? 'bg-orange-500/20 text-orange-300 border border-orange-500/30' : 
+                            'bg-red-500/20 text-red-300 border border-red-500/30'
+                          }`}>
+                            {booking.status === 'confirmed' ? 'Confermata' :
+                             booking.status === 'pending' ? 'In Attesa' :
+                             'Cancellata'}
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </TabsContent>
 
             {/* Bookings Tab */}
-            <TabsContent value="bookings" className="p-6 space-y-6">
+            <TabsContent value="bookings" className="p-8 space-y-8">
               <div className="flex justify-between items-center">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Gestione Prenotazioni</h2>
-                  <p className="text-gray-600">Sistema di gestione prenotazioni alberghiere</p>
+                  <h2 className="text-3xl font-bold text-white mb-2">Reservation Manager</h2>
+                  <p className="text-blue-200 text-lg">Advanced booking control system</p>
                 </div>
-                <Button onClick={() => handleCreateAction('booking')} className="bg-blue-600 hover:bg-blue-700">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Nuova Prenotazione
-                </Button>
+                <button 
+                  onClick={() => handleCreateAction('booking')} 
+                  className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  <Plus className="h-5 w-5" />
+                  New Reservation
+                </button>
               </div>
 
-              <Card className="shadow-sm">
-                <CardContent className="p-0">
-                  <Table>
-                    <TableHeader className="bg-gray-50">
-                      <TableRow>
-                        <TableHead className="font-semibold">Ospite</TableHead>
-                        <TableHead className="font-semibold">Contatto</TableHead>
-                        <TableHead className="font-semibold">Check-in</TableHead>
-                        <TableHead className="font-semibold">Check-out</TableHead>
-                        <TableHead className="font-semibold">Ospiti</TableHead>
-                        <TableHead className="font-semibold">Importo</TableHead>
-                        <TableHead className="font-semibold">Status</TableHead>
-                        <TableHead className="font-semibold">Azioni</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
+              <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-white/5 border-b border-white/10">
+                      <tr>
+                        <th className="text-left p-4 font-semibold text-white">Guest</th>
+                        <th className="text-left p-4 font-semibold text-white">Contact</th>
+                        <th className="text-left p-4 font-semibold text-white">Check-in</th>
+                        <th className="text-left p-4 font-semibold text-white">Check-out</th>
+                        <th className="text-left p-4 font-semibold text-white">Guests</th>
+                        <th className="text-left p-4 font-semibold text-white">Amount</th>
+                        <th className="text-left p-4 font-semibold text-white">Status</th>
+                        <th className="text-left p-4 font-semibold text-white">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
                       {bookings?.map((booking: any) => (
-                        <TableRow key={booking.id} className="hover:bg-gray-50">
-                          <TableCell className="font-medium">{booking.guestName}</TableCell>
-                          <TableCell className="text-sm text-gray-600">{booking.guestEmail}</TableCell>
-                          <TableCell>{new Date(booking.checkIn).toLocaleDateString('it-IT')}</TableCell>
-                          <TableCell>{new Date(booking.checkOut).toLocaleDateString('it-IT')}</TableCell>
-                          <TableCell>{booking.numberOfGuests}</TableCell>
-                          <TableCell className="font-medium">€{booking.totalPrice}</TableCell>
-                          <TableCell>
-                            <Badge 
-                              variant={
-                                booking.status === 'confirmed' ? 'default' : 
-                                booking.status === 'pending' ? 'secondary' : 
-                                'destructive'
-                              }
-                            >
+                        <tr key={booking.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                          <td className="p-4 font-medium text-white">{booking.guestName}</td>
+                          <td className="p-4 text-blue-200 text-sm">{booking.guestEmail}</td>
+                          <td className="p-4 text-blue-200">{new Date(booking.checkIn).toLocaleDateString('it-IT')}</td>
+                          <td className="p-4 text-blue-200">{new Date(booking.checkOut).toLocaleDateString('it-IT')}</td>
+                          <td className="p-4 text-blue-200">{booking.numberOfGuests}</td>
+                          <td className="p-4 font-semibold text-white">€{booking.totalPrice}</td>
+                          <td className="p-4">
+                            <div className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${
+                              booking.status === 'confirmed' ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 
+                              booking.status === 'pending' ? 'bg-orange-500/20 text-orange-300 border border-orange-500/30' : 
+                              'bg-red-500/20 text-red-300 border border-red-500/30'
+                            }`}>
                               {booking.status === 'confirmed' ? 'Confermata' :
                                booking.status === 'pending' ? 'In Attesa' :
                                'Cancellata'}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
+                            </div>
+                          </td>
+                          <td className="p-4">
                             <div className="flex space-x-2">
-                              <Button 
-                                size="sm" 
-                                variant="outline"
+                              <button 
                                 onClick={() => updateBookingStatusMutation.mutate({ 
                                   bookingId: booking.id, 
                                   status: booking.status === 'confirmed' ? 'pending' : 'confirmed' 
                                 })}
+                                className="p-2 bg-blue-500/20 hover:bg-blue-500/30 rounded-lg border border-blue-500/30 text-blue-300 hover:text-white transition-colors"
                               >
                                 {booking.status === 'confirmed' ? <XCircle className="h-4 w-4" /> : <CheckCircle className="h-4 w-4" />}
-                              </Button>
-                              <Button 
-                                size="sm" 
-                                variant="destructive"
+                              </button>
+                              <button 
                                 onClick={() => deleteBookingMutation.mutate(booking.id)}
+                                className="p-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg border border-red-500/30 text-red-300 hover:text-white transition-colors"
                               >
                                 <Trash2 className="h-4 w-4" />
-                              </Button>
+                              </button>
                             </div>
-                          </TableCell>
-                        </TableRow>
+                          </td>
+                        </tr>
                       ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Other tabs remain similar with professional styling... */}
-            <TabsContent value="users" className="p-6">
-              <div className="text-center py-12">
-                <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Anagrafica Ospiti</h3>
-                <p className="text-gray-500">Modulo in fase di sviluppo</p>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="messages" className="p-6">
-              <div className="text-center py-12">
-                <MessageSquare className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Centro Messaggi</h3>
-                <p className="text-gray-500">Sistema di gestione comunicazioni</p>
+            {/* Guest Relations Tab */}
+            <TabsContent value="users" className="p-8">
+              <div className="text-center py-20">
+                <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-12 max-w-md mx-auto">
+                  <div className="p-4 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl shadow-lg w-fit mx-auto mb-6">
+                    <Users className="h-12 w-12 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3">Guest Relations</h3>
+                  <p className="text-blue-200">Advanced guest management system</p>
+                </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="content" className="p-6">
-              <div className="text-center py-12">
-                <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">CMS Contenuti</h3>
-                <p className="text-gray-500">Sistema di gestione contenuti</p>
+            {/* Communications Hub Tab */}
+            <TabsContent value="messages" className="p-8">
+              <div className="text-center py-20">
+                <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-12 max-w-md mx-auto">
+                  <div className="p-4 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl shadow-lg w-fit mx-auto mb-6">
+                    <MessageSquare className="h-12 w-12 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3">Communications Hub</h3>
+                  <p className="text-blue-200">Real-time message management</p>
+                </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="inventory" className="p-6">
-              <div className="text-center py-12">
-                <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Gestione Inventario</h3>
-                <p className="text-gray-500">Sistema di gestione inventario</p>
+            {/* Content Studio Tab */}
+            <TabsContent value="content" className="p-8">
+              <div className="text-center py-20">
+                <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-12 max-w-md mx-auto">
+                  <div className="p-4 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl shadow-lg w-fit mx-auto mb-6">
+                    <BookOpen className="h-12 w-12 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3">Content Studio</h3>
+                  <p className="text-blue-200">Dynamic content management</p>
+                </div>
               </div>
             </TabsContent>
 
-            <TabsContent value="email" className="p-6">
-              <div className="text-center py-12">
-                <Mail className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Sistema Email</h3>
-                <p className="text-gray-500">Centro di comunicazione email</p>
+            {/* Inventory Control Tab */}
+            <TabsContent value="inventory" className="p-8">
+              <div className="text-center py-20">
+                <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-12 max-w-md mx-auto">
+                  <div className="p-4 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-xl shadow-lg w-fit mx-auto mb-6">
+                    <Package className="h-12 w-12 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3">Inventory Control</h3>
+                  <p className="text-blue-200">Smart inventory tracking</p>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Email Command Center Tab */}
+            <TabsContent value="email" className="p-8">
+              <div className="text-center py-20">
+                <div className="bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl p-12 max-w-md mx-auto">
+                  <div className="p-4 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl shadow-lg w-fit mx-auto mb-6">
+                    <Mail className="h-12 w-12 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3">Email Command Center</h3>
+                  <p className="text-blue-200">Executive communication suite</p>
+                </div>
               </div>
             </TabsContent>
 
