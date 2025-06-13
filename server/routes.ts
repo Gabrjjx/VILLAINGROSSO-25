@@ -1244,6 +1244,71 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
     }
   });
 
+  // API per statistiche admin dashboard
+  app.get("/api/admin/stats", async (req: Request, res: Response) => {
+    try {
+      if (!req.isAuthenticated() || !req.user?.isAdmin) {
+        return res.status(403).json({ error: "Admin access required" });
+      }
+
+      // Ottieni statistiche dal database
+      const [users, bookings, messages, blogPosts, faqs] = await Promise.all([
+        db.select().from(schema.users),
+        db.select().from(schema.bookings),
+        db.select().from(schema.contactMessages),
+        db.select().from(schema.blogPosts),
+        db.select().from(schema.faqs)
+      ]);
+
+      // Calcola statistiche
+      const activeBookings = bookings.filter(b => 
+        b.status === 'confirmed' && 
+        new Date(b.endDate) >= new Date()
+      ).length;
+
+      const totalRevenue = bookings
+        .filter(b => b.status === 'confirmed')
+        .reduce((sum, b) => sum + (b.totalPrice || 0), 0);
+
+      const newMessages = messages.filter(m => !m.isRead).length;
+
+      // Calcola tasso di occupazione (giorni prenotati negli ultimi 365 giorni)
+      const oneYearAgo = new Date();
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+      
+      const recentBookings = bookings.filter(b => 
+        b.status === 'confirmed' && 
+        new Date(b.startDate) >= oneYearAgo
+      );
+
+      let totalBookedDays = 0;
+      recentBookings.forEach(booking => {
+        const start = new Date(booking.startDate);
+        const end = new Date(booking.endDate);
+        const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+        totalBookedDays += days;
+      });
+
+      const occupancyRate = Math.round((totalBookedDays / 365) * 100);
+
+      const stats = {
+        totalBookings: bookings.length,
+        activeBookings,
+        totalRevenue,
+        occupancyRate,
+        totalUsers: users.length,
+        newMessages,
+        blogPosts: blogPosts.length,
+        faqCount: faqs.length
+      };
+
+      res.json(stats);
+    } catch (error) {
+      log(`Error fetching admin stats: ${error}`, "error");
+      res.status(500).json({ error: "Failed to fetch statistics" });
+    }
+  });
+
   // API per gli amministratori
   app.get("/api/admin/users", async (req: Request, res: Response) => {
     // La verifica dei permessi avviene nel middleware /api/admin in auth.ts
