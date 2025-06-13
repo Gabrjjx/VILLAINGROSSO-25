@@ -1270,7 +1270,7 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
         .filter(b => b.status === 'confirmed')
         .reduce((sum, b) => sum + (b.totalPrice || 0), 0);
 
-      const newMessages = messages.filter(m => !m.isRead).length;
+      const newMessages = messages.filter(m => !m.read).length;
 
       // Calcola tasso di occupazione (giorni prenotati negli ultimi 365 giorni)
       const oneYearAgo = new Date();
@@ -1795,7 +1795,7 @@ ${bookingData.notes ? `📝 Note: ${bookingData.notes}` : ''}
       const { id } = req.params;
       const success = await storage.incrementFaqViews(parseInt(id));
       
-      if (!success) {
+      if (success === false) {
         return res.status(404).json({ error: "FAQ not found" });
       }
 
