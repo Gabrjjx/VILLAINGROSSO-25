@@ -1074,46 +1074,106 @@ export async function sendPasswordResetEmail(userEmail: string, userName: string
 }
 
 export async function sendBookingConfirmationEmail(guestEmail: string, guestName: string, checkIn: string, checkOut: string, numberOfGuests: number): Promise<boolean> {
-  const subject = "Conferma Prenotazione Villa Ingrosso";
+  const subject = "Richiesta Prenotazione Villa Ingrosso - In Attesa di Conferma";
   const content = `
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conferma Prenotazione</title>
+    <title>Richiesta Prenotazione</title>
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         .header { background: #1976d2; color: white; padding: 20px; text-align: center; }
         .content { padding: 20px; background: #f9f9f9; }
         .booking-details { background: white; padding: 15px; margin: 20px 0; border-radius: 8px; }
+        .status-notice { background: #fff3e0; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #ff9800; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>Villa Ingrosso</h1>
-            <p>Conferma Prenotazione</p>
+            <p>Richiesta di Prenotazione Ricevuta</p>
         </div>
         <div class="content">
             <h2>Gentile ${guestName},</h2>
-            <p>La sua prenotazione presso Villa Ingrosso è stata confermata!</p>
+            <p>Abbiamo ricevuto la sua richiesta di prenotazione presso Villa Ingrosso.</p>
+            
+            <div class="status-notice">
+                <h4>⏳ STATO: IN ATTESA DI CONFERMA</h4>
+                <p>La sua prenotazione è stata registrata ma non ancora confermata. Riceverà una conferma definitiva entro 24 ore.</p>
+            </div>
             
             <div class="booking-details">
-                <h3>Dettagli Prenotazione:</h3>
+                <h3>Dettagli della Richiesta:</h3>
                 <p><strong>Check-in:</strong> ${checkIn}</p>
                 <p><strong>Check-out:</strong> ${checkOut}</p>
                 <p><strong>Numero ospiti:</strong> ${numberOfGuests}</p>
             </div>
             
-            <p>La contatteremo presto con ulteriori dettagli e istruzioni per l'arrivo.</p>
+            <p>Il nostro staff verificherà la disponibilità e la contatteremo presto con la conferma definitiva e le istruzioni per il pagamento.</p>
+            <p>Per qualsiasi domanda, può contattarci a g.ingrosso@gabhub.it</p>
             <p>Grazie per aver scelto Villa Ingrosso per la sua vacanza in Puglia!</p>
         </div>
     </div>
 </body>
 </html>`;
   return await sendEmail(guestEmail, subject, content, 'booking');
+}
+
+// Funzione per inviare notifica di nuova richiesta prenotazione al proprietario
+export async function sendBookingNotificationToOwner(guestName: string, guestEmail: string, checkIn: string, checkOut: string, numberOfGuests: number): Promise<boolean> {
+  const subject = "🔔 Nuova Richiesta di Prenotazione - Villa Ingrosso";
+  const content = `
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuova Richiesta Prenotazione</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #2e7d32; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background: #f9f9f9; }
+        .booking-details { background: white; padding: 15px; margin: 20px 0; border-radius: 8px; }
+        .action-notice { background: #e3f2fd; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #1976d2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏖️ Villa Ingrosso</h1>
+            <p>Nuova Richiesta di Prenotazione</p>
+        </div>
+        <div class="content">
+            <h2>Ciao Giuseppe!</h2>
+            <p>È arrivata una nuova richiesta di prenotazione tramite il sito web.</p>
+            
+            <div class="booking-details">
+                <h3>📋 Dettagli della Richiesta:</h3>
+                <p><strong>👤 Cliente:</strong> ${guestName}</p>
+                <p><strong>📧 Email:</strong> ${guestEmail}</p>
+                <p><strong>📅 Check-in:</strong> ${checkIn}</p>
+                <p><strong>📅 Check-out:</strong> ${checkOut}</p>
+                <p><strong>👥 Numero ospiti:</strong> ${numberOfGuests}</p>
+            </div>
+            
+            <div class="action-notice">
+                <h4>⚡ AZIONE RICHIESTA</h4>
+                <p>• Controlla la disponibilità per le date richieste</p>
+                <p>• Contatta il cliente per confermare la prenotazione</p>
+                <p>• Invia le istruzioni per il pagamento se confermato</p>
+            </div>
+            
+            <p>Accedi al pannello di amministrazione per gestire questa richiesta.</p>
+        </div>
+    </div>
+</body>
+</html>`;
+  return await sendEmail("g.ingrosso@gabhub.it", subject, content, 'admin');
 }
 
 export async function sendContactNotificationEmail(contactName: string, contactEmail: string, message: string): Promise<boolean> {
